@@ -1,0 +1,180 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+// AI股票分析核心数据结构（五层）
+// 说明：
+// - 使用 //@go_tags(`gorm:"..." json:"..."`) 为生成的Go结构体注入标签，便于GORM与API输出
+// - 时间统一采用字符串存储，推荐 RFC3339 格式，如 2025-12-03T09:30:00+08:00
+// - 金额/比例使用 double，数量类使用 int64；数组/映射字段通过 serializer:json 持久化
+
+// 第一层：基础标识结构（静态数据）
+message StockIdentity {
+  string Id = 1;              //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
+  string Symbol = 2;          //@go_tags(`gorm:"symbol;uniqueIndex:uk_market_symbol" json:"symbol"`) 股票代码
+  string Market = 3;          //@go_tags(`gorm:"market;uniqueIndex:uk_market_symbol" json:"market"`) 市场标识(sh/sz等)
+  string Exchange = 4;        //@go_tags(`gorm:"exchange" json:"exchange"`) 交易所(SSE/SZSE等)
+  string Name = 5;            //@go_tags(`gorm:"name" json:"name"`) 公司简称
+  string FullName = 6;        //@go_tags(`gorm:"full_name" json:"full_name"`) 公司全称
+  string ISIN = 7;            //@go_tags(`gorm:"isin;index" json:"isin"`) 国际证券识别码
+  string Industry = 8;        //@go_tags(`gorm:"industry" json:"industry"`) 行业
+  string Sector = 9;          //@go_tags(`gorm:"sector" json:"sector"`) 板块
+  string Area = 10;           //@go_tags(`gorm:"area" json:"area"`) 地区
+  string Currency = 11;       //@go_tags(`gorm:"currency" json:"currency"`) 币种
+  string ListDate = 12;       //@go_tags(`gorm:"list_date" json:"list_date"`) 上市日期(YYYYMMDD)
+  string Status = 13;         //@go_tags(`gorm:"status" json:"status"`) 上市状态
+  repeated string Aliases = 14; //@go_tags(`gorm:"aliases;serializer:json" json:"aliases"`) 公司别名列表
+  string CreateAt = 15;       //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
+  string UpdateAt = 16;       //@go_tags(`gorm:"update_at" json:"update_at"`) 更新时间
+}
+
+// 第二层：行情数据结构（时序核心） - K线/Bar
+message StockBar {
+  string Id = 1;            //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
+  string Symbol = 2;        //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_tf_ts" json:"symbol"`) 股票代码
+  string Market = 3;        //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_tf_ts" json:"market"`) 市场标识
+  string Timeframe = 4;     //@go_tags(`gorm:"timeframe;uniqueIndex:uk_symbol_tf_ts" json:"timeframe"`) 周期(1m/5m/15m/1d等)
+  string Ts = 5;            //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_tf_ts" json:"ts"`) K线时间戳(RFC3339)
+
+  double Open = 6;          //@go_tags(`gorm:"open" json:"open"`) 开盘价
+  double High = 7;          //@go_tags(`gorm:"high" json:"high"`) 最高价
+  double Low = 8;           //@go_tags(`gorm:"low" json:"low"`) 最低价
+  double Close = 9;         //@go_tags(`gorm:"close" json:"close"`) 收盘价
+  int64 Volume = 10;        //@go_tags(`gorm:"volume" json:"volume"`) 成交量(股)
+  double Turnover = 11;     //@go_tags(`gorm:"turnover" json:"turnover"`) 成交额(货币)
+  double AdjFactor = 12;    //@go_tags(`gorm:"adj_factor" json:"adj_factor"`) 复权因子
+  string Source = 13;       //@go_tags(`gorm:"source" json:"source"`) 数据来源(akshare等)
+
+  string CreateAt = 14;     //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
+  string UpdateAt = 15;     //@go_tags(`gorm:"update_at" json:"update_at"`) 更新时间
+}
+
+// 第二层：行情数据结构（时序核心） - 实时快照
+message RealtimeQuote {
+  string Id = 1;            //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
+  string Symbol = 2;        //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_ts" json:"symbol"`) 股票代码
+  string Market = 3;        //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_ts" json:"market"`) 市场标识
+  string Ts = 4;            //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_ts" json:"ts"`) 行情时间戳(RFC3339)
+
+  double Last = 5;          //@go_tags(`gorm:"last" json:"last"`) 最新价
+  double Open = 6;          //@go_tags(`gorm:"open" json:"open"`) 开盘价
+  double High = 7;          //@go_tags(`gorm:"high" json:"high"`) 最高价
+  double Low = 8;           //@go_tags(`gorm:"low" json:"low"`) 最低价
+  double PreClose = 9;      //@go_tags(`gorm:"pre_close" json:"pre_close"`) 前收盘
+  double Change = 10;       //@go_tags(`gorm:"change" json:"change"`) 涨跌额
+  double ChangePct = 11;    //@go_tags(`gorm:"change_pct" json:"change_pct"`) 涨跌幅(%)
+  int64 Volume = 12;        //@go_tags(`gorm:"volume" json:"volume"`) 成交量(股)
+  double Turnover = 13;     //@go_tags(`gorm:"turnover" json:"turnover"`) 成交额(货币)
+
+  repeated double Bids = 14; //@go_tags(`gorm:"bids;serializer:json" json:"bids"`) 买盘价格(浅层深度)
+  repeated double Asks = 15; //@go_tags(`gorm:"asks;serializer:json" json:"asks"`) 卖盘价格(浅层深度)
+
+  string Source = 16;       //@go_tags(`gorm:"source" json:"source"`) 数据来源
+  string CreateAt = 17;     //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
+}
+
+// 第三层：基本面数据结构（价值投资 AI 用）
+message FundamentalSnapshot {
+  string Id = 1;                 //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
+  string Symbol = 2;             //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_ts" json:"symbol"`) 股票代码
+  string Market = 3;             //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_ts" json:"market"`) 市场标识
+  string Ts = 4;                 //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_ts" json:"ts"`) 报告时间戳(RFC3339)
+  string Period = 5;             //@go_tags(`gorm:"period" json:"period"`) 报告期(quarter/year)
+  string FiscalYear = 6;         //@go_tags(`gorm:"fiscal_year" json:"fiscal_year"`) 财年
+  string FiscalQuarter = 7;      //@go_tags(`gorm:"fiscal_quarter" json:"fiscal_quarter"`) 财季(Q1/Q2/Q3/Q4)
+  string Source = 8;             //@go_tags(`gorm:"source" json:"source"`) 数据来源
+
+  double Revenue = 20;           //@go_tags(`gorm:"revenue" json:"revenue"`) 营业收入
+  double OperatingIncome = 21;   //@go_tags(`gorm:"operating_income" json:"operating_income"`) 营业利润
+  double NetProfit = 22;         //@go_tags(`gorm:"net_profit" json:"net_profit"`) 净利润
+  double EPS = 23;               //@go_tags(`gorm:"eps" json:"eps"`) 每股收益
+  double ROE = 24;               //@go_tags(`gorm:"roe" json:"roe"`) 净资产收益率(%)
+  double ROA = 25;               //@go_tags(`gorm:"roa" json:"roa"`) 资产回报率(%)
+  double GrossMargin = 26;       //@go_tags(`gorm:"gross_margin" json:"gross_margin"`) 毛利率(%)
+  double OperatingMargin = 27;   //@go_tags(`gorm:"operating_margin" json:"operating_margin"`) 营业利润率(%)
+  double NetMargin = 28;         //@go_tags(`gorm:"net_margin" json:"net_margin"`) 净利率(%)
+  double PE = 29;                //@go_tags(`gorm:"pe" json:"pe"`) 市盈率
+  double PB = 30;                //@go_tags(`gorm:"pb" json:"pb"`) 市净率
+  double PS = 31;                //@go_tags(`gorm:"ps" json:"ps"`) 市销率
+  double DividendPerShare = 32;  //@go_tags(`gorm:"dividend_per_share" json:"dividend_per_share"`) 每股分红
+  double DividendYield = 33;     //@go_tags(`gorm:"dividend_yield" json:"dividend_yield"`) 股息率(%)
+  double FreeCashFlow = 34;      //@go_tags(`gorm:"free_cash_flow" json:"free_cash_flow"`) 自由现金流
+  double DebtToEquity = 35;      //@go_tags(`gorm:"debt_to_equity" json:"debt_to_equity"`) 资产负债率/杠杆
+  double CurrentRatio = 36;      //@go_tags(`gorm:"current_ratio" json:"current_ratio"`) 流动比率
+  double QuickRatio = 37;        //@go_tags(`gorm:"quick_ratio" json:"quick_ratio"`) 速动比率
+  double TotalAssets = 38;       //@go_tags(`gorm:"total_assets" json:"total_assets"`) 总资产
+  double TotalLiabilities = 39;  //@go_tags(`gorm:"total_liabilities" json:"total_liabilities"`) 总负债
+  double Equity = 40;            //@go_tags(`gorm:"equity" json:"equity"`) 股东权益
+
+  double RevenueYoY = 41;        //@go_tags(`gorm:"revenue_yoy" json:"revenue_yoy"`) 收入同比(%)
+  double NetProfitYoY = 42;      //@go_tags(`gorm:"net_profit_yoy" json:"net_profit_yoy"`) 净利润同比(%)
+  double EPSYoY = 43;            //@go_tags(`gorm:"eps_yoy" json:"eps_yoy"`) 每股收益同比(%)
+
+  map<string, double> Metrics = 60; //@go_tags(`gorm:"metrics;serializer:json" json:"metrics"`) 其他指标扩展
+  string CreateAt = 61;          //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
+}
+
+// 第四层：资金流数据结构（资金驱动 AI 用）
+message CapitalFlowSnapshot {
+  string Id = 1;                    //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
+  string Symbol = 2;                //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_ts" json:"symbol"`) 股票代码
+  string Market = 3;                //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_ts" json:"market"`) 市场标识
+  string Ts = 4;                    //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_ts" json:"ts"`) 时间戳(RFC3339)
+  string Source = 5;                //@go_tags(`gorm:"source" json:"source"`) 数据来源
+
+  double NetInflow = 20;            //@go_tags(`gorm:"net_inflow" json:"net_inflow"`) 净流入(货币)
+  double Inflow = 21;               //@go_tags(`gorm:"inflow" json:"inflow"`) 流入总额(货币)
+  double Outflow = 22;              //@go_tags(`gorm:"outflow" json:"outflow"`) 流出总额(货币)
+  double InflowRatio = 23;          //@go_tags(`gorm:"inflow_ratio" json:"inflow_ratio"`) 净流入占成交额比例(%)
+
+  double SuperLargeInflow = 30;     //@go_tags(`gorm:"super_large_inflow" json:"super_large_inflow"`) 超大单流入
+  double SuperLargeOutflow = 31;    //@go_tags(`gorm:"super_large_outflow" json:"super_large_outflow"`) 超大单流出
+  double LargeInflow = 32;          //@go_tags(`gorm:"large_inflow" json:"large_inflow"`) 大单流入
+  double LargeOutflow = 33;         //@go_tags(`gorm:"large_outflow" json:"large_outflow"`) 大单流出
+  double MediumInflow = 34;         //@go_tags(`gorm:"medium_inflow" json:"medium_inflow"`) 中单流入
+  double MediumOutflow = 35;        //@go_tags(`gorm:"medium_outflow" json:"medium_outflow"`) 中单流出
+  double SmallInflow = 36;          //@go_tags(`gorm:"small_inflow" json:"small_inflow"`) 小单流入
+  double SmallOutflow = 37;         //@go_tags(`gorm:"small_outflow" json:"small_outflow"`) 小单流出
+
+  double TurnoverRate = 40;         //@go_tags(`gorm:"turnover_rate" json:"turnover_rate"`) 换手率(%)
+  double MainForceNetInflow = 41;   //@go_tags(`gorm:"mainforce_net_inflow" json:"mainforce_net_inflow"`) 主力资金净流入
+
+  map<string, double> Buckets = 60; //@go_tags(`gorm:"buckets;serializer:json" json:"buckets"`) 自定义档位资金统计
+  string CreateAt = 61;             //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
+}
+
+// 第五层：事件数据结构（催化因素 AI 用）
+enum EventType {
+  EventUnknown = 0;     //未知
+  EventEarnings = 1;    //财报公告
+  EventDividend = 2;    //分红派息
+  EventMNA = 3;         //并购重组
+  EventRegulatory = 4;  //监管/政策
+  EventInsider = 5;     //高管/股东增减持
+  EventNews = 6;        //新闻
+  EventRumor = 7;       //传闻
+  EventProduct = 8;     //产品发布/重大项目
+  EventBuyback = 9;     //回购
+  EventShareIssue = 10; //增发/配股
+  EventSuspend = 11;    //停牌
+  EventResume = 12;     //复牌
+}
+
+message EventRecord {
+  string Id = 1;                   //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
+  string EventId = 2;              //@go_tags(`gorm:"event_id;uniqueIndex" json:"event_id"`) 事件唯一编号
+  string Symbol = 3;               //@go_tags(`gorm:"symbol;index:idx_symbol_ts" json:"symbol"`) 股票代码
+  string Market = 4;               //@go_tags(`gorm:"market;index:idx_symbol_ts" json:"market"`) 市场标识
+  string Ts = 5;                   //@go_tags(`gorm:"ts;index:idx_symbol_ts" json:"ts"`) 事件时间戳(RFC3339)
+  EventType Type = 6;              //@go_tags(`gorm:"type" json:"type"`) 事件类型
+  string Title = 7;                //@go_tags(`gorm:"title" json:"title"`) 标题
+  string ContentSummary = 8;       //@go_tags(`gorm:"content_summary" json:"content_summary"`) 概要
+  double Sentiment = 9;            //@go_tags(`gorm:"sentiment" json:"sentiment"`) 舆情情绪(-1~1)
+  double Impact = 10;              //@go_tags(`gorm:"impact" json:"impact"`) 影响强度(0~1)
+  double Urgency = 11;             //@go_tags(`gorm:"urgency" json:"urgency"`) 紧迫程度(0~1)
+  string Source = 12;              //@go_tags(`gorm:"source" json:"source"`) 数据来源
+  string Url = 13;                 //@go_tags(`gorm:"url" json:"url"`) 详情链接
+  map<string, string> Attributes = 14; //@go_tags(`gorm:"attributes;serializer:json" json:"attributes"`) 事件属性扩展字段
+  repeated string RelatedSymbols = 15; //@go_tags(`gorm:"related_symbols;serializer:json" json:"related_symbols"`) 关联标的列表
+  string ExpiresTs = 16;           //@go_tags(`gorm:"expires_ts" json:"expires_ts"`) 事件影响失效时间
+  string CreateAt = 17;            //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
+}
