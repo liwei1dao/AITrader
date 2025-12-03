@@ -1,0 +1,82 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+message DBUser {
+    // 用户ID
+	// 必填，长度 3-100
+	// example: asdasd12313asdas
+    string uid = 1 ;                               //@go_tags(`gorm:"uid:50;primaryKey" json:"uid"`) 用户ID
+    // 邮箱
+	// 必填，长度 3-100
+	// example: 
+    string mail = 2;                               //@go_tags(`gorm:"mail:50" json:"mail"`) 邮箱
+    // 手机号
+	// 必填，长度 3-100
+	// example: 
+    string phone = 3;                              //@go_tags(`gorm:"phone:50" json:"phone"`) 手机号
+    // 用户名
+	// 用户昵称
+	// example: 
+    string name = 5;                               //@go_tags(`gorm:"name:50" json:"name"`) 用户名
+    // 玩家头像
+	// 用户头衔地址 https//xxxxx
+	// example: 
+    string avatar = 8;                             //@go_tags(`gorm:"avatar" json:"avatar"`) 玩家头像
+    // 耳机id
+	// 耳机的设备id，完成设备绑定后 存在
+	// example: 
+    string deviceid = 9;                           //@go_tags(`gorm:"deviceid" json:"deviceid"`) 耳机id
+    // 手机型号
+	// 选填
+	// example: iPhone10
+    string phonemodel = 10;                        //@go_tags(`json:"phonemodel"`) 手机型号
+    // 手机硬件id
+	// 选填
+	// example: 
+    string phonemac = 11;                          //@go_tags(`json:"phonemac"`) 手机硬件id
+    // 登录帐号
+	// 选填
+	// example: 
+    string account = 12;                           //@go_tags(`json:"account"`) 登录帐号
+    // 账号登陆密码
+	// 选填
+	// example: 
+    string password = 13;                         //@go_tags(`json:"password"`) 密码登录
+    // 最后一次下注时间
+	// 秒级时间戳
+	// example:1736780920 
+    int64 lastbettime = 20;                        //@go_tags(`gorm:"lastbettime" json:"lastbettime"`) 最后一次下注时间
+    // 注册时间
+	// 秒级时间戳
+	// example: 1736780920
+    int64 createtime = 21;                         //@go_tags(`gorm:"createtime" json:"createtime"`) 注册时间
+    // 语言
+	// 玩家设置的语言
+	// example: 
+    string language = 22;                          //@go_tags(`gorm:"language" json:"language"`) 语言
+    // 授权码
+	// 绑定设备需要的凭据
+	// example: 
+    string authorizecode = 23;                     //@go_tags(`gorm:"authorizecode" json:"authorizecode"`) 授权码
+    // 微信openid
+	// 必填，长度 3-100
+	// example: 
+    string wxopenid = 30;                           //@go_tags(`gorm:"wxopenid:50" json:"wxopenid"`) 微信openid
+    // 谷歌openid
+	// 必填，长度 3-100
+	// example: 
+    string googleopenid = 31;                       //@go_tags(`gorm:"googleopenid:50" json:"googleopenid"`) 谷歌openid
+    // 谷歌openid
+	// 必填，长度 3-100
+	// example: 
+    string facebookopenid = 32;                     //@go_tags(`gorm:"facebookopenid:50" json:"facebookopenid"`) FaceBook
+    // 谷歌openid
+	// 必填，长度 3-100
+	// example: 
+    string firebaseopenid = 33;                     //@go_tags(`gorm:"firebaseopenid:50" json:"firebaseopenid"`) Firebas
+    // viplv
+	// 必填，长度 3-100
+	// example: 
+    int32 viplv = 40;                               //@go_tags(`gorm:"viplv:50" json:"viplv"`) viplv
+}
+  
