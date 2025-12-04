@@ -1,20 +1,4 @@
 services:
-  akshare:
-    # 现成镜像（官方维护，已预装 Python + AkShare + 所有依赖）
-    image: registry.cn-hangzhou.aliyuncs.com/akfamily/akshare:latest
-    container_name: akshare-ready
-    # 持久化：本地目录映射到容器，方便存放脚本和数据
-    volumes:
-      - ./akshare_scripts:/app  # 本地脚本目录 → 容器 /app 目录
-      - ./akshare_data:/data    # 本地数据目录 → 容器 /data 目录
-    # 环境变量：设置时区（避免时间相关数据异常）
-    environment:
-      - TZ=Asia/Shanghai
-      - PYTHONUNBUFFERED=1  # 实时输出日志，无缓存
-    # 启动后保持容器运行（支持手动执行脚本）
-    command: tail -f /dev/null
-    network_mode: bridge
-    restart: unless-stopped  # 容器退出时自动重启（可选）
   python_akshare:
     build: ./python_akshare
     container_name: aktools
