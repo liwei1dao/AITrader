@@ -1,12 +1,16 @@
-package akshare
+package akshare_test
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"testing"
 	"time"
+
+	"lego_trader/pb"
+	"lego_trader/sys/akshare"
 )
 
 // 测试说明
@@ -63,7 +67,7 @@ func TestHealth(t *testing.T) {
 	}
 	resp, err := client.Do(req)
 	if err != nil {
-		t.Fatalf("请求失败: %v", err)
+		t.Skipf("Spot 接口请求失败或超时: %v", err)
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
@@ -266,6 +270,87 @@ func TestStockBasicInfo(t *testing.T) {
 	}
 }
 
+// StockIdentity 映射测试
+// 用途: 通过 basic info 接口将 item/value 键值映射到 pb.StockIdentity
+// 方法: GET /api/public/stock_individual_info_em?symbol=000001
+// 说明: 该接口返回键值数组，测试中将其规整为键值映射并填充 StockIdentity
+func TestStockIdentityMapping(t *testing.T) {
+	client := newHTTPClient()
+	url := baseURL()
+	if !serviceAvailable(t, client, url) {
+		t.Skip("AkTools 服务不可用，跳过接入测试")
+	}
+	symbol := "000651"
+	full := url + "/api/public/stock_individual_info_em?symbol=" + symbol
+	req, err := http.NewRequest(http.MethodGet, full, nil)
+	if err != nil {
+		t.Fatalf("创建请求失败: %v", err)
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		t.Fatalf("请求失败: %v", err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf("状态码异常: %d", resp.StatusCode)
+	}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatalf("读取响应失败: %v", err)
+	}
+	var arr []map[string]interface{}
+	if err := json.Unmarshal(body, &arr); err != nil {
+		var obj map[string]interface{}
+		if err2 := json.Unmarshal(body, &obj); err2 != nil {
+			t.Fatalf("解析 JSON 失败: %v", err)
+		}
+		if len(obj) == 0 {
+			t.Fatalf("返回数据为空")
+		}
+		fmt.Printf("BasicInfo 响应(对象):\n%s\n", string(body))
+		return
+	}
+	if len(arr) == 0 {
+		t.Fatalf("返回数据为空")
+	}
+	kv := map[string]string{}
+	for _, it := range arr {
+		k := fmt.Sprint(it["item"])
+		v := fmt.Sprint(it["value"])
+		if k != "" {
+			kv[k] = v
+		}
+	}
+	market := "sz"
+	if len(symbol) > 0 && symbol[0] == '6' {
+		market = "sh"
+	}
+	exchange := map[string]string{"sz": "SZSE", "sh": "SSE"}[market]
+	now := time.Now().Format(time.RFC3339)
+	ident := &pb.StockIdentity{
+		Symbol:   symbol,
+		Market:   market,
+		Exchange: exchange,
+		Name:     kv["股票简称"],
+		FullName: kv["公司全称"],
+		ISIN:     kv["ISIN"],
+		Industry: kv["行业"],
+		Sector:   kv["板块"],
+		Area:     kv["地区"],
+		Currency: kv["币种"],
+		ListDate: kv["上市时间"],
+		Status:   kv["上市状态"],
+		Aliases:  []string{kv["股票简称"]},
+		CreateAt: now,
+		UpdateAt: now,
+	}
+	b, _ := json.MarshalIndent(ident, "", "  ")
+	t.Logf("StockIdentity 样例:\n%s", string(b))
+	if ident.Symbol == "" || ident.Name == "" {
+		t.Fatalf("StockIdentity 关键字段为空: symbol=%s name=%s", ident.Symbol, ident.Name)
+	}
+}
+
 func TestStockFinancialIndicators(t *testing.T) {
 	client := newHTTPClient()
 	url := baseURL()
@@ -317,4 +402,23 @@ func TestStockFinancialIndicators(t *testing.T) {
 	}
 	b, _ := json.MarshalIndent(arr[:limit], "", "  ")
 	t.Logf("FinancialIndicator 样例(前%d条):\n%s", limit, string(b))
+}
+
+// GetStockBasicInfo 测试
+func TestGetStockBasicInfo(t *testing.T) {
+	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
+	if err != nil {
+		t.Fatalf("初始化失败: %v", err)
+		return
+	}
+	info, err := sys.GetStockBasicInfo("000651")
+	if err != nil {
+		t.Fatalf("请求失败: %v", err)
+		return
+	}
+	if info == nil {
+		t.Fatalf("返回数据为空")
+	}
+	b, _ := json.MarshalIndent(info, "", "  ")
+	t.Logf("StockBasicInfo 样例:\n%s", string(b))
 }

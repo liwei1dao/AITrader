@@ -53,84 +53,71 @@ const (
 	ErrorCode_NoFindRoom              ErrorCode = 104 //未找到房间
 	ErrorCode_AgentNofund             ErrorCode = 105 //渠道未注册
 	ErrorCode_NetWorkError            ErrorCode = 106 //网络请求错误
-	// api 相关错误码
-	ErrorCode_VerificationExpired          ErrorCode = 1001 //验证码已失效
-	ErrorCode_DeviceRegistered             ErrorCode = 2001 //设备已被注册
-	ErrorCode_AuthorizeNoCanUse            ErrorCode = 2002 //授权码不可用
-	ErrorCode_ExceptionAccountVerification ErrorCode = 2003 //验证账号异常
 )
 
 // Enum value maps for ErrorCode.
 var (
 	ErrorCode_name = map[int32]string{
-		0:    "Success",
-		1:    "GatewayException",
-		10:   "NoFindService",
-		11:   "NoFindServiceHandleFunc",
-		12:   "RpcFuncExecutionError",
-		13:   "CacheReadError",
-		14:   "SqlExecutionError",
-		15:   "ReqParameterError",
-		16:   "SignError",
-		17:   "InsufficientPermissions",
-		18:   "NoLogin",
-		19:   "UserSessionNobeing",
-		20:   "StateInvalid",
-		21:   "DBError",
-		22:   "SystemError",
-		23:   "DecodeError",
-		24:   "TimestampTimeout",
-		25:   "PbError",
-		26:   "AgentUidEmpty",
-		27:   "ConfigNoFound",
-		28:   "DecryptError",
-		29:   "ClientError",
-		100:  "Exception",
-		101:  "AgentBetExchangeError",
-		102:  "GameInMaintenance",
-		103:  "NoCanBet",
-		104:  "NoFindRoom",
-		105:  "AgentNofund",
-		106:  "NetWorkError",
-		1001: "VerificationExpired",
-		2001: "DeviceRegistered",
-		2002: "AuthorizeNoCanUse",
-		2003: "ExceptionAccountVerification",
+		0:   "Success",
+		1:   "GatewayException",
+		10:  "NoFindService",
+		11:  "NoFindServiceHandleFunc",
+		12:  "RpcFuncExecutionError",
+		13:  "CacheReadError",
+		14:  "SqlExecutionError",
+		15:  "ReqParameterError",
+		16:  "SignError",
+		17:  "InsufficientPermissions",
+		18:  "NoLogin",
+		19:  "UserSessionNobeing",
+		20:  "StateInvalid",
+		21:  "DBError",
+		22:  "SystemError",
+		23:  "DecodeError",
+		24:  "TimestampTimeout",
+		25:  "PbError",
+		26:  "AgentUidEmpty",
+		27:  "ConfigNoFound",
+		28:  "DecryptError",
+		29:  "ClientError",
+		100: "Exception",
+		101: "AgentBetExchangeError",
+		102: "GameInMaintenance",
+		103: "NoCanBet",
+		104: "NoFindRoom",
+		105: "AgentNofund",
+		106: "NetWorkError",
 	}
 	ErrorCode_value = map[string]int32{
-		"Success":                      0,
-		"GatewayException":             1,
-		"NoFindService":                10,
-		"NoFindServiceHandleFunc":      11,
-		"RpcFuncExecutionError":        12,
-		"CacheReadError":               13,
-		"SqlExecutionError":            14,
-		"ReqParameterError":            15,
-		"SignError":                    16,
-		"InsufficientPermissions":      17,
-		"NoLogin":                      18,
-		"UserSessionNobeing":           19,
-		"StateInvalid":                 20,
-		"DBError":                      21,
-		"SystemError":                  22,
-		"DecodeError":                  23,
-		"TimestampTimeout":             24,
-		"PbError":                      25,
-		"AgentUidEmpty":                26,
-		"ConfigNoFound":                27,
-		"DecryptError":                 28,
-		"ClientError":                  29,
-		"Exception":                    100,
-		"AgentBetExchangeError":        101,
-		"GameInMaintenance":            102,
-		"NoCanBet":                     103,
-		"NoFindRoom":                   104,
-		"AgentNofund":                  105,
-		"NetWorkError":                 106,
-		"VerificationExpired":          1001,
-		"DeviceRegistered":             2001,
-		"AuthorizeNoCanUse":            2002,
-		"ExceptionAccountVerification": 2003,
+		"Success":                 0,
+		"GatewayException":        1,
+		"NoFindService":           10,
+		"NoFindServiceHandleFunc": 11,
+		"RpcFuncExecutionError":   12,
+		"CacheReadError":          13,
+		"SqlExecutionError":       14,
+		"ReqParameterError":       15,
+		"SignError":               16,
+		"InsufficientPermissions": 17,
+		"NoLogin":                 18,
+		"UserSessionNobeing":      19,
+		"StateInvalid":            20,
+		"DBError":                 21,
+		"SystemError":             22,
+		"DecodeError":             23,
+		"TimestampTimeout":        24,
+		"PbError":                 25,
+		"AgentUidEmpty":           26,
+		"ConfigNoFound":           27,
+		"DecryptError":            28,
+		"ClientError":             29,
+		"Exception":               100,
+		"AgentBetExchangeError":   101,
+		"GameInMaintenance":       102,
+		"NoCanBet":                103,
+		"NoFindRoom":              104,
+		"AgentNofund":             105,
+		"NetWorkError":            106,
 	}
 )
 
@@ -165,7 +152,7 @@ var File_errorcode_proto protoreflect.FileDescriptor
 
 const file_errorcode_proto_rawDesc = "" +
 	"\n" +
-	"\x0ferrorcode.proto*\xa7\x05\n" +
+	"\x0ferrorcode.proto*\xbb\x04\n" +
 	"\tErrorCode\x12\v\n" +
 	"\aSuccess\x10\x00\x12\x14\n" +
 	"\x10GatewayException\x10\x01\x12\x11\n" +
@@ -197,11 +184,7 @@ const file_errorcode_proto_rawDesc = "" +
 	"\n" +
 	"NoFindRoom\x10h\x12\x0f\n" +
 	"\vAgentNofund\x10i\x12\x10\n" +
-	"\fNetWorkError\x10j\x12\x18\n" +
-	"\x13VerificationExpired\x10\xe9\a\x12\x15\n" +
-	"\x10DeviceRegistered\x10\xd1\x0f\x12\x16\n" +
-	"\x11AuthorizeNoCanUse\x10\xd2\x0f\x12!\n" +
-	"\x1cExceptionAccountVerification\x10\xd3\x0fB\x06Z\x04.;pbb\x06proto3"
+	"\fNetWorkError\x10jB\x06Z\x04.;pbb\x06proto3"
 
 var (
 	file_errorcode_proto_rawDescOnce sync.Once

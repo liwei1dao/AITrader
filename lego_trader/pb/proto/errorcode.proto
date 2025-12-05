@@ -32,9 +32,4 @@ enum ErrorCode {
   AgentNofund = 105;            //渠道未注册
   NetWorkError = 106;           //网络请求错误
 
-  //api 相关错误码
-  VerificationExpired = 1001;   //验证码已失效
-  DeviceRegistered = 2001;      //设备已被注册
-  AuthorizeNoCanUse = 2002;     //授权码不可用
-  ExceptionAccountVerification = 2003; //验证账号异常
 }
