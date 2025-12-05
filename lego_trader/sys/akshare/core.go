@@ -4,8 +4,24 @@ type (
 	ISys interface {
 		/// 获取股票基本信息
 		GetStockBasicInfo(stockCode string) (info *StockBasicInfo, err error)
+		/// 获取实时盘口（东方财富 stock_bid_ask_em）
+		/// 参数: stockCode 6位代码或含前缀 sz/sh；返回: 买卖盘列表（原始字段）
+		GetStockBidAskEM(stockCode string) (data *StockBidAskEM, err error)
+		/// 获取A股历史行情（东方财富 stock_zh_a_hist）
+		/// 参数: stockCode, period(daily/weekly/monthly), start/end(YYYYMMDD), adjust('',qfq,hfq)
+		/// 返回: 历史K线列表（结构化）
+		GetStockZhAHist(stockCode, period, start, end, adjust string) (records []StockZhAHistRecord, err error)
+		/// 获取个股新闻（东方财富 stock_news_em）
+		/// 参数: stockCode 6位或含前缀；page/size 可选；返回: 新闻列表（结构化）
+		GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error)
+		/// 获取市场要闻（财新 stock_news_main_cx）
+		/// 参数: 无；返回: 市场要闻列表（结构化）
+		GetStockNewsMainCx() (records []StockNewsMainCxRecord, err error)
 	}
-
+	ItemValue struct {
+		Item  string      `json:"item" comment:"项目"`
+		Value interface{} `json:"value" comment:"值"`
+	}
 	// 股票基本信息
 	StockBasicInfo struct {
 		OrgID                    string  `json:"org_id" comment:"机构ID"`                          // T000071215
@@ -48,6 +64,84 @@ type (
 		OnlineSuccessRateOfIssue float64 `json:"online_success_rate_of_issue" comment:"网上发行中签率"` // 0.110176
 		AffiliateIndustry        string  `json:"affiliate_industry" comment:"所属行业"`              // {"ind_code":"BK0025","ind_name":"汽车整车"}
 	}
+
+	// 实时盘口（东方财富 stock_bid_ask_em）
+	// 说明：字段的 json 标签与返回的 item 名称一致，直接用于 MapItemValuesToStruct 映射
+	StockBidAskEM struct {
+		Sell5    float64 `json:"sell_5" comment:"卖五价"`
+		Sell5Vol float64 `json:"sell_5_vol" comment:"卖五量"`
+		Sell4    float64 `json:"sell_4" comment:"卖四价"`
+		Sell4Vol float64 `json:"sell_4_vol" comment:"卖四量"`
+		Sell3    float64 `json:"sell_3" comment:"卖三价"`
+		Sell3Vol float64 `json:"sell_3_vol" comment:"卖三量"`
+		Sell2    float64 `json:"sell_2" comment:"卖二价"`
+		Sell2Vol float64 `json:"sell_2_vol" comment:"卖二量"`
+		Sell1    float64 `json:"sell_1" comment:"卖一价"`
+		Sell1Vol float64 `json:"sell_1_vol" comment:"卖一量"`
+
+		Buy1    float64 `json:"buy_1" comment:"买一价"`
+		Buy1Vol float64 `json:"buy_1_vol" comment:"买一量"`
+		Buy2    float64 `json:"buy_2" comment:"买二价"`
+		Buy2Vol float64 `json:"buy_2_vol" comment:"买二量"`
+		Buy3    float64 `json:"buy_3" comment:"买三价"`
+		Buy3Vol float64 `json:"buy_3_vol" comment:"买三量"`
+		Buy4    float64 `json:"buy_4" comment:"买四价"`
+		Buy4Vol float64 `json:"buy_4_vol" comment:"买四量"`
+		Buy5    float64 `json:"buy_5" comment:"买五价"`
+		Buy5Vol float64 `json:"buy_5_vol" comment:"买五量"`
+
+		Latest      float64 `json:"最新" comment:"最新价"`
+		Average     float64 `json:"均价" comment:"均价"`
+		RisePercent float64 `json:"涨幅" comment:"涨幅(%)"`
+		RiseAmount  float64 `json:"涨跌" comment:"涨跌"`
+		TotalHands  float64 `json:"总手" comment:"总手"`
+		Amount      float64 `json:"金额" comment:"成交金额"`
+		Turnover    float64 `json:"换手" comment:"换手率(%)"`
+		VolumeRatio float64 `json:"量比" comment:"量比"`
+		High        float64 `json:"最高" comment:"最高价"`
+		Low         float64 `json:"最低" comment:"最低价"`
+		Open        float64 `json:"今开" comment:"今日开盘价"`
+		PrevClose   float64 `json:"昨收" comment:"昨日收盘价"`
+		LimitUp     float64 `json:"涨停" comment:"涨停价"`
+		LimitDown   float64 `json:"跌停" comment:"跌停价"`
+		OutVol      float64 `json:"外盘" comment:"外盘(主动买)"`
+		InVol       float64 `json:"内盘" comment:"内盘(主动卖)"`
+	}
+
+	// A股历史行情（东方财富 stock_zh_a_hist）记录
+	// 说明：字段标签与上游返回一致（中文键），便于直接反序列化
+	StockZhAHistRecord struct {
+		Date         string  `json:"日期" comment:"交易日期"`
+		Open         float64 `json:"开盘" comment:"开盘价"`
+		Close        float64 `json:"收盘" comment:"收盘价"`
+		High         float64 `json:"最高" comment:"最高价"`
+		Low          float64 `json:"最低" comment:"最低价"`
+		Volume       float64 `json:"成交量" comment:"成交量(手)"`
+		Turnover     float64 `json:"成交额" comment:"成交额(元)"`
+		Amplitude    float64 `json:"振幅" comment:"振幅(%)"`
+		ChangePct    float64 `json:"涨跌幅" comment:"涨跌幅(%)"`
+		ChangeAmt    float64 `json:"涨跌额" comment:"涨跌额"`
+		TurnoverRate float64 `json:"换手率" comment:"换手率(%)"`
+	}
+
+	// 个股新闻（东方财富 stock_news_em）记录
+	StockNewsEmRecord struct {
+		Title       string  `json:"标题" comment:"新闻标题"`
+		PublishTime string  `json:"发布时间" comment:"发布时间"`
+		Source      string  `json:"来源" comment:"来源"`
+		URL         string  `json:"新闻链接" comment:"链接"`
+		NewsID      string  `json:"新闻ID" comment:"新闻ID"`
+		Summary     *string `json:"摘要" comment:"摘要(可能不存在)"`
+	}
+
+	// 市场要闻（财新 stock_news_main_cx）记录
+	StockNewsMainCxRecord struct {
+		Title       string `json:"标题" comment:"标题"`
+		PublishTime string `json:"发布时间" comment:"发布时间"`
+		Source      string `json:"来源" comment:"来源"`
+		URL         string `json:"新闻链接" comment:"链接"`
+		Summary     string `json:"摘要" comment:"摘要"`
+	}
 )
 
 var (
@@ -73,4 +167,30 @@ func NewSys(opt ...Option) (sys ISys, err error) {
 
 func GetStockBasicInfo(stockCode string) (info *StockBasicInfo, err error) {
 	return defsys.GetStockBasicInfo(stockCode)
+}
+
+// GetStockBidAskEM 获取实时盘口（结构化对象）
+func GetStockBidAskEM(stockCode string) (data *StockBidAskEM, err error) {
+	return defsys.GetStockBidAskEM(stockCode)
+}
+
+// GetStockZhAHist 获取A股历史行情（东方财富）
+// - 参数: period 支持 `daily`/`weekly`/`monthly`; start/end 为 `YYYYMMDD`; adjust 为 `""`/`qfq`/`hfq`
+// - 返回: 原始字段的历史K线记录（日期/开盘/收盘/最高/最低/成交量/成交额/涨跌幅/换手率等）
+func GetStockZhAHist(stockCode, period, start, end, adjust string) (records []StockZhAHistRecord, err error) {
+	return defsys.GetStockZhAHist(stockCode, period, start, end, adjust)
+}
+
+// GetStockNewsEm 获取个股新闻（东方财富）
+// - 参数: stockCode 可为6位或带前缀；page/size 可选
+// - 返回: 原始字段的新闻记录列表（标题/时间/来源/链接等）
+func GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error) {
+	return defsys.GetStockNewsEm(stockCode, page, size)
+}
+
+// GetStockNewsMainCx 获取市场要闻（财新）
+// - 参数: 无
+// - 返回: 原始字段的市场要闻记录列表（标题/时间/来源/摘要等）
+func GetStockNewsMainCx() (records []StockNewsMainCxRecord, err error) {
+	return defsys.GetStockNewsMainCx()
 }

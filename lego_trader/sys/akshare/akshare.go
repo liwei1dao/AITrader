@@ -5,11 +5,28 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strconv"
-	"time"
-
-	"golang.org/x/text/encoding/simplifiedchinese"
+	"strings"
 )
+
+// normalizeStockCode 统一股票代码格式
+// 规则：
+// - 若已包含前缀 `sz`/`sh` 则原样返回
+// - 若首位为 '6'，加前缀 `sh`
+// - 其他情况，加前缀 `sz`
+func normalizeStockCode(stockCode string) string {
+	s := strings.TrimSpace(stockCode)
+	if s == "" {
+		return s
+	}
+	ls := strings.ToLower(s)
+	if strings.HasPrefix(ls, "sz") || strings.HasPrefix(ls, "sh") {
+		return s
+	}
+	if s[0] == '6' {
+		return "sh" + s
+	}
+	return "sz" + s
+}
 
 func newSys(options *Options) (sys *AkShare, err error) {
 	sys = &AkShare{
@@ -23,321 +40,216 @@ type AkShare struct {
 }
 
 func (a *AkShare) GetStockBasicInfo(stockCode string) (info *StockBasicInfo, err error) {
-	ns := stockCode
-	if len(stockCode) > 0 {
-		if stockCode[0] == '6' {
-			ns = "sh" + stockCode
-		} else if !(len(stockCode) >= 2 && (stockCode[:2] == "sz" || stockCode[:2] == "sh")) {
-			ns = "sz" + stockCode
-		}
-	}
+	ns := normalizeStockCode(stockCode)
 	url := fmt.Sprintf("%s/api/public/stock_individual_basic_info_xq?symbol=%s", a.options.BaseUrl, ns)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	var arr []map[string]interface{}
+	var items []ItemValue
 	if resp.StatusCode == http.StatusOK {
 		body, err := io.ReadAll(resp.Body)
 		if err != nil {
 			return nil, err
 		}
 		fmt.Println(string(body))
-		if err := json.Unmarshal(body, &arr); err != nil {
-			arr = nil
+		if err := json.Unmarshal(body, &items); err != nil {
+			items = nil
 		}
 	} else {
 		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
 	}
-	kv := map[string]string{}
-	if arr != nil {
-		for _, it := range arr {
-			k := fmt.Sprint(it["item"])
-			v := fmt.Sprint(it["value"])
-			if k != "" {
-				kv[k] = v
-			}
-		}
+
+	// 使用通用映射接口将 items 映射到 StockBasicInfo
+	info = &StockBasicInfo{}
+	if err := MapItemValuesToStruct(items, info); err != nil {
+		return nil, err
 	}
-	toInt := func(s string) int {
-		if s == "" {
-			return 0
-		}
-		f, _ := strconv.ParseFloat(s, 64)
-		return int(f)
-	}
-	toFloat := func(s string) float64 {
-		if s == "" {
-			return 0
-		}
-		f, _ := strconv.ParseFloat(s, 64)
-		return f
-	}
-	toMs := func(s string) int64 {
-		if s == "" {
-			return 0
-		}
-		var t time.Time
-		var e error
-		if len(s) == 8 {
-			t, e = time.Parse("20060102", s)
-		} else {
-			t, e = time.Parse("2006-01-02", s)
-		}
-		if e != nil {
-			return 0
-		}
-		return t.UnixMilli()
-	}
-	name := kv["股票简称"]
-	full := kv["公司全称"]
-	if full == "" {
-		full = name
-	}
-	currency := kv["币种"]
-	if currency == "" {
-		currency = "CNY"
-	}
-	province := kv["省份"]
-	if province == "" {
-		province = kv["地区"]
-	}
-	info = &StockBasicInfo{
-		OrgID:                    kv["机构ID"],
-		OrgNameCn:                full,
-		OrgShortNameCn:           name,
-		OrgNameEn:                kv["机构英文名称"],
-		OrgShortNameEn:           kv["机构英文简称"],
-		MainOperationBusiness:    kv["主营业务"],
-		OperatingScope:           kv["经营范围"],
-		DistrictEncode:           kv["地区编码"],
-		OrgCnIntroduction:        kv["机构中文简介"],
-		LegalRepresentative:      kv["法定代表人"],
-		GeneralManager:           kv["总经理"],
-		Secretary:                kv["董事会秘书"],
-		EstablishedDate:          toMs(kv["成立日期"]),
-		RegAsset:                 toFloat(kv["注册资本"]),
-		StaffNum:                 toInt(kv["员工人数"]),
-		Telephone:                kv["公司电话"],
-		Postcode:                 kv["邮政编码"],
-		Fax:                      kv["公司传真"],
-		Email:                    kv["公司电子邮箱"],
-		OrgWebsite:               kv["公司网址"],
-		RegAddressCn:             kv["注册地址"],
-		RegAddressEn:             nil,
-		OfficeAddressCn:          kv["办公地址"],
-		OfficeAddressEn:          nil,
-		CurrencyEncode:           kv["货币编码"],
-		Currency:                 currency,
-		ListedDate:               toMs(kv["上市时间"]),
-		ProvincialName:           province,
-		ActualController:         kv["实际控制人"],
-		ClassiName:               kv["企业性质"],
-		PreNameCn:                kv["曾用名"],
-		Chairman:                 kv["董事长"],
-		ExecutivesNums:           toInt(kv["高管人数"]),
-		ActualIssueVol:           toFloat(kv["实际发行量"]),
-		IssuePrice:               toFloat(kv["发行价格"]),
-		ActualRcNetAmt:           toFloat(kv["实际募集资金净额"]),
-		PeAfterIssuing:           toFloat(kv["发行后市盈率"]),
-		OnlineSuccessRateOfIssue: toFloat(kv["网上发行中签率"]),
-		AffiliateIndustry:        kv["所属行业"],
-	}
-	if name == "" {
-		p := "sz"
-		if len(stockCode) > 0 && stockCode[0] == '6' {
-			p = "sh"
-		}
-		if p == "sh" {
-			u := fmt.Sprintf("%s/api/public/stock_info_sh_name_code", a.options.BaseUrl)
-			r, e := http.Get(u)
-			if e == nil && r.StatusCode == http.StatusOK {
-				b, _ := io.ReadAll(r.Body)
-				var recs []map[string]interface{}
-				_ = json.Unmarshal(b, &recs)
-				for _, x := range recs {
-					c := fmt.Sprint(x["证券代码"])
-					if c == stockCode {
-						name = fmt.Sprint(x["证券简称"])
-						break
-					}
-				}
-				r.Body.Close()
-			}
-		} else {
-			u := fmt.Sprintf("%s/api/public/stock_info_sz_name_code", a.options.BaseUrl)
-			r, e := http.Get(u)
-			if e == nil && r.StatusCode == http.StatusOK {
-				b, _ := io.ReadAll(r.Body)
-				var recs []map[string]interface{}
-				_ = json.Unmarshal(b, &recs)
-				for _, x := range recs {
-					c := fmt.Sprint(x["证券代码"])
-					if c == stockCode {
-						name = fmt.Sprint(x["证券简称"])
-						break
-					}
-				}
-				r.Body.Close()
-			}
-		}
-		info.OrgShortNameCn = name
-		if info.OrgNameCn == "" {
-			info.OrgNameCn = name
-		}
-	}
-	if info.ListedDate == 0 {
-		u := fmt.Sprintf("%s/api/public/stock_zh_a_hist?symbol=%s&period=daily&start_date=&end_date=&adjust=", a.options.BaseUrl, ns)
-		r, e := http.Get(u)
-		if e == nil && r.StatusCode == http.StatusOK {
-			b, _ := io.ReadAll(r.Body)
-			var recs []map[string]interface{}
-			if json.Unmarshal(b, &recs) == nil && len(recs) > 0 {
-				d := fmt.Sprint(recs[0]["日期"])
-				info.ListedDate = toMs(d)
-			}
-			r.Body.Close()
-		}
-	}
-	if info.OrgShortNameCn == "" || info.OrgNameCn == "" || info.ListedDate == 0 || info.AffiliateIndustry == "" {
-		u := fmt.Sprintf("%s/api/public/stock_zh_a_base_em", a.options.BaseUrl)
-		r, e := http.Get(u)
-		if e == nil && r.StatusCode == http.StatusOK {
-			b, _ := io.ReadAll(r.Body)
-			var recs []map[string]interface{}
-			if json.Unmarshal(b, &recs) == nil {
-				for _, x := range recs {
-					c1 := fmt.Sprint(x["代码"])
-					c2 := fmt.Sprint(x["股票代码"])
-					if c1 == stockCode || c2 == ns || c2 == ("sz"+stockCode) || c2 == ("sh"+stockCode) {
-						if info.OrgShortNameCn == "" {
-							v := fmt.Sprint(x["名称"])
-							if v != "" {
-								info.OrgShortNameCn = v
-							}
-						}
-						if info.OrgNameCn == "" {
-							v := fmt.Sprint(x["名称"])
-							if v != "" {
-								info.OrgNameCn = v
-							}
-						}
-						if info.AffiliateIndustry == "" {
-							v := fmt.Sprint(x["所属行业"])
-							if v == "" {
-								v = fmt.Sprint(x["行业"])
-							}
-							if v == "" {
-								v = fmt.Sprint(x["板块"])
-							}
-							if v != "" {
-								info.AffiliateIndustry = v
-							}
-						}
-						if info.ListedDate == 0 {
-							v := fmt.Sprint(x["上市日期"])
-							if v != "" {
-								info.ListedDate = toMs(v)
-							}
-						}
-						if info.OrgWebsite == "" {
-							v := fmt.Sprint(x["公司网址"])
-							if v == "" {
-								v = fmt.Sprint(x["网站"])
-							}
-							if v != "" {
-								info.OrgWebsite = v
-							}
-						}
-						if info.MainOperationBusiness == "" {
-							v := fmt.Sprint(x["主营业务"])
-							if v != "" {
-								info.MainOperationBusiness = v
-							}
-						}
-						if info.ProvincialName == "" {
-							v := fmt.Sprint(x["地域"])
-							if v == "" {
-								v = fmt.Sprint(x["地区"])
-							}
-							if v != "" {
-								info.ProvincialName = v
-							}
-						}
-						if info.IssuePrice == 0 {
-							v := fmt.Sprint(x["发行价格"])
-							if v != "" {
-								info.IssuePrice = toFloat(v)
-							}
-						}
-						break
-					}
-				}
-			}
-			r.Body.Close()
-		}
-	}
-	if info.OrgShortNameCn == "" {
-		p := ns
-		if !(len(p) >= 2 && (p[:2] == "sz" || p[:2] == "sh")) {
-			if len(stockCode) > 0 && stockCode[0] == '6' {
-				p = "sh" + stockCode
-			} else {
-				p = "sz" + stockCode
-			}
-		}
-		u := fmt.Sprintf("http://qt.gtimg.cn/q=s_%s", p)
-		r, e := http.Get(u)
-		if e == nil && r.StatusCode == http.StatusOK {
-			b, _ := io.ReadAll(r.Body)
-			db, _ := simplifiedchinese.GBK.NewDecoder().Bytes(b)
-			s := string(db)
-			i := 0
-			for idx := 0; idx < len(s); idx++ {
-				if s[idx] == '=' {
-					i = idx + 1
-					break
-				}
-			}
-			if i > 0 && i < len(s) {
-				payload := s[i:]
-				for j := 0; j < len(payload); j++ {
-					if payload[j] == '"' {
-						payload = payload[j+1:]
-						break
-					}
-				}
-				for j := len(payload) - 1; j >= 0; j-- {
-					if payload[j] == '"' {
-						payload = payload[:j]
-						break
-					}
-				}
-				parts := make([]string, 0)
-				cur := ""
-				for _, ch := range payload {
-					if ch == '~' {
-						parts = append(parts, cur)
-						cur = ""
-					} else {
-						cur += string(ch)
-					}
-				}
-				parts = append(parts, cur)
-				if len(parts) >= 2 {
-					v := parts[1]
-					name := v
-					if name != "" {
-						info.OrgShortNameCn = name
-						if info.OrgNameCn == "" {
-							info.OrgNameCn = name
-						}
-					}
-				}
-			}
-			r.Body.Close()
-		}
+	if info.Currency == "" {
+		info.Currency = "CNY"
 	}
 	return info, nil
+}
+
+// GetStockBidAsk 获取实时盘口（东方财富 stock_bid_ask_em）
+// - 参数: stockCode 支持 6位代码或带前缀 `sz`/`sh`
+// - 返回: 原始字段的列表（例如 买一价/买一量/卖一价/时间 等）
+// - 说明: 调用 python_akshare `/api/public/stock_bid_ask_em`
+func (a *AkShare) GetStockBidAsk(stockCode string) (records *StockBidAskEM, err error) {
+	ns := normalizeStockCode(stockCode)
+	url := fmt.Sprintf("%s/api/public/stock_bid_ask_em?symbol=%s", a.options.BaseUrl, ns)
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
+	}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	records = &StockBidAskEM{}
+	if err := json.Unmarshal(body, records); err != nil {
+		return nil, err
+	}
+	return records, nil
+}
+
+// GetStockZhAHist 获取A股历史行情（东方财富 stock_zh_a_hist）
+//   - 参数:
+//     stockCode: 6位或带前缀 `sz`/`sh`
+//     period: `daily`/`weekly`/`monthly`
+//     start/end: 起止日期 `YYYYMMDD`
+//     adjust: 复权 `""`/`qfq`/`hfq`
+//   - 返回: 历史K线记录列表（日期/开盘/收盘/最高/最低/成交量/成交额/涨跌幅/换手率等字段）
+//   - 说明: 调用 python_akshare `/api/public/stock_zh_a_hist`
+func (a *AkShare) GetStockZhAHist(stockCode, period, start, end, adjust string) (records []StockZhAHistRecord, err error) {
+	ns := normalizeStockCode(stockCode)
+	p := strings.ToLower(strings.TrimSpace(period))
+	aji := strings.ToLower(strings.TrimSpace(adjust))
+	url := fmt.Sprintf("%s/api/public/stock_zh_a_hist?symbol=%s&period=%s&start=%s&end=%s&adjust=%s", a.options.BaseUrl, ns, p, start, end, aji)
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
+	}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	// 直接反序列化为结构化记录切片
+	if err := json.Unmarshal(body, &records); err != nil {
+		// 若服务返回错误对象，尝试解析错误信息
+		var obj map[string]interface{}
+		if err2 := json.Unmarshal(body, &obj); err2 == nil {
+			if msg, ok := obj["error"]; ok {
+				return nil, fmt.Errorf("stock_zh_a_hist error: %v", msg)
+			}
+		}
+		return nil, err
+	}
+	return records, nil
+}
+
+// GetStockNewsEm 获取个股新闻（东方财富 stock_news_em）
+// - 参数: stockCode 可为6位或带前缀；page/size 可选（nil 表示不传）
+// - 返回: 新闻列表（标题/时间/来源/链接等字段）
+// - 说明: 调用 python_akshare `/api/public/stock_news_em`
+func (a *AkShare) GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error) {
+	ns := normalizeStockCode(stockCode)
+	// 组装可选参数
+	q := ""
+	if page != nil {
+		q += fmt.Sprintf("&page=%d", *page)
+	}
+	if size != nil {
+		q += fmt.Sprintf("&size=%d", *size)
+	}
+	url := fmt.Sprintf("%s/api/public/stock_news_em?symbol=%s%s", a.options.BaseUrl, ns, q)
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
+	}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(body, &records); err != nil {
+		var obj map[string]interface{}
+		if err2 := json.Unmarshal(body, &obj); err2 == nil {
+			if msg, ok := obj["error"]; ok {
+				return nil, fmt.Errorf("stock_news_em error: %v", msg)
+			}
+		}
+		return nil, err
+	}
+	return records, nil
+}
+
+// GetStockNewsMainCx 获取市场要闻（财新 stock_news_main_cx）
+// - 参数: 无
+// - 返回: 市场要闻列表（标题/时间/来源/摘要等字段）
+// - 说明: 调用 python_akshare `/api/public/stock_news_main_cx`
+func (a *AkShare) GetStockNewsMainCx() (records []StockNewsMainCxRecord, err error) {
+	url := fmt.Sprintf("%s/api/public/stock_news_main_cx", a.options.BaseUrl)
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
+	}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(body, &records); err != nil {
+		var obj map[string]interface{}
+		if err2 := json.Unmarshal(body, &obj); err2 == nil {
+			if msg, ok := obj["error"]; ok {
+				return nil, fmt.Errorf("stock_news_main_cx error: %v", msg)
+			}
+		}
+		return nil, err
+	}
+	return records, nil
+}
+
+// getJSONAsList 请求 URL 并将响应解析为 []map[string]interface{}
+func (a *AkShare) getJSONAsList(url string) (records []map[string]interface{}, err error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
+	}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(body, &records); err != nil {
+		return nil, err
+	}
+	return records, nil
+}
+
+// GetStockBidAskEM 获取实时盘口并映射为结构体
+// 返回 StockBidAskEM，内部按 item/value 结构进行映射
+func (a *AkShare) GetStockBidAskEM(stockCode string) (data *StockBidAskEM, err error) {
+	ns := normalizeStockCode(stockCode)
+	url := fmt.Sprintf("%s/api/public/stock_bid_ask_em?symbol=%s", a.options.BaseUrl, ns)
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
+	}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	var items []ItemValue
+	if err := json.Unmarshal(body, &items); err != nil {
+		return nil, err
+	}
+	res := &StockBidAskEM{}
+	if err := MapItemValuesToStruct(items, res); err != nil {
+		return nil, err
+	}
+	return res, nil
 }
