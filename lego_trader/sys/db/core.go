@@ -1,7 +1,14 @@
 package db
 
+import (
+	"lego_trader/lego/sys/mysql"
+	"lego_trader/lego/sys/redis"
+)
+
 type (
 	ISys interface {
+		Mysql() mysql.ISys
+		Redis() redis.ISys
 	}
 )
 
@@ -22,4 +29,11 @@ func NewSys(opt ...Option) (sys ISys, err error) {
 	}
 	sys, err = newSys(option)
 	return
+}
+
+func Mysql() mysql.ISys {
+	return defsys.Mysql()
+}
+func Redis() redis.ISys {
+	return defsys.Redis()
 }

@@ -14,6 +14,14 @@ func newSys(options *Options) (sys *DB, err error) {
 
 type DB struct {
 	options *Options
-	mysql   *mysql.ISys
-	redis   *redis.ISys
+	mysql   mysql.ISys
+	redis   redis.ISys
+}
+
+func (this *DB) Mysql() mysql.ISys {
+	return this.mysql
+}
+
+func (this *DB) Redis() redis.ISys {
+	return this.redis
 }

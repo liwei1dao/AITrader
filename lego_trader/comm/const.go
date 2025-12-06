@@ -34,32 +34,8 @@ const (
 
 // 数据表名定义处
 const (
-	TableUser             = "user"              //用户表
-	TableUserdevice       = "userdevice"        //用户设备列表
-	TableRecord           = "record"            //记录表
-	TableAgent            = "agent"             //智能体id
-	TableMcp              = "mcp"               //Mcp服务
-	TableAppConfig        = "config"            //配置项
-	TableAdmin            = "adnim"             //后台用户表
-	TableEchomeetTemplate = "echomeet_template" //模板表
-	TableEchomeetRecord   = "echomeet_record"   //会议记录表
-
-	TableChannelApp          = "channelapp"           //渠道包管理
-	TableFactory             = "factory"              //厂商数据表
-	TableProduct             = "product"              //产品表
-	TableProductVersion      = "product_version"      //产品表版本管理
-	TableFactoryDeliveryNote = "factory_deliverynote" //厂家出货日志表
-	TableLicense             = "license"              //授权码表
-	TableGoods               = "goods"                //支付商品表
-	TablePayOrder            = "payorder"             //支付订单表
-	TableWakeupVoice         = "wakeupvoice"          //唤醒语音表
-	TableUserIntegralLog     = "integrallog"          //用户积分日志表
-	TableUserStatistics      = "userstatistics"       //用户统计表
-
-	// TableAuthCode            = "authcode"             //授权码表
-	// TableFactoryDevice = "factorydevice" //厂家设备表
-
-	TableUseRecordLog = "uselog" //用户使用统计日志
+	TableUser         = "user"           //用户表
+	TableStockDayHist = "stock_day_hist" //股票日历史数据表
 )
 
 // 对象池定义
