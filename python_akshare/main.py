@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 import akshare as ak
 import pandas as pd
 import time
@@ -12,18 +13,23 @@ def df_to_records(df: pd.DataFrame):
         return []
     if not isinstance(df, pd.DataFrame):
         return []
-    return df.to_dict(orient="records")
+    records = df.where(pd.notnull(df), None).to_dict(orient="records")
+    return jsonable_encoder(records)
 
 
-def _normalize_symbol_xq(symbol: str) -> str:
-    s = (symbol or "").strip()
-    if len(s) == 6:
-        if s[0] == "6":
-            return "SH" + s
-        return "SZ" + s
-    if len(s) >= 2 and s[:2].lower() in ("sz", "sh"):
-        return s.upper()
-    return s
+def _ak_retry(func, **kwargs):
+    for i in range(2):
+        try:
+            return func(**kwargs)
+        except Exception as e:
+            msg = str(e)
+            if i == 0 and (
+                "Remote end closed connection without response" in msg
+                or "Connection aborted" in msg
+            ):
+                time.sleep(0.2)
+                continue
+            raise
 
 
 @app.get(
@@ -47,7 +53,7 @@ def stock_individual_info_em(symbol: str = Query(...)):
     - 错误: 上游异常时返回 {"error": string}
     """
     try:
-        df = ak.stock_individual_info_em(symbol=symbol)
+        df = _ak_retry(ak.stock_individual_info_em, symbol=symbol)
         records = df_to_records(df)
         return JSONResponse(content=records)
     except Exception as e:
@@ -78,27 +84,15 @@ def stock_individual_basic_info_xq(symbol: str = Query(...)):
     - 错误: 上游异常时返回 {"error": string}
     """
     try:
-        norm = _normalize_symbol_xq(symbol)
-        data = ak.stock_individual_basic_info_xq(symbol=norm)
+        data = _ak_retry(ak.stock_individual_basic_info_xq, symbol=symbol)
         # 转换为可序列化 JSON
         if isinstance(data, pd.DataFrame):
             recs = df_to_records(data)
-            # 若全部为 null/空值，则尝试用原始 symbol 再拉一次
-            if not recs or all((r.get("value") is None or str(r.get("value")) == "") for r in recs):
-                try:
-                    data2 = ak.stock_individual_basic_info_xq(symbol=symbol)
-                    if isinstance(data2, pd.DataFrame):
-                        recs2 = df_to_records(data2)
-                        if recs2 and not all((r.get("value") is None or str(r.get("value")) == "") for r in recs2):
-                            return JSONResponse(content=recs2)
-                    return JSONResponse(content=recs)
-                except Exception:
-                    return JSONResponse(content=recs)
             return JSONResponse(content=recs)
         # 非 DataFrame，直接返回；如需，可判断空对象
         return JSONResponse(content=data)
     except Exception as e:
-        return JSONResponse(content={"error": str(e), "normalized_symbol": norm})
+        return JSONResponse(content={"error": str(e)})
 
 
 @app.get(
@@ -119,28 +113,12 @@ def stock_bid_ask_em(symbol: str = Query(...)):
     - 返回: list[dict]，每项为一个档位或记录，常见字段包含买卖价量、时间/最新价等
     - 错误: 上游异常时返回 {"error": string}
     """
-    s = (symbol or "").strip().upper()
-    # 规范化为 6 位代码
-    if len(s) >= 8 and s[:2] in ("SZ", "SH"):
-        s6 = s[2:8]
-    elif len(s) == 6:
-        s6 = s
-    else:
-        s6 = s
     try:
-        df = ak.stock_bid_ask_em(symbol=s6)
+        df = _ak_retry(ak.stock_bid_ask_em, symbol=symbol)
         recs = df_to_records(df)
-        # 若返回为空且输入带前缀，尝试用原始输入，以防上游接口参数规则变化
-        if not recs and len(s) >= 8 and s[:2] in ("SZ", "SH"):
-            try:
-                df2 = ak.stock_bid_ask_em(symbol=s)
-                recs2 = df_to_records(df2)
-                return JSONResponse(content=recs2)
-            except Exception:
-                pass
         return JSONResponse(content=recs)
     except Exception as e:
-        return JSONResponse(content={"error": str(e), "normalized_symbol": s6})
+        return JSONResponse(content={"error": str(e)})
 
 
 @app.get(
@@ -165,33 +143,17 @@ def stock_news_em(
     - 返回: list[dict]，包含标题/时间/来源/链接等
     - 错误: 上游异常时返回 {"error": string}
     """
-    s = (symbol or "").strip().upper()
-    # 规范化为 6 位代码
-    if len(s) >= 8 and s[:2] in ("SZ", "SH"):
-        s6 = s[2:8]
-    elif len(s) == 6:
-        s6 = s
-    else:
-        s6 = s
     try:
         kwargs = {}
         if page is not None:
             kwargs["page"] = page
         if size is not None:
             kwargs["size"] = size
-        df = ak.stock_news_em(symbol=s6, **kwargs)
+        df = _ak_retry(ak.stock_news_em, symbol=symbol, **kwargs)
         recs = df_to_records(df)
-        # 若返回为空且输入带前缀，尝试用原始输入
-        if not recs and len(s) >= 8 and s[:2] in ("SZ", "SH"):
-            try:
-                df2 = ak.stock_news_em(symbol=s, **kwargs)
-                recs2 = df_to_records(df2)
-                return JSONResponse(content=recs2)
-            except Exception:
-                pass
         return JSONResponse(content=recs)
     except Exception as e:
-        return JSONResponse(content={"error": str(e), "normalized_symbol": s6, "page": page, "size": size})
+        return JSONResponse(content={"error": str(e)})
 
 
 @app.get(
@@ -213,7 +175,7 @@ def stock_news_main_cx():
     - 错误: 上游异常时返回 {"error": string}
     """
     try:
-        df = ak.stock_news_main_cx()
+        df = _ak_retry(ak.stock_news_main_cx)
         recs = df_to_records(df)
         return JSONResponse(content=recs)
     except Exception as e:
@@ -248,53 +210,16 @@ def stock_zh_a_hist(
     - 返回: list[dict]，包含日期/价量/涨跌幅/换手率等字段
     - 错误: 上游异常时返回 {"error": string}
     """
-    # 归一化代码为 AkShare 期望格式（小写 sz/sh 前缀）
-    norm = _normalize_symbol_xq(symbol)
-    norm_l = norm.lower()
-    per = (period or "daily").lower()
-    adj = (adjust or "").lower()
     try:
-        df = ak.stock_zh_a_hist(
-            symbol=norm_l,
-            period=per,
+        df = _ak_retry(
+            ak.stock_zh_a_hist,
+            symbol=symbol,
+            period=period,
             start_date=start,
             end_date=end,
-            adjust=adj,
+            adjust=adjust,
         )
         recs = df_to_records(df)
-        if recs:
-            return JSONResponse(content=recs)
-        # Fallback 1: try with original input symbol (no normalization)
-        try:
-            df2 = ak.stock_zh_a_hist(
-                symbol=symbol,
-                period=per,
-                start_date=start,
-                end_date=end,
-                adjust=adj,
-            )
-            recs2 = df_to_records(df2)
-            if recs2:
-                return JSONResponse(content=recs2)
-        except Exception:
-            pass
-        # Fallback 2: if 6-digit symbol, try market-prefixed uppercase (SH/SZ)
-        s = (symbol or "").strip()
-        if len(s) == 6:
-            prefix = "SH" if s[0] == "6" else "SZ"
-            try:
-                df3 = ak.stock_zh_a_hist(
-                    symbol=f"{prefix}{s}",
-                    period=per,
-                    start_date=start,
-                    end_date=end,
-                    adjust=adj,
-                )
-                recs3 = df_to_records(df3)
-                if recs3:
-                    return JSONResponse(content=recs3)
-            except Exception:
-                pass
         return JSONResponse(content=recs)
     except Exception as e:
-        return JSONResponse(content={"error": str(e), "normalized_symbol": norm_l, "period": per, "adjust": adj})
+        return JSONResponse(content={"error": str(e)})

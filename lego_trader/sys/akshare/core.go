@@ -111,6 +111,7 @@ type (
 	// A股历史行情（东方财富 stock_zh_a_hist）记录
 	// 说明：字段标签与上游返回一致（中文键），便于直接反序列化
 	StockZhAHistRecord struct {
+		Symbol       string  `json:"股票代码" comment:"股票代码"`
 		Date         string  `json:"日期" comment:"交易日期"`
 		Open         float64 `json:"开盘" comment:"开盘价"`
 		Close        float64 `json:"收盘" comment:"收盘价"`

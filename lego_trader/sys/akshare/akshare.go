@@ -5,28 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strings"
 )
-
-// normalizeStockCode 统一股票代码格式
-// 规则：
-// - 若已包含前缀 `sz`/`sh` 则原样返回
-// - 若首位为 '6'，加前缀 `sh`
-// - 其他情况，加前缀 `sz`
-func normalizeStockCode(stockCode string) string {
-	s := strings.TrimSpace(stockCode)
-	if s == "" {
-		return s
-	}
-	ls := strings.ToLower(s)
-	if strings.HasPrefix(ls, "sz") || strings.HasPrefix(ls, "sh") {
-		return s
-	}
-	if s[0] == '6' {
-		return "sh" + s
-	}
-	return "sz" + s
-}
 
 func newSys(options *Options) (sys *AkShare, err error) {
 	sys = &AkShare{
@@ -40,8 +19,7 @@ type AkShare struct {
 }
 
 func (a *AkShare) GetStockBasicInfo(stockCode string) (info *StockBasicInfo, err error) {
-	ns := normalizeStockCode(stockCode)
-	url := fmt.Sprintf("%s/api/public/stock_individual_basic_info_xq?symbol=%s", a.options.BaseUrl, ns)
+	url := fmt.Sprintf("%s/api/public/stock_individual_basic_info_xq?symbol=%s", a.options.BaseUrl, stockCode)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -77,8 +55,7 @@ func (a *AkShare) GetStockBasicInfo(stockCode string) (info *StockBasicInfo, err
 // - 返回: 原始字段的列表（例如 买一价/买一量/卖一价/时间 等）
 // - 说明: 调用 python_akshare `/api/public/stock_bid_ask_em`
 func (a *AkShare) GetStockBidAsk(stockCode string) (records *StockBidAskEM, err error) {
-	ns := normalizeStockCode(stockCode)
-	url := fmt.Sprintf("%s/api/public/stock_bid_ask_em?symbol=%s", a.options.BaseUrl, ns)
+	url := fmt.Sprintf("%s/api/public/stock_bid_ask_em?symbol=%s", a.options.BaseUrl, stockCode)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -107,10 +84,8 @@ func (a *AkShare) GetStockBidAsk(stockCode string) (records *StockBidAskEM, err 
 //   - 返回: 历史K线记录列表（日期/开盘/收盘/最高/最低/成交量/成交额/涨跌幅/换手率等字段）
 //   - 说明: 调用 python_akshare `/api/public/stock_zh_a_hist`
 func (a *AkShare) GetStockZhAHist(stockCode, period, start, end, adjust string) (records []StockZhAHistRecord, err error) {
-	ns := normalizeStockCode(stockCode)
-	p := strings.ToLower(strings.TrimSpace(period))
-	aji := strings.ToLower(strings.TrimSpace(adjust))
-	url := fmt.Sprintf("%s/api/public/stock_zh_a_hist?symbol=%s&period=%s&start=%s&end=%s&adjust=%s", a.options.BaseUrl, ns, p, start, end, aji)
+	url := fmt.Sprintf("%s/api/public/stock_zh_a_hist?symbol=%s&period=%s&start=%s&end=%s&adjust=%s", a.options.BaseUrl, stockCode, period, start, end, adjust)
+	fmt.Println(url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -123,15 +98,10 @@ func (a *AkShare) GetStockZhAHist(stockCode, period, start, end, adjust string) 
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println(string(body))
 	// 直接反序列化为结构化记录切片
 	if err := json.Unmarshal(body, &records); err != nil {
-		// 若服务返回错误对象，尝试解析错误信息
-		var obj map[string]interface{}
-		if err2 := json.Unmarshal(body, &obj); err2 == nil {
-			if msg, ok := obj["error"]; ok {
-				return nil, fmt.Errorf("stock_zh_a_hist error: %v", msg)
-			}
-		}
+
 		return nil, err
 	}
 	return records, nil
@@ -142,7 +112,6 @@ func (a *AkShare) GetStockZhAHist(stockCode, period, start, end, adjust string) 
 // - 返回: 新闻列表（标题/时间/来源/链接等字段）
 // - 说明: 调用 python_akshare `/api/public/stock_news_em`
 func (a *AkShare) GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error) {
-	ns := normalizeStockCode(stockCode)
 	// 组装可选参数
 	q := ""
 	if page != nil {
@@ -151,7 +120,7 @@ func (a *AkShare) GetStockNewsEm(stockCode string, page, size *int) (records []S
 	if size != nil {
 		q += fmt.Sprintf("&size=%d", *size)
 	}
-	url := fmt.Sprintf("%s/api/public/stock_news_em?symbol=%s%s", a.options.BaseUrl, ns, q)
+	url := fmt.Sprintf("%s/api/public/stock_news_em?symbol=%s%s", a.options.BaseUrl, stockCode, q)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -206,31 +175,10 @@ func (a *AkShare) GetStockNewsMainCx() (records []StockNewsMainCxRecord, err err
 	return records, nil
 }
 
-// getJSONAsList 请求 URL 并将响应解析为 []map[string]interface{}
-func (a *AkShare) getJSONAsList(url string) (records []map[string]interface{}, err error) {
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
-	}
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(body, &records); err != nil {
-		return nil, err
-	}
-	return records, nil
-}
-
 // GetStockBidAskEM 获取实时盘口并映射为结构体
 // 返回 StockBidAskEM，内部按 item/value 结构进行映射
 func (a *AkShare) GetStockBidAskEM(stockCode string) (data *StockBidAskEM, err error) {
-	ns := normalizeStockCode(stockCode)
-	url := fmt.Sprintf("%s/api/public/stock_bid_ask_em?symbol=%s", a.options.BaseUrl, ns)
+	url := fmt.Sprintf("%s/api/public/stock_bid_ask_em?symbol=%s", a.options.BaseUrl, stockCode)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err

@@ -157,7 +157,7 @@ func TestStockAHist(t *testing.T) {
 	// 参数: symbol=股票代码; period=周期(daily/weekly/monthly); start_date=YYYYMMDD; end_date=YYYYMMDD; adjust=复权(qfq/hfq/空字符串)
 	// 返回: 数组，按日期排列的历史 K 线数据
 	// 字段示例: 日期、股票代码、开盘、收盘、最高、最低、成交量、成交额、振幅、涨跌幅、涨跌额、换手率
-	full := url + "/api/public/stock_zh_a_hist?symbol=000001&period=daily&start_date=20211109&end_date=20211209&adjust="
+	full := url + "/api/public/stock_zh_a_hist?symbol=000001&period=daily&start=20211109&end=20211209&adjust="
 	req, err := http.NewRequest(http.MethodGet, full, nil)
 	if err != nil {
 		t.Fatalf("创建请求失败: %v", err)
@@ -441,13 +441,15 @@ func TestGetStockBidAskEM(t *testing.T) {
 	t.Logf("StockBidAskEM 样例:\n%s", string(b))
 }
 
+// http://127.0.0.1:8080/api/public/stock_zh_a_hist?symbol=000001&period=daily&start=20170301&end=20240528&adjust=
+// http://127.0.0.1:8080/api/public/stock_zh_a_hist?symbol=000001&period=daily&start=20170301&end=20240528&adjust=
 func TestGetStockZhAHist(t *testing.T) {
 	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
 	if err != nil {
 		t.Fatalf("初始化失败: %v", err)
 		return
 	}
-	data, err := sys.GetStockZhAHist("000651", "daily", "20230101", "20230105", "")
+	data, err := sys.GetStockZhAHist("000001", "daily", "20170301", "20240528", "")
 	if err != nil {
 		t.Fatalf("请求失败: %v", err)
 		return
