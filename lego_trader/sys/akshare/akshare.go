@@ -18,34 +18,38 @@ type AkShare struct {
 	options *Options
 }
 
+// GetStockBasicInfo 获取股票基本信息（东方财富 stock_individual_basic_info_xq）
+// - 参数: stockCode 支持 6位代码或带前缀 `sz`/`sh`
+// - 返回: 股票基本信息结构体（包含股票代码、名称、上市日期、上市地点、所属行业、所属板块、上市状态等字段）
+// - 说明: 调用 python_akshare `/api/public/stock_individual_basic_info_xq`
 func (a *AkShare) GetStockBasicInfo(stockCode string) (info *StockBasicInfo, err error) {
+	// 雪球接口要求symbol必须带sz/sh前缀，若未带则默认补sh
+	if len(stockCode) == 6 && (stockCode[:2] != "sz" && stockCode[:2] != "sh") {
+		stockCode = "sh" + stockCode
+	}
 	url := fmt.Sprintf("%s/api/public/stock_individual_basic_info_xq?symbol=%s", a.options.BaseUrl, stockCode)
+	fmt.Println(url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 	var items []ItemValue
-	if resp.StatusCode == http.StatusOK {
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			return nil, err
-		}
-		fmt.Println(string(body))
-		if err := json.Unmarshal(body, &items); err != nil {
-			items = nil
-		}
-	} else {
+	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
 	}
-
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println(string(body))
+	if err := json.Unmarshal(body, &items); err != nil {
+		items = nil
+	}
 	// 使用通用映射接口将 items 映射到 StockBasicInfo
 	info = &StockBasicInfo{}
 	if err := MapItemValuesToStruct(items, info); err != nil {
 		return nil, err
-	}
-	if info.Currency == "" {
-		info.Currency = "CNY"
 	}
 	return info, nil
 }
@@ -179,6 +183,7 @@ func (a *AkShare) GetStockNewsMainCx() (records []StockNewsMainCxRecord, err err
 // 返回 StockBidAskEM，内部按 item/value 结构进行映射
 func (a *AkShare) GetStockBidAskEM(stockCode string) (data *StockBidAskEM, err error) {
 	url := fmt.Sprintf("%s/api/public/stock_bid_ask_em?symbol=%s", a.options.BaseUrl, stockCode)
+	fmt.Println(url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -191,6 +196,7 @@ func (a *AkShare) GetStockBidAskEM(stockCode string) (data *StockBidAskEM, err e
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println(string(body))
 	var items []ItemValue
 	if err := json.Unmarshal(body, &items); err != nil {
 		return nil, err

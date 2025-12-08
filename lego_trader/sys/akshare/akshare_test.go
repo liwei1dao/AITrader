@@ -411,7 +411,7 @@ func TestGetStockBasicInfo(t *testing.T) {
 		t.Fatalf("初始化失败: %v", err)
 		return
 	}
-	info, err := sys.GetStockBasicInfo("000651")
+	info, err := sys.GetStockBasicInfo("601127")
 	if err != nil {
 		t.Fatalf("请求失败: %v", err)
 		return
