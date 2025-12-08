@@ -1,4 +1,4 @@
-package db
+package agent
 
 import (
 	"errors"
@@ -9,10 +9,12 @@ import (
 
 type Option func(*Options)
 type Options struct {
-	Debug    bool //日志是否开启
-	Log      log.ILogger
-	MysqlUrl string
-	RedisUrl string
+	Debug        bool //日志是否开启
+	Log          log.ILogger
+	BaseUrl      string // OpenAI API base URL
+	Mode         string // OpenAI API mode (e.g. "chat")
+	Key          string // OpenAI API key
+	SystemPrompt string // System prompt for chat completions
 }
 
 func SetDebug(v bool) Option {
@@ -27,20 +29,28 @@ func SetLog(v log.ILogger) Option {
 	}
 }
 
-func SetMysqlUrl(v string) Option {
+func SetBaseUrl(v string) Option {
 	return func(o *Options) {
-		o.MysqlUrl = v
+		o.BaseUrl = v
 	}
 }
 
-func SetRedisUrl(v string) Option {
+func SetMode(v string) Option {
 	return func(o *Options) {
-		o.RedisUrl = v
+		o.Mode = v
+	}
+}
+
+func SetKey(v string) Option {
+	return func(o *Options) {
+		o.Key = v
 	}
 }
 
 func newOptions(config map[string]interface{}, opts ...Option) (options *Options, err error) {
-	options = &Options{}
+	options = &Options{
+		BaseUrl: "https://api.openai.com",
+	}
 	if config != nil {
 		if err = mapstructure.Decode(config, options); err != nil {
 			return
@@ -56,7 +66,9 @@ func newOptions(config map[string]interface{}, opts ...Option) (options *Options
 }
 
 func newOptionsByOption(opts ...Option) (options *Options, err error) {
-	options = &Options{}
+	options = &Options{
+		BaseUrl: "https://api.openai.com",
+	}
 	for _, o := range opts {
 		o(options)
 	}
