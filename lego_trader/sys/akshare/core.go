@@ -137,11 +137,11 @@ type (
 
 	// 市场要闻（财新 stock_news_main_cx）记录
 	StockNewsMainCxRecord struct {
-		Title       string `json:"标题" comment:"标题"`
-		PublishTime string `json:"发布时间" comment:"发布时间"`
-		Source      string `json:"来源" comment:"来源"`
-		URL         string `json:"新闻链接" comment:"链接"`
-		Summary     string `json:"摘要" comment:"摘要"`
+		Tag          string `json:"tag" comment:"标签/标题"`
+		Summary      string `json:"summary" comment:"摘要"`
+		IntervalTime string `json:"interval_time" comment:"时间区间/显示时间"`
+		PubTime      string `json:"pub_time" comment:"发布时间(精确)"`
+		URL          string `json:"url" comment:"链接"`
 	}
 )
 

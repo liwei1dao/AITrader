@@ -460,3 +460,22 @@ func TestGetStockZhAHist(t *testing.T) {
 	b, _ := json.MarshalIndent(data, "", "  ")
 	t.Logf("StockZhAHist 样例:\n%s", string(b))
 }
+
+// GetStockNewsMainCx 测试
+func TestGetStockNewsMainCx(t *testing.T) {
+	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
+	if err != nil {
+		t.Fatalf("初始化失败: %v", err)
+		return
+	}
+	data, err := sys.GetStockNewsMainCx()
+	if err != nil {
+		t.Fatalf("请求失败: %v", err)
+		return
+	}
+	if data == nil {
+		t.Fatalf("返回数据为空")
+	}
+	b, _ := json.MarshalIndent(data, "", "  ")
+	t.Logf("StockNewsMainCx 样例:\n%s", string(b))
+}

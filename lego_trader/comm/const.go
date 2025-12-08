@@ -36,6 +36,7 @@ const (
 const (
 	TableUser         = "user"           //用户表
 	TableStockDayHist = "stock_day_hist" //股票日历史数据表
+	TableUserStock    = "user_stock"     //用户股票持仓表
 )
 
 // 对象池定义

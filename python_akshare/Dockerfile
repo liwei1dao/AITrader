@@ -11,6 +11,7 @@ RUN pip install --no-cache-dir fastapi uvicorn akshare pandas lxml requests aioh
 WORKDIR /app
 
 COPY main.py /app/main.py
+COPY routes /app/routes
 
 EXPOSE 8080
 

@@ -8,6 +8,40 @@ from .common import df_to_records
 router = APIRouter()
 
 @router.get(
+    "/api/public/stock_info_global_sina",
+    summary="全球市场实时行情(Sina)",
+    description=(
+        "调用 AkShare `stock_info_global_sina` 获取全球股票/指数的实时行情快照。\n"
+        "参数: 无。\n"
+        "返回: JSON 数组；字段以上游返回为准（可能包含名称、代码、最新价、涨跌幅等）。"
+    ),
+)
+def stock_info_global_sina():
+    try:
+        df = ak.stock_info_global_sina()
+        recs = df_to_records(df)
+        return JSONResponse(content=recs)
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)})
+
+@router.get(
+    "/api/public/stock_info_global_futu",
+    summary="全球市场实时行情(Futu)",
+    description=(
+        "调用 AkShare `stock_info_global_futu` 获取全球市场的实时行情快照。\n"
+        "参数: 无。\n"
+        "返回: JSON 数组；字段以上游返回为准。"
+    ),
+)
+def stock_info_global_futu():
+    try:
+        df = ak.stock_info_global_futu()
+        recs = df_to_records(df)
+        return JSONResponse(content=recs)
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)})
+
+@router.get(
     "/api/public/index_spot_zh",
     summary="A股主要指数实时行情",
     description=(
