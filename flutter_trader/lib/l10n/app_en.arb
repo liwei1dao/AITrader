@@ -1,0 +1,14 @@
+{
+  "appTitle": "Flutter Trader",
+  "homeTitle": "Home",
+  "counterLabel": "You have pushed the button this many times:",
+  "loadingTitle": "Loading",
+  "loginTitle": "Sign In",
+  "loginUsername": "Username",
+  "loginPassword": "Password",
+  "loginSubmit": "Login",
+  "tabMarket": "Market",
+  "tabStocks": "Stocks",
+  "tabAnalysis": "Analysis",
+  "tabSettings": "Settings"
+}

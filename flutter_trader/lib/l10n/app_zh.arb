@@ -1,0 +1,14 @@
+{
+  "appTitle": "交易应用",
+  "homeTitle": "首页",
+  "counterLabel": "你已经点击按钮的次数：",
+  "loadingTitle": "加载中",
+  "loginTitle": "登录",
+  "loginUsername": "用户名",
+  "loginPassword": "密码",
+  "loginSubmit": "登录",
+  "tabMarket": "行情",
+  "tabStocks": "股票",
+  "tabAnalysis": "分析",
+  "tabSettings": "设置"
+}

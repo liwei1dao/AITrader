@@ -200,3 +200,75 @@ def stock_zh_a_hist(
     except Exception as e:
         return JSONResponse(content={"error": str(e), "normalized_symbol": norm_l, "period": per, "adjust": adj})
 
+
+# 筹码分布
+# 接口: stock_cyq_em
+# 目标地址: https://quote.eastmoney.com/concept/sz000001.html
+# 描述: 东方财富网-概念板-行情中心-日K-筹码分布
+# 限量: 单次返回指定 symbol 和 adjust 的近 90 个交易日数据
+@router.get(
+    "/api/public/stock_cyq_em",
+    summary="筹码分布(东方财富)",
+    description=(
+        "调用 AkShare `stock_cyq_em` 获取 A 股近 90 个交易日的筹码分布数据。\n"
+        "参数: `symbol` 为 6 位股票代码，如 `000001`；`adjust` 复权选项 `''`/`qfq`/`hfq`。\n"
+        "返回: JSON 数组，常见字段包括 `交易日期`、`获利比例`、`平均成本`、`90%成本区间`、`集中度` 等（具体字段可能随上游变化）。\n"
+        "说明: 数据源为东方财富；异常时返回 `{error: string}`。"
+    ),
+)
+def stock_cyq_em(
+    symbol: str = Query(...),
+    adjust: str = Query("")
+):
+    """
+    获取 A 股筹码分布（东方财富）
+    - 功能: 通过 AkShare `stock_cyq_em` 读取近 90 个交易日的筹码分布
+    - 参数:
+      - symbol: 6 位股票代码
+      - adjust: 复权 `''`(不复权)/`qfq`(前复权)/`hfq`(后复权)
+    - 返回: list[dict]，包含交易日期/获利比例/平均成本/90%成本区间/集中度等字段
+    - 错误: 上游异常时返回 {"error": string}
+    """
+    adj = (adjust or "").lower()
+    try:
+        df = ak.stock_cyq_em(symbol=symbol, adjust=adj)
+        records = df_to_records(df)
+        return JSONResponse(content=records)
+    except Exception as e:
+        return JSONResponse(content={"error": str(e), "symbol": symbol, "adjust": adj})
+
+
+# 个股资金流向
+# 接口: stock_individual_fund_flow
+# 目标地址: https://data.eastmoney.com/zjlx/000425.html
+# 描述: 东方财富网-数据中心-资金流向-个股资金流向
+# 限量: 单次返回指定 stock 和 market 的近 100 个交易日数据
+@router.get(
+    "/api/public/stock_individual_fund_flow",
+    summary="个股资金流向(东方财富)",
+    description=(
+        "调用 AkShare `stock_individual_fund_flow` 获取 A 股近 100 个交易日的资金流向数据。\n"
+        "参数: `stock` 为 6 位股票代码，如 `000425`；`market` 为市场代码 `sh`(沪)/`sz`(深)/`bj`(北)。\n"
+        "返回: JSON 数组，常见字段包括 `日期`、`收盘价`、`涨跌幅`、`主力净流入`、`超大单净流入`、`大单净流入`、`中单净流入`、`小单净流入` 等（具体字段可能随上游变化）。\n"
+        "说明: 数据源为东方财富；异常时返回 `{error: string}`。"
+    ),
+)
+def stock_individual_fund_flow(
+    stock: str = Query(...),
+    market: str = Query("sh")
+):
+    """
+    获取 A 股个股资金流向（东方财富）
+    - 功能: 通过 AkShare `stock_individual_fund_flow` 读取近 100 个交易日的资金流向
+    - 参数:
+      - stock: 6 位股票代码
+      - market: 市场 `sh`(沪)/`sz`(深)/`bj`(北)
+    - 返回: list[dict]，包含日期/收盘价/涨跌幅/各类资金净流入等字段
+    - 错误: 上游异常时返回 {"error": string}
+    """
+    try:
+        df = ak.stock_individual_fund_flow(stock=stock, market=market.lower())
+        records = df_to_records(df)
+        return JSONResponse(content=records)
+    except Exception as e:
+        return JSONResponse(content={"error": str(e), "stock": stock, "market": market.lower()})
