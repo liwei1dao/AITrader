@@ -44,7 +44,5 @@ def buildProto(pbpath, outpath, pattern):
 
 
 buildProto('./pb/proto','./pb','*.proto')
-buildProto('./pb/proto','./pb','user/*.proto')
-buildProto('./pb/proto','./pb','record/*.proto')
-buildProto('./pb/proto','./pb','auth/*.proto')
-buildProto('./pb/proto','./pb','ai/*.proto')
+buildProto('./pb/proto','./pb','stock/*.proto')
+buildProto('./pb/proto','./pb','market/*.proto')

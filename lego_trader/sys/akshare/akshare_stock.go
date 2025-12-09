@@ -281,3 +281,38 @@ func (a *AkShare) GetStockBidAskEM(stockCode string) (data *StockBidAskEM, err e
 	}
 	return res, nil
 }
+
+// GetStockFinancialSummary 获取基本面摘要（雪球/东方财富）
+// - 参数: stockCode 支持 6位代码或带前缀 `sz`/`sh`
+// - 返回: item/value 列表，键可能包含英文或中文名（例如 revenue/净利润/eps/roe 等）
+// - 说明: 调用 python_akshare `/api/public/stock_financial_summary_xq`
+func (a *AkShare) GetStockFinancialSummary(stockCode string) (items []ItemValue, err error) {
+    // 雪球接口要求symbol必须带sz/sh前缀，若未带则默认补sh
+    if len(stockCode) == 6 && (stockCode[:2] != "sz" && stockCode[:2] != "sh") {
+        stockCode = "sh" + stockCode
+    }
+    url := fmt.Sprintf("%s/api/public/stock_financial_summary_xq?symbol=%s", a.options.BaseUrl, stockCode)
+    resp, err := http.Get(url)
+    if err != nil {
+        return nil, err
+    }
+    defer resp.Body.Close()
+    if resp.StatusCode != http.StatusOK {
+        return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
+    }
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return nil, err
+    }
+    if err := json.Unmarshal(body, &items); err != nil {
+        // 兼容错误对象
+        var obj map[string]interface{}
+        if err2 := json.Unmarshal(body, &obj); err2 == nil {
+            if msg, ok := obj["error"]; ok {
+                return nil, fmt.Errorf("stock_financial_summary_xq error: %v", msg)
+            }
+        }
+        return nil, err
+    }
+    return items, nil
+}

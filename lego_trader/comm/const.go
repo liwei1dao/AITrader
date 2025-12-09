@@ -16,16 +16,9 @@ const (
 
 // 模块名定义处
 const (
-	ModuleGate     core.M_Modules = "gateway"  //gate模块 网关服务模块
-	ModuleApi      core.M_Modules = "api"      //gate模块 网关服务模块
-	ModuleUser     core.M_Modules = "user"     //gate模块 网关服务模块
-	ModuleAuth     core.M_Modules = "auth"     //gate模块 网关服务模块
-	ModuleChat     core.M_Modules = "chat"     //gate模块 网关服务模块
-	ModuleMcp      core.M_Modules = "mcp"      //gate模块 网关服务模块
-	ModuleMusic    core.M_Modules = "music"    //gate模块 网关服务模块
-	ModuleEchomeet core.M_Modules = "echomeet" //会议记录模块
-	ModuleRecord   core.M_Modules = "record"   //gate模块 网关服务模块
-	ModulePay      core.M_Modules = "pay"      //gate模块 网关服务模块
+	ModuleGate       core.M_Modules = "gateway"    //gate模块 网关服务模块
+	ModuleCollection core.M_Modules = "collection" //收藏模块 集合模块 提供集合数据 股票, 基金, 指数等
+
 )
 
 const (

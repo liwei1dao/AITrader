@@ -28,6 +28,8 @@ type (
 		/// 获取个股新闻（东方财富 stock_news_em）
 		/// 参数: stockCode 6位或含前缀；page/size 可选；返回: 新闻列表（结构化）
 		GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error)
+		/// 获取基本面摘要（雪球/东方财富）
+		GetStockFinancialSummary(stockCode string) (items []ItemValue, err error)
 	}
 	ISys interface {
 		IMarket
@@ -89,4 +91,9 @@ func GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRec
 // - 返回: 原始字段的市场要闻记录列表（标题/时间/来源/摘要等）
 func GetStockNewsMainCx() (records []StockNewsMainCxRecord, err error) {
 	return defsys.GetStockNewsMainCx()
+}
+
+// GetStockFinancialSummary 获取基本面摘要（item/value 列表）
+func GetStockFinancialSummary(stockCode string) (items []ItemValue, err error) {
+	return defsys.GetStockFinancialSummary(stockCode)
 }

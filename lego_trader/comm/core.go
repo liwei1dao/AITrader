@@ -6,6 +6,7 @@ import (
 	"lego_trader/lego/core"
 	"lego_trader/pb"
 	"reflect"
+	"strings"
 )
 
 type IService interface {
@@ -57,6 +58,29 @@ type HttpResult struct {
 	Data interface{} `json:"data" description:"返回的数据对象"`
 }
 
-// ai 工具结构
-type IAITool struct {
+/*
+标准化股票代码
+- 参数: symbol 股票代码（支持 sz/sh 前缀或6位代码）
+- 返回: market 市场（sz/sh）, code 股票代码（6位）, withPrefix 标准化后的带前缀代码（sz000001/sh600000）
+*/
+func NormalizeSymbol(symbol string) (market string, code string, withPrefix string) {
+	s := strings.TrimSpace(symbol)
+	s = strings.ToLower(s)
+	if len(s) >= 2 && (s[:2] == "sz" || s[:2] == "sh") {
+		market = s[:2]
+		code = s[2:]
+	} else if len(s) == 6 {
+		code = s
+		if s[0] == '6' {
+			market = "sh"
+		} else {
+			market = "sz"
+		}
+	}
+	if market != "" && code != "" {
+		withPrefix = market + code
+	} else {
+		withPrefix = s
+	}
+	return
 }

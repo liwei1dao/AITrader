@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;pb";
 
 // 股票基础信息（静态/半静态）
-message StockIdentity {
+message DBStockIdentity {
   string Id = 1;                   //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
   string Symbol = 2;               //@go_tags(`gorm:"symbol;uniqueIndex:uk_market_symbol" json:"symbol"`) 股票代码
   string Market = 3;               //@go_tags(`gorm:"market;uniqueIndex:uk_market_symbol" json:"market"`) 市场标识(sh/sz)
@@ -22,7 +22,7 @@ message StockIdentity {
 }
 
 // 日/周/月K线（行情）
-message StockBar {
+message DBStockBar {
   string Id = 1;                   //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
   string Symbol = 2;               //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_tf_ts" json:"symbol"`) 股票代码
   string Market = 3;               //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_tf_ts" json:"market"`) 市场标识
@@ -41,7 +41,7 @@ message StockBar {
 }
 
 // 基本面快照（按期/按时间）
-message FundamentalSnapshot {
+message DBFundamentalSnapshot {
   string Id = 1;                   //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
   string Symbol = 2;               //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_ts" json:"symbol"`) 股票代码
   string Market = 3;               //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_ts" json:"market"`) 市场标识
@@ -80,3 +80,23 @@ message FundamentalSnapshot {
   string CreateAt = 61;             //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
 }
 
+// 股票新闻
+message DBStockNews {
+  string Id = 1;                   //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
+  string Symbol = 2;               //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_ts" json:"symbol"`) 股票代码
+  string Market = 3;               //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_ts" json:"market"`) 市场标识
+  string Ts = 4;                   //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_ts" json:"ts"`) 时间戳(RFC3339)
+  string Title = 5;                //@go_tags(`gorm:"title" json:"title"`) 新闻标题
+  string Source = 6;               //@go_tags(`gorm:"source" json:"source"`) 数据来源
+  string CreateAt = 7;             //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
+}
+
+//股票分析报告 每日
+message DBStockReport {
+  string Id = 1;                   //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
+  string Symbol = 2;               //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_ts" json:"symbol"`) 股票代码
+  string Market = 3;               //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_ts" json:"market"`) 市场标识
+  string Ts = 4;                   //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_ts" json:"ts"`) 时间戳(RFC3339)
+  string Source = 5;               //@go_tags(`gorm:"source" json:"source"`) 数据来源
+  string CreateAt = 6;             //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
+}
