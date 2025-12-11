@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'core/config/env.dart';
+import 'core/cache/cache_manager.dart';
 import 'network/socket/socket_bindings.dart';
 import 'l10n/app_localizations.dart';
 import 'routes/app_pages.dart';
@@ -13,6 +14,7 @@ const String _envName = String.fromEnvironment(
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await CacheManager.init();
   await Env.init(_envName);
   runApp(const MyApp());
 }

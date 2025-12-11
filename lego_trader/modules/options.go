@@ -14,7 +14,6 @@ type (
 		core.IModuleOptions
 		GetDebug() bool
 		GetLog() log.ILogger
-		GetOutputCSV() bool
 	}
 	Options struct {
 		Debug bool //日志是否开启

@@ -34,13 +34,13 @@ func (this *CompOptions) LoadConfig(settings map[string]interface{}) (err error)
 	服务网关组件 用于接收网关服务发送过来的消息
 */
 
-func NewGateRouteComp() comm.ISC_GateRouteComp {
-	comp := new(SCompGateRoute)
+func NewSocketGateRouteComp() comm.ISC_SocketRouteComp {
+	comp := new(SCompSocketRoute)
 	return comp
 }
 
 // 服务网关组件
-type SCompGateRoute struct {
+type SCompSocketRoute struct {
 	cbase.ServiceCompBase
 	options    *CompOptions
 	service    comm.IService         //rpc服务对象 通过这个对象可以发布服务和调用其他服务的接口
@@ -48,16 +48,16 @@ type SCompGateRoute struct {
 }
 
 // 设置服务组件名称 方便业务模块中获取此组件对象
-func (this *SCompGateRoute) GetName() core.S_Comps {
+func (this *SCompSocketRoute) GetName() core.S_Comps {
 	return comm.SC_ServiceGateRouteComp
 }
 
-func (this *SCompGateRoute) NewOptions() (options core.ICompOptions) {
+func (this *SCompSocketRoute) NewOptions() (options core.ICompOptions) {
 	return new(CompOptions)
 }
 
 // 组件初始化函数
-func (this *SCompGateRoute) Init(service core.IService, comp core.IServiceComp, options core.ICompOptions) (err error) {
+func (this *SCompSocketRoute) Init(service core.IService, comp core.IServiceComp, options core.ICompOptions) (err error) {
 	err = this.ServiceCompBase.Init(service, comp, options)
 	this.options = options.(*CompOptions)
 	this.service = service.(comm.IService)
@@ -66,14 +66,14 @@ func (this *SCompGateRoute) Init(service core.IService, comp core.IServiceComp, 
 }
 
 // 组件启动时注册rpc服务监听
-func (this *SCompGateRoute) Start() (err error) {
+func (this *SCompSocketRoute) Start() (err error) {
 	this.service.Register(string(comm.Rpc_GatewayRoute), this.Rpc_GatewayRoute) //注册网关路由接收接口
 	err = this.ServiceCompBase.Start()
 	return
 }
 
 // 业务模块注册用户消息处理路由
-func (this *SCompGateRoute) RegisterRoute(methodName string, comp reflect.Value, msg reflect.Type, handele reflect.Method) {
+func (this *SCompSocketRoute) RegisterRoute(methodName string, comp reflect.Value, msg reflect.Type, handele reflect.Method) {
 	//log.Debugf("注册用户路由【%s】", methodName)
 	_, ok := this.msghandles[methodName]
 	if ok {
@@ -91,7 +91,7 @@ func (this *SCompGateRoute) RegisterRoute(methodName string, comp reflect.Value,
 
 // RPC----------------------------------------------------------------------------------------------------------------------
 // Rpc_GatewayRoute服务接口的接收函数
-func (this *SCompGateRoute) Rpc_GatewayRoute(ctx context.Context, args *pb.Rpc_GatewayRouteReq, reply *pb.Rpc_GatewayRouteResp) (err error) {
+func (this *SCompSocketRoute) Rpc_GatewayRoute(ctx context.Context, args *pb.Rpc_GatewayRouteReq, reply *pb.Rpc_GatewayRouteResp) (err error) {
 	var (
 		msghandle *msghandle
 		session   comm.IUserSession

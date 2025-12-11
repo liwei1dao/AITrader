@@ -16,7 +16,7 @@ type IService interface {
 }
 
 // 服务网关组件接口定义
-type ISC_GateRouteComp interface {
+type ISC_SocketRouteComp interface {
 	core.IServiceComp
 	Rpc_GatewayRoute(ctx context.Context, args *pb.Rpc_GatewayRouteReq, reply *pb.Rpc_GatewayRouteResp) error
 	RegisterRoute(methodName string, comp reflect.Value, msg reflect.Type, handle reflect.Method)

@@ -24,6 +24,9 @@ type Gateway struct {
 func (this *Gateway) GetType() core.M_Modules {
 	return comm.ModuleGateway
 }
+func (this *Gateway) NewOptions() (options core.IModuleOptions) {
+	return new(Options)
+}
 func (this *Gateway) Service() base.IRPCXService {
 	return this.service
 }

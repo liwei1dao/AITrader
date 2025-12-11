@@ -1,0 +1,5 @@
+2025/12/11 20:05:01.153	INFO	sys log Init success !
+2025/12/11 20:05:01.153	INFO	sys event Init success !
+2025/12/11 20:05:01.153	INFO	服务[gateway-d4tb6rc4kvntejljav1g] 初始化完成!
+2025/12/11 20:05:01.195	INFO	服务[gateway-d4tb6rc4kvntejljav1g:1.0.0.0] 启动完成!
+2025/12/11 20:05:01.196	DEBUG	启动模块【gateway】

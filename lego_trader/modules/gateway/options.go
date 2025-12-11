@@ -1,9 +1,8 @@
 package gateway
 
 import (
-	"lego_trader/modules"
-
 	"lego_trader/lego/utils/mapstructure"
+	"lego_trader/modules"
 )
 
 /*

@@ -1,0 +1,18 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+message DBUser{
+    string id = 1;                                      //@go_tags(`gorm:"id;primaryKey json:"id"`) id 
+    string name = 2;
+    string password = 3; 
+}
+
+//用户股票持仓
+message DBUserStock{
+    uint64 id = 1;                                      //@go_tags(`gorm:"id;primaryKey;autoIncrement json:"id"`) id 
+    string user_id = 2;                                 //@go_tags(`gorm:"user_id json:"user_id"`) user_id 
+    string stock_id = 3;                                //@go_tags(`gorm:"stock_id json:"stock_id"`) stock_id 
+    int64 amount = 4;                                   //@go_tags(`gorm:"amount json:"amount"`) amount 
+    int32 price = 5;                                    //@go_tags(`gorm:"price json:"price"`) price 
+}
+
