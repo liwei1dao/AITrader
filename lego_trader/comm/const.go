@@ -16,12 +16,13 @@ const (
 
 // 模块名定义处
 const (
-	ModuleGate       core.M_Modules = "gateway"    //gate模块 网关服务模块
+	ModuleGateway    core.M_Modules = "gateway"    //gate模块 网关服务模块
 	ModuleCollection core.M_Modules = "collection" //收藏模块 集合模块 提供集合数据 股票, 基金, 指数等
 
 )
 
 const (
+	Rpc_GatewayRoute     core.Rpc_Key = "Rpc_GatewayRoute"     //网关路由
 	Rpc_GatewayHttpRoute core.Rpc_Key = "Rpc_GatewayHttpRoute" //Http网关路由
 )
 

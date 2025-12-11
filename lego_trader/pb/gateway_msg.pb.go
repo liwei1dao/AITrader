@@ -22,126 +22,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type GatewayAgentReq struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Agentid       string                 `protobuf:"bytes,1,opt,name=agentid,proto3" json:"agentid,omitempty"`
-	Params        string                 `protobuf:"bytes,2,opt,name=params,proto3" json:"params,omitempty"`
-	Sign          string                 `protobuf:"bytes,3,opt,name=sign,proto3" json:"sign,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GatewayAgentReq) Reset() {
-	*x = GatewayAgentReq{}
-	mi := &file_gateway_gateway_msg_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GatewayAgentReq) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GatewayAgentReq) ProtoMessage() {}
-
-func (x *GatewayAgentReq) ProtoReflect() protoreflect.Message {
-	mi := &file_gateway_gateway_msg_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GatewayAgentReq.ProtoReflect.Descriptor instead.
-func (*GatewayAgentReq) Descriptor() ([]byte, []int) {
-	return file_gateway_gateway_msg_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *GatewayAgentReq) GetAgentid() string {
-	if x != nil {
-		return x.Agentid
-	}
-	return ""
-}
-
-func (x *GatewayAgentReq) GetParams() string {
-	if x != nil {
-		return x.Params
-	}
-	return ""
-}
-
-func (x *GatewayAgentReq) GetSign() string {
-	if x != nil {
-		return x.Sign
-	}
-	return ""
-}
-
-type GatewayAgentResp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Code          ErrorCode              `protobuf:"varint,1,opt,name=code,proto3,enum=ErrorCode" json:"code"` //@go_tags(`json:"code"`)
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Data          string                 `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GatewayAgentResp) Reset() {
-	*x = GatewayAgentResp{}
-	mi := &file_gateway_gateway_msg_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GatewayAgentResp) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GatewayAgentResp) ProtoMessage() {}
-
-func (x *GatewayAgentResp) ProtoReflect() protoreflect.Message {
-	mi := &file_gateway_gateway_msg_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GatewayAgentResp.ProtoReflect.Descriptor instead.
-func (*GatewayAgentResp) Descriptor() ([]byte, []int) {
-	return file_gateway_gateway_msg_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *GatewayAgentResp) GetCode() ErrorCode {
-	if x != nil {
-		return x.Code
-	}
-	return ErrorCode_Success
-}
-
-func (x *GatewayAgentResp) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-func (x *GatewayAgentResp) GetData() string {
-	if x != nil {
-		return x.Data
-	}
-	return ""
-}
-
 // 网关心跳 请求
 type GatewayHeartbeatReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -151,7 +31,7 @@ type GatewayHeartbeatReq struct {
 
 func (x *GatewayHeartbeatReq) Reset() {
 	*x = GatewayHeartbeatReq{}
-	mi := &file_gateway_gateway_msg_proto_msgTypes[2]
+	mi := &file_gateway_gateway_msg_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -163,7 +43,7 @@ func (x *GatewayHeartbeatReq) String() string {
 func (*GatewayHeartbeatReq) ProtoMessage() {}
 
 func (x *GatewayHeartbeatReq) ProtoReflect() protoreflect.Message {
-	mi := &file_gateway_gateway_msg_proto_msgTypes[2]
+	mi := &file_gateway_gateway_msg_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -176,7 +56,7 @@ func (x *GatewayHeartbeatReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GatewayHeartbeatReq.ProtoReflect.Descriptor instead.
 func (*GatewayHeartbeatReq) Descriptor() ([]byte, []int) {
-	return file_gateway_gateway_msg_proto_rawDescGZIP(), []int{2}
+	return file_gateway_gateway_msg_proto_rawDescGZIP(), []int{0}
 }
 
 // 网关心跳 请求回应
@@ -189,7 +69,7 @@ type GatewayHeartbeatResp struct {
 
 func (x *GatewayHeartbeatResp) Reset() {
 	*x = GatewayHeartbeatResp{}
-	mi := &file_gateway_gateway_msg_proto_msgTypes[3]
+	mi := &file_gateway_gateway_msg_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -201,7 +81,7 @@ func (x *GatewayHeartbeatResp) String() string {
 func (*GatewayHeartbeatResp) ProtoMessage() {}
 
 func (x *GatewayHeartbeatResp) ProtoReflect() protoreflect.Message {
-	mi := &file_gateway_gateway_msg_proto_msgTypes[3]
+	mi := &file_gateway_gateway_msg_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -214,7 +94,7 @@ func (x *GatewayHeartbeatResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GatewayHeartbeatResp.ProtoReflect.Descriptor instead.
 func (*GatewayHeartbeatResp) Descriptor() ([]byte, []int) {
-	return file_gateway_gateway_msg_proto_rawDescGZIP(), []int{3}
+	return file_gateway_gateway_msg_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *GatewayHeartbeatResp) GetTimestamp() int64 {
@@ -230,14 +110,14 @@ type GatewayErrorNotifyPush struct {
 	MsgName       string                 `protobuf:"bytes,1,opt,name=MsgName,proto3" json:"MsgName,omitempty"`         //消息id 客户端标记
 	ServicePath   string                 `protobuf:"bytes,2,opt,name=ServicePath,proto3" json:"ServicePath,omitempty"` //消息路由
 	Req           *anypb.Any             `protobuf:"bytes,3,opt,name=Req,proto3" json:"Req,omitempty"`                 //参数信息
-	Err           *ErrorData             `protobuf:"bytes,4,opt,name=Err,proto3" json:"Err,omitempty"`                 //错误数据
+	Error         *ErrorData             `protobuf:"bytes,4,opt,name=Error,proto3" json:"Error,omitempty"`             //错误数据
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GatewayErrorNotifyPush) Reset() {
 	*x = GatewayErrorNotifyPush{}
-	mi := &file_gateway_gateway_msg_proto_msgTypes[4]
+	mi := &file_gateway_gateway_msg_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -249,7 +129,7 @@ func (x *GatewayErrorNotifyPush) String() string {
 func (*GatewayErrorNotifyPush) ProtoMessage() {}
 
 func (x *GatewayErrorNotifyPush) ProtoReflect() protoreflect.Message {
-	mi := &file_gateway_gateway_msg_proto_msgTypes[4]
+	mi := &file_gateway_gateway_msg_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -262,7 +142,7 @@ func (x *GatewayErrorNotifyPush) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GatewayErrorNotifyPush.ProtoReflect.Descriptor instead.
 func (*GatewayErrorNotifyPush) Descriptor() ([]byte, []int) {
-	return file_gateway_gateway_msg_proto_rawDescGZIP(), []int{4}
+	return file_gateway_gateway_msg_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GatewayErrorNotifyPush) GetMsgName() string {
@@ -286,9 +166,9 @@ func (x *GatewayErrorNotifyPush) GetReq() *anypb.Any {
 	return nil
 }
 
-func (x *GatewayErrorNotifyPush) GetErr() *ErrorData {
+func (x *GatewayErrorNotifyPush) GetError() *ErrorData {
 	if x != nil {
-		return x.Err
+		return x.Error
 	}
 	return nil
 }
@@ -298,25 +178,16 @@ var File_gateway_gateway_msg_proto protoreflect.FileDescriptor
 const file_gateway_gateway_msg_proto_rawDesc = "" +
 	"\n" +
 	"\x19gateway/gateway_msg.proto\x1a\n" +
-	"comm.proto\x1a\x0ferrorcode.proto\x1a\x19google/protobuf/any.proto\"W\n" +
-	"\x0fGatewayAgentReq\x12\x18\n" +
-	"\aagentid\x18\x01 \x01(\tR\aagentid\x12\x16\n" +
-	"\x06params\x18\x02 \x01(\tR\x06params\x12\x12\n" +
-	"\x04sign\x18\x03 \x01(\tR\x04sign\"`\n" +
-	"\x10GatewayAgentResp\x12\x1e\n" +
-	"\x04code\x18\x01 \x01(\x0e2\n" +
-	".ErrorCodeR\x04code\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\x12\x12\n" +
-	"\x04data\x18\x03 \x01(\tR\x04data\"\x15\n" +
+	"comm.proto\x1a\x19google/protobuf/any.proto\"\x15\n" +
 	"\x13GatewayHeartbeatReq\"4\n" +
 	"\x14GatewayHeartbeatResp\x12\x1c\n" +
-	"\ttimestamp\x18\x01 \x01(\x03R\ttimestamp\"\x9a\x01\n" +
+	"\ttimestamp\x18\x01 \x01(\x03R\ttimestamp\"\x9e\x01\n" +
 	"\x16GatewayErrorNotifyPush\x12\x18\n" +
 	"\aMsgName\x18\x01 \x01(\tR\aMsgName\x12 \n" +
 	"\vServicePath\x18\x02 \x01(\tR\vServicePath\x12&\n" +
-	"\x03Req\x18\x03 \x01(\v2\x14.google.protobuf.AnyR\x03Req\x12\x1c\n" +
-	"\x03Err\x18\x04 \x01(\v2\n" +
-	".ErrorDataR\x03ErrB\x06Z\x04.;pbb\x06proto3"
+	"\x03Req\x18\x03 \x01(\v2\x14.google.protobuf.AnyR\x03Req\x12 \n" +
+	"\x05Error\x18\x04 \x01(\v2\n" +
+	".ErrorDataR\x05ErrorB\x06Z\x04.;pbb\x06proto3"
 
 var (
 	file_gateway_gateway_msg_proto_rawDescOnce sync.Once
@@ -330,26 +201,22 @@ func file_gateway_gateway_msg_proto_rawDescGZIP() []byte {
 	return file_gateway_gateway_msg_proto_rawDescData
 }
 
-var file_gateway_gateway_msg_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_gateway_gateway_msg_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_gateway_gateway_msg_proto_goTypes = []any{
-	(*GatewayAgentReq)(nil),        // 0: GatewayAgentReq
-	(*GatewayAgentResp)(nil),       // 1: GatewayAgentResp
-	(*GatewayHeartbeatReq)(nil),    // 2: GatewayHeartbeatReq
-	(*GatewayHeartbeatResp)(nil),   // 3: GatewayHeartbeatResp
-	(*GatewayErrorNotifyPush)(nil), // 4: GatewayErrorNotifyPush
-	(ErrorCode)(0),                 // 5: ErrorCode
-	(*anypb.Any)(nil),              // 6: google.protobuf.Any
-	(*ErrorData)(nil),              // 7: ErrorData
+	(*GatewayHeartbeatReq)(nil),    // 0: GatewayHeartbeatReq
+	(*GatewayHeartbeatResp)(nil),   // 1: GatewayHeartbeatResp
+	(*GatewayErrorNotifyPush)(nil), // 2: GatewayErrorNotifyPush
+	(*anypb.Any)(nil),              // 3: google.protobuf.Any
+	(*ErrorData)(nil),              // 4: ErrorData
 }
 var file_gateway_gateway_msg_proto_depIdxs = []int32{
-	5, // 0: GatewayAgentResp.code:type_name -> ErrorCode
-	6, // 1: GatewayErrorNotifyPush.Req:type_name -> google.protobuf.Any
-	7, // 2: GatewayErrorNotifyPush.Err:type_name -> ErrorData
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	3, // 0: GatewayErrorNotifyPush.Req:type_name -> google.protobuf.Any
+	4, // 1: GatewayErrorNotifyPush.Error:type_name -> ErrorData
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_gateway_gateway_msg_proto_init() }
@@ -358,14 +225,13 @@ func file_gateway_gateway_msg_proto_init() {
 		return
 	}
 	file_comm_proto_init()
-	file_errorcode_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_gateway_gateway_msg_proto_rawDesc), len(file_gateway_gateway_msg_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

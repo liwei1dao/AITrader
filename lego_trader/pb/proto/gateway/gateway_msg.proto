@@ -1,7 +1,6 @@
 syntax = "proto3";
 option go_package = ".;pb";
 import "comm.proto";
-import "errorcode.proto";
 import "google/protobuf/any.proto";
 
 //网关心跳 请求  
@@ -20,5 +19,5 @@ message GatewayErrorNotifyPush {
     string MsgName = 1;             //消息id 客户端标记
     string ServicePath = 2;         //消息路由
     google.protobuf.Any Req = 3;    //参数信息
-    ErrorData Err = 4;              //错误数据
+    ErrorData Error = 4;              //错误数据
 }

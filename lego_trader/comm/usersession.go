@@ -3,6 +3,7 @@ package comm
 import (
 	"fmt"
 	"lego_trader/lego/utils"
+	"net/url"
 	"sync"
 )
 
@@ -24,6 +25,7 @@ func NewUserSession() IUserSession {
 // 用户会话
 type UserSession struct {
 	service   IService
+	values    url.Values
 	metalock  sync.RWMutex
 	meta      map[string]string
 	cachelock sync.RWMutex
@@ -31,11 +33,16 @@ type UserSession struct {
 }
 
 // 重置
-func (this *UserSession) SetSession(service IService, meta map[string]string) {
+func (this *UserSession) SetSession(service IService, values string) {
 	this.service = service
-	for k, v := range meta {
-		this.meta[k] = v
+	this.metalock.Lock()
+	this.values, _ = url.ParseQuery(values)
+	for k, v := range this.values {
+		if len(v) > 0 {
+			this.meta[k] = v[0]
+		}
 	}
+	this.metalock.Unlock()
 }
 
 // 重置
@@ -97,13 +104,18 @@ func (this *UserSession) GetUserId() string {
 func (this *UserSession) SetMate(name, value string) {
 	this.metalock.Lock()
 	this.meta[name] = value
+	this.values.Add(name, value)
 	this.metalock.Unlock()
 }
 
-func (this *UserSession) SetMates(meta map[string]string) {
+func (this *UserSession) SetMates(values string) {
+	temp_values, _ := url.ParseQuery(values)
 	this.metalock.Lock()
-	for k, v := range meta {
-		this.meta[k] = v
+	for k, v := range temp_values {
+		if len(v) > 0 {
+			this.meta[k] = v[0]
+			this.values.Add(k, v[0])
+		}
 	}
 	this.metalock.Unlock()
 }
@@ -133,7 +145,7 @@ func (this *UserSession) GetCache(name string) (value interface{}, ok bool) {
 
 // 克隆
 func (this *UserSession) Clone() (session IUserSession) {
-	session = this.service.GetUserSession(make(map[string]string))
+	session = this.service.GetUserSession("")
 	this.metalock.RLock()
 	for k, v := range this.meta {
 		session.SetMate(k, v)
@@ -147,12 +159,8 @@ func (this *UserSession) Clone() (session IUserSession) {
 	return
 }
 
-func (this *UserSession) GetMetas() (meta map[string]string) {
-	meta = make(map[string]string)
+func (this *UserSession) GetMetas() (meta string) {
 	this.metalock.RLock()
-	for k, v := range this.meta {
-		meta[k] = v
-	}
-	this.metalock.RUnlock()
-	return
+	defer this.metalock.RUnlock()
+	return this.values.Encode()
 }

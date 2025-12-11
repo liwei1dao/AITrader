@@ -2,6 +2,8 @@ package modules
 
 import (
 	"lego_trader/comm"
+	"lego_trader/lego/core"
+	"lego_trader/lego/sys/log"
 	"lego_trader/pb"
 	"reflect"
 
@@ -15,3 +17,8 @@ var (
 	typeOfErrorData = reflect.TypeOf((*pb.ErrorData)(nil))
 	typeOfError     = reflect.TypeOf((*error)(nil)).Elem()
 )
+
+type IModule interface {
+	core.IModule
+	log.ILogger
+}

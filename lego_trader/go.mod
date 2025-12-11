@@ -12,6 +12,7 @@ require (
 	github.com/go-playground/validator/v10 v10.28.0
 	github.com/goccy/go-json v0.10.5
 	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/gorilla/websocket v1.5.0
 	github.com/json-iterator/go v1.1.12
 	github.com/mitchellh/mapstructure v1.4.1
 	github.com/rcrowley/go-metrics v0.0.0-20250401214520-65e299d6c5c9

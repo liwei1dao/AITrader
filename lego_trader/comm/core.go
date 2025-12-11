@@ -11,7 +11,7 @@ import (
 
 type IService interface {
 	base.IRPCXService
-	GetUserSession(mate map[string]string) (session IUserSession)
+	GetUserSession(mate string) (session IUserSession)
 	PutUserSession(session IUserSession)
 }
 type ISC_HttpRouteComp interface {
@@ -22,7 +22,7 @@ type ISC_HttpRouteComp interface {
 
 // 用户会话
 type IUserSession interface {
-	SetSession(service IService, mate map[string]string)
+	SetSession(service IService, values string)
 	GetMateToString(key string) string
 	GetMateToInt64(key string) int64
 	GetMateToUInt64(key string) uint64
@@ -33,13 +33,13 @@ type IUserSession interface {
 	GetMateToBool(key string) bool
 	GetUserId() string
 	Reset()
-	SetMate(name string, value string)
-	SetMates(meta map[string]string)
+	SetMate(name string, values string)
+	SetMates(values string)
 	GetMate(name string) (value string, ok bool)
 	SetCache(name string, value interface{})
 	GetCache(name string) (value interface{}, ok bool)
 	Clone() (session IUserSession) //克隆
-	GetMetas() (meta map[string]string)
+	GetMetas() (values string)
 }
 
 type HttpResult struct {

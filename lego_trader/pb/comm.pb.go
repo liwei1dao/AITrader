@@ -74,119 +74,6 @@ func (x *ErrorData) GetMessage() string {
 	return ""
 }
 
-// 网关Http 路由请求
-type Rpc_GatewayHttpRouteReq struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	MsgName       string                 `protobuf:"bytes,1,opt,name=MsgName,proto3" json:"MsgName,omitempty"`
-	Meta          map[string]string      `protobuf:"bytes,2,rep,name=Meta,proto3" json:"Meta,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	Message       []byte                 `protobuf:"bytes,3,opt,name=Message,proto3" json:"Message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *Rpc_GatewayHttpRouteReq) Reset() {
-	*x = Rpc_GatewayHttpRouteReq{}
-	mi := &file_comm_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *Rpc_GatewayHttpRouteReq) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Rpc_GatewayHttpRouteReq) ProtoMessage() {}
-
-func (x *Rpc_GatewayHttpRouteReq) ProtoReflect() protoreflect.Message {
-	mi := &file_comm_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Rpc_GatewayHttpRouteReq.ProtoReflect.Descriptor instead.
-func (*Rpc_GatewayHttpRouteReq) Descriptor() ([]byte, []int) {
-	return file_comm_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *Rpc_GatewayHttpRouteReq) GetMsgName() string {
-	if x != nil {
-		return x.MsgName
-	}
-	return ""
-}
-
-func (x *Rpc_GatewayHttpRouteReq) GetMeta() map[string]string {
-	if x != nil {
-		return x.Meta
-	}
-	return nil
-}
-
-func (x *Rpc_GatewayHttpRouteReq) GetMessage() []byte {
-	if x != nil {
-		return x.Message
-	}
-	return nil
-}
-
-type Rpc_GatewayHttpRouteResp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ContentType   string                 `protobuf:"bytes,1,opt,name=ContentType,proto3" json:"ContentType,omitempty"`
-	Body          []byte                 `protobuf:"bytes,2,opt,name=Body,proto3" json:"Body,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *Rpc_GatewayHttpRouteResp) Reset() {
-	*x = Rpc_GatewayHttpRouteResp{}
-	mi := &file_comm_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *Rpc_GatewayHttpRouteResp) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Rpc_GatewayHttpRouteResp) ProtoMessage() {}
-
-func (x *Rpc_GatewayHttpRouteResp) ProtoReflect() protoreflect.Message {
-	mi := &file_comm_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Rpc_GatewayHttpRouteResp.ProtoReflect.Descriptor instead.
-func (*Rpc_GatewayHttpRouteResp) Descriptor() ([]byte, []int) {
-	return file_comm_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *Rpc_GatewayHttpRouteResp) GetContentType() string {
-	if x != nil {
-		return x.ContentType
-	}
-	return ""
-}
-
-func (x *Rpc_GatewayHttpRouteResp) GetBody() []byte {
-	if x != nil {
-		return x.Body
-	}
-	return nil
-}
-
 // 集合包
 type MessagePackage struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -197,7 +84,7 @@ type MessagePackage struct {
 
 func (x *MessagePackage) Reset() {
 	*x = MessagePackage{}
-	mi := &file_comm_proto_msgTypes[3]
+	mi := &file_comm_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -209,7 +96,7 @@ func (x *MessagePackage) String() string {
 func (*MessagePackage) ProtoMessage() {}
 
 func (x *MessagePackage) ProtoReflect() protoreflect.Message {
-	mi := &file_comm_proto_msgTypes[3]
+	mi := &file_comm_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -222,7 +109,7 @@ func (x *MessagePackage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MessagePackage.ProtoReflect.Descriptor instead.
 func (*MessagePackage) Descriptor() ([]byte, []int) {
-	return file_comm_proto_rawDescGZIP(), []int{3}
+	return file_comm_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *MessagePackage) GetMessages() []*SocketMessage {
@@ -236,7 +123,7 @@ func (x *MessagePackage) GetMessages() []*SocketMessage {
 type SocketMessage struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	MsgName       string                 `protobuf:"bytes,1,opt,name=MsgName,proto3" json:"MsgName,omitempty"`         //消息名称
-	ServicePath   string                 `protobuf:"bytes,2,opt,name=servicePath,proto3" json:"servicePath,omitempty"` // 消息路由地址 部分消息前端确定转发给谁 \worker\worker0
+	ServicePath   string                 `protobuf:"bytes,2,opt,name=ServicePath,proto3" json:"ServicePath,omitempty"` // 消息路由地址 部分消息前端确定转发给谁 \worker\worker0
 	Data          *anypb.Any             `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
 	Sec           string                 `protobuf:"bytes,4,opt,name=sec,proto3" json:"sec,omitempty"` //密文
 	unknownFields protoimpl.UnknownFields
@@ -245,7 +132,7 @@ type SocketMessage struct {
 
 func (x *SocketMessage) Reset() {
 	*x = SocketMessage{}
-	mi := &file_comm_proto_msgTypes[4]
+	mi := &file_comm_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -257,7 +144,7 @@ func (x *SocketMessage) String() string {
 func (*SocketMessage) ProtoMessage() {}
 
 func (x *SocketMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_comm_proto_msgTypes[4]
+	mi := &file_comm_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -270,7 +157,7 @@ func (x *SocketMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SocketMessage.ProtoReflect.Descriptor instead.
 func (*SocketMessage) Descriptor() ([]byte, []int) {
-	return file_comm_proto_rawDescGZIP(), []int{4}
+	return file_comm_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *SocketMessage) GetMsgName() string {
@@ -301,6 +188,608 @@ func (x *SocketMessage) GetSec() string {
 	return ""
 }
 
+// 网关Http 路由请求
+type Rpc_GatewayHttpRouteReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MsgName       string                 `protobuf:"bytes,1,opt,name=MsgName,proto3" json:"MsgName,omitempty"`
+	Meta          string                 `protobuf:"bytes,2,opt,name=Meta,proto3" json:"Meta,omitempty"`
+	Message       []byte                 `protobuf:"bytes,3,opt,name=Message,proto3" json:"Message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Rpc_GatewayHttpRouteReq) Reset() {
+	*x = Rpc_GatewayHttpRouteReq{}
+	mi := &file_comm_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rpc_GatewayHttpRouteReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rpc_GatewayHttpRouteReq) ProtoMessage() {}
+
+func (x *Rpc_GatewayHttpRouteReq) ProtoReflect() protoreflect.Message {
+	mi := &file_comm_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rpc_GatewayHttpRouteReq.ProtoReflect.Descriptor instead.
+func (*Rpc_GatewayHttpRouteReq) Descriptor() ([]byte, []int) {
+	return file_comm_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *Rpc_GatewayHttpRouteReq) GetMsgName() string {
+	if x != nil {
+		return x.MsgName
+	}
+	return ""
+}
+
+func (x *Rpc_GatewayHttpRouteReq) GetMeta() string {
+	if x != nil {
+		return x.Meta
+	}
+	return ""
+}
+
+func (x *Rpc_GatewayHttpRouteReq) GetMessage() []byte {
+	if x != nil {
+		return x.Message
+	}
+	return nil
+}
+
+type Rpc_GatewayHttpRouteResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ContentType   string                 `protobuf:"bytes,1,opt,name=ContentType,proto3" json:"ContentType,omitempty"`
+	Body          []byte                 `protobuf:"bytes,2,opt,name=Body,proto3" json:"Body,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Rpc_GatewayHttpRouteResp) Reset() {
+	*x = Rpc_GatewayHttpRouteResp{}
+	mi := &file_comm_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rpc_GatewayHttpRouteResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rpc_GatewayHttpRouteResp) ProtoMessage() {}
+
+func (x *Rpc_GatewayHttpRouteResp) ProtoReflect() protoreflect.Message {
+	mi := &file_comm_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rpc_GatewayHttpRouteResp.ProtoReflect.Descriptor instead.
+func (*Rpc_GatewayHttpRouteResp) Descriptor() ([]byte, []int) {
+	return file_comm_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *Rpc_GatewayHttpRouteResp) GetContentType() string {
+	if x != nil {
+		return x.ContentType
+	}
+	return ""
+}
+
+func (x *Rpc_GatewayHttpRouteResp) GetBody() []byte {
+	if x != nil {
+		return x.Body
+	}
+	return nil
+}
+
+type Rpc_GatewayRouteReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MsgName       string                 `protobuf:"bytes,1,opt,name=MsgName,proto3" json:"MsgName,omitempty"`
+	Meta          string                 `protobuf:"bytes,2,opt,name=Meta,proto3" json:"Meta,omitempty"`
+	Message       *anypb.Any             `protobuf:"bytes,3,opt,name=Message,proto3" json:"Message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Rpc_GatewayRouteReq) Reset() {
+	*x = Rpc_GatewayRouteReq{}
+	mi := &file_comm_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rpc_GatewayRouteReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rpc_GatewayRouteReq) ProtoMessage() {}
+
+func (x *Rpc_GatewayRouteReq) ProtoReflect() protoreflect.Message {
+	mi := &file_comm_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rpc_GatewayRouteReq.ProtoReflect.Descriptor instead.
+func (*Rpc_GatewayRouteReq) Descriptor() ([]byte, []int) {
+	return file_comm_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Rpc_GatewayRouteReq) GetMsgName() string {
+	if x != nil {
+		return x.MsgName
+	}
+	return ""
+}
+
+func (x *Rpc_GatewayRouteReq) GetMeta() string {
+	if x != nil {
+		return x.Meta
+	}
+	return ""
+}
+
+func (x *Rpc_GatewayRouteReq) GetMessage() *anypb.Any {
+	if x != nil {
+		return x.Message
+	}
+	return nil
+}
+
+type Rpc_GatewayRouteResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ServicePath   string                 `protobuf:"bytes,1,opt,name=ServicePath,proto3" json:"ServicePath,omitempty"`
+	ErrorData     *ErrorData             `protobuf:"bytes,2,opt,name=ErrorData,proto3" json:"ErrorData,omitempty"`
+	Reply         []*SocketMessage       `protobuf:"bytes,3,rep,name=Reply,proto3" json:"Reply,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Rpc_GatewayRouteResp) Reset() {
+	*x = Rpc_GatewayRouteResp{}
+	mi := &file_comm_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rpc_GatewayRouteResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rpc_GatewayRouteResp) ProtoMessage() {}
+
+func (x *Rpc_GatewayRouteResp) ProtoReflect() protoreflect.Message {
+	mi := &file_comm_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rpc_GatewayRouteResp.ProtoReflect.Descriptor instead.
+func (*Rpc_GatewayRouteResp) Descriptor() ([]byte, []int) {
+	return file_comm_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *Rpc_GatewayRouteResp) GetServicePath() string {
+	if x != nil {
+		return x.ServicePath
+	}
+	return ""
+}
+
+func (x *Rpc_GatewayRouteResp) GetErrorData() *ErrorData {
+	if x != nil {
+		return x.ErrorData
+	}
+	return nil
+}
+
+func (x *Rpc_GatewayRouteResp) GetReply() []*SocketMessage {
+	if x != nil {
+		return x.Reply
+	}
+	return nil
+}
+
+// RPC向用户代理发送消息
+type Rpc_GatewaySendMsgToAgentReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserSessionId string                 `protobuf:"bytes,1,opt,name=UserSessionId,proto3" json:"UserSessionId,omitempty"` //用户会话ID
+	Reply         []*SocketMessage       `protobuf:"bytes,2,rep,name=Reply,proto3" json:"Reply,omitempty"`                 //回复消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Rpc_GatewaySendMsgToAgentReq) Reset() {
+	*x = Rpc_GatewaySendMsgToAgentReq{}
+	mi := &file_comm_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rpc_GatewaySendMsgToAgentReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rpc_GatewaySendMsgToAgentReq) ProtoMessage() {}
+
+func (x *Rpc_GatewaySendMsgToAgentReq) ProtoReflect() protoreflect.Message {
+	mi := &file_comm_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rpc_GatewaySendMsgToAgentReq.ProtoReflect.Descriptor instead.
+func (*Rpc_GatewaySendMsgToAgentReq) Descriptor() ([]byte, []int) {
+	return file_comm_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *Rpc_GatewaySendMsgToAgentReq) GetUserSessionId() string {
+	if x != nil {
+		return x.UserSessionId
+	}
+	return ""
+}
+
+func (x *Rpc_GatewaySendMsgToAgentReq) GetReply() []*SocketMessage {
+	if x != nil {
+		return x.Reply
+	}
+	return nil
+}
+
+type Rpc_GatewaySendMsgToAgentResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ErrorData     *ErrorData             `protobuf:"bytes,1,opt,name=ErrorData,proto3" json:"ErrorData,omitempty"` //错误信息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Rpc_GatewaySendMsgToAgentResp) Reset() {
+	*x = Rpc_GatewaySendMsgToAgentResp{}
+	mi := &file_comm_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rpc_GatewaySendMsgToAgentResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rpc_GatewaySendMsgToAgentResp) ProtoMessage() {}
+
+func (x *Rpc_GatewaySendMsgToAgentResp) ProtoReflect() protoreflect.Message {
+	mi := &file_comm_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rpc_GatewaySendMsgToAgentResp.ProtoReflect.Descriptor instead.
+func (*Rpc_GatewaySendMsgToAgentResp) Descriptor() ([]byte, []int) {
+	return file_comm_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *Rpc_GatewaySendMsgToAgentResp) GetErrorData() *ErrorData {
+	if x != nil {
+		return x.ErrorData
+	}
+	return nil
+}
+
+type Rpc_GatewaySendMsgsToAgentsReq struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	UserSessionIds []string               `protobuf:"bytes,1,rep,name=UserSessionIds,proto3" json:"UserSessionIds,omitempty"` //用户会话ID列表
+	Reply          []*SocketMessage       `protobuf:"bytes,2,rep,name=Reply,proto3" json:"Reply,omitempty"`                   //回复消息
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *Rpc_GatewaySendMsgsToAgentsReq) Reset() {
+	*x = Rpc_GatewaySendMsgsToAgentsReq{}
+	mi := &file_comm_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rpc_GatewaySendMsgsToAgentsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rpc_GatewaySendMsgsToAgentsReq) ProtoMessage() {}
+
+func (x *Rpc_GatewaySendMsgsToAgentsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_comm_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rpc_GatewaySendMsgsToAgentsReq.ProtoReflect.Descriptor instead.
+func (*Rpc_GatewaySendMsgsToAgentsReq) Descriptor() ([]byte, []int) {
+	return file_comm_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *Rpc_GatewaySendMsgsToAgentsReq) GetUserSessionIds() []string {
+	if x != nil {
+		return x.UserSessionIds
+	}
+	return nil
+}
+
+func (x *Rpc_GatewaySendMsgsToAgentsReq) GetReply() []*SocketMessage {
+	if x != nil {
+		return x.Reply
+	}
+	return nil
+}
+
+type Rpc_GatewaySendMsgsToAgentsResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ErrorData     *ErrorData             `protobuf:"bytes,1,opt,name=ErrorData,proto3" json:"ErrorData,omitempty"` //错误信息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Rpc_GatewaySendMsgsToAgentsResp) Reset() {
+	*x = Rpc_GatewaySendMsgsToAgentsResp{}
+	mi := &file_comm_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rpc_GatewaySendMsgsToAgentsResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rpc_GatewaySendMsgsToAgentsResp) ProtoMessage() {}
+
+func (x *Rpc_GatewaySendMsgsToAgentsResp) ProtoReflect() protoreflect.Message {
+	mi := &file_comm_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rpc_GatewaySendMsgsToAgentsResp.ProtoReflect.Descriptor instead.
+func (*Rpc_GatewaySendMsgsToAgentsResp) Descriptor() ([]byte, []int) {
+	return file_comm_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *Rpc_GatewaySendMsgsToAgentsResp) GetErrorData() *ErrorData {
+	if x != nil {
+		return x.ErrorData
+	}
+	return nil
+}
+
+type Rpc_GatewaySendMsgsToAllAgentsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Reply         []*SocketMessage       `protobuf:"bytes,2,rep,name=Reply,proto3" json:"Reply,omitempty"` //回复消息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Rpc_GatewaySendMsgsToAllAgentsReq) Reset() {
+	*x = Rpc_GatewaySendMsgsToAllAgentsReq{}
+	mi := &file_comm_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rpc_GatewaySendMsgsToAllAgentsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rpc_GatewaySendMsgsToAllAgentsReq) ProtoMessage() {}
+
+func (x *Rpc_GatewaySendMsgsToAllAgentsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_comm_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rpc_GatewaySendMsgsToAllAgentsReq.ProtoReflect.Descriptor instead.
+func (*Rpc_GatewaySendMsgsToAllAgentsReq) Descriptor() ([]byte, []int) {
+	return file_comm_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *Rpc_GatewaySendMsgsToAllAgentsReq) GetReply() []*SocketMessage {
+	if x != nil {
+		return x.Reply
+	}
+	return nil
+}
+
+type Rpc_GatewaySendMsgsToAllAgentsResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ErrorData     *ErrorData             `protobuf:"bytes,1,opt,name=ErrorData,proto3" json:"ErrorData,omitempty"` //错误信息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Rpc_GatewaySendMsgsToAllAgentsResp) Reset() {
+	*x = Rpc_GatewaySendMsgsToAllAgentsResp{}
+	mi := &file_comm_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rpc_GatewaySendMsgsToAllAgentsResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rpc_GatewaySendMsgsToAllAgentsResp) ProtoMessage() {}
+
+func (x *Rpc_GatewaySendMsgsToAllAgentsResp) ProtoReflect() protoreflect.Message {
+	mi := &file_comm_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rpc_GatewaySendMsgsToAllAgentsResp.ProtoReflect.Descriptor instead.
+func (*Rpc_GatewaySendMsgsToAllAgentsResp) Descriptor() ([]byte, []int) {
+	return file_comm_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *Rpc_GatewaySendMsgsToAllAgentsResp) GetErrorData() *ErrorData {
+	if x != nil {
+		return x.ErrorData
+	}
+	return nil
+}
+
+type Rpc_GatewayCloseAgentsReq struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	UserSessionIds []string               `protobuf:"bytes,1,rep,name=UserSessionIds,proto3" json:"UserSessionIds,omitempty"` //用户会话ID列表
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *Rpc_GatewayCloseAgentsReq) Reset() {
+	*x = Rpc_GatewayCloseAgentsReq{}
+	mi := &file_comm_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rpc_GatewayCloseAgentsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rpc_GatewayCloseAgentsReq) ProtoMessage() {}
+
+func (x *Rpc_GatewayCloseAgentsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_comm_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rpc_GatewayCloseAgentsReq.ProtoReflect.Descriptor instead.
+func (*Rpc_GatewayCloseAgentsReq) Descriptor() ([]byte, []int) {
+	return file_comm_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *Rpc_GatewayCloseAgentsReq) GetUserSessionIds() []string {
+	if x != nil {
+		return x.UserSessionIds
+	}
+	return nil
+}
+
+type Rpc_GatewayCloseAgentsResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ErrorData     *ErrorData             `protobuf:"bytes,1,opt,name=ErrorData,proto3" json:"ErrorData,omitempty"` //错误信息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Rpc_GatewayCloseAgentsResp) Reset() {
+	*x = Rpc_GatewayCloseAgentsResp{}
+	mi := &file_comm_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rpc_GatewayCloseAgentsResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rpc_GatewayCloseAgentsResp) ProtoMessage() {}
+
+func (x *Rpc_GatewayCloseAgentsResp) ProtoReflect() protoreflect.Message {
+	mi := &file_comm_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rpc_GatewayCloseAgentsResp.ProtoReflect.Descriptor instead.
+func (*Rpc_GatewayCloseAgentsResp) Descriptor() ([]byte, []int) {
+	return file_comm_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *Rpc_GatewayCloseAgentsResp) GetErrorData() *ErrorData {
+	if x != nil {
+		return x.ErrorData
+	}
+	return nil
+}
+
 var File_comm_proto protoreflect.FileDescriptor
 
 const file_comm_proto_rawDesc = "" +
@@ -310,24 +799,52 @@ const file_comm_proto_rawDesc = "" +
 	"\tErrorData\x12\x1e\n" +
 	"\x04Code\x18\x01 \x01(\x0e2\n" +
 	".ErrorCodeR\x04Code\x12\x18\n" +
-	"\aMessage\x18\x02 \x01(\tR\aMessage\"\xbe\x01\n" +
-	"\x17Rpc_GatewayHttpRouteReq\x12\x18\n" +
-	"\aMsgName\x18\x01 \x01(\tR\aMsgName\x126\n" +
-	"\x04Meta\x18\x02 \x03(\v2\".Rpc_GatewayHttpRouteReq.MetaEntryR\x04Meta\x12\x18\n" +
-	"\aMessage\x18\x03 \x01(\fR\aMessage\x1a7\n" +
-	"\tMetaEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"P\n" +
-	"\x18Rpc_GatewayHttpRouteResp\x12 \n" +
-	"\vContentType\x18\x01 \x01(\tR\vContentType\x12\x12\n" +
-	"\x04Body\x18\x02 \x01(\fR\x04Body\"<\n" +
+	"\aMessage\x18\x02 \x01(\tR\aMessage\"<\n" +
 	"\x0eMessagePackage\x12*\n" +
 	"\bmessages\x18\x01 \x03(\v2\x0e.SocketMessageR\bmessages\"\x87\x01\n" +
 	"\rSocketMessage\x12\x18\n" +
 	"\aMsgName\x18\x01 \x01(\tR\aMsgName\x12 \n" +
-	"\vservicePath\x18\x02 \x01(\tR\vservicePath\x12(\n" +
+	"\vServicePath\x18\x02 \x01(\tR\vServicePath\x12(\n" +
 	"\x04data\x18\x03 \x01(\v2\x14.google.protobuf.AnyR\x04data\x12\x10\n" +
-	"\x03sec\x18\x04 \x01(\tR\x03secB\x06Z\x04.;pbb\x06proto3"
+	"\x03sec\x18\x04 \x01(\tR\x03sec\"a\n" +
+	"\x17Rpc_GatewayHttpRouteReq\x12\x18\n" +
+	"\aMsgName\x18\x01 \x01(\tR\aMsgName\x12\x12\n" +
+	"\x04Meta\x18\x02 \x01(\tR\x04Meta\x12\x18\n" +
+	"\aMessage\x18\x03 \x01(\fR\aMessage\"P\n" +
+	"\x18Rpc_GatewayHttpRouteResp\x12 \n" +
+	"\vContentType\x18\x01 \x01(\tR\vContentType\x12\x12\n" +
+	"\x04Body\x18\x02 \x01(\fR\x04Body\"s\n" +
+	"\x13Rpc_GatewayRouteReq\x12\x18\n" +
+	"\aMsgName\x18\x01 \x01(\tR\aMsgName\x12\x12\n" +
+	"\x04Meta\x18\x02 \x01(\tR\x04Meta\x12.\n" +
+	"\aMessage\x18\x03 \x01(\v2\x14.google.protobuf.AnyR\aMessage\"\x88\x01\n" +
+	"\x14Rpc_GatewayRouteResp\x12 \n" +
+	"\vServicePath\x18\x01 \x01(\tR\vServicePath\x12(\n" +
+	"\tErrorData\x18\x02 \x01(\v2\n" +
+	".ErrorDataR\tErrorData\x12$\n" +
+	"\x05Reply\x18\x03 \x03(\v2\x0e.SocketMessageR\x05Reply\"j\n" +
+	"\x1cRpc_GatewaySendMsgToAgentReq\x12$\n" +
+	"\rUserSessionId\x18\x01 \x01(\tR\rUserSessionId\x12$\n" +
+	"\x05Reply\x18\x02 \x03(\v2\x0e.SocketMessageR\x05Reply\"I\n" +
+	"\x1dRpc_GatewaySendMsgToAgentResp\x12(\n" +
+	"\tErrorData\x18\x01 \x01(\v2\n" +
+	".ErrorDataR\tErrorData\"n\n" +
+	"\x1eRpc_GatewaySendMsgsToAgentsReq\x12&\n" +
+	"\x0eUserSessionIds\x18\x01 \x03(\tR\x0eUserSessionIds\x12$\n" +
+	"\x05Reply\x18\x02 \x03(\v2\x0e.SocketMessageR\x05Reply\"K\n" +
+	"\x1fRpc_GatewaySendMsgsToAgentsResp\x12(\n" +
+	"\tErrorData\x18\x01 \x01(\v2\n" +
+	".ErrorDataR\tErrorData\"I\n" +
+	"!Rpc_GatewaySendMsgsToAllAgentsReq\x12$\n" +
+	"\x05Reply\x18\x02 \x03(\v2\x0e.SocketMessageR\x05Reply\"N\n" +
+	"\"Rpc_GatewaySendMsgsToAllAgentsResp\x12(\n" +
+	"\tErrorData\x18\x01 \x01(\v2\n" +
+	".ErrorDataR\tErrorData\"C\n" +
+	"\x19Rpc_GatewayCloseAgentsReq\x12&\n" +
+	"\x0eUserSessionIds\x18\x01 \x03(\tR\x0eUserSessionIds\"F\n" +
+	"\x1aRpc_GatewayCloseAgentsResp\x12(\n" +
+	"\tErrorData\x18\x01 \x01(\v2\n" +
+	".ErrorDataR\tErrorDataB\x06Z\x04.;pbb\x06proto3"
 
 var (
 	file_comm_proto_rawDescOnce sync.Once
@@ -341,27 +858,45 @@ func file_comm_proto_rawDescGZIP() []byte {
 	return file_comm_proto_rawDescData
 }
 
-var file_comm_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_comm_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_comm_proto_goTypes = []any{
-	(*ErrorData)(nil),                // 0: ErrorData
-	(*Rpc_GatewayHttpRouteReq)(nil),  // 1: Rpc_GatewayHttpRouteReq
-	(*Rpc_GatewayHttpRouteResp)(nil), // 2: Rpc_GatewayHttpRouteResp
-	(*MessagePackage)(nil),           // 3: MessagePackage
-	(*SocketMessage)(nil),            // 4: SocketMessage
-	nil,                              // 5: Rpc_GatewayHttpRouteReq.MetaEntry
-	(ErrorCode)(0),                   // 6: ErrorCode
-	(*anypb.Any)(nil),                // 7: google.protobuf.Any
+	(*ErrorData)(nil),                          // 0: ErrorData
+	(*MessagePackage)(nil),                     // 1: MessagePackage
+	(*SocketMessage)(nil),                      // 2: SocketMessage
+	(*Rpc_GatewayHttpRouteReq)(nil),            // 3: Rpc_GatewayHttpRouteReq
+	(*Rpc_GatewayHttpRouteResp)(nil),           // 4: Rpc_GatewayHttpRouteResp
+	(*Rpc_GatewayRouteReq)(nil),                // 5: Rpc_GatewayRouteReq
+	(*Rpc_GatewayRouteResp)(nil),               // 6: Rpc_GatewayRouteResp
+	(*Rpc_GatewaySendMsgToAgentReq)(nil),       // 7: Rpc_GatewaySendMsgToAgentReq
+	(*Rpc_GatewaySendMsgToAgentResp)(nil),      // 8: Rpc_GatewaySendMsgToAgentResp
+	(*Rpc_GatewaySendMsgsToAgentsReq)(nil),     // 9: Rpc_GatewaySendMsgsToAgentsReq
+	(*Rpc_GatewaySendMsgsToAgentsResp)(nil),    // 10: Rpc_GatewaySendMsgsToAgentsResp
+	(*Rpc_GatewaySendMsgsToAllAgentsReq)(nil),  // 11: Rpc_GatewaySendMsgsToAllAgentsReq
+	(*Rpc_GatewaySendMsgsToAllAgentsResp)(nil), // 12: Rpc_GatewaySendMsgsToAllAgentsResp
+	(*Rpc_GatewayCloseAgentsReq)(nil),          // 13: Rpc_GatewayCloseAgentsReq
+	(*Rpc_GatewayCloseAgentsResp)(nil),         // 14: Rpc_GatewayCloseAgentsResp
+	(ErrorCode)(0),                             // 15: ErrorCode
+	(*anypb.Any)(nil),                          // 16: google.protobuf.Any
 }
 var file_comm_proto_depIdxs = []int32{
-	6, // 0: ErrorData.Code:type_name -> ErrorCode
-	5, // 1: Rpc_GatewayHttpRouteReq.Meta:type_name -> Rpc_GatewayHttpRouteReq.MetaEntry
-	4, // 2: MessagePackage.messages:type_name -> SocketMessage
-	7, // 3: SocketMessage.data:type_name -> google.protobuf.Any
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	15, // 0: ErrorData.Code:type_name -> ErrorCode
+	2,  // 1: MessagePackage.messages:type_name -> SocketMessage
+	16, // 2: SocketMessage.data:type_name -> google.protobuf.Any
+	16, // 3: Rpc_GatewayRouteReq.Message:type_name -> google.protobuf.Any
+	0,  // 4: Rpc_GatewayRouteResp.ErrorData:type_name -> ErrorData
+	2,  // 5: Rpc_GatewayRouteResp.Reply:type_name -> SocketMessage
+	2,  // 6: Rpc_GatewaySendMsgToAgentReq.Reply:type_name -> SocketMessage
+	0,  // 7: Rpc_GatewaySendMsgToAgentResp.ErrorData:type_name -> ErrorData
+	2,  // 8: Rpc_GatewaySendMsgsToAgentsReq.Reply:type_name -> SocketMessage
+	0,  // 9: Rpc_GatewaySendMsgsToAgentsResp.ErrorData:type_name -> ErrorData
+	2,  // 10: Rpc_GatewaySendMsgsToAllAgentsReq.Reply:type_name -> SocketMessage
+	0,  // 11: Rpc_GatewaySendMsgsToAllAgentsResp.ErrorData:type_name -> ErrorData
+	0,  // 12: Rpc_GatewayCloseAgentsResp.ErrorData:type_name -> ErrorData
+	13, // [13:13] is the sub-list for method output_type
+	13, // [13:13] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_comm_proto_init() }
@@ -376,7 +911,7 @@ func file_comm_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_comm_proto_rawDesc), len(file_comm_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
