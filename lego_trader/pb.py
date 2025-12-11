@@ -44,5 +44,6 @@ def buildProto(pbpath, outpath, pattern):
 
 
 buildProto('./pb/proto','./pb','*.proto')
+buildProto('./pb/proto','./pb','gateway/*.proto')
 buildProto('./pb/proto','./pb','stock/*.proto')
 buildProto('./pb/proto','./pb','market/*.proto')

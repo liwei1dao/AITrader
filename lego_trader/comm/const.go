@@ -37,13 +37,15 @@ const (
 	Pool_UserSession = "Pool_UserSession" //对象此 comm.UserSession
 )
 
-// 对象池定义
-const (
-	Redis_Verification = "Verification" //验证码
-)
-
 // RPC服务接口定义处
 const ( //Rpc
 	Rpc_ModifyAppConifg core.Rpc_Key = "Rpc_ModifyAppConifg" //修改app配置
 
+)
+
+// 公用协议名 用于跨模块使用
+const (
+	Msg_GatewayHeartbeat   string = "gateway/heartbeat"   //网关心跳协议
+	Msg_GatewayErrornotify string = "gateway/errornotify" //网关错误推送
+	Msg_UserLogin          string = "user/login"          //用户登录协议
 )

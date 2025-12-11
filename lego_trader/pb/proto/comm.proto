@@ -1,6 +1,7 @@
 syntax = "proto3";
 option go_package = ".;pb";
 import "errorcode.proto";
+import "google/protobuf/any.proto";
 
 message ErrorData {
   ErrorCode Code = 1;
@@ -16,4 +17,17 @@ message Rpc_GatewayHttpRouteReq {
 message Rpc_GatewayHttpRouteResp {
   string ContentType = 1;
   bytes Body = 2;
+}
+
+//集合包
+message MessagePackage {
+  repeated SocketMessage messages = 1;
+}
+
+//用户消息流结构1
+message SocketMessage {
+  string MsgName = 1;   //消息名称
+  string servicePath = 2;     // 消息路由地址 部分消息前端确定转发给谁 \worker\worker0
+  google.protobuf.Any data = 3;
+  string sec = 4; //密文
 }
