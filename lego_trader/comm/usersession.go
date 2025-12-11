@@ -3,6 +3,7 @@ package comm
 import (
 	"fmt"
 	"lego_trader/lego/utils"
+	"lego_trader/pb"
 	"net/url"
 	"sync"
 )
@@ -19,6 +20,7 @@ func NewUserSession() IUserSession {
 	return &UserSession{
 		meta:  make(map[string]string),
 		cache: make(map[string]interface{}),
+		msgs:  make([]*pb.SocketMessage, 0),
 	}
 }
 
@@ -30,6 +32,7 @@ type UserSession struct {
 	meta      map[string]string
 	cachelock sync.RWMutex
 	cache     map[string]interface{}
+	msgs      []*pb.SocketMessage
 }
 
 // 重置
@@ -163,4 +166,16 @@ func (this *UserSession) GetMetas() (meta string) {
 	this.metalock.RLock()
 	defer this.metalock.RUnlock()
 	return this.values.Encode()
+}
+
+func (this *UserSession) GetChangeMeta() (meta string) {
+	this.metalock.RLock()
+	defer this.metalock.RUnlock()
+	return this.values.Encode()
+}
+
+// 采用先进先出逻辑 清空消息队列
+func (this *UserSession) Polls() (msgs []*pb.SocketMessage) {
+	this.msgs, msgs = this.msgs[:0], this.msgs
+	return
 }

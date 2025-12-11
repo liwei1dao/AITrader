@@ -364,8 +364,9 @@ func (x *Rpc_GatewayRouteReq) GetMessage() *anypb.Any {
 type Rpc_GatewayRouteResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ServicePath   string                 `protobuf:"bytes,1,opt,name=ServicePath,proto3" json:"ServicePath,omitempty"`
-	ErrorData     *ErrorData             `protobuf:"bytes,2,opt,name=ErrorData,proto3" json:"ErrorData,omitempty"`
+	ChangeMeta    string                 `protobuf:"bytes,2,opt,name=ChangeMeta,proto3" json:"ChangeMeta,omitempty"`
 	Reply         []*SocketMessage       `protobuf:"bytes,3,rep,name=Reply,proto3" json:"Reply,omitempty"`
+	ErrorData     *ErrorData             `protobuf:"bytes,4,opt,name=ErrorData,proto3" json:"ErrorData,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -407,16 +408,23 @@ func (x *Rpc_GatewayRouteResp) GetServicePath() string {
 	return ""
 }
 
-func (x *Rpc_GatewayRouteResp) GetErrorData() *ErrorData {
+func (x *Rpc_GatewayRouteResp) GetChangeMeta() string {
 	if x != nil {
-		return x.ErrorData
+		return x.ChangeMeta
 	}
-	return nil
+	return ""
 }
 
 func (x *Rpc_GatewayRouteResp) GetReply() []*SocketMessage {
 	if x != nil {
 		return x.Reply
+	}
+	return nil
+}
+
+func (x *Rpc_GatewayRouteResp) GetErrorData() *ErrorData {
+	if x != nil {
+		return x.ErrorData
 	}
 	return nil
 }
@@ -817,12 +825,15 @@ const file_comm_proto_rawDesc = "" +
 	"\x13Rpc_GatewayRouteReq\x12\x18\n" +
 	"\aMsgName\x18\x01 \x01(\tR\aMsgName\x12\x12\n" +
 	"\x04Meta\x18\x02 \x01(\tR\x04Meta\x12.\n" +
-	"\aMessage\x18\x03 \x01(\v2\x14.google.protobuf.AnyR\aMessage\"\x88\x01\n" +
+	"\aMessage\x18\x03 \x01(\v2\x14.google.protobuf.AnyR\aMessage\"\xa8\x01\n" +
 	"\x14Rpc_GatewayRouteResp\x12 \n" +
-	"\vServicePath\x18\x01 \x01(\tR\vServicePath\x12(\n" +
-	"\tErrorData\x18\x02 \x01(\v2\n" +
-	".ErrorDataR\tErrorData\x12$\n" +
-	"\x05Reply\x18\x03 \x03(\v2\x0e.SocketMessageR\x05Reply\"j\n" +
+	"\vServicePath\x18\x01 \x01(\tR\vServicePath\x12\x1e\n" +
+	"\n" +
+	"ChangeMeta\x18\x02 \x01(\tR\n" +
+	"ChangeMeta\x12$\n" +
+	"\x05Reply\x18\x03 \x03(\v2\x0e.SocketMessageR\x05Reply\x12(\n" +
+	"\tErrorData\x18\x04 \x01(\v2\n" +
+	".ErrorDataR\tErrorData\"j\n" +
 	"\x1cRpc_GatewaySendMsgToAgentReq\x12$\n" +
 	"\rUserSessionId\x18\x01 \x01(\tR\rUserSessionId\x12$\n" +
 	"\x05Reply\x18\x02 \x03(\v2\x0e.SocketMessageR\x05Reply\"I\n" +
@@ -883,8 +894,8 @@ var file_comm_proto_depIdxs = []int32{
 	2,  // 1: MessagePackage.messages:type_name -> SocketMessage
 	16, // 2: SocketMessage.data:type_name -> google.protobuf.Any
 	16, // 3: Rpc_GatewayRouteReq.Message:type_name -> google.protobuf.Any
-	0,  // 4: Rpc_GatewayRouteResp.ErrorData:type_name -> ErrorData
-	2,  // 5: Rpc_GatewayRouteResp.Reply:type_name -> SocketMessage
+	2,  // 4: Rpc_GatewayRouteResp.Reply:type_name -> SocketMessage
+	0,  // 5: Rpc_GatewayRouteResp.ErrorData:type_name -> ErrorData
 	2,  // 6: Rpc_GatewaySendMsgToAgentReq.Reply:type_name -> SocketMessage
 	0,  // 7: Rpc_GatewaySendMsgToAgentResp.ErrorData:type_name -> ErrorData
 	2,  // 8: Rpc_GatewaySendMsgsToAgentsReq.Reply:type_name -> SocketMessage

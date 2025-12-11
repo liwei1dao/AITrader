@@ -11,6 +11,7 @@ const (
 
 // 服务组件名称
 const (
+	SC_ServiceGateRouteComp core.S_Comps = "SC_GateRouteComp" //服务组件 消息路由组件
 	SC_ServiceHttpRouteComp core.S_Comps = "SC_HttpRouteComp" //服务组件 消息路由组件
 )
 

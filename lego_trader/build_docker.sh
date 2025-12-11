@@ -1,0 +1,2 @@
+GOOS=linux GOARCH=amd64 go build -o ./bin/a11/gateway.a11 ./services/gateway/main.go &
+

@@ -41,9 +41,10 @@ message Rpc_GatewayRouteReq {
 }
 
 message Rpc_GatewayRouteResp  {
-	string ServicePath =1;       
-	ErrorData  ErrorData =2;  
+	string ServicePath =1;
+  string ChangeMeta = 2;       
 	repeated SocketMessage Reply =3;
+  ErrorData  ErrorData =4; 
 }
 
 

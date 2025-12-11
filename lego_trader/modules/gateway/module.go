@@ -8,6 +8,11 @@ import (
 	"lego_trader/modules"
 )
 
+func NewModule() core.IModule {
+	m := new(Gateway)
+	return m
+}
+
 type Gateway struct {
 	modules.ModuleBase
 	options *Options

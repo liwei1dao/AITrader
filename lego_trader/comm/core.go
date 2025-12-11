@@ -14,6 +14,14 @@ type IService interface {
 	GetUserSession(mate string) (session IUserSession)
 	PutUserSession(session IUserSession)
 }
+
+// 服务网关组件接口定义
+type ISC_GateRouteComp interface {
+	core.IServiceComp
+	Rpc_GatewayRoute(ctx context.Context, args *pb.Rpc_GatewayRouteReq, reply *pb.Rpc_GatewayRouteResp) error
+	RegisterRoute(methodName string, comp reflect.Value, msg reflect.Type, handle reflect.Method)
+}
+
 type ISC_HttpRouteComp interface {
 	core.IServiceComp
 	Rpc_GatewayHttpRoute(ctx context.Context, args *pb.Rpc_GatewayHttpRouteReq, reply *pb.Rpc_GatewayHttpRouteResp) error
@@ -40,6 +48,8 @@ type IUserSession interface {
 	GetCache(name string) (value interface{}, ok bool)
 	Clone() (session IUserSession) //克隆
 	GetMetas() (values string)
+	GetChangeMeta() (values string)
+	Polls() (msgs []*pb.SocketMessage)
 }
 
 type HttpResult struct {
