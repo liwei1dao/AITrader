@@ -6,6 +6,8 @@ import (
 	"lego_trader/lego/core"
 	"lego_trader/lego/sys/log"
 	"lego_trader/modules"
+
+	"lego_trader/lego/sys/pools"
 )
 
 func NewModule() core.IModule {
@@ -38,6 +40,7 @@ func (this *Gateway) Init(service core.IService, module core.IModule, options co
 	}
 	this.options = options.(*Options)
 	this.service = service.(base.IRPCXService)
+	pools.InitTypes(socketReqTyoe, socketRespTyoe, httpReqTyoe, httpRespTyoe)
 	return
 }
 

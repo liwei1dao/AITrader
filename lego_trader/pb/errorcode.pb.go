@@ -24,100 +24,103 @@ const (
 type ErrorCode int32
 
 const (
-	ErrorCode_Success                 ErrorCode = 0   //成功
-	ErrorCode_GatewayException        ErrorCode = 1   //网关执行异常
-	ErrorCode_NoFindService           ErrorCode = 10  //没有找到远程服务器
-	ErrorCode_NoFindServiceHandleFunc ErrorCode = 11  //远程服务器未找到执行方法
-	ErrorCode_RpcFuncExecutionError   ErrorCode = 12  //Rpc方法执行错误
-	ErrorCode_CacheReadError          ErrorCode = 13  //缓存读取失败
-	ErrorCode_SqlExecutionError       ErrorCode = 14  //数据库执行错误
-	ErrorCode_ReqParameterError       ErrorCode = 15  //请求参数错误
-	ErrorCode_SignError               ErrorCode = 16  //签名串错误
-	ErrorCode_InsufficientPermissions ErrorCode = 17  //权限不足
-	ErrorCode_NoLogin                 ErrorCode = 18  //未登录
-	ErrorCode_UserSessionNobeing      ErrorCode = 19  //用户不存在
-	ErrorCode_StateInvalid            ErrorCode = 20  //无效状态
-	ErrorCode_DBError                 ErrorCode = 21  //数据库操作失败
-	ErrorCode_SystemError             ErrorCode = 22  //通用错误
-	ErrorCode_DecodeError             ErrorCode = 23  //加密串解码错误
-	ErrorCode_TimestampTimeout        ErrorCode = 24  //加密串时间戳超时
-	ErrorCode_PbError                 ErrorCode = 25  //pb错误
-	ErrorCode_AgentUidEmpty           ErrorCode = 26  //AgentUid空
-	ErrorCode_ConfigNoFound           ErrorCode = 27  //配置未找到
-	ErrorCode_DecryptError            ErrorCode = 28  //解密错误
-	ErrorCode_ClientError             ErrorCode = 29  //客户端错误
-	ErrorCode_Exception               ErrorCode = 100 //程序执行异常
-	ErrorCode_AgentBetExchangeError   ErrorCode = 101 //代理兑付错误
-	ErrorCode_GameInMaintenance       ErrorCode = 102 //目标游戏维护中
-	ErrorCode_NoCanBet                ErrorCode = 103 //不能下注
-	ErrorCode_NoFindRoom              ErrorCode = 104 //未找到房间
-	ErrorCode_AgentNofund             ErrorCode = 105 //渠道未注册
-	ErrorCode_NetWorkError            ErrorCode = 106 //网络请求错误
+	ErrorCode_Success                      ErrorCode = 0    //成功
+	ErrorCode_GatewayException             ErrorCode = 1    //网关执行异常
+	ErrorCode_NoFindService                ErrorCode = 10   //没有找到远程服务器
+	ErrorCode_NoFindServiceHandleFunc      ErrorCode = 11   //远程服务器未找到执行方法
+	ErrorCode_RpcFuncExecutionError        ErrorCode = 12   //Rpc方法执行错误
+	ErrorCode_CacheReadError               ErrorCode = 13   //缓存读取失败
+	ErrorCode_SqlExecutionError            ErrorCode = 14   //数据库执行错误
+	ErrorCode_ReqParameterError            ErrorCode = 15   //请求参数错误
+	ErrorCode_SignError                    ErrorCode = 16   //签名串错误
+	ErrorCode_InsufficientPermissions      ErrorCode = 17   //权限不足
+	ErrorCode_NoLogin                      ErrorCode = 18   //未登录
+	ErrorCode_UserSessionNobeing           ErrorCode = 19   //用户不存在
+	ErrorCode_StateInvalid                 ErrorCode = 20   //无效状态
+	ErrorCode_DBError                      ErrorCode = 21   //数据库操作失败
+	ErrorCode_SystemError                  ErrorCode = 22   //通用错误
+	ErrorCode_DecodeError                  ErrorCode = 23   //加密串解码错误
+	ErrorCode_TimestampTimeout             ErrorCode = 24   //加密串时间戳超时
+	ErrorCode_PbError                      ErrorCode = 25   //pb错误
+	ErrorCode_AgentUidEmpty                ErrorCode = 26   //AgentUid空
+	ErrorCode_ConfigNoFound                ErrorCode = 27   //配置未找到
+	ErrorCode_DecryptError                 ErrorCode = 28   //解密错误
+	ErrorCode_ClientError                  ErrorCode = 29   //客户端错误
+	ErrorCode_Exception                    ErrorCode = 100  //程序执行异常
+	ErrorCode_AgentBetExchangeError        ErrorCode = 101  //代理兑付错误
+	ErrorCode_GameInMaintenance            ErrorCode = 102  //目标游戏维护中
+	ErrorCode_NoCanBet                     ErrorCode = 103  //不能下注
+	ErrorCode_NoFindRoom                   ErrorCode = 104  //未找到房间
+	ErrorCode_AgentNofund                  ErrorCode = 105  //渠道未注册
+	ErrorCode_NetWorkError                 ErrorCode = 106  //网络请求错误
+	ErrorCode_ExceptionAccountVerification ErrorCode = 1001 //账号验证异常
 )
 
 // Enum value maps for ErrorCode.
 var (
 	ErrorCode_name = map[int32]string{
-		0:   "Success",
-		1:   "GatewayException",
-		10:  "NoFindService",
-		11:  "NoFindServiceHandleFunc",
-		12:  "RpcFuncExecutionError",
-		13:  "CacheReadError",
-		14:  "SqlExecutionError",
-		15:  "ReqParameterError",
-		16:  "SignError",
-		17:  "InsufficientPermissions",
-		18:  "NoLogin",
-		19:  "UserSessionNobeing",
-		20:  "StateInvalid",
-		21:  "DBError",
-		22:  "SystemError",
-		23:  "DecodeError",
-		24:  "TimestampTimeout",
-		25:  "PbError",
-		26:  "AgentUidEmpty",
-		27:  "ConfigNoFound",
-		28:  "DecryptError",
-		29:  "ClientError",
-		100: "Exception",
-		101: "AgentBetExchangeError",
-		102: "GameInMaintenance",
-		103: "NoCanBet",
-		104: "NoFindRoom",
-		105: "AgentNofund",
-		106: "NetWorkError",
+		0:    "Success",
+		1:    "GatewayException",
+		10:   "NoFindService",
+		11:   "NoFindServiceHandleFunc",
+		12:   "RpcFuncExecutionError",
+		13:   "CacheReadError",
+		14:   "SqlExecutionError",
+		15:   "ReqParameterError",
+		16:   "SignError",
+		17:   "InsufficientPermissions",
+		18:   "NoLogin",
+		19:   "UserSessionNobeing",
+		20:   "StateInvalid",
+		21:   "DBError",
+		22:   "SystemError",
+		23:   "DecodeError",
+		24:   "TimestampTimeout",
+		25:   "PbError",
+		26:   "AgentUidEmpty",
+		27:   "ConfigNoFound",
+		28:   "DecryptError",
+		29:   "ClientError",
+		100:  "Exception",
+		101:  "AgentBetExchangeError",
+		102:  "GameInMaintenance",
+		103:  "NoCanBet",
+		104:  "NoFindRoom",
+		105:  "AgentNofund",
+		106:  "NetWorkError",
+		1001: "ExceptionAccountVerification",
 	}
 	ErrorCode_value = map[string]int32{
-		"Success":                 0,
-		"GatewayException":        1,
-		"NoFindService":           10,
-		"NoFindServiceHandleFunc": 11,
-		"RpcFuncExecutionError":   12,
-		"CacheReadError":          13,
-		"SqlExecutionError":       14,
-		"ReqParameterError":       15,
-		"SignError":               16,
-		"InsufficientPermissions": 17,
-		"NoLogin":                 18,
-		"UserSessionNobeing":      19,
-		"StateInvalid":            20,
-		"DBError":                 21,
-		"SystemError":             22,
-		"DecodeError":             23,
-		"TimestampTimeout":        24,
-		"PbError":                 25,
-		"AgentUidEmpty":           26,
-		"ConfigNoFound":           27,
-		"DecryptError":            28,
-		"ClientError":             29,
-		"Exception":               100,
-		"AgentBetExchangeError":   101,
-		"GameInMaintenance":       102,
-		"NoCanBet":                103,
-		"NoFindRoom":              104,
-		"AgentNofund":             105,
-		"NetWorkError":            106,
+		"Success":                      0,
+		"GatewayException":             1,
+		"NoFindService":                10,
+		"NoFindServiceHandleFunc":      11,
+		"RpcFuncExecutionError":        12,
+		"CacheReadError":               13,
+		"SqlExecutionError":            14,
+		"ReqParameterError":            15,
+		"SignError":                    16,
+		"InsufficientPermissions":      17,
+		"NoLogin":                      18,
+		"UserSessionNobeing":           19,
+		"StateInvalid":                 20,
+		"DBError":                      21,
+		"SystemError":                  22,
+		"DecodeError":                  23,
+		"TimestampTimeout":             24,
+		"PbError":                      25,
+		"AgentUidEmpty":                26,
+		"ConfigNoFound":                27,
+		"DecryptError":                 28,
+		"ClientError":                  29,
+		"Exception":                    100,
+		"AgentBetExchangeError":        101,
+		"GameInMaintenance":            102,
+		"NoCanBet":                     103,
+		"NoFindRoom":                   104,
+		"AgentNofund":                  105,
+		"NetWorkError":                 106,
+		"ExceptionAccountVerification": 1001,
 	}
 )
 
@@ -152,7 +155,7 @@ var File_errorcode_proto protoreflect.FileDescriptor
 
 const file_errorcode_proto_rawDesc = "" +
 	"\n" +
-	"\x0ferrorcode.proto*\xbb\x04\n" +
+	"\x0ferrorcode.proto*\xde\x04\n" +
 	"\tErrorCode\x12\v\n" +
 	"\aSuccess\x10\x00\x12\x14\n" +
 	"\x10GatewayException\x10\x01\x12\x11\n" +
@@ -184,7 +187,8 @@ const file_errorcode_proto_rawDesc = "" +
 	"\n" +
 	"NoFindRoom\x10h\x12\x0f\n" +
 	"\vAgentNofund\x10i\x12\x10\n" +
-	"\fNetWorkError\x10jB\x06Z\x04.;pbb\x06proto3"
+	"\fNetWorkError\x10j\x12!\n" +
+	"\x1cExceptionAccountVerification\x10\xe9\aB\x06Z\x04.;pbb\x06proto3"
 
 var (
 	file_errorcode_proto_rawDescOnce sync.Once

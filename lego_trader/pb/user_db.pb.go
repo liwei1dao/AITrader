@@ -48,10 +48,10 @@ const (
 	// @Description
 	// @example
 	SginTyoe_Apple SginTyoe = 5 //Apple 登陆
-	// 游客登录
-	// @Description
+	// 账号登录
+	// @Description 账号登录 账号密码登录
 	// @example
-	SginTyoe_Tourists SginTyoe = 6 //游客登录
+	SginTyoe_Account SginTyoe = 6 // 账号登录
 )
 
 // Enum value maps for SginTyoe.
@@ -63,7 +63,7 @@ var (
 		3: "Google",
 		4: "FaceBook",
 		5: "Apple",
-		6: "Tourists",
+		6: "Account",
 	}
 	SginTyoe_value = map[string]int32{
 		"Mail":     0,
@@ -72,7 +72,7 @@ var (
 		"Google":   3,
 		"FaceBook": 4,
 		"Apple":    5,
-		"Tourists": 6,
+		"Account":  6,
 	}
 )
 
@@ -284,7 +284,7 @@ const file_user_user_db_proto_rawDesc = "" +
 	"\fgoogleopenid\x18\x12 \x01(\tR\fgoogleopenid\x12&\n" +
 	"\x0efacebookopenid\x18\x13 \x01(\tR\x0efacebookopenid\x12 \n" +
 	"\vappleopenid\x18\x14 \x01(\tR\vappleopenid\x12\"\n" +
-	"\flastsgintime\x18\x15 \x01(\x03R\flastsgintime*^\n" +
+	"\flastsgintime\x18\x15 \x01(\x03R\flastsgintime*]\n" +
 	"\bSginTyoe\x12\b\n" +
 	"\x04Mail\x10\x00\x12\t\n" +
 	"\x05Phone\x10\x01\x12\n" +
@@ -293,8 +293,8 @@ const file_user_user_db_proto_rawDesc = "" +
 	"\n" +
 	"\x06Google\x10\x03\x12\f\n" +
 	"\bFaceBook\x10\x04\x12\t\n" +
-	"\x05Apple\x10\x05\x12\f\n" +
-	"\bTourists\x10\x06B\x06Z\x04.;pbb\x06proto3"
+	"\x05Apple\x10\x05\x12\v\n" +
+	"\aAccount\x10\x06B\x06Z\x04.;pbb\x06proto3"
 
 var (
 	file_user_user_db_proto_rawDescOnce sync.Once

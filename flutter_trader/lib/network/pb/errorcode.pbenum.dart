@@ -73,6 +73,8 @@ class ErrorCode extends $pb.ProtobufEnum {
       ErrorCode._(105, _omitEnumNames ? '' : 'AgentNofund');
   static const ErrorCode NetWorkError =
       ErrorCode._(106, _omitEnumNames ? '' : 'NetWorkError');
+  static const ErrorCode ExceptionAccountVerification =
+      ErrorCode._(1001, _omitEnumNames ? '' : 'ExceptionAccountVerification');
 
   static const $core.List<ErrorCode> values = <ErrorCode>[
     Success,
@@ -104,6 +106,7 @@ class ErrorCode extends $pb.ProtobufEnum {
     NoFindRoom,
     AgentNofund,
     NetWorkError,
+    ExceptionAccountVerification,
   ];
 
   static final $core.Map<$core.int, ErrorCode> _byValue =

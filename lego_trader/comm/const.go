@@ -11,13 +11,14 @@ const (
 
 // 服务组件名称
 const (
-	SC_ServiceGateRouteComp core.S_Comps = "SC_GateRouteComp" //服务组件 消息路由组件
-	SC_ServiceHttpRouteComp core.S_Comps = "SC_HttpRouteComp" //服务组件 消息路由组件
+	SC_ServiceSocketRouteComp core.S_Comps = "SC_SocketRouteComp" //服务组件 消息路由组件
+	SC_ServiceHttpRouteComp   core.S_Comps = "SC_HttpRouteComp"   //服务组件 消息路由组件
 )
 
 // 模块名定义处
 const (
 	ModuleGateway    core.M_Modules = "gateway"    //gate模块 网关服务模块
+	ModuleUser       core.M_Modules = "user"       //用户模块 用户服务模块
 	ModuleCollection core.M_Modules = "collection" //收藏模块 集合模块 提供集合数据 股票, 基金, 指数等
 
 )

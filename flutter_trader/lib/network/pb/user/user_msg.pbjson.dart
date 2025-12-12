@@ -20,22 +20,25 @@ const UserSginReq$json = {
   '1': 'UserSginReq',
   '2': [
     {'1': 'stype', '3': 1, '4': 1, '5': 14, '6': '.SginTyoe', '10': 'stype'},
-    {'1': 'mail', '3': 2, '4': 1, '5': 9, '10': 'mail'},
-    {'1': 'phone', '3': 3, '4': 1, '5': 9, '10': 'phone'},
-    {'1': 'ttoken', '3': 4, '4': 1, '5': 9, '10': 'ttoken'},
-    {'1': 'vcode', '3': 5, '4': 1, '5': 9, '10': 'vcode'},
-    {'1': 'name', '3': 20, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'avatar', '3': 21, '4': 1, '5': 9, '10': 'avatar'},
-    {'1': 'language', '3': 22, '4': 1, '5': 9, '10': 'language'},
+    {'1': 'account', '3': 2, '4': 1, '5': 9, '10': 'account'},
+    {'1': 'password', '3': 3, '4': 1, '5': 9, '10': 'password'},
+    {'1': 'mail', '3': 4, '4': 1, '5': 9, '10': 'mail'},
+    {'1': 'phone', '3': 5, '4': 1, '5': 9, '10': 'phone'},
+    {'1': 'ttoken', '3': 6, '4': 1, '5': 9, '10': 'ttoken'},
+    {'1': 'vcode', '3': 7, '4': 1, '5': 9, '10': 'vcode'},
+    {'1': 'name', '3': 10, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'avatar', '3': 11, '4': 1, '5': 9, '10': 'avatar'},
+    {'1': 'language', '3': 12, '4': 1, '5': 9, '10': 'language'},
   ],
 };
 
 /// Descriptor for `UserSginReq`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List userSginReqDescriptor = $convert.base64Decode(
-    'CgtVc2VyU2dpblJlcRIfCgVzdHlwZRgBIAEoDjIJLlNnaW5UeW9lUgVzdHlwZRISCgRtYWlsGA'
-    'IgASgJUgRtYWlsEhQKBXBob25lGAMgASgJUgVwaG9uZRIWCgZ0dG9rZW4YBCABKAlSBnR0b2tl'
-    'bhIUCgV2Y29kZRgFIAEoCVIFdmNvZGUSEgoEbmFtZRgUIAEoCVIEbmFtZRIWCgZhdmF0YXIYFS'
-    'ABKAlSBmF2YXRhchIaCghsYW5ndWFnZRgWIAEoCVIIbGFuZ3VhZ2U=');
+    'CgtVc2VyU2dpblJlcRIfCgVzdHlwZRgBIAEoDjIJLlNnaW5UeW9lUgVzdHlwZRIYCgdhY2NvdW'
+    '50GAIgASgJUgdhY2NvdW50EhoKCHBhc3N3b3JkGAMgASgJUghwYXNzd29yZBISCgRtYWlsGAQg'
+    'ASgJUgRtYWlsEhQKBXBob25lGAUgASgJUgVwaG9uZRIWCgZ0dG9rZW4YBiABKAlSBnR0b2tlbh'
+    'IUCgV2Y29kZRgHIAEoCVIFdmNvZGUSEgoEbmFtZRgKIAEoCVIEbmFtZRIWCgZhdmF0YXIYCyAB'
+    'KAlSBmF2YXRhchIaCghsYW5ndWFnZRgMIAEoCVIIbGFuZ3VhZ2U=');
 
 @$core.Deprecated('Use userSginRespDescriptor instead')
 const UserSginResp$json = {

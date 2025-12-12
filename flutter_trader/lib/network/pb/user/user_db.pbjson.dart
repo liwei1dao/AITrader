@@ -25,14 +25,14 @@ const SginTyoe$json = {
     {'1': 'Google', '2': 3},
     {'1': 'FaceBook', '2': 4},
     {'1': 'Apple', '2': 5},
-    {'1': 'Tourists', '2': 6},
+    {'1': 'Account', '2': 6},
   ],
 };
 
 /// Descriptor for `SginTyoe`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List sginTyoeDescriptor = $convert.base64Decode(
     'CghTZ2luVHlvZRIICgRNYWlsEAASCQoFUGhvbmUQARIKCgZXWENoYXQQAhIKCgZHb29nbGUQAx'
-    'IMCghGYWNlQm9vaxAEEgkKBUFwcGxlEAUSDAoIVG91cmlzdHMQBg==');
+    'IMCghGYWNlQm9vaxAEEgkKBUFwcGxlEAUSCwoHQWNjb3VudBAG');
 
 @$core.Deprecated('Use dBUserDescriptor instead')
 const DBUser$json = {

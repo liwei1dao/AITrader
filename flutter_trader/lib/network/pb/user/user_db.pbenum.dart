@@ -46,11 +46,11 @@ class SginTyoe extends $pb.ProtobufEnum {
   /// @example
   static const SginTyoe Apple = SginTyoe._(5, _omitEnumNames ? '' : 'Apple');
 
-  /// 游客登录
-  /// @Description
+  /// 账号登录
+  /// @Description 账号登录 账号密码登录
   /// @example
-  static const SginTyoe Tourists =
-      SginTyoe._(6, _omitEnumNames ? '' : 'Tourists');
+  static const SginTyoe Account =
+      SginTyoe._(6, _omitEnumNames ? '' : 'Account');
 
   static const $core.List<SginTyoe> values = <SginTyoe>[
     Mail,
@@ -59,7 +59,7 @@ class SginTyoe extends $pb.ProtobufEnum {
     Google,
     FaceBook,
     Apple,
-    Tourists,
+    Account,
   ];
 
   static final $core.List<SginTyoe?> _byValue =

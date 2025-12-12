@@ -7,19 +7,21 @@ import (
 	"lego_trader/pb"
 	"reflect"
 	"strings"
+
+	"google.golang.org/protobuf/proto"
 )
 
 type IService interface {
 	base.IRPCXService
-	GetUserSession(mate string) (session IUserSession)
+	GetUserSession(ctx context.Context, values string) (session IUserSession)
 	PutUserSession(session IUserSession)
 }
 
 // 服务网关组件接口定义
 type ISC_SocketRouteComp interface {
 	core.IServiceComp
-	Rpc_GatewayRoute(ctx context.Context, args *pb.Rpc_GatewayRouteReq, reply *pb.Rpc_GatewayRouteResp) error
-	RegisterRoute(methodName string, comp reflect.Value, msg reflect.Type, handle reflect.Method)
+	Rpc_GatewaySocketRoute(ctx context.Context, args *pb.Rpc_GatewaySocketRouteReq, reply *pb.Rpc_GatewaySocketRouteResp) error
+	RegisterRoute(methodName string, comp reflect.Value, req reflect.Type, handle reflect.Method)
 }
 
 type ISC_HttpRouteComp interface {
@@ -30,7 +32,7 @@ type ISC_HttpRouteComp interface {
 
 // 用户会话
 type IUserSession interface {
-	SetSession(service IService, values string)
+	SetSession(ctx context.Context, values string)
 	GetMateToString(key string) string
 	GetMateToInt64(key string) int64
 	GetMateToUInt64(key string) uint64
@@ -46,9 +48,10 @@ type IUserSession interface {
 	GetMate(name string) (value string, ok bool)
 	SetCache(name string, value interface{})
 	GetCache(name string) (value interface{}, ok bool)
-	Clone() (session IUserSession) //克隆
+	Clone(ctx context.Context) (session IUserSession) //克隆
 	GetMetas() (values string)
 	GetChangeMeta() (values string)
+	SendMsg(MsgName string, msg proto.Message) (err error)
 	Polls() (msgs []*pb.SocketMessage)
 }
 

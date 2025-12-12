@@ -32,4 +32,7 @@ enum ErrorCode {
   AgentNofund = 105;            //渠道未注册
   NetWorkError = 106;           //网络请求错误
 
+
+  ExceptionAccountVerification = 1001; //账号验证异常
+
 }

@@ -64,7 +64,7 @@ func (this *SCompHttpRoute) RegisterRoute(methodName string, comp reflect.Value,
 	}
 	this.msghandles[methodName] = &msghandle{
 		rcvr:    comp,
-		msgType: msg,
+		reqtype: msg,
 		handle:  handele,
 	}
 	//注册类型池
@@ -89,10 +89,10 @@ func (this *SCompHttpRoute) Rpc_GatewayHttpRoute(ctx context.Context, args *pb.R
 	}()
 	msghandle, ok = this.msghandles[args.MsgName]
 	if ok {
-		session = this.service.GetUserSession(args.Meta)
+		session = this.service.GetUserSession(ctx, args.Meta)
 
 		//序列化用户消息对象
-		msg = pools.GetForType(msghandle.msgType)
+		msg = pools.GetForType(msghandle.reqtype)
 		if len(args.Message) > 0 {
 			if err = json.Unmarshal(args.Message, msg); err != nil {
 				log.Errorf("[Handle Api] UserMessage:%s Unmarshal err:%v", args.MsgName, err)

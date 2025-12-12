@@ -12,12 +12,11 @@ type (
 		Raw(sql string, values ...interface{}) (tx *gorm.DB)
 		Exec(sql string, values ...interface{}) (tx *gorm.DB)
 		CreateTable(tName string, model any) (err error)
-		FindOne(tName string, model any, where map[string]interface{}) (err error)
-		Find(tName string, models any, where map[string]interface{}) (err error)
+		FindOne(tName string, model any, query interface{}, args ...interface{}) (err error)
+		Find(tName string, models any, query interface{}, args ...interface{}) (err error)
 		Insert(tName string, model any) (err error)
 		Save(tName string, model any) (err error)
-		Update(tName string, where, change map[string]interface{}) (err error)
-		Delete(tName string, where map[string]interface{}) (err error)
+		Delete(tName string, query interface{}, args ...interface{}) (err error)
 		DropTable(tName string) (err error)
 	}
 )
@@ -49,20 +48,18 @@ func Raw(sql string, values ...interface{}) (tx *gorm.DB) {
 func CreateTable(tName string, model any) (err error) {
 	return defsys.CreateTable(tName, model)
 }
-func FindOne(tName string, model any, where map[string]interface{}) (err error) {
-	return defsys.FindOne(tName, model, where)
+func FindOne(tName string, model any, query interface{}, args ...interface{}) (err error) {
+	return defsys.FindOne(tName, model, query, args...)
 }
-func Find(tName string, models any, where map[string]interface{}) (err error) {
-	return defsys.Find(tName, models, where)
+func Find(tName string, models any, query interface{}, args ...interface{}) (err error) {
+	return defsys.Find(tName, models, query, args...)
 }
 func Insert(tName string, model any) (err error) {
 	return defsys.Insert(tName, model)
 }
-func Update(tName string, where, change map[string]interface{}) (err error) {
-	return defsys.Update(tName, where, change)
-}
-func Delete(tName string, where map[string]interface{}) (err error) {
-	return defsys.Delete(tName, where)
+
+func Delete(tName string, query interface{}, args ...interface{}) (err error) {
+	return defsys.Delete(tName, query, args...)
 }
 
 func DropTable(tName string) (err error) {

@@ -104,9 +104,9 @@ final $typed_data.Uint8List rpc_GatewayHttpRouteRespDescriptor =
         'ChhScGNfR2F0ZXdheUh0dHBSb3V0ZVJlc3ASIAoLQ29udGVudFR5cGUYASABKAlSC0NvbnRlbn'
         'RUeXBlEhIKBEJvZHkYAiABKAxSBEJvZHk=');
 
-@$core.Deprecated('Use rpc_GatewayRouteReqDescriptor instead')
-const Rpc_GatewayRouteReq$json = {
-  '1': 'Rpc_GatewayRouteReq',
+@$core.Deprecated('Use rpc_GatewaySocketRouteReqDescriptor instead')
+const Rpc_GatewaySocketRouteReq$json = {
+  '1': 'Rpc_GatewaySocketRouteReq',
   '2': [
     {'1': 'MsgName', '3': 1, '4': 1, '5': 9, '10': 'MsgName'},
     {'1': 'Meta', '3': 2, '4': 1, '5': 9, '10': 'Meta'},
@@ -121,15 +121,15 @@ const Rpc_GatewayRouteReq$json = {
   ],
 };
 
-/// Descriptor for `Rpc_GatewayRouteReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List rpc_GatewayRouteReqDescriptor = $convert.base64Decode(
-    'ChNScGNfR2F0ZXdheVJvdXRlUmVxEhgKB01zZ05hbWUYASABKAlSB01zZ05hbWUSEgoETWV0YR'
-    'gCIAEoCVIETWV0YRIuCgdNZXNzYWdlGAMgASgLMhQuZ29vZ2xlLnByb3RvYnVmLkFueVIHTWVz'
-    'c2FnZQ==');
+/// Descriptor for `Rpc_GatewaySocketRouteReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List rpc_GatewaySocketRouteReqDescriptor = $convert.base64Decode(
+    'ChlScGNfR2F0ZXdheVNvY2tldFJvdXRlUmVxEhgKB01zZ05hbWUYASABKAlSB01zZ05hbWUSEg'
+    'oETWV0YRgCIAEoCVIETWV0YRIuCgdNZXNzYWdlGAMgASgLMhQuZ29vZ2xlLnByb3RvYnVmLkFu'
+    'eVIHTWVzc2FnZQ==');
 
-@$core.Deprecated('Use rpc_GatewayRouteRespDescriptor instead')
-const Rpc_GatewayRouteResp$json = {
-  '1': 'Rpc_GatewayRouteResp',
+@$core.Deprecated('Use rpc_GatewaySocketRouteRespDescriptor instead')
+const Rpc_GatewaySocketRouteResp$json = {
+  '1': 'Rpc_GatewaySocketRouteResp',
   '2': [
     {'1': 'ServicePath', '3': 1, '4': 1, '5': 9, '10': 'ServicePath'},
     {'1': 'ChangeMeta', '3': 2, '4': 1, '5': 9, '10': 'ChangeMeta'},
@@ -152,12 +152,12 @@ const Rpc_GatewayRouteResp$json = {
   ],
 };
 
-/// Descriptor for `Rpc_GatewayRouteResp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List rpc_GatewayRouteRespDescriptor = $convert.base64Decode(
-    'ChRScGNfR2F0ZXdheVJvdXRlUmVzcBIgCgtTZXJ2aWNlUGF0aBgBIAEoCVILU2VydmljZVBhdG'
-    'gSHgoKQ2hhbmdlTWV0YRgCIAEoCVIKQ2hhbmdlTWV0YRIkCgVSZXBseRgDIAMoCzIOLlNvY2tl'
-    'dE1lc3NhZ2VSBVJlcGx5EigKCUVycm9yRGF0YRgEIAEoCzIKLkVycm9yRGF0YVIJRXJyb3JEYX'
-    'Rh');
+/// Descriptor for `Rpc_GatewaySocketRouteResp`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List rpc_GatewaySocketRouteRespDescriptor = $convert.base64Decode(
+    'ChpScGNfR2F0ZXdheVNvY2tldFJvdXRlUmVzcBIgCgtTZXJ2aWNlUGF0aBgBIAEoCVILU2Vydm'
+    'ljZVBhdGgSHgoKQ2hhbmdlTWV0YRgCIAEoCVIKQ2hhbmdlTWV0YRIkCgVSZXBseRgDIAMoCzIO'
+    'LlNvY2tldE1lc3NhZ2VSBVJlcGx5EigKCUVycm9yRGF0YRgEIAEoCzIKLkVycm9yRGF0YVIJRX'
+    'Jyb3JEYXRh');
 
 @$core.Deprecated('Use rpc_GatewaySendMsgToAgentReqDescriptor instead')
 const Rpc_GatewaySendMsgToAgentReq$json = {

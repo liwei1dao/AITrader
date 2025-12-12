@@ -25,13 +25,15 @@ const (
 type UserSginReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Stype         SginTyoe               `protobuf:"varint,1,opt,name=stype,proto3,enum=SginTyoe" json:"stype" example:"0"` //@go_tags(`json:"stype" example:"0" description:"登录方式“`) 登录方式
-	Mail          string                 `protobuf:"bytes,2,opt,name=mail,proto3" json:"mail" example:"" description:"邮箱地址"`                  //@go_tags(`json:"mail" example:"" description:"邮箱地址"`) 邮箱地址
-	Phone         string                 `protobuf:"bytes,3,opt,name=phone,proto3" json:"phone" example:""`                //@go_tags(`json:"phone" example:"" description:"手机号码“`) 手机号
-	Ttoken        string                 `protobuf:"bytes,4,opt,name=ttoken,proto3" json:"ttoken" example:"" description:"第三方token"`              //@go_tags(`json:"ttoken" example:"" description:"第三方token"`) 第三方token
-	Vcode         string                 `protobuf:"bytes,5,opt,name=vcode,proto3" json:"vcode" example:"" description:"验证码"`                //@go_tags(`json:"vcode" example:"" description:"验证码"`) 验证码
-	Name          string                 `protobuf:"bytes,20,opt,name=name,proto3" json:"name" gorm:"name:50" example:"" description:"用户名"`                 //@go_tags(`gorm:"name:50" json:"name" example:"" description:"用户名"`) 用户名
-	Avatar        string                 `protobuf:"bytes,21,opt,name=avatar,proto3" json:"avatar" gorm:"avatar" example:"" description:"头像连接"`             //@go_tags(`gorm:"avatar" json:"avatar" example:"" description:"头像连接"`) 头像连接
-	Language      string                 `protobuf:"bytes,22,opt,name=language,proto3" json:"language" example:"en" description:"语言"`         //@go_tags(`json:"language" example:"en" description:"语言"`)
+	Account       string                 `protobuf:"bytes,2,opt,name=account,proto3" json:"account" example:"" description:"账号"`            //@go_tags(`json:"account" example:"" description:"账号"`) 账号
+	Password      string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password" example:"" description:"密码"`          //@go_tags(`json:"password" example:"" description:"密码"`) 密码
+	Mail          string                 `protobuf:"bytes,4,opt,name=mail,proto3" json:"mail" example:"" description:"邮箱地址"`                  //@go_tags(`json:"mail" example:"" description:"邮箱地址"`) 邮箱地址
+	Phone         string                 `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone" example:""`                //@go_tags(`json:"phone" example:"" description:"手机号码“`) 手机号
+	Ttoken        string                 `protobuf:"bytes,6,opt,name=ttoken,proto3" json:"ttoken" example:"" description:"第三方token"`              //@go_tags(`json:"ttoken" example:"" description:"第三方token"`) 第三方token
+	Vcode         string                 `protobuf:"bytes,7,opt,name=vcode,proto3" json:"vcode" example:"" description:"验证码"`                //@go_tags(`json:"vcode" example:"" description:"验证码"`) 验证码
+	Name          string                 `protobuf:"bytes,10,opt,name=name,proto3" json:"name" gorm:"name:50" example:"" description:"用户名"`                 //@go_tags(`gorm:"name:50" json:"name" example:"" description:"用户名"`) 用户名
+	Avatar        string                 `protobuf:"bytes,11,opt,name=avatar,proto3" json:"avatar" gorm:"avatar" example:"" description:"头像连接"`             //@go_tags(`gorm:"avatar" json:"avatar" example:"" description:"头像连接"`) 头像连接
+	Language      string                 `protobuf:"bytes,12,opt,name=language,proto3" json:"language" example:"en" description:"语言"`         //@go_tags(`json:"language" example:"en" description:"语言"`)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -71,6 +73,20 @@ func (x *UserSginReq) GetStype() SginTyoe {
 		return x.Stype
 	}
 	return SginTyoe_Mail
+}
+
+func (x *UserSginReq) GetAccount() string {
+	if x != nil {
+		return x.Account
+	}
+	return ""
+}
+
+func (x *UserSginReq) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
 }
 
 func (x *UserSginReq) GetMail() string {
@@ -178,16 +194,19 @@ var File_user_user_msg_proto protoreflect.FileDescriptor
 
 const file_user_user_msg_proto_rawDesc = "" +
 	"\n" +
-	"\x13user/user_msg.proto\x1a\x12user/user_db.proto\"\xce\x01\n" +
+	"\x13user/user_msg.proto\x1a\x12user/user_db.proto\"\x84\x02\n" +
 	"\vUserSginReq\x12\x1f\n" +
-	"\x05stype\x18\x01 \x01(\x0e2\t.SginTyoeR\x05stype\x12\x12\n" +
-	"\x04mail\x18\x02 \x01(\tR\x04mail\x12\x14\n" +
-	"\x05phone\x18\x03 \x01(\tR\x05phone\x12\x16\n" +
-	"\x06ttoken\x18\x04 \x01(\tR\x06ttoken\x12\x14\n" +
-	"\x05vcode\x18\x05 \x01(\tR\x05vcode\x12\x12\n" +
-	"\x04name\x18\x14 \x01(\tR\x04name\x12\x16\n" +
-	"\x06avatar\x18\x15 \x01(\tR\x06avatar\x12\x1a\n" +
-	"\blanguage\x18\x16 \x01(\tR\blanguage\"A\n" +
+	"\x05stype\x18\x01 \x01(\x0e2\t.SginTyoeR\x05stype\x12\x18\n" +
+	"\aaccount\x18\x02 \x01(\tR\aaccount\x12\x1a\n" +
+	"\bpassword\x18\x03 \x01(\tR\bpassword\x12\x12\n" +
+	"\x04mail\x18\x04 \x01(\tR\x04mail\x12\x14\n" +
+	"\x05phone\x18\x05 \x01(\tR\x05phone\x12\x16\n" +
+	"\x06ttoken\x18\x06 \x01(\tR\x06ttoken\x12\x14\n" +
+	"\x05vcode\x18\a \x01(\tR\x05vcode\x12\x12\n" +
+	"\x04name\x18\n" +
+	" \x01(\tR\x04name\x12\x16\n" +
+	"\x06avatar\x18\v \x01(\tR\x06avatar\x12\x1a\n" +
+	"\blanguage\x18\f \x01(\tR\blanguage\"A\n" +
 	"\fUserSginResp\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1b\n" +
 	"\x04user\x18\x02 \x01(\v2\a.DBUserR\x04userB\x06Z\x04.;pbb\x06proto3"

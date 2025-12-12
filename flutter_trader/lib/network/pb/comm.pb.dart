@@ -374,8 +374,8 @@ class Rpc_GatewayHttpRouteResp extends $pb.GeneratedMessage {
   void clearBody() => $_clearField(2);
 }
 
-class Rpc_GatewayRouteReq extends $pb.GeneratedMessage {
-  factory Rpc_GatewayRouteReq({
+class Rpc_GatewaySocketRouteReq extends $pb.GeneratedMessage {
+  factory Rpc_GatewaySocketRouteReq({
     $core.String? msgName,
     $core.String? meta,
     $0.Any? message,
@@ -387,17 +387,17 @@ class Rpc_GatewayRouteReq extends $pb.GeneratedMessage {
     return result;
   }
 
-  Rpc_GatewayRouteReq._();
+  Rpc_GatewaySocketRouteReq._();
 
-  factory Rpc_GatewayRouteReq.fromBuffer($core.List<$core.int> data,
+  factory Rpc_GatewaySocketRouteReq.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory Rpc_GatewayRouteReq.fromJson($core.String json,
+  factory Rpc_GatewaySocketRouteReq.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Rpc_GatewayRouteReq',
+      _omitMessageNames ? '' : 'Rpc_GatewaySocketRouteReq',
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'MsgName', protoName: 'MsgName')
     ..aOS(2, _omitFieldNames ? '' : 'Meta', protoName: 'Meta')
@@ -406,23 +406,24 @@ class Rpc_GatewayRouteReq extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Rpc_GatewayRouteReq clone() => deepCopy();
+  Rpc_GatewaySocketRouteReq clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Rpc_GatewayRouteReq copyWith(void Function(Rpc_GatewayRouteReq) updates) =>
-      super.copyWith((message) => updates(message as Rpc_GatewayRouteReq))
-          as Rpc_GatewayRouteReq;
+  Rpc_GatewaySocketRouteReq copyWith(
+          void Function(Rpc_GatewaySocketRouteReq) updates) =>
+      super.copyWith((message) => updates(message as Rpc_GatewaySocketRouteReq))
+          as Rpc_GatewaySocketRouteReq;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static Rpc_GatewayRouteReq create() => Rpc_GatewayRouteReq._();
+  static Rpc_GatewaySocketRouteReq create() => Rpc_GatewaySocketRouteReq._();
   @$core.override
-  Rpc_GatewayRouteReq createEmptyInstance() => create();
+  Rpc_GatewaySocketRouteReq createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static Rpc_GatewayRouteReq getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Rpc_GatewayRouteReq>(create);
-  static Rpc_GatewayRouteReq? _defaultInstance;
+  static Rpc_GatewaySocketRouteReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Rpc_GatewaySocketRouteReq>(create);
+  static Rpc_GatewaySocketRouteReq? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get msgName => $_getSZ(0);
@@ -454,8 +455,8 @@ class Rpc_GatewayRouteReq extends $pb.GeneratedMessage {
   $0.Any ensureMessage() => $_ensure(2);
 }
 
-class Rpc_GatewayRouteResp extends $pb.GeneratedMessage {
-  factory Rpc_GatewayRouteResp({
+class Rpc_GatewaySocketRouteResp extends $pb.GeneratedMessage {
+  factory Rpc_GatewaySocketRouteResp({
     $core.String? servicePath,
     $core.String? changeMeta,
     $core.Iterable<SocketMessage>? reply,
@@ -469,17 +470,17 @@ class Rpc_GatewayRouteResp extends $pb.GeneratedMessage {
     return result;
   }
 
-  Rpc_GatewayRouteResp._();
+  Rpc_GatewaySocketRouteResp._();
 
-  factory Rpc_GatewayRouteResp.fromBuffer($core.List<$core.int> data,
+  factory Rpc_GatewaySocketRouteResp.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory Rpc_GatewayRouteResp.fromJson($core.String json,
+  factory Rpc_GatewaySocketRouteResp.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Rpc_GatewayRouteResp',
+      _omitMessageNames ? '' : 'Rpc_GatewaySocketRouteResp',
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'ServicePath', protoName: 'ServicePath')
     ..aOS(2, _omitFieldNames ? '' : 'ChangeMeta', protoName: 'ChangeMeta')
@@ -490,23 +491,25 @@ class Rpc_GatewayRouteResp extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Rpc_GatewayRouteResp clone() => deepCopy();
+  Rpc_GatewaySocketRouteResp clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Rpc_GatewayRouteResp copyWith(void Function(Rpc_GatewayRouteResp) updates) =>
-      super.copyWith((message) => updates(message as Rpc_GatewayRouteResp))
-          as Rpc_GatewayRouteResp;
+  Rpc_GatewaySocketRouteResp copyWith(
+          void Function(Rpc_GatewaySocketRouteResp) updates) =>
+      super.copyWith(
+              (message) => updates(message as Rpc_GatewaySocketRouteResp))
+          as Rpc_GatewaySocketRouteResp;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static Rpc_GatewayRouteResp create() => Rpc_GatewayRouteResp._();
+  static Rpc_GatewaySocketRouteResp create() => Rpc_GatewaySocketRouteResp._();
   @$core.override
-  Rpc_GatewayRouteResp createEmptyInstance() => create();
+  Rpc_GatewaySocketRouteResp createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static Rpc_GatewayRouteResp getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Rpc_GatewayRouteResp>(create);
-  static Rpc_GatewayRouteResp? _defaultInstance;
+  static Rpc_GatewaySocketRouteResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Rpc_GatewaySocketRouteResp>(create);
+  static Rpc_GatewaySocketRouteResp? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get servicePath => $_getSZ(0);

@@ -1,5 +1,17 @@
-2025/12/11 20:05:01.153	INFO	sys log Init success !
-2025/12/11 20:05:01.153	INFO	sys event Init success !
-2025/12/11 20:05:01.153	INFO	服务[gateway-d4tb6rc4kvntejljav1g] 初始化完成!
-2025/12/11 20:05:01.195	INFO	服务[gateway-d4tb6rc4kvntejljav1g:1.0.0.0] 启动完成!
-2025/12/11 20:05:01.196	DEBUG	启动模块【gateway】
+2025/12/12 19:18:18.162	INFO	sys log Init success !
+2025/12/12 19:18:18.163	INFO	sys event Init success !
+2025/12/12 19:18:18.163	INFO	服务[gateway-d4tvjuk4kvnibctt24bg] 初始化完成!
+2025/12/12 19:18:18.180	INFO	服务[gateway-d4tvjuk4kvnibctt24bg:1.0.0.0] 启动完成!
+2025/12/12 19:18:18.181	DEBUG	启动模块【gateway】
+2025/12/12 19:19:17.958	DEBUG	[module.gateway]	have new connect	SessionId:d4tvkdc4kvnibctt24c0
+2025/12/12 19:19:40.224	DEBUG	[module.gateway]	[UserResponse]	t:71	userId:	req:user.sgin:type_url:"user.sgin" value:"\x08\x06\x12\x05liwei\x1a\nli13451234"	reply:ServicePath:"home/home-d4tvjuk4kvnibev33120" Reply:{ServicePath:"home/home-d4tvjuk4kvnibev33120" data:{[type.googleapis.com/UserSginResp]:{token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsZWdvX3RyYWRlciIsInN1YiI6IlNnaW4iLCJuYmYiOjE3NjU1MzgzODAsImlhdCI6MTc2NTUzODM4MCwianRpIjoiMTk5OTQzOTAwMDY1NzM2Mjk0NCJ9.5aTBMdkcla_ulngKI3x7ZYBVZ7_RyXf9dL1RjXUpcew" user:{uid:"1999439000657362944" name:"guest_9351" account:"liwei" password:"li13451234" createtime:1765538380 lastsgintime:1765538380}}}}
+2025/12/12 19:21:39.201	ERROR	gateway/agent.go:71	[module.gateway]	agent:d4tvkdc4kvnibctt24c0 userId: ReadMessage err:websocket: close 1001 (going away)
+2025/12/12 19:21:39.201	DEBUG	[module.gateway]	agent:d4tvkdc4kvnibctt24c0 userId: readLoop end!
+2025/12/12 19:21:39.202	DEBUG	[module.gateway]	agent:d4tvkdc4kvnibctt24c0 userId: writeLoop end!
+2025/12/12 19:21:39.202	DEBUG	[module.gateway]	have new disconnect	SessionId:d4tvkdc4kvnibctt24c0
+2025/12/12 19:23:27.346	DEBUG	[module.gateway]	have new connect	SessionId:d4tvmbs4kvnibctt24cg
+2025/12/12 19:23:42.054	DEBUG	[module.gateway]	[UserResponse]	t:23	userId:	req:user.sgin:type_url:"user.sgin" value:"\x08\x06\x12\x05liwei\x1a\nli13451234"	reply:ServicePath:"home/home-d4tvjuk4kvnibev33120" Reply:{ServicePath:"home/home-d4tvjuk4kvnibev33120" data:{[type.googleapis.com/UserSginResp]:{token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsZWdvX3RyYWRlciIsInN1YiI6IlNnaW4iLCJuYmYiOjE3NjU1Mzg2MjIsImlhdCI6MTc2NTUzODYyMiwianRpIjoiMTk5OTQzOTAwMDY1NzM2Mjk0NCJ9.oFhQtdtHh-J2AqtAW4pUc0XRk8SQrnAp3huz4HHRZN0" user:{uid:"1999439000657362944" name:"guest_9351" account:"liwei" password:"li13451234" createtime:1765538380 lastsgintime:1765538622}}}}
+2025/12/12 19:24:50.949	ERROR	gateway/agent.go:71	[module.gateway]	agent:d4tvmbs4kvnibctt24cg userId: ReadMessage err:websocket: close 1001 (going away)
+2025/12/12 19:24:50.950	DEBUG	[module.gateway]	agent:d4tvmbs4kvnibctt24cg userId: readLoop end!
+2025/12/12 19:24:50.950	DEBUG	[module.gateway]	agent:d4tvmbs4kvnibctt24cg userId: writeLoop end!
+2025/12/12 19:24:50.950	DEBUG	[module.gateway]	have new disconnect	SessionId:d4tvmbs4kvnibctt24cg

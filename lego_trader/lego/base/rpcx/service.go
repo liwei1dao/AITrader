@@ -17,6 +17,7 @@ import (
 	etcdclient "github.com/rpcxio/rpcx-etcd/client"
 	"github.com/rpcxio/rpcx-etcd/serverplugin"
 	"github.com/smallnest/rpcx/client"
+	"github.com/smallnest/rpcx/protocol"
 	"github.com/smallnest/rpcx/server"
 )
 
@@ -143,6 +144,16 @@ func (this *RPCXService) RpcBroadcast(ctx context.Context, servicePath string, s
 }
 
 // 获取目标客户端
+// getclient 获取指定服务路径的XClient客户端
+// 参数:
+// - ctx: 上下文指针，用于传递调用链上下文
+// - servicePath: 目标服务的路径（例如 "home"、"gateway"）
+// 返回值:
+// - c: 成功时返回已创建或缓存的XClient客户端
+// - err: 失败时返回错误，例如 servicePath 为空或服务发现失败
+// 异常:
+// - 当 servicePath 为空时返回错误
+// - 当通过 Etcd 进行服务发现失败时返回错误
 func (this *RPCXService) getclient(ctx *context.Context, servicePath string) (c client.XClient, err error) {
 	if servicePath == "" {
 		err = errors.New("service no cant null")
@@ -159,7 +170,10 @@ func (this *RPCXService) getclient(ctx *context.Context, servicePath string) (c 
 		if d, err = etcdclient.NewEtcdV3Discovery(this.option.Setting.Tag, servicePath, this.option.RPCXConfig.ETCDServers, false, nil); err != nil {
 			return
 		}
-		c = client.NewBidirectionalXClient(servicePath, client.Failfast, client.RoundRobin, d, client.DefaultOption, nil)
+		// 使用 JSON 序列化，避免 Protobuf v1/v2 不兼容导致的反序列化错误
+		opt := client.DefaultOption
+		opt.SerializeType = protocol.JSON
+		c = client.NewBidirectionalXClient(servicePath, client.Failfast, client.RoundRobin, d, opt, nil)
 		this.mu.Lock()
 		this.clients[servicePath] = c
 		this.mu.Unlock()

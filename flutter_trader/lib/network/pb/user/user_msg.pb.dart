@@ -22,6 +22,8 @@ export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 class UserSginReq extends $pb.GeneratedMessage {
   factory UserSginReq({
     $0.SginTyoe? stype,
+    $core.String? account,
+    $core.String? password,
     $core.String? mail,
     $core.String? phone,
     $core.String? ttoken,
@@ -32,6 +34,8 @@ class UserSginReq extends $pb.GeneratedMessage {
   }) {
     final result = create();
     if (stype != null) result.stype = stype;
+    if (account != null) result.account = account;
+    if (password != null) result.password = password;
     if (mail != null) result.mail = mail;
     if (phone != null) result.phone = phone;
     if (ttoken != null) result.ttoken = ttoken;
@@ -56,13 +60,15 @@ class UserSginReq extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aE<$0.SginTyoe>(1, _omitFieldNames ? '' : 'stype',
         enumValues: $0.SginTyoe.values)
-    ..aOS(2, _omitFieldNames ? '' : 'mail')
-    ..aOS(3, _omitFieldNames ? '' : 'phone')
-    ..aOS(4, _omitFieldNames ? '' : 'ttoken')
-    ..aOS(5, _omitFieldNames ? '' : 'vcode')
-    ..aOS(20, _omitFieldNames ? '' : 'name')
-    ..aOS(21, _omitFieldNames ? '' : 'avatar')
-    ..aOS(22, _omitFieldNames ? '' : 'language')
+    ..aOS(2, _omitFieldNames ? '' : 'account')
+    ..aOS(3, _omitFieldNames ? '' : 'password')
+    ..aOS(4, _omitFieldNames ? '' : 'mail')
+    ..aOS(5, _omitFieldNames ? '' : 'phone')
+    ..aOS(6, _omitFieldNames ? '' : 'ttoken')
+    ..aOS(7, _omitFieldNames ? '' : 'vcode')
+    ..aOS(10, _omitFieldNames ? '' : 'name')
+    ..aOS(11, _omitFieldNames ? '' : 'avatar')
+    ..aOS(12, _omitFieldNames ? '' : 'language')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -94,67 +100,85 @@ class UserSginReq extends $pb.GeneratedMessage {
   void clearStype() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get mail => $_getSZ(1);
+  $core.String get account => $_getSZ(1);
   @$pb.TagNumber(2)
-  set mail($core.String value) => $_setString(1, value);
+  set account($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
-  $core.bool hasMail() => $_has(1);
+  $core.bool hasAccount() => $_has(1);
   @$pb.TagNumber(2)
-  void clearMail() => $_clearField(2);
+  void clearAccount() => $_clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get phone => $_getSZ(2);
+  $core.String get password => $_getSZ(2);
   @$pb.TagNumber(3)
-  set phone($core.String value) => $_setString(2, value);
+  set password($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
-  $core.bool hasPhone() => $_has(2);
+  $core.bool hasPassword() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPhone() => $_clearField(3);
+  void clearPassword() => $_clearField(3);
 
   @$pb.TagNumber(4)
-  $core.String get ttoken => $_getSZ(3);
+  $core.String get mail => $_getSZ(3);
   @$pb.TagNumber(4)
-  set ttoken($core.String value) => $_setString(3, value);
+  set mail($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
-  $core.bool hasTtoken() => $_has(3);
+  $core.bool hasMail() => $_has(3);
   @$pb.TagNumber(4)
-  void clearTtoken() => $_clearField(4);
+  void clearMail() => $_clearField(4);
 
   @$pb.TagNumber(5)
-  $core.String get vcode => $_getSZ(4);
+  $core.String get phone => $_getSZ(4);
   @$pb.TagNumber(5)
-  set vcode($core.String value) => $_setString(4, value);
+  set phone($core.String value) => $_setString(4, value);
   @$pb.TagNumber(5)
-  $core.bool hasVcode() => $_has(4);
+  $core.bool hasPhone() => $_has(4);
   @$pb.TagNumber(5)
-  void clearVcode() => $_clearField(5);
+  void clearPhone() => $_clearField(5);
 
-  @$pb.TagNumber(20)
-  $core.String get name => $_getSZ(5);
-  @$pb.TagNumber(20)
-  set name($core.String value) => $_setString(5, value);
-  @$pb.TagNumber(20)
-  $core.bool hasName() => $_has(5);
-  @$pb.TagNumber(20)
-  void clearName() => $_clearField(20);
+  @$pb.TagNumber(6)
+  $core.String get ttoken => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set ttoken($core.String value) => $_setString(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasTtoken() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearTtoken() => $_clearField(6);
 
-  @$pb.TagNumber(21)
-  $core.String get avatar => $_getSZ(6);
-  @$pb.TagNumber(21)
-  set avatar($core.String value) => $_setString(6, value);
-  @$pb.TagNumber(21)
-  $core.bool hasAvatar() => $_has(6);
-  @$pb.TagNumber(21)
-  void clearAvatar() => $_clearField(21);
+  @$pb.TagNumber(7)
+  $core.String get vcode => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set vcode($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasVcode() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearVcode() => $_clearField(7);
 
-  @$pb.TagNumber(22)
-  $core.String get language => $_getSZ(7);
-  @$pb.TagNumber(22)
-  set language($core.String value) => $_setString(7, value);
-  @$pb.TagNumber(22)
-  $core.bool hasLanguage() => $_has(7);
-  @$pb.TagNumber(22)
-  void clearLanguage() => $_clearField(22);
+  @$pb.TagNumber(10)
+  $core.String get name => $_getSZ(7);
+  @$pb.TagNumber(10)
+  set name($core.String value) => $_setString(7, value);
+  @$pb.TagNumber(10)
+  $core.bool hasName() => $_has(7);
+  @$pb.TagNumber(10)
+  void clearName() => $_clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.String get avatar => $_getSZ(8);
+  @$pb.TagNumber(11)
+  set avatar($core.String value) => $_setString(8, value);
+  @$pb.TagNumber(11)
+  $core.bool hasAvatar() => $_has(8);
+  @$pb.TagNumber(11)
+  void clearAvatar() => $_clearField(11);
+
+  @$pb.TagNumber(12)
+  $core.String get language => $_getSZ(9);
+  @$pb.TagNumber(12)
+  set language($core.String value) => $_setString(9, value);
+  @$pb.TagNumber(12)
+  $core.bool hasLanguage() => $_has(9);
+  @$pb.TagNumber(12)
+  void clearLanguage() => $_clearField(12);
 }
 
 class UserSginResp extends $pb.GeneratedMessage {

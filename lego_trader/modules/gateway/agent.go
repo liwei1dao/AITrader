@@ -30,6 +30,7 @@ func newAgent(gateway IGateway, conn *websocket.Conn) *Agent {
 	agent := &Agent{
 		gateway:     gateway,
 		wsConn:      conn,
+		spath:       "home",
 		sessionId:   id.NewXId(),
 		writeChan:   make(chan []byte, 2),
 		closeSignal: make(chan bool),
@@ -79,7 +80,17 @@ locp:
 		} else {
 			this.wsConn.SetReadDeadline(time.Now().Add(time.Second * 60))
 			for _, msg := range msgpackage.Messages {
-
+				if msg.MsgName == Msg_GatewayHeartbeat {
+					data, _ := anypb.New(&pb.GatewayHeartbeatResp{
+						Timestamp: time.Now().Unix(),
+					})
+					this.WriteMsgs(&pb.SocketMessage{
+						MsgName:     Msg_GatewayHeartbeat,
+						ServicePath: msg.ServicePath,
+						Data:        data,
+					})
+					continue
+				}
 				if err = this.messageDistribution(msg); err != nil {
 					this.gateway.Errorf("messageDistribution err:%v", err)
 					data, _ := anypb.New(&pb.GatewayErrorNotifyPush{
@@ -88,7 +99,7 @@ locp:
 						Req:         msg.Data,
 						Error:       &pb.ErrorData{Code: pb.ErrorCode_GatewayException, Message: err.Error()},
 					})
-					err = this.WriteMsgs(&pb.SocketMessage{
+					this.WriteMsgs(&pb.SocketMessage{
 						MsgName:     Msg_GatewayErrornotify,
 						ServicePath: msg.ServicePath,
 						Data:        data,
@@ -96,7 +107,6 @@ locp:
 					go this.Close()
 					break locp
 				}
-
 			}
 		}
 	}
@@ -216,13 +226,13 @@ func (this *Agent) HandleMessage(msg *pb.SocketMessage) (err error) {
 // 分发用户消息
 func (this *Agent) messageDistribution(msg *pb.SocketMessage) (err error) {
 	var (
-		spath string                   = this.spath
-		req   *pb.Rpc_GatewayRouteReq  = pools.GetForType(gatewayReqTyoe).(*pb.Rpc_GatewayRouteReq)
-		reply *pb.Rpc_GatewayRouteResp = pools.GetForType(gatewayRespTyoe).(*pb.Rpc_GatewayRouteResp)
+		spath string                         = this.spath
+		req   *pb.Rpc_GatewaySocketRouteReq  = pools.GetForType(socketReqTyoe).(*pb.Rpc_GatewaySocketRouteReq)
+		reply *pb.Rpc_GatewaySocketRouteResp = pools.GetForType(socketRespTyoe).(*pb.Rpc_GatewaySocketRouteResp)
 	)
 	defer func() {
-		pools.PutForType(gatewayReqTyoe, req)
-		pools.PutForType(gatewayRespTyoe, reply)
+		pools.PutForType(socketReqTyoe, req)
+		pools.PutForType(socketRespTyoe, reply)
 	}()
 
 	req.MsgName = msg.MsgName
@@ -270,21 +280,22 @@ func (this *Agent) messageDistribution(msg *pb.SocketMessage) (err error) {
 		})
 		return
 	} else {
-		// for _, v := range reply.Reply {
-		// 	if v.MsgName == msg.MsgName && v.MsgName == Msg_UserLogin {
-		// 		var (
-		// 			resp      proto.Message
-		// 			loginresp *pb.UserLoginResp
-		// 		)
-		// 		if resp, err = v.Data.UnmarshalNew(); err != nil {
-		// 			return
-		// 		}
-		// 		loginresp = resp.(*pb.UserLoginResp)
-		// 		this.userId = loginresp.User.userId
-		// 		this.spath = reply.ServicePath
-		// 		this.gateway.LoginNotice(this)
-		// 	}
-		// }
+		if msg.MsgName == Msg_UserLogin {
+			for _, v := range reply.Reply {
+				if v.MsgName == msg.MsgName && v.MsgName == Msg_UserLogin {
+					var (
+						resp     proto.Message
+						signresp *pb.UserSginResp
+					)
+					if resp, err = v.Data.UnmarshalNew(); err != nil {
+						return
+					}
+					signresp = resp.(*pb.UserSginResp)
+					this.userId = signresp.User.Uid
+					this.spath = reply.ServicePath
+				}
+			}
+		}
 		if err = this.WriteMsgs(reply.Reply...); err != nil {
 			return
 		}

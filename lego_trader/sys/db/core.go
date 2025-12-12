@@ -2,13 +2,14 @@ package db
 
 import (
 	"lego_trader/lego/sys/mysql"
-	"lego_trader/lego/sys/redis"
+
+	"github.com/redis/go-redis/v9"
 )
 
 type (
 	ISys interface {
 		Mysql() mysql.ISys
-		Redis() redis.ISys
+		Redis() redis.UniversalClient
 	}
 )
 
@@ -34,6 +35,6 @@ func NewSys(opt ...Option) (sys ISys, err error) {
 func Mysql() mysql.ISys {
 	return defsys.Mysql()
 }
-func Redis() redis.ISys {
+func Redis() redis.UniversalClient {
 	return defsys.Redis()
 }

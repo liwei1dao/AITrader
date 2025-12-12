@@ -1,15 +1,20 @@
 package comm
 
 import (
+	"context"
 	"fmt"
 	"lego_trader/lego/utils"
 	"lego_trader/pb"
 	"net/url"
 	"sync"
+
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/anypb"
 )
 
 // session Session 临时数据key
 const (
+	ContextKey_Service     = "service"    //服务
 	SessionMeta_SessionId  = "sessionid"  //会话Id
 	SessionMeta_UserId     = "userid"     //用户id
 	SessionMeta_ServiceTag = "servicetag" //集群标签
@@ -18,9 +23,9 @@ const (
 
 func NewUserSession() IUserSession {
 	return &UserSession{
-		meta:  make(map[string]string),
-		cache: make(map[string]interface{}),
-		msgs:  make([]*pb.SocketMessage, 0),
+		meta:     make(map[string]string),
+		cache:    make(map[string]interface{}),
+		msgqueue: make([]*pb.SocketMessage, 0),
 	}
 }
 
@@ -32,12 +37,11 @@ type UserSession struct {
 	meta      map[string]string
 	cachelock sync.RWMutex
 	cache     map[string]interface{}
-	msgs      []*pb.SocketMessage
+	msgqueue  []*pb.SocketMessage
 }
 
 // 重置
-func (this *UserSession) SetSession(service IService, values string) {
-	this.service = service
+func (this *UserSession) SetSession(ctx context.Context, values string) {
 	this.metalock.Lock()
 	this.values, _ = url.ParseQuery(values)
 	for k, v := range this.values {
@@ -46,6 +50,9 @@ func (this *UserSession) SetSession(service IService, values string) {
 		}
 	}
 	this.metalock.Unlock()
+	if v := ctx.Value(ContextKey_Service); v != nil {
+		this.service = v.(IService)
+	}
 }
 
 // 重置
@@ -147,8 +154,8 @@ func (this *UserSession) GetCache(name string) (value interface{}, ok bool) {
 }
 
 // 克隆
-func (this *UserSession) Clone() (session IUserSession) {
-	session = this.service.GetUserSession("")
+func (this *UserSession) Clone(ctx context.Context) (session IUserSession) {
+	session = this.service.GetUserSession(ctx, "")
 	this.metalock.RLock()
 	for k, v := range this.meta {
 		session.SetMate(k, v)
@@ -174,8 +181,19 @@ func (this *UserSession) GetChangeMeta() (meta string) {
 	return this.values.Encode()
 }
 
+// 向用户发送消息
+func (this *UserSession) SendMsg(MsgName string, msg proto.Message) (err error) {
+	data, _ := anypb.New(msg)
+	this.msgqueue = append(this.msgqueue, &pb.SocketMessage{
+		MsgName:     MsgName,
+		ServicePath: fmt.Sprintf("%s/%s", this.service.GetType(), this.service.GetId()),
+		Data:        data,
+	})
+	return
+}
+
 // 采用先进先出逻辑 清空消息队列
 func (this *UserSession) Polls() (msgs []*pb.SocketMessage) {
-	this.msgs, msgs = this.msgs[:0], this.msgs
+	this.msgqueue, msgs = this.msgqueue[:0], this.msgqueue
 	return
 }

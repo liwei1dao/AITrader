@@ -14,7 +14,7 @@ import (
 服务类型:后台服务
 */
 var (
-	conf = flag.String("conf", "./conf/api.yaml", "获取需要启动的服务配置文件") //启动服务的Id
+	conf = flag.String("conf", "./conf/gateway.yaml", "获取需要启动的服务配置文件") //启动服务的Id
 )
 
 /*服务启动的入口函数*/

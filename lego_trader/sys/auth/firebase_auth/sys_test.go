@@ -1,0 +1,20 @@
+package firebase_auth_test
+
+import (
+
+	//"lego_bighealth/sys/coze"
+
+	"context"
+	"fmt"
+	firebase_auth "lego_trader/sys/auth/firebase_auth"
+	"testing"
+)
+
+func Test_Sys_Chat(t *testing.T) {
+	if sys, err := firebase_auth.NewSys(); err != nil {
+		fmt.Printf("Sys Init err:%v", err)
+	} else {
+		info, err := sys.Auth(context.Background(), "eyJhbGciOiJSUzI1NiIsImtpZCI6IjMwYjIyMWFiNjU2MTdiY2Y4N2VlMGY4NDYyZjc0ZTM2NTIyY2EyZTQiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiY2h1YW5neGluIHl1bnFpIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0p3OTZwSHFvM3VjZXl4eXJXemlRcjhlR1MtQ1paX05oUkJOQ19Fdm1Ha0F5ZjZUUT1zOTYtYyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9kZWVwc291bmQtZTBlM2QiLCJhdWQiOiJkZWVwc291bmQtZTBlM2QiLCJhdXRoX3RpbWUiOjE3NDI2MTA5MjMsInVzZXJfaWQiOiJVeXJrbTJBTDdEWnJuSHpmTmh6cTk4NWxRdjEyIiwic3ViIjoiVXlya20yQUw3RFpybkh6Zk5oenE5ODVsUXYxMiIsImlhdCI6MTc0MjYxMDkyMywiZXhwIjoxNzQyNjE0NTIzLCJlbWFpbCI6Inl1bnFpaW5ub3ZhdGlvbkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjEwNjgyMjc5MDg3MTQ0MTY4NDkxMSJdLCJlbWFpbCI6WyJ5dW5xaWlubm92YXRpb25AZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.rw6DkZUM97GypdB91FMpn4UY1PvMqXegvH5u34R4zVjpF55OmVOJEI2TNl6j1K9yzL4Kq4p5_vrLLfhBqFOjkc8UfX98xKZT5oLMrfkNrlR_W8omXJ0W3HAUEaG4KGLGSJn-hiQwgp2ZEBl7zvbWaapjlpVvDhfhV5AZMaHXUalxV9iure8ubo-36F0NY3YM63YQb9QPXJ9KYIzc413mUu5Ee0oaHt_jl6Jc0HZbW7Q3qvmNFh608n79cgkToMNPJTDYLCpSOblRucJEXP7OfW7vanUOHjJyPA1EI-w_kchss664OESjnn-YGw6igkKcRDAbIZk1HEL7o3hoBfF4og")
+		fmt.Printf("Sys info:%+v err:%v", info, err)
+	}
+}

@@ -5,13 +5,15 @@ import "user/user_db.proto";
 //登录请求
 message UserSginReq{
     SginTyoe stype = 1;                 //@go_tags(`json:"stype" example:"0" description:"登录方式“`) 登录方式
-    string mail = 2;                   //@go_tags(`json:"mail" example:"" description:"邮箱地址"`) 邮箱地址
-    string phone = 3;                   //@go_tags(`json:"phone" example:"" description:"手机号码“`) 手机号
-    string ttoken = 4;                  //@go_tags(`json:"ttoken" example:"" description:"第三方token"`) 第三方token
-    string vcode = 5;                   //@go_tags(`json:"vcode" example:"" description:"验证码"`) 验证码
-    string name = 20;                   //@go_tags(`gorm:"name:50" json:"name" example:"" description:"用户名"`) 用户名
-    string avatar = 21;                 //@go_tags(`gorm:"avatar" json:"avatar" example:"" description:"头像连接"`) 头像连接
-    string language = 22;               //@go_tags(`json:"language" example:"en" description:"语言"`) 
+    string account = 2;                 //@go_tags(`json:"account" example:"" description:"账号"`) 账号
+    string password = 3;                //@go_tags(`json:"password" example:"" description:"密码"`) 密码
+    string mail = 4;                   //@go_tags(`json:"mail" example:"" description:"邮箱地址"`) 邮箱地址
+    string phone = 5;                   //@go_tags(`json:"phone" example:"" description:"手机号码“`) 手机号
+    string ttoken = 6;                  //@go_tags(`json:"ttoken" example:"" description:"第三方token"`) 第三方token    
+    string vcode = 7;                   //@go_tags(`json:"vcode" example:"" description:"验证码"`) 验证码   
+    string name = 10;                   //@go_tags(`gorm:"name:50" json:"name" example:"" description:"用户名"`) 用户名
+    string avatar = 11;                 //@go_tags(`gorm:"avatar" json:"avatar" example:"" description:"头像连接"`) 头像连接
+    string language = 12;               //@go_tags(`json:"language" example:"en" description:"语言"`) 
 }
 
 message UserSginResp {

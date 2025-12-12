@@ -1,0 +1,10 @@
+2025/12/12 19:18:18.654	INFO	sys log Init success !
+2025/12/12 19:18:18.654	INFO	sys event Init success !
+2025/12/12 19:18:18.672	INFO	init sys.db success!
+2025/12/12 19:18:18.672	INFO	init sys.sms success!
+2025/12/12 19:18:18.672	INFO	init sys.email success!
+2025/12/12 19:18:18.672	INFO	服务[home-d4tvjuk4kvnibev33120] 初始化完成!
+2025/12/12 19:18:18.680	INFO	服务[home-d4tvjuk4kvnibev33120:1.0.0.0] 启动完成!
+2025/12/12 19:18:18.699	DEBUG	启动模块【user】
+2025/12/12 19:19:40.215	DEBUG	[Handle Api]	t:51	m:user.sgin	uid:	req:{"stype":6,"account":"liwei","password":"li13451234","mail":"","phone":"","ttoken":"","vcode":"","name":"","avatar":"","language":""}	reply:ServicePath:"home/home-d4tvjuk4kvnibev33120" Reply:{ServicePath:"home/home-d4tvjuk4kvnibev33120" data:{[type.googleapis.com/UserSginResp]:{token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsZWdvX3RyYWRlciIsInN1YiI6IlNnaW4iLCJuYmYiOjE3NjU1MzgzODAsImlhdCI6MTc2NTUzODM4MCwianRpIjoiMTk5OTQzOTAwMDY1NzM2Mjk0NCJ9.5aTBMdkcla_ulngKI3x7ZYBVZ7_RyXf9dL1RjXUpcew" user:{uid:"1999439000657362944" name:"guest_9351" account:"liwei" password:"li13451234" createtime:1765538380 lastsgintime:1765538380}}}}
+2025/12/12 19:23:42.052	DEBUG	[Handle Api]	t:19	m:user.sgin	uid:	req:{"stype":6,"account":"liwei","password":"li13451234","mail":"","phone":"","ttoken":"","vcode":"","name":"","avatar":"","language":""}	reply:ServicePath:"home/home-d4tvjuk4kvnibev33120" Reply:{ServicePath:"home/home-d4tvjuk4kvnibev33120" data:{[type.googleapis.com/UserSginResp]:{token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsZWdvX3RyYWRlciIsInN1YiI6IlNnaW4iLCJuYmYiOjE3NjU1Mzg2MjIsImlhdCI6MTc2NTUzODYyMiwianRpIjoiMTk5OTQzOTAwMDY1NzM2Mjk0NCJ9.oFhQtdtHh-J2AqtAW4pUc0XRk8SQrnAp3huz4HHRZN0" user:{uid:"1999439000657362944" name:"guest_9351" account:"liwei" password:"li13451234" createtime:1765538380 lastsgintime:1765538622}}}}

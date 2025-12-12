@@ -26,10 +26,10 @@ enum SginTyoe {
 	// @Description 
 	// @example
     Apple = 5;    //Apple 登陆
-    // 游客登录
-	// @Description 
+    // 账号登录
+	// @Description 账号登录 账号密码登录
 	// @example
-    Tourists = 6;    //游客登录
+    Account = 6;    // 账号登录
 }
 
 

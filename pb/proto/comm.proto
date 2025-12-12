@@ -34,13 +34,13 @@ message Rpc_GatewayHttpRouteResp {
 }
 
 
-message Rpc_GatewayRouteReq {
+message Rpc_GatewaySocketRouteReq {
   string MsgName = 1;
   string Meta = 2;
   google.protobuf.Any Message = 3;
 }
 
-message Rpc_GatewayRouteResp  {
+message Rpc_GatewaySocketRouteResp  {
 	string ServicePath =1;
   string ChangeMeta = 2;       
 	repeated SocketMessage Reply =3;

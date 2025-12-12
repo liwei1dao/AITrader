@@ -48,6 +48,7 @@ const ErrorCode$json = {
     {'1': 'NoFindRoom', '2': 104},
     {'1': 'AgentNofund', '2': 105},
     {'1': 'NetWorkError', '2': 106},
+    {'1': 'ExceptionAccountVerification', '2': 1001},
   ],
 };
 
@@ -63,4 +64,4 @@ final $typed_data.Uint8List errorCodeDescriptor = $convert.base64Decode(
     'EKDUNvbmZpZ05vRm91bmQQGxIQCgxEZWNyeXB0RXJyb3IQHBIPCgtDbGllbnRFcnJvchAdEg0K'
     'CUV4Y2VwdGlvbhBkEhkKFUFnZW50QmV0RXhjaGFuZ2VFcnJvchBlEhUKEUdhbWVJbk1haW50ZW'
     '5hbmNlEGYSDAoITm9DYW5CZXQQZxIOCgpOb0ZpbmRSb29tEGgSDwoLQWdlbnROb2Z1bmQQaRIQ'
-    'CgxOZXRXb3JrRXJyb3IQag==');
+    'CgxOZXRXb3JrRXJyb3IQahIhChxFeGNlcHRpb25BY2NvdW50VmVyaWZpY2F0aW9uEOkH');

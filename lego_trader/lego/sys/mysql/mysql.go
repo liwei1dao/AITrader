@@ -46,8 +46,8 @@ func (this *MySql) Table(tName string) (tx *gorm.DB) {
 }
 
 // 查询数据
-func (this *MySql) FindOne(tName string, model any, where map[string]interface{}) (err error) {
-	result := this.db.Table(tName).Where(where).First(model)
+func (this *MySql) FindOne(tName string, model any, query interface{}, args ...interface{}) (err error) {
+	result := this.db.Table(tName).Where(query, args...).First(model)
 	if result.Error != nil {
 		err = result.Error
 	}
@@ -55,8 +55,8 @@ func (this *MySql) FindOne(tName string, model any, where map[string]interface{}
 }
 
 // 查询数据
-func (this *MySql) Find(tName string, models any, where map[string]interface{}) (err error) {
-	result := this.db.Table(tName).Where(where).Find(models)
+func (this *MySql) Find(tName string, models any, query interface{}, args ...interface{}) (err error) {
+	result := this.db.Table(tName).Where(query, args...).Find(models)
 	if result.Error != nil {
 		err = result.Error
 	}
@@ -88,9 +88,9 @@ func (this *MySql) Save(tName string, model any) (err error) {
 }
 
 // 插入数据
-func (this *MySql) Delete(tName string, where map[string]interface{}) (err error) {
+func (this *MySql) Delete(tName string, query interface{}, args ...interface{}) (err error) {
 	// 使用 Update 方法更新特定字段
-	result := this.db.Table(tName).Where(where).Unscoped().Delete(nil)
+	result := this.db.Table(tName).Where(query, args...).Unscoped().Delete(nil)
 	if result.Error != nil {
 		err = result.Error
 	}

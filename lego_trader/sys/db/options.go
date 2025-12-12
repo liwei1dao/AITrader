@@ -9,10 +9,13 @@ import (
 
 type Option func(*Options)
 type Options struct {
-	Debug    bool //日志是否开启
-	Log      log.ILogger
-	MysqlUrl string
-	RedisUrl string
+	Debug         bool //日志是否开启
+	Log           log.ILogger
+	MysqlDNS      string   //平台MySql 数据库
+	RedisAddr     []string //平台Rdis 的集群地址
+	RedisPassword string   //平台Rdis 密码
+	RedisTLS      bool     //平台Rdis 是否开启tls
+	RedisDB       int      //平台Rdis DB
 }
 
 func SetDebug(v bool) Option {
@@ -29,13 +32,31 @@ func SetLog(v log.ILogger) Option {
 
 func SetMysqlUrl(v string) Option {
 	return func(o *Options) {
-		o.MysqlUrl = v
+		o.MysqlDNS = v
 	}
 }
 
-func SetRedisUrl(v string) Option {
+func SetRedisAddr(v []string) Option {
 	return func(o *Options) {
-		o.RedisUrl = v
+		o.RedisAddr = v
+	}
+}
+
+func SetRedisPassword(v string) Option {
+	return func(o *Options) {
+		o.RedisPassword = v
+	}
+}
+
+func SetRedisTLS(v bool) Option {
+	return func(o *Options) {
+		o.RedisTLS = v
+	}
+}
+
+func SetRedisDB(v int) Option {
+	return func(o *Options) {
+		o.RedisDB = v
 	}
 }
 

@@ -45,7 +45,7 @@ func (this *MCompSocketGate) Start() (err error) {
 	}
 	var comp core.IServiceComp
 	//注册远程路由
-	if comp, err = this.service.GetComp(comm.SC_ServiceGateRouteComp); err != nil {
+	if comp, err = this.service.GetComp(comm.SC_ServiceSocketRouteComp); err != nil {
 		return
 	}
 	this.scomp = comp.(comm.ISC_SocketRouteComp)
@@ -75,35 +75,36 @@ func (this *MCompSocketGate) reflectionRouteHandle(typ reflect.Type, method refl
 	mtype := method.Type
 	mname := method.Name
 	if method.PkgPath != "" {
-		log.Panicf("反射注册用户处理函数错误 [%s-%s] Api接口格式错误", this.module.GetType(), mname)
+		log.Panicf("模块[%s] 方法[%s] 非导出方法，无法注册为路由处理函数", this.module.GetType(), mname)
 		return
 	}
 	if mtype.NumIn() != 3 {
-		log.Panicf("反射注册用户处理函数错误 [%s-%s] Api接口格式错误", this.module.GetType(), mname)
+		log.Panicf("模块[%s] 方法[%s] 入参数量[%d] 不符合要求，期望为3个参数", this.module.GetType(), mname, mtype.NumIn())
 		return
 	}
 	sessionType := mtype.In(1)
 	if !sessionType.Implements(typeOfSession) {
-		log.Panicf("反射注册用户处理函数错误 [%s-%s] Api接口格式错误", this.module.GetType(), mname)
+		log.Panicf("模块[%s] 方法[%s] 第2个参数类型[%s] 未实现Session接口", this.module.GetType(), mname, sessionType.String())
 		return
 	}
-	agrType := mtype.In(2)
-	if !agrType.Implements(typeOfMessage) {
-		log.Panicf("反射注册用户处理函数错误 [%s-%s] Api接口格式错误", this.module.GetType(), mname)
+	reqType := mtype.In(2)
+	if !reqType.Implements(typeOfMessage) {
+		log.Panicf("模块[%s] 方法[%s] 第3个参数类型[%s] 未实现Message接口", this.module.GetType(), mname, reqType.String())
 		return
 	}
+
 	if mtype.NumOut() != 1 {
-		log.Panicf("反射注册用户处理函数错误 [%s-%s] Api接口格式错误", this.module.GetType(), mname)
+		log.Panicf("模块[%s] 方法[%s] 返回值数量[%d] 不符合要求，期望为1个返回值", this.module.GetType(), mname, mtype.NumOut())
 		return
 	}
 	returnDataType := mtype.Out(0)
 	if returnDataType != typeOfErrorData {
-		log.Panicf("反射注册用户处理函数错误 [%s-%s] Api接口格式错误", this.module.GetType(), mname)
+		log.Panicf("模块[%s] 方法[%s] 返回值类型[%s] 不符合要求，期望为error类型", this.module.GetType(), mname, returnDataType.String())
 		return
 	}
 
 	//注册路由函数
-	this.scomp.RegisterRoute(fmt.Sprintf("%s/%s", this.module.GetType(), strings.ToLower(mname)), reflect.ValueOf(this.comp), agrType, method)
+	this.scomp.RegisterRoute(fmt.Sprintf("%s.%s", this.module.GetType(), strings.ToLower(mname)), reflect.ValueOf(this.comp), reqType, method)
 
 	return true
 }
