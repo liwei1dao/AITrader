@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from market_msg.proto.
+// Generated from gateway/gateway_msg.proto.
 
 // @dart = 3.3
 

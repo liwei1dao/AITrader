@@ -52,7 +52,7 @@ def buildProto(pbpath, go_out, flutter_out, pattern):
 
 # 定义 Go 和 Flutter 的输出目录
 GO_OUT_DIR = '../lego_trader/pb'
-FLUTTER_OUT_DIR = '../lego_trader/lib/network/pb'
+FLUTTER_OUT_DIR = '../flutter_trader/lib/network/pb'
 
 # 确保输出目录存在
 os.makedirs(GO_OUT_DIR, exist_ok=True)
@@ -60,7 +60,7 @@ os.makedirs(FLUTTER_OUT_DIR, exist_ok=True)
 
 # 批量生成
 buildProto('./proto', GO_OUT_DIR, FLUTTER_OUT_DIR, '*.proto')
-buildProto('./proto/gateway', GO_OUT_DIR, FLUTTER_OUT_DIR, '*.proto')
-buildProto('./proto/user', GO_OUT_DIR, FLUTTER_OUT_DIR, '*.proto')
-buildProto('./proto/stock', GO_OUT_DIR, FLUTTER_OUT_DIR, '*.proto')
-buildProto('./proto/market', GO_OUT_DIR, FLUTTER_OUT_DIR, '*.proto')
+buildProto('./proto', GO_OUT_DIR, FLUTTER_OUT_DIR, 'gateway/*.proto')
+buildProto('./proto', GO_OUT_DIR, FLUTTER_OUT_DIR, 'user/*.proto')
+buildProto('./proto', GO_OUT_DIR, FLUTTER_OUT_DIR, 'stock/*.proto')
+buildProto('./proto', GO_OUT_DIR, FLUTTER_OUT_DIR, 'market/*.proto')

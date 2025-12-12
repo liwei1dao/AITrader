@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: stock_db.proto
+// source: stock/stock_db.proto
 
 package pb
 
@@ -46,7 +46,7 @@ type DBStockIdentity struct {
 
 func (x *DBStockIdentity) Reset() {
 	*x = DBStockIdentity{}
-	mi := &file_stock_db_proto_msgTypes[0]
+	mi := &file_stock_stock_db_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -58,7 +58,7 @@ func (x *DBStockIdentity) String() string {
 func (*DBStockIdentity) ProtoMessage() {}
 
 func (x *DBStockIdentity) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_db_proto_msgTypes[0]
+	mi := &file_stock_stock_db_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -71,7 +71,7 @@ func (x *DBStockIdentity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DBStockIdentity.ProtoReflect.Descriptor instead.
 func (*DBStockIdentity) Descriptor() ([]byte, []int) {
-	return file_stock_db_proto_rawDescGZIP(), []int{0}
+	return file_stock_stock_db_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *DBStockIdentity) GetId() string {
@@ -210,7 +210,7 @@ type DBStockBar struct {
 
 func (x *DBStockBar) Reset() {
 	*x = DBStockBar{}
-	mi := &file_stock_db_proto_msgTypes[1]
+	mi := &file_stock_stock_db_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -222,7 +222,7 @@ func (x *DBStockBar) String() string {
 func (*DBStockBar) ProtoMessage() {}
 
 func (x *DBStockBar) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_db_proto_msgTypes[1]
+	mi := &file_stock_stock_db_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -235,7 +235,7 @@ func (x *DBStockBar) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DBStockBar.ProtoReflect.Descriptor instead.
 func (*DBStockBar) Descriptor() ([]byte, []int) {
-	return file_stock_db_proto_rawDescGZIP(), []int{1}
+	return file_stock_stock_db_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *DBStockBar) GetId() string {
@@ -386,7 +386,7 @@ type DBFundamentalSnapshot struct {
 
 func (x *DBFundamentalSnapshot) Reset() {
 	*x = DBFundamentalSnapshot{}
-	mi := &file_stock_db_proto_msgTypes[2]
+	mi := &file_stock_stock_db_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -398,7 +398,7 @@ func (x *DBFundamentalSnapshot) String() string {
 func (*DBFundamentalSnapshot) ProtoMessage() {}
 
 func (x *DBFundamentalSnapshot) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_db_proto_msgTypes[2]
+	mi := &file_stock_stock_db_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -411,7 +411,7 @@ func (x *DBFundamentalSnapshot) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DBFundamentalSnapshot.ProtoReflect.Descriptor instead.
 func (*DBFundamentalSnapshot) Descriptor() ([]byte, []int) {
-	return file_stock_db_proto_rawDescGZIP(), []int{2}
+	return file_stock_stock_db_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *DBFundamentalSnapshot) GetId() string {
@@ -668,7 +668,7 @@ type DBStockNews struct {
 
 func (x *DBStockNews) Reset() {
 	*x = DBStockNews{}
-	mi := &file_stock_db_proto_msgTypes[3]
+	mi := &file_stock_stock_db_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -680,7 +680,7 @@ func (x *DBStockNews) String() string {
 func (*DBStockNews) ProtoMessage() {}
 
 func (x *DBStockNews) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_db_proto_msgTypes[3]
+	mi := &file_stock_stock_db_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -693,7 +693,7 @@ func (x *DBStockNews) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DBStockNews.ProtoReflect.Descriptor instead.
 func (*DBStockNews) Descriptor() ([]byte, []int) {
-	return file_stock_db_proto_rawDescGZIP(), []int{3}
+	return file_stock_stock_db_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *DBStockNews) GetId() string {
@@ -760,7 +760,7 @@ type DBStockReport struct {
 
 func (x *DBStockReport) Reset() {
 	*x = DBStockReport{}
-	mi := &file_stock_db_proto_msgTypes[4]
+	mi := &file_stock_stock_db_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -772,7 +772,7 @@ func (x *DBStockReport) String() string {
 func (*DBStockReport) ProtoMessage() {}
 
 func (x *DBStockReport) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_db_proto_msgTypes[4]
+	mi := &file_stock_stock_db_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -785,7 +785,7 @@ func (x *DBStockReport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DBStockReport.ProtoReflect.Descriptor instead.
 func (*DBStockReport) Descriptor() ([]byte, []int) {
-	return file_stock_db_proto_rawDescGZIP(), []int{4}
+	return file_stock_stock_db_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *DBStockReport) GetId() string {
@@ -830,11 +830,11 @@ func (x *DBStockReport) GetCreateAt() string {
 	return ""
 }
 
-var File_stock_db_proto protoreflect.FileDescriptor
+var File_stock_stock_db_proto protoreflect.FileDescriptor
 
-const file_stock_db_proto_rawDesc = "" +
+const file_stock_stock_db_proto_rawDesc = "" +
 	"\n" +
-	"\x0estock_db.proto\"\x9b\x03\n" +
+	"\x14stock/stock_db.proto\"\x9b\x03\n" +
 	"\x0fDBStockIdentity\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x16\n" +
 	"\x06Symbol\x18\x02 \x01(\tR\x06Symbol\x12\x16\n" +
@@ -932,19 +932,19 @@ const file_stock_db_proto_rawDesc = "" +
 	"\bCreateAt\x18\x06 \x01(\tR\bCreateAtB\x06Z\x04.;pbb\x06proto3"
 
 var (
-	file_stock_db_proto_rawDescOnce sync.Once
-	file_stock_db_proto_rawDescData []byte
+	file_stock_stock_db_proto_rawDescOnce sync.Once
+	file_stock_stock_db_proto_rawDescData []byte
 )
 
-func file_stock_db_proto_rawDescGZIP() []byte {
-	file_stock_db_proto_rawDescOnce.Do(func() {
-		file_stock_db_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_stock_db_proto_rawDesc), len(file_stock_db_proto_rawDesc)))
+func file_stock_stock_db_proto_rawDescGZIP() []byte {
+	file_stock_stock_db_proto_rawDescOnce.Do(func() {
+		file_stock_stock_db_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_stock_stock_db_proto_rawDesc), len(file_stock_stock_db_proto_rawDesc)))
 	})
-	return file_stock_db_proto_rawDescData
+	return file_stock_stock_db_proto_rawDescData
 }
 
-var file_stock_db_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_stock_db_proto_goTypes = []any{
+var file_stock_stock_db_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_stock_stock_db_proto_goTypes = []any{
 	(*DBStockIdentity)(nil),       // 0: DBStockIdentity
 	(*DBStockBar)(nil),            // 1: DBStockBar
 	(*DBFundamentalSnapshot)(nil), // 2: DBFundamentalSnapshot
@@ -952,7 +952,7 @@ var file_stock_db_proto_goTypes = []any{
 	(*DBStockReport)(nil),         // 4: DBStockReport
 	nil,                           // 5: DBFundamentalSnapshot.MetricsEntry
 }
-var file_stock_db_proto_depIdxs = []int32{
+var file_stock_stock_db_proto_depIdxs = []int32{
 	5, // 0: DBFundamentalSnapshot.Metrics:type_name -> DBFundamentalSnapshot.MetricsEntry
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
@@ -961,26 +961,26 @@ var file_stock_db_proto_depIdxs = []int32{
 	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_stock_db_proto_init() }
-func file_stock_db_proto_init() {
-	if File_stock_db_proto != nil {
+func init() { file_stock_stock_db_proto_init() }
+func file_stock_stock_db_proto_init() {
+	if File_stock_stock_db_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_stock_db_proto_rawDesc), len(file_stock_db_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_stock_stock_db_proto_rawDesc), len(file_stock_stock_db_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_stock_db_proto_goTypes,
-		DependencyIndexes: file_stock_db_proto_depIdxs,
-		MessageInfos:      file_stock_db_proto_msgTypes,
+		GoTypes:           file_stock_stock_db_proto_goTypes,
+		DependencyIndexes: file_stock_stock_db_proto_depIdxs,
+		MessageInfos:      file_stock_stock_db_proto_msgTypes,
 	}.Build()
-	File_stock_db_proto = out.File
-	file_stock_db_proto_goTypes = nil
-	file_stock_db_proto_depIdxs = nil
+	File_stock_stock_db_proto = out.File
+	file_stock_stock_db_proto_goTypes = nil
+	file_stock_stock_db_proto_depIdxs = nil
 }
