@@ -14,115 +14,195 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'user_db.pb.dart' as $0;
+
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
-class UserSignInReq extends $pb.GeneratedMessage {
-  factory UserSignInReq({
+/// 登录请求
+class UserSginReq extends $pb.GeneratedMessage {
+  factory UserSginReq({
+    $0.SginTyoe? stype,
+    $core.String? mail,
+    $core.String? phone,
+    $core.String? ttoken,
+    $core.String? vcode,
     $core.String? name,
-    $core.String? password,
+    $core.String? avatar,
+    $core.String? language,
   }) {
     final result = create();
+    if (stype != null) result.stype = stype;
+    if (mail != null) result.mail = mail;
+    if (phone != null) result.phone = phone;
+    if (ttoken != null) result.ttoken = ttoken;
+    if (vcode != null) result.vcode = vcode;
     if (name != null) result.name = name;
-    if (password != null) result.password = password;
+    if (avatar != null) result.avatar = avatar;
+    if (language != null) result.language = language;
     return result;
   }
 
-  UserSignInReq._();
+  UserSginReq._();
 
-  factory UserSignInReq.fromBuffer($core.List<$core.int> data,
+  factory UserSginReq.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory UserSignInReq.fromJson($core.String json,
+  factory UserSginReq.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'UserSignInReq',
+      _omitMessageNames ? '' : 'UserSginReq',
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..aOS(2, _omitFieldNames ? '' : 'password')
+    ..aE<$0.SginTyoe>(1, _omitFieldNames ? '' : 'stype',
+        enumValues: $0.SginTyoe.values)
+    ..aOS(2, _omitFieldNames ? '' : 'mail')
+    ..aOS(3, _omitFieldNames ? '' : 'phone')
+    ..aOS(4, _omitFieldNames ? '' : 'ttoken')
+    ..aOS(5, _omitFieldNames ? '' : 'vcode')
+    ..aOS(20, _omitFieldNames ? '' : 'name')
+    ..aOS(21, _omitFieldNames ? '' : 'avatar')
+    ..aOS(22, _omitFieldNames ? '' : 'language')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UserSignInReq clone() => deepCopy();
+  UserSginReq clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UserSignInReq copyWith(void Function(UserSignInReq) updates) =>
-      super.copyWith((message) => updates(message as UserSignInReq))
-          as UserSignInReq;
+  UserSginReq copyWith(void Function(UserSginReq) updates) =>
+      super.copyWith((message) => updates(message as UserSginReq))
+          as UserSginReq;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static UserSignInReq create() => UserSignInReq._();
+  static UserSginReq create() => UserSginReq._();
   @$core.override
-  UserSignInReq createEmptyInstance() => create();
+  UserSginReq createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static UserSignInReq getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<UserSignInReq>(create);
-  static UserSignInReq? _defaultInstance;
+  static UserSginReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UserSginReq>(create);
+  static UserSginReq? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get name => $_getSZ(0);
+  $0.SginTyoe get stype => $_getN(0);
   @$pb.TagNumber(1)
-  set name($core.String value) => $_setString(0, value);
+  set stype($0.SginTyoe value) => $_setField(1, value);
   @$pb.TagNumber(1)
-  $core.bool hasName() => $_has(0);
+  $core.bool hasStype() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => $_clearField(1);
+  void clearStype() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get password => $_getSZ(1);
+  $core.String get mail => $_getSZ(1);
   @$pb.TagNumber(2)
-  set password($core.String value) => $_setString(1, value);
+  set mail($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
-  $core.bool hasPassword() => $_has(1);
+  $core.bool hasMail() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPassword() => $_clearField(2);
+  void clearMail() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get phone => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set phone($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasPhone() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPhone() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get ttoken => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set ttoken($core.String value) => $_setString(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasTtoken() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearTtoken() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get vcode => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set vcode($core.String value) => $_setString(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasVcode() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearVcode() => $_clearField(5);
+
+  @$pb.TagNumber(20)
+  $core.String get name => $_getSZ(5);
+  @$pb.TagNumber(20)
+  set name($core.String value) => $_setString(5, value);
+  @$pb.TagNumber(20)
+  $core.bool hasName() => $_has(5);
+  @$pb.TagNumber(20)
+  void clearName() => $_clearField(20);
+
+  @$pb.TagNumber(21)
+  $core.String get avatar => $_getSZ(6);
+  @$pb.TagNumber(21)
+  set avatar($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(21)
+  $core.bool hasAvatar() => $_has(6);
+  @$pb.TagNumber(21)
+  void clearAvatar() => $_clearField(21);
+
+  @$pb.TagNumber(22)
+  $core.String get language => $_getSZ(7);
+  @$pb.TagNumber(22)
+  set language($core.String value) => $_setString(7, value);
+  @$pb.TagNumber(22)
+  $core.bool hasLanguage() => $_has(7);
+  @$pb.TagNumber(22)
+  void clearLanguage() => $_clearField(22);
 }
 
-class UserSignInResp extends $pb.GeneratedMessage {
-  factory UserSignInResp({
+class UserSginResp extends $pb.GeneratedMessage {
+  factory UserSginResp({
     $core.String? token,
+    $0.DBUser? user,
   }) {
     final result = create();
     if (token != null) result.token = token;
+    if (user != null) result.user = user;
     return result;
   }
 
-  UserSignInResp._();
+  UserSginResp._();
 
-  factory UserSignInResp.fromBuffer($core.List<$core.int> data,
+  factory UserSginResp.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory UserSignInResp.fromJson($core.String json,
+  factory UserSginResp.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'UserSignInResp',
+      _omitMessageNames ? '' : 'UserSginResp',
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'token')
+    ..aOM<$0.DBUser>(2, _omitFieldNames ? '' : 'user',
+        subBuilder: $0.DBUser.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UserSignInResp clone() => deepCopy();
+  UserSginResp clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UserSignInResp copyWith(void Function(UserSignInResp) updates) =>
-      super.copyWith((message) => updates(message as UserSignInResp))
-          as UserSignInResp;
+  UserSginResp copyWith(void Function(UserSginResp) updates) =>
+      super.copyWith((message) => updates(message as UserSginResp))
+          as UserSginResp;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static UserSignInResp create() => UserSignInResp._();
+  static UserSginResp create() => UserSginResp._();
   @$core.override
-  UserSignInResp createEmptyInstance() => create();
+  UserSginResp createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static UserSignInResp getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<UserSignInResp>(create);
-  static UserSignInResp? _defaultInstance;
+  static UserSginResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UserSginResp>(create);
+  static UserSginResp? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get token => $_getSZ(0);
@@ -132,6 +212,17 @@ class UserSignInResp extends $pb.GeneratedMessage {
   $core.bool hasToken() => $_has(0);
   @$pb.TagNumber(1)
   void clearToken() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $0.DBUser get user => $_getN(1);
+  @$pb.TagNumber(2)
+  set user($0.DBUser value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasUser() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUser() => $_clearField(2);
+  @$pb.TagNumber(2)
+  $0.DBUser ensureUser() => $_ensure(1);
 }
 
 const $core.bool _omitFieldNames =

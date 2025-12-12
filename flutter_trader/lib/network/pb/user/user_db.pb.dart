@@ -17,16 +17,43 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
+export 'user_db.pbenum.dart';
+
+/// 用户数据
 class DBUser extends $pb.GeneratedMessage {
   factory DBUser({
-    $core.String? id,
+    $core.String? uid,
+    $core.String? mail,
+    $core.String? phone,
     $core.String? name,
+    $core.String? avatar,
+    $core.String? account,
     $core.String? password,
+    $fixnum.Int64? createtime,
+    $core.String? language,
+    $core.String? servicetag,
+    $core.String? wxopenid,
+    $core.String? googleopenid,
+    $core.String? facebookopenid,
+    $core.String? appleopenid,
+    $fixnum.Int64? lastsgintime,
   }) {
     final result = create();
-    if (id != null) result.id = id;
+    if (uid != null) result.uid = uid;
+    if (mail != null) result.mail = mail;
+    if (phone != null) result.phone = phone;
     if (name != null) result.name = name;
+    if (avatar != null) result.avatar = avatar;
+    if (account != null) result.account = account;
     if (password != null) result.password = password;
+    if (createtime != null) result.createtime = createtime;
+    if (language != null) result.language = language;
+    if (servicetag != null) result.servicetag = servicetag;
+    if (wxopenid != null) result.wxopenid = wxopenid;
+    if (googleopenid != null) result.googleopenid = googleopenid;
+    if (facebookopenid != null) result.facebookopenid = facebookopenid;
+    if (appleopenid != null) result.appleopenid = appleopenid;
+    if (lastsgintime != null) result.lastsgintime = lastsgintime;
     return result;
   }
 
@@ -42,9 +69,21 @@ class DBUser extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'DBUser',
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aOS(3, _omitFieldNames ? '' : 'password')
+    ..aOS(1, _omitFieldNames ? '' : 'uid')
+    ..aOS(2, _omitFieldNames ? '' : 'mail')
+    ..aOS(3, _omitFieldNames ? '' : 'phone')
+    ..aOS(5, _omitFieldNames ? '' : 'name')
+    ..aOS(8, _omitFieldNames ? '' : 'avatar')
+    ..aOS(12, _omitFieldNames ? '' : 'account')
+    ..aOS(13, _omitFieldNames ? '' : 'password')
+    ..aInt64(14, _omitFieldNames ? '' : 'createtime')
+    ..aOS(15, _omitFieldNames ? '' : 'language')
+    ..aOS(16, _omitFieldNames ? '' : 'servicetag')
+    ..aOS(17, _omitFieldNames ? '' : 'wxopenid')
+    ..aOS(18, _omitFieldNames ? '' : 'googleopenid')
+    ..aOS(19, _omitFieldNames ? '' : 'facebookopenid')
+    ..aOS(20, _omitFieldNames ? '' : 'appleopenid')
+    ..aInt64(21, _omitFieldNames ? '' : 'lastsgintime')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -66,134 +105,139 @@ class DBUser extends $pb.GeneratedMessage {
   static DBUser? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get id => $_getSZ(0);
+  $core.String get uid => $_getSZ(0);
   @$pb.TagNumber(1)
-  set id($core.String value) => $_setString(0, value);
+  set uid($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
+  $core.bool hasUid() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => $_clearField(1);
+  void clearUid() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get name => $_getSZ(1);
+  $core.String get mail => $_getSZ(1);
   @$pb.TagNumber(2)
-  set name($core.String value) => $_setString(1, value);
+  set mail($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
-  $core.bool hasName() => $_has(1);
+  $core.bool hasMail() => $_has(1);
   @$pb.TagNumber(2)
-  void clearName() => $_clearField(2);
+  void clearMail() => $_clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get password => $_getSZ(2);
+  $core.String get phone => $_getSZ(2);
   @$pb.TagNumber(3)
-  set password($core.String value) => $_setString(2, value);
+  set phone($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
-  $core.bool hasPassword() => $_has(2);
+  $core.bool hasPhone() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPassword() => $_clearField(3);
-}
-
-/// 用户股票持仓
-class DBUserStock extends $pb.GeneratedMessage {
-  factory DBUserStock({
-    $fixnum.Int64? id,
-    $core.String? userId,
-    $core.String? stockId,
-    $fixnum.Int64? amount,
-    $core.int? price,
-  }) {
-    final result = create();
-    if (id != null) result.id = id;
-    if (userId != null) result.userId = userId;
-    if (stockId != null) result.stockId = stockId;
-    if (amount != null) result.amount = amount;
-    if (price != null) result.price = price;
-    return result;
-  }
-
-  DBUserStock._();
-
-  factory DBUserStock.fromBuffer($core.List<$core.int> data,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
-  factory DBUserStock.fromJson($core.String json,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'DBUserStock',
-      createEmptyInstance: create)
-    ..a<$fixnum.Int64>(1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OU6,
-        defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOS(2, _omitFieldNames ? '' : 'userId')
-    ..aOS(3, _omitFieldNames ? '' : 'stockId')
-    ..aInt64(4, _omitFieldNames ? '' : 'amount')
-    ..aI(5, _omitFieldNames ? '' : 'price')
-    ..hasRequiredFields = false;
-
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DBUserStock clone() => deepCopy();
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DBUserStock copyWith(void Function(DBUserStock) updates) =>
-      super.copyWith((message) => updates(message as DBUserStock))
-          as DBUserStock;
-
-  @$core.override
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static DBUserStock create() => DBUserStock._();
-  @$core.override
-  DBUserStock createEmptyInstance() => create();
-  @$core.pragma('dart2js:noInline')
-  static DBUserStock getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<DBUserStock>(create);
-  static DBUserStock? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get id => $_getI64(0);
-  @$pb.TagNumber(1)
-  set id($fixnum.Int64 value) => $_setInt64(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearId() => $_clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get userId => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set userId($core.String value) => $_setString(1, value);
-  @$pb.TagNumber(2)
-  $core.bool hasUserId() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearUserId() => $_clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.String get stockId => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set stockId($core.String value) => $_setString(2, value);
-  @$pb.TagNumber(3)
-  $core.bool hasStockId() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearStockId() => $_clearField(3);
-
-  @$pb.TagNumber(4)
-  $fixnum.Int64 get amount => $_getI64(3);
-  @$pb.TagNumber(4)
-  set amount($fixnum.Int64 value) => $_setInt64(3, value);
-  @$pb.TagNumber(4)
-  $core.bool hasAmount() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearAmount() => $_clearField(4);
+  void clearPhone() => $_clearField(3);
 
   @$pb.TagNumber(5)
-  $core.int get price => $_getIZ(4);
+  $core.String get name => $_getSZ(3);
   @$pb.TagNumber(5)
-  set price($core.int value) => $_setSignedInt32(4, value);
+  set name($core.String value) => $_setString(3, value);
   @$pb.TagNumber(5)
-  $core.bool hasPrice() => $_has(4);
+  $core.bool hasName() => $_has(3);
   @$pb.TagNumber(5)
-  void clearPrice() => $_clearField(5);
+  void clearName() => $_clearField(5);
+
+  @$pb.TagNumber(8)
+  $core.String get avatar => $_getSZ(4);
+  @$pb.TagNumber(8)
+  set avatar($core.String value) => $_setString(4, value);
+  @$pb.TagNumber(8)
+  $core.bool hasAvatar() => $_has(4);
+  @$pb.TagNumber(8)
+  void clearAvatar() => $_clearField(8);
+
+  @$pb.TagNumber(12)
+  $core.String get account => $_getSZ(5);
+  @$pb.TagNumber(12)
+  set account($core.String value) => $_setString(5, value);
+  @$pb.TagNumber(12)
+  $core.bool hasAccount() => $_has(5);
+  @$pb.TagNumber(12)
+  void clearAccount() => $_clearField(12);
+
+  @$pb.TagNumber(13)
+  $core.String get password => $_getSZ(6);
+  @$pb.TagNumber(13)
+  set password($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(13)
+  $core.bool hasPassword() => $_has(6);
+  @$pb.TagNumber(13)
+  void clearPassword() => $_clearField(13);
+
+  @$pb.TagNumber(14)
+  $fixnum.Int64 get createtime => $_getI64(7);
+  @$pb.TagNumber(14)
+  set createtime($fixnum.Int64 value) => $_setInt64(7, value);
+  @$pb.TagNumber(14)
+  $core.bool hasCreatetime() => $_has(7);
+  @$pb.TagNumber(14)
+  void clearCreatetime() => $_clearField(14);
+
+  @$pb.TagNumber(15)
+  $core.String get language => $_getSZ(8);
+  @$pb.TagNumber(15)
+  set language($core.String value) => $_setString(8, value);
+  @$pb.TagNumber(15)
+  $core.bool hasLanguage() => $_has(8);
+  @$pb.TagNumber(15)
+  void clearLanguage() => $_clearField(15);
+
+  @$pb.TagNumber(16)
+  $core.String get servicetag => $_getSZ(9);
+  @$pb.TagNumber(16)
+  set servicetag($core.String value) => $_setString(9, value);
+  @$pb.TagNumber(16)
+  $core.bool hasServicetag() => $_has(9);
+  @$pb.TagNumber(16)
+  void clearServicetag() => $_clearField(16);
+
+  @$pb.TagNumber(17)
+  $core.String get wxopenid => $_getSZ(10);
+  @$pb.TagNumber(17)
+  set wxopenid($core.String value) => $_setString(10, value);
+  @$pb.TagNumber(17)
+  $core.bool hasWxopenid() => $_has(10);
+  @$pb.TagNumber(17)
+  void clearWxopenid() => $_clearField(17);
+
+  @$pb.TagNumber(18)
+  $core.String get googleopenid => $_getSZ(11);
+  @$pb.TagNumber(18)
+  set googleopenid($core.String value) => $_setString(11, value);
+  @$pb.TagNumber(18)
+  $core.bool hasGoogleopenid() => $_has(11);
+  @$pb.TagNumber(18)
+  void clearGoogleopenid() => $_clearField(18);
+
+  @$pb.TagNumber(19)
+  $core.String get facebookopenid => $_getSZ(12);
+  @$pb.TagNumber(19)
+  set facebookopenid($core.String value) => $_setString(12, value);
+  @$pb.TagNumber(19)
+  $core.bool hasFacebookopenid() => $_has(12);
+  @$pb.TagNumber(19)
+  void clearFacebookopenid() => $_clearField(19);
+
+  @$pb.TagNumber(20)
+  $core.String get appleopenid => $_getSZ(13);
+  @$pb.TagNumber(20)
+  set appleopenid($core.String value) => $_setString(13, value);
+  @$pb.TagNumber(20)
+  $core.bool hasAppleopenid() => $_has(13);
+  @$pb.TagNumber(20)
+  void clearAppleopenid() => $_clearField(20);
+
+  @$pb.TagNumber(21)
+  $fixnum.Int64 get lastsgintime => $_getI64(14);
+  @$pb.TagNumber(21)
+  set lastsgintime($fixnum.Int64 value) => $_setInt64(14, value);
+  @$pb.TagNumber(21)
+  $core.bool hasLastsgintime() => $_has(14);
+  @$pb.TagNumber(21)
+  void clearLastsgintime() => $_clearField(21);
 }
 
 const $core.bool _omitFieldNames =

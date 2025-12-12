@@ -1,0 +1,54 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+enum SginTyoe {
+    // 邮箱登录
+	// @Description 邮箱登录 
+	// @example
+    Mail = 0;      //手机登录
+    // 手机登录
+	// @Description 手机登录 
+	// @example
+    Phone = 1;      //手机登录
+    // 微信登录
+	// @Description 微信登录 
+	// @example
+    WXChat = 2;     //微信登录
+    // google登录
+	// @Description google登录 
+	// @example
+    Google = 3;     //google登录
+    // facebook登录
+	// @Description facebook登录 
+	// @example
+    FaceBook = 4;     //facebook登录
+    // firebase 登录
+	// @Description 
+	// @example
+    Apple = 5;    //Apple 登陆
+    // 游客登录
+	// @Description 
+	// @example
+    Tourists = 6;    //游客登录
+}
+
+
+//用户数据
+message DBUser {
+    string uid = 1;                                //@go_tags(`gorm:"uid:50;primaryKey" json:"uid"`) 用户ID
+    string mail = 2;                               //@go_tags(`gorm:"mail:50;index" json:"mail"`) 邮箱
+    string phone = 3;                              //@go_tags(`gorm:"phone:50;index" json:"phone"`) 手机号
+    string name = 5;                               //@go_tags(`gorm:"name:50" json:"name"`) 用户名
+    string avatar = 8;                             //@go_tags(`gorm:"avatar" json:"avatar"`) 玩家头像
+    string account = 12;                           //@go_tags(`gorm:"account:50;index" json:"account"`) 登录帐号
+    string password = 13;                          //@go_tags(`json:"password"`) 密码登录
+    int64 createtime = 14;                         //@go_tags(`gorm:"createtime" json:"createtime"`) 注册时间
+    string language = 15;                          //@go_tags(`gorm:"language" json:"language"`) 语言
+    string servicetag = 16;                        //@go_tags(`gorm:"servicetag" json:"servicetag"`) 服务所属区
+    string wxopenid = 17;                           //@go_tags(`gorm:"wxopenid:50;index" json:"wxopenid"`) 微信openid
+    string googleopenid = 18;                       //@go_tags(`gorm:"googleopenid:50;index" json:"googleopenid"`) 谷歌openid
+    string facebookopenid = 19;                     //@go_tags(`gorm:"facebookopenid:50;index" json:"facebookopenid"`) FaceBook
+    string appleopenid = 20;                        //@go_tags(`gorm:"appleopenid:50;index" json:"appleopenid"`) 
+
+    int64 lastsgintime = 21;                       //@go_tags(`gorm:"lastsgintime" json:"lastsgintime"`) 最后登录时间
+}
