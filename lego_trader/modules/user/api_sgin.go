@@ -18,14 +18,16 @@ import (
 	"golang.org/x/exp/rand"
 )
 
-// @Summary 登入接口
-// @Description 根据登录类型实现登录操作
-// @Tags User
-// @Accept  json
-// @Produce  json
-// @Param user body pb.UserSginReq true "登录请求"
-// @Success 200 {object} comm.HttpResult{data=pb.UserSginResp} "成功返回用户信息"
-// @Router /api/home/user_sgin [post]
+/*
+@Summary 登入接口
+@Description 根据登录类型实现登录操作
+@Tags User
+@Accept  json
+@Produce  json
+@Param user body pb.UserSginReq true "登录请求"
+@Success 200 {object} comm.HttpResult{data=pb.UserSginResp} "成功返回用户信息"
+@Router /api/home/user_sgin [post]
+*/
 func (this *apiComp) Sgin(session comm.IUserSession, req *pb.UserSginReq) (errdata *pb.ErrorData) {
 	var (
 		code         string
@@ -157,7 +159,23 @@ func (this *apiComp) Sgin(session comm.IUserSession, req *pb.UserSginReq) (errda
 			}
 			return
 		}
-
+	case pb.SginTyoe_Token: //token登录
+		if tokenString == "" {
+			errdata = &pb.ErrorData{
+				Code:    pb.ErrorCode_ReqParameterError,
+				Message: pb.ErrorCode_ReqParameterError.String(),
+			}
+			return
+		}
+		if parsedClaims, err := parseToken(tokenString, []byte(this.options.TokenKey)); err == nil {
+			if user, err = this.module.model.findforid(parsedClaims.ID); err != nil {
+				errdata = &pb.ErrorData{
+					Code:    pb.ErrorCode_DBError,
+					Message: err.Error(),
+				}
+				return
+			}
+		}
 	default:
 		errdata = &pb.ErrorData{
 			Code:    pb.ErrorCode_ReqParameterError,

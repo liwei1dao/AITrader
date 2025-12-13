@@ -1,0 +1,12 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+/// 市场新闻
+message DBMarketNews {
+    string id = 1;                                //@go_tags(`gorm:"id:50;primaryKey" json:"id"`
+    string tag = 2;                              //@go_tags(`json:"tag" comment:"标签/标题"`
+    string summary = 3;                          //@go_tags(`json:"summary" comment:"摘要"`
+    string interval_time = 4;                    //@go_tags(`json:"interval_time" comment:"时间区间/显示时间"`
+    string pub_time = 5;                         //@go_tags(`json:"pub_time" comment:"发布时间(精确)"`
+    string url = 6;                              //@go_tags(`json:"url" comment:"链接"`    
+}

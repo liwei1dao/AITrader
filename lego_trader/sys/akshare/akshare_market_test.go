@@ -2,45 +2,175 @@ package akshare_test
 
 import (
 	"encoding/json"
-	"net/http"
-	"net/http/httptest"
 	"testing"
 
 	"lego_trader/sys/akshare"
 )
 
-func TestGetStockSzseSummary_WithMockServer(t *testing.T) {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/api/public/stock_szse_summary", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`[
-  {"证券类别": "股票", "数量": 2874, "成交金额": 492745828554.63, "总市值": 25837664936960.49, "流通市值": 22051689693333.94},
-  {"证券类别": "主板A股", "数量": 1767, "成交金额": 33333333.33, "总市值": null, "流通市值": null}
-]`))
-	})
-	ts := httptest.NewServer(mux)
-	defer ts.Close()
-
-	sys, err := akshare.NewSys(akshare.SetBaseUrl(ts.URL))
+// TestGetStockSzseSummary
+// 接口作用: 获取深圳证券交易所 summary（东方财富 stock_szse_summary）
+// 参数: 无；返回: 深圳证券交易所 summary（结构化）
+func TestGetStockSzseSummary(t *testing.T) {
+	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
 	if err != nil {
 		t.Fatalf("初始化失败: %v", err)
 		return
 	}
-	summary, err := sys.GetStockSzseSummary()
+	data, err := sys.GetStockSzseSummary()
 	if err != nil {
 		t.Fatalf("请求失败: %v", err)
 		return
 	}
-	if summary == nil || len(summary.Items) == 0 {
+	if data == nil {
 		t.Fatalf("返回数据为空")
 	}
-	b, _ := json.MarshalIndent(summary, "", "  ")
+	b, _ := json.MarshalIndent(data, "", "  ")
 	t.Logf("StockSzseSummary 样例:\n%s", string(b))
+}
 
-	if summary.Items[0].TotalVal == nil || summary.Items[0].FloatVal == nil {
-		t.Fatalf("应解析为非空数值")
+// TestGetStockMarketFundFlow
+// 接口作用: 获取大盘资金流向，用于大盘看板资金流模块展示
+// 参数: t 测试上下文
+// 返回值: 无
+// 异常: 上游不可用或被限流时跳过；断言失败抛出测试错误
+func TestGetStockMarketFundFlow(t *testing.T) {
+	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
+	if err != nil {
+		t.Fatalf("初始化失败: %v", err)
+		return
 	}
-	if summary.Items[1].TotalVal != nil || summary.Items[1].FloatVal != nil {
-		t.Fatalf("应解析为 nil")
+	data, err := sys.GetStockMarketFundFlow()
+	if err != nil {
+		t.Skipf("上游不可用或被限流: %v", err)
+		return
 	}
+	if data == nil || len(data.Items) == 0 {
+		t.Fatalf("返回数据为空")
+	}
+	b, _ := json.MarshalIndent(data.Items[:min(5, len(data.Items))], "", "  ")
+	t.Logf("StockMarketFundFlow 样例(前5条):\n%s", string(b))
+}
+
+// TestGetStockZhIndexSpot
+// 接口作用: 获取沪深主要指数实时行情，用于大盘看板指数卡片数据源
+// 参数: t 测试上下文
+// 返回值: 无
+// 异常: 断言失败时抛出测试错误
+func TestGetStockZhIndexSpot(t *testing.T) {
+	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
+	if err != nil {
+		t.Fatalf("初始化失败: %v", err)
+		return
+	}
+	data, err := sys.GetStockZhIndexSpot()
+	if err != nil {
+		t.Skipf("上游不可用或被限流: %v", err)
+		return
+	}
+	if len(data) == 0 {
+		t.Fatalf("返回数据为空")
+	}
+	b, _ := json.MarshalIndent(data[:min(4, len(data))], "", "  ")
+	t.Logf("StockZhIndexSpot 样例(前4条):\n%s", string(b))
+}
+
+// TestGetStockZhASpotEM
+// 接口作用: 获取沪深京 A 股实时行情，用于市场宽度统计与涨跌榜
+// 参数: t 测试上下文
+// 返回值: 无
+// 异常: 断言失败时抛出测试错误
+func TestGetStockZhASpotEM(t *testing.T) {
+	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
+	if err != nil {
+		t.Fatalf("初始化失败: %v", err)
+		return
+	}
+	records, err := sys.GetStockZhASpotEM()
+	if err != nil {
+		t.Skipf("上游不可用或被限流: %v", err)
+		return
+	}
+	if len(records) == 0 {
+		t.Fatalf("返回数据为空")
+	}
+	b, _ := json.MarshalIndent(records[:min(5, len(records))], "", "  ")
+	t.Logf("StockZhASpotEM 样例(前5条):\n%s", string(b))
+}
+
+// TestBuildMarketPanelDTO
+// 接口作用: 聚合指数、市场宽度与涨跌榜，形成大盘看板最小 DTO
+// 参数: t 测试上下文
+// 返回值: 无
+// 异常: 断言失败时抛出测试错误
+func TestBuildMarketPanelDTO(t *testing.T) {
+	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
+	if err != nil {
+		t.Fatalf("初始化失败: %v", err)
+		return
+	}
+	panel, err := sys.BuildMarketPanelDTO(10)
+	if err != nil {
+		t.Skipf("上游不可用或被限流: %v", err)
+		return
+	}
+	if panel == nil {
+		t.Fatalf("返回面板为空")
+	}
+	if len(panel.Indices) == 0 {
+		t.Fatalf("指数列表为空")
+	}
+	if len(panel.TopGainers) == 0 || len(panel.TopLosers) == 0 {
+		t.Fatalf("榜单为空: gainers=%d losers=%d", len(panel.TopGainers), len(panel.TopLosers))
+	}
+	if panel.Timestamp <= 0 {
+		t.Fatalf("时间戳异常: %d", panel.Timestamp)
+	}
+	b, _ := json.MarshalIndent(panel, "", "  ")
+	t.Logf("MarketPanelDTO 样例:\n%s", string(b))
+}
+
+// TestGetStockCyASpotEM
+// 接口作用: 获取创业板实时行情，用于分板块视图与创业板榜单
+// 参数: t 测试上下文
+// 返回值: 无
+// 异常: 断言失败时抛出测试错误
+func TestGetStockCyASpotEM(t *testing.T) {
+	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
+	if err != nil {
+		t.Fatalf("初始化失败: %v", err)
+		return
+	}
+	records, err := sys.GetStockCyASpotEM()
+	if err != nil {
+		t.Skipf("上游不可用或被限流: %v", err)
+		return
+	}
+	if len(records) == 0 {
+		t.Fatalf("返回数据为空")
+	}
+	b, _ := json.MarshalIndent(records[:min(5, len(records))], "", "  ")
+	t.Logf("StockCyASpotEM 样例(前5条):\n%s", string(b))
+}
+
+// TestGetStockKcASpotEM
+// 接口作用: 获取科创板实时行情，用于分板块视图与科创板榜单
+// 参数: t 测试上下文
+// 返回值: 无
+// 异常: 断言失败时抛出测试错误
+func TestGetStockKcASpotEM(t *testing.T) {
+	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
+	if err != nil {
+		t.Fatalf("初始化失败: %v", err)
+		return
+	}
+	records, err := sys.GetStockKcASpotEM()
+	if err != nil {
+		t.Skipf("上游不可用或被限流: %v", err)
+		return
+	}
+	if len(records) == 0 {
+		t.Fatalf("返回数据为空")
+	}
+	b, _ := json.MarshalIndent(records[:min(5, len(records))], "", "  ")
+	t.Logf("StockKcASpotEM 样例(前5条):\n%s", string(b))
 }

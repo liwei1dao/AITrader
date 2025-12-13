@@ -8,6 +8,35 @@ from .common import df_to_records, to_json_safe
 
 router = APIRouter()
 
+@router.get(
+    "/api/public/stock_zh_index_spot",
+    summary="东方财富网-沪深主要指数-实时行情",
+    description=(
+        "调用 AkShare `stock_zh_index_spot_em` 获取东方财富-沪深主要指数的实时行情数据。\n"
+        "参数: 使用 `symbol=\"沪深重要指数\"` 聚焦核心指数。\n"
+        "返回: JSON 数组；字段以上游返回为准。"
+    ),
+)
+def stock_zh_index_spot():
+    """
+    获取沪深主要指数的实时行情
+    
+    参数:
+    - 固定 symbol=\"沪深重要指数\"
+    
+    返回值:
+    - JSON 数组：字段以上游返回为准
+    
+    异常:
+    - 抓取或处理异常时返回 {"error": str(e)}
+    """
+    try:
+        df = ak.stock_zh_index_spot_em(symbol="沪深重要指数")
+        recs = df_to_records(df)
+        return JSONResponse(content=recs)
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)})
+
 
 # 证券类别统计
 # 接口: stock_szse_summary

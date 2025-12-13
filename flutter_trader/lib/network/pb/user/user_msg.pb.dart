@@ -249,6 +249,290 @@ class UserSginResp extends $pb.GeneratedMessage {
   $0.DBUser ensureUser() => $_ensure(1);
 }
 
+/// 获取用户股票信息请求
+class UserGetStocksReq extends $pb.GeneratedMessage {
+  factory UserGetStocksReq() => create();
+
+  UserGetStocksReq._();
+
+  factory UserGetStocksReq.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UserGetStocksReq.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UserGetStocksReq',
+      createEmptyInstance: create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserGetStocksReq clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserGetStocksReq copyWith(void Function(UserGetStocksReq) updates) =>
+      super.copyWith((message) => updates(message as UserGetStocksReq))
+          as UserGetStocksReq;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UserGetStocksReq create() => UserGetStocksReq._();
+  @$core.override
+  UserGetStocksReq createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static UserGetStocksReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UserGetStocksReq>(create);
+  static UserGetStocksReq? _defaultInstance;
+}
+
+class UserGetStocksResp extends $pb.GeneratedMessage {
+  factory UserGetStocksResp({
+    $core.Iterable<$0.DBUserStock>? stocks,
+  }) {
+    final result = create();
+    if (stocks != null) result.stocks.addAll(stocks);
+    return result;
+  }
+
+  UserGetStocksResp._();
+
+  factory UserGetStocksResp.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UserGetStocksResp.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UserGetStocksResp',
+      createEmptyInstance: create)
+    ..pPM<$0.DBUserStock>(1, _omitFieldNames ? '' : 'stocks',
+        subBuilder: $0.DBUserStock.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserGetStocksResp clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserGetStocksResp copyWith(void Function(UserGetStocksResp) updates) =>
+      super.copyWith((message) => updates(message as UserGetStocksResp))
+          as UserGetStocksResp;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UserGetStocksResp create() => UserGetStocksResp._();
+  @$core.override
+  UserGetStocksResp createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static UserGetStocksResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UserGetStocksResp>(create);
+  static UserGetStocksResp? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<$0.DBUserStock> get stocks => $_getList(0);
+}
+
+/// 添加用户股票信息请求
+class UserAddStockReq extends $pb.GeneratedMessage {
+  factory UserAddStockReq({
+    $0.DBUserStock? stock,
+  }) {
+    final result = create();
+    if (stock != null) result.stock = stock;
+    return result;
+  }
+
+  UserAddStockReq._();
+
+  factory UserAddStockReq.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UserAddStockReq.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UserAddStockReq',
+      createEmptyInstance: create)
+    ..aOM<$0.DBUserStock>(1, _omitFieldNames ? '' : 'stock',
+        subBuilder: $0.DBUserStock.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserAddStockReq clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserAddStockReq copyWith(void Function(UserAddStockReq) updates) =>
+      super.copyWith((message) => updates(message as UserAddStockReq))
+          as UserAddStockReq;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UserAddStockReq create() => UserAddStockReq._();
+  @$core.override
+  UserAddStockReq createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static UserAddStockReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UserAddStockReq>(create);
+  static UserAddStockReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $0.DBUserStock get stock => $_getN(0);
+  @$pb.TagNumber(1)
+  set stock($0.DBUserStock value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasStock() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearStock() => $_clearField(1);
+  @$pb.TagNumber(1)
+  $0.DBUserStock ensureStock() => $_ensure(0);
+}
+
+class UserAddStockResp extends $pb.GeneratedMessage {
+  factory UserAddStockResp({
+    $0.DBUserStock? stock,
+  }) {
+    final result = create();
+    if (stock != null) result.stock = stock;
+    return result;
+  }
+
+  UserAddStockResp._();
+
+  factory UserAddStockResp.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UserAddStockResp.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UserAddStockResp',
+      createEmptyInstance: create)
+    ..aOM<$0.DBUserStock>(1, _omitFieldNames ? '' : 'stock',
+        subBuilder: $0.DBUserStock.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserAddStockResp clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserAddStockResp copyWith(void Function(UserAddStockResp) updates) =>
+      super.copyWith((message) => updates(message as UserAddStockResp))
+          as UserAddStockResp;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UserAddStockResp create() => UserAddStockResp._();
+  @$core.override
+  UserAddStockResp createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static UserAddStockResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UserAddStockResp>(create);
+  static UserAddStockResp? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $0.DBUserStock get stock => $_getN(0);
+  @$pb.TagNumber(1)
+  set stock($0.DBUserStock value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasStock() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearStock() => $_clearField(1);
+  @$pb.TagNumber(1)
+  $0.DBUserStock ensureStock() => $_ensure(0);
+}
+
+/// 删除用户股票信息请求
+class UserDelStockReq extends $pb.GeneratedMessage {
+  factory UserDelStockReq({
+    $core.Iterable<$core.String>? stockid,
+  }) {
+    final result = create();
+    if (stockid != null) result.stockid.addAll(stockid);
+    return result;
+  }
+
+  UserDelStockReq._();
+
+  factory UserDelStockReq.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UserDelStockReq.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UserDelStockReq',
+      createEmptyInstance: create)
+    ..pPS(2, _omitFieldNames ? '' : 'stockid')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserDelStockReq clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserDelStockReq copyWith(void Function(UserDelStockReq) updates) =>
+      super.copyWith((message) => updates(message as UserDelStockReq))
+          as UserDelStockReq;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UserDelStockReq create() => UserDelStockReq._();
+  @$core.override
+  UserDelStockReq createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static UserDelStockReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UserDelStockReq>(create);
+  static UserDelStockReq? _defaultInstance;
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$core.String> get stockid => $_getList(0);
+}
+
+class UserDelStockResp extends $pb.GeneratedMessage {
+  factory UserDelStockResp() => create();
+
+  UserDelStockResp._();
+
+  factory UserDelStockResp.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UserDelStockResp.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UserDelStockResp',
+      createEmptyInstance: create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserDelStockResp clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserDelStockResp copyWith(void Function(UserDelStockResp) updates) =>
+      super.copyWith((message) => updates(message as UserDelStockResp))
+          as UserDelStockResp;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UserDelStockResp create() => UserDelStockResp._();
+  @$core.override
+  UserDelStockResp createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static UserDelStockResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UserDelStockResp>(create);
+  static UserDelStockResp? _defaultInstance;
+}
+
 const $core.bool _omitFieldNames =
     $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../l10n/app_localizations.dart';
 import 'home_controller.dart';
+import '../market/market_view.dart';
+import '../stocks/stocks_view.dart';
+import '../news/news_view.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -31,9 +34,9 @@ class HomeView extends GetView<HomeController> {
         body: IndexedStack(
           index: i,
           children: const [
-            Center(child: Text('Market')),
-            Center(child: Text('Stocks')),
-            Center(child: Text('Analysis')),
+            MarketView(),
+            StocksView(),
+            NewsView(),
             Center(child: Text('Settings')),
           ],
         ),

@@ -1,0 +1,12 @@
+syntax = "proto3";
+option go_package = ".;pb";
+import "news/news_db.proto";
+
+
+// 获取市场新闻请求
+message NewsMarketNewsReq {  
+}
+
+message NewsMarketNewsResp {
+  repeated DBMarketNews news = 1;
+}

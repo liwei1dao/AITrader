@@ -19,6 +19,7 @@ const (
 const (
 	ModuleGateway    core.M_Modules = "gateway"    //gate模块 网关服务模块
 	ModuleUser       core.M_Modules = "user"       //用户模块 用户服务模块
+	ModuleMarket     core.M_Modules = "market"     //市场模块 市场服务模块
 	ModuleCollection core.M_Modules = "collection" //收藏模块 集合模块 提供集合数据 股票, 基金, 指数等
 
 )
@@ -33,6 +34,12 @@ const (
 	TableUser         = "user"           //用户表
 	TableStockDayHist = "stock_day_hist" //股票日历史数据表
 	TableUserStock    = "user_stock"     //用户股票持仓表
+)
+
+// Redis 键定义
+const (
+	Redis_MarketSpot = "marketspot" //Redis 市场指数实时数据键
+	Redis_MarketNews = "marketnews" //Redis 市场要闻列表键(List)
 )
 
 // 对象池定义

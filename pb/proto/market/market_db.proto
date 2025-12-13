@@ -1,0 +1,12 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+
+// 指数实时快照（东方财富 stock_zh_index_spot）
+message DBMarketSpotItem  {
+    string Code     = 1; // 指数代码，如“000001”
+    string Name     = 2; // 指数名称，如“上证指数”
+    double Last     = 3; // 最新价
+    double ChangePct = 4; // 涨跌幅
+    double TurnOver = 5; // 成交额（元）
+}

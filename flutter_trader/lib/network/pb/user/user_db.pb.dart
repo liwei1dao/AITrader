@@ -240,6 +240,108 @@ class DBUser extends $pb.GeneratedMessage {
   void clearLastsgintime() => $_clearField(21);
 }
 
+class DBUserStock extends $pb.GeneratedMessage {
+  factory DBUserStock({
+    $fixnum.Int64? id,
+    $core.String? uid,
+    $core.String? stockid,
+    $fixnum.Int64? amount,
+    $core.int? costprice,
+  }) {
+    final result = create();
+    if (id != null) result.id = id;
+    if (uid != null) result.uid = uid;
+    if (stockid != null) result.stockid = stockid;
+    if (amount != null) result.amount = amount;
+    if (costprice != null) result.costprice = costprice;
+    return result;
+  }
+
+  DBUserStock._();
+
+  factory DBUserStock.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory DBUserStock.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'DBUserStock',
+      createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(2, _omitFieldNames ? '' : 'uid')
+    ..aOS(3, _omitFieldNames ? '' : 'stockid')
+    ..aInt64(4, _omitFieldNames ? '' : 'amount')
+    ..aI(5, _omitFieldNames ? '' : 'costprice')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  DBUserStock clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  DBUserStock copyWith(void Function(DBUserStock) updates) =>
+      super.copyWith((message) => updates(message as DBUserStock))
+          as DBUserStock;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static DBUserStock create() => DBUserStock._();
+  @$core.override
+  DBUserStock createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static DBUserStock getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<DBUserStock>(create);
+  static DBUserStock? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get id => $_getI64(0);
+  @$pb.TagNumber(1)
+  set id($fixnum.Int64 value) => $_setInt64(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get uid => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set uid($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasUid() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUid() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get stockid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set stockid($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasStockid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearStockid() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $fixnum.Int64 get amount => $_getI64(3);
+  @$pb.TagNumber(4)
+  set amount($fixnum.Int64 value) => $_setInt64(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasAmount() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAmount() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get costprice => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set costprice($core.int value) => $_setSignedInt32(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasCostprice() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearCostprice() => $_clearField(5);
+}
+
 const $core.bool _omitFieldNames =
     $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =

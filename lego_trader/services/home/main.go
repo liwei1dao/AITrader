@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"lego_trader/modules/news"
 	"lego_trader/modules/user"
 	"lego_trader/services"
 	"lego_trader/sys/db"
@@ -36,6 +37,7 @@ func main() {
 	)
 	lego.Run(s, //运行模块
 		user.NewModule(),
+		news.NewModule(),
 	)
 }
 

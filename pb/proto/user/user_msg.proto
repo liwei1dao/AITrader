@@ -20,3 +20,30 @@ message UserSginResp {
     string token = 1;                   //@go_tags(`json:"token" example:"认证token" description:"认证token"`)
     DBUser user = 2;                    //@go_tags(`json:"user" description:"用户信息"`)
 }
+
+//获取用户股票信息请求
+message UserGetStocksReq {
+    
+}
+
+message UserGetStocksResp {
+    repeated DBUserStock stocks = 1;   //@go_tags(`json:"stocks" description:"用户股票信息"`) 用户股票信息
+}
+
+//添加用户股票信息请求
+message UserAddStockReq {
+    DBUserStock stock = 1;              //@go_tags(`json:"stock" description:"用户股票信息"`) 用户股票信息
+}
+
+message UserAddStockResp {
+    DBUserStock stock = 1;              //@go_tags(`json:"stock" description:"用户股票信息"`) 用户股票信息
+}
+ 
+//删除用户股票信息请求
+message UserDelStockReq {
+    repeated string stockid = 2;                 //@go_tags(`json:"stockid" example:"" description:"股票ID"`) 股票ID
+}
+
+message UserDelStockResp {
+
+}

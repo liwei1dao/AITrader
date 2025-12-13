@@ -30,6 +30,10 @@ enum SginTyoe {
 	// @Description 账号登录 账号密码登录
 	// @example
     Account = 6;    // 账号登录
+    // token登录
+	// @Description token登录 
+	// @example
+    Token = 10;     // token登录
 }
 
 
@@ -51,4 +55,12 @@ message DBUser {
     string appleopenid = 20;                        //@go_tags(`gorm:"appleopenid:50;index" json:"appleopenid"`) 
 
     int64 lastsgintime = 21;                       //@go_tags(`gorm:"lastsgintime" json:"lastsgintime"`) 最后登录时间
+}
+
+message DBUserStock {
+    uint64 id = 1;                                //@go_tags(`gorm:"id:50;primaryKey;autoIncrement" json:"id"`) 主键ID
+    string uid = 2;                                //@go_tags(`gorm:"uid:50;index" json:"uid"`) 用户ID
+    string stockid = 3;                            //@go_tags(`gorm:"stockid:50;index" json:"stockid"`) 股票ID
+    int64 amount = 4;                              //@go_tags(`gorm:"amount" json:"amount"`) 股票数量
+    int32 costprice = 5;                           //@go_tags(`gorm:"costprice" json:"costprice"`) 成本价
 }

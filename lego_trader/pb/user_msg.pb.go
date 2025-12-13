@@ -190,6 +190,257 @@ func (x *UserSginResp) GetUser() *DBUser {
 	return nil
 }
 
+// 获取用户股票信息请求
+type UserGetStocksReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserGetStocksReq) Reset() {
+	*x = UserGetStocksReq{}
+	mi := &file_user_user_msg_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserGetStocksReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserGetStocksReq) ProtoMessage() {}
+
+func (x *UserGetStocksReq) ProtoReflect() protoreflect.Message {
+	mi := &file_user_user_msg_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserGetStocksReq.ProtoReflect.Descriptor instead.
+func (*UserGetStocksReq) Descriptor() ([]byte, []int) {
+	return file_user_user_msg_proto_rawDescGZIP(), []int{2}
+}
+
+type UserGetStocksResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Stocks        []*DBUserStock         `protobuf:"bytes,1,rep,name=stocks,proto3" json:"stocks" description:"用户股票信息"` //@go_tags(`json:"stocks" description:"用户股票信息"`) 用户股票信息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserGetStocksResp) Reset() {
+	*x = UserGetStocksResp{}
+	mi := &file_user_user_msg_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserGetStocksResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserGetStocksResp) ProtoMessage() {}
+
+func (x *UserGetStocksResp) ProtoReflect() protoreflect.Message {
+	mi := &file_user_user_msg_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserGetStocksResp.ProtoReflect.Descriptor instead.
+func (*UserGetStocksResp) Descriptor() ([]byte, []int) {
+	return file_user_user_msg_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *UserGetStocksResp) GetStocks() []*DBUserStock {
+	if x != nil {
+		return x.Stocks
+	}
+	return nil
+}
+
+// 添加用户股票信息请求
+type UserAddStockReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Stock         *DBUserStock           `protobuf:"bytes,1,opt,name=stock,proto3" json:"stock" description:"用户股票信息"` //@go_tags(`json:"stock" description:"用户股票信息"`) 用户股票信息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserAddStockReq) Reset() {
+	*x = UserAddStockReq{}
+	mi := &file_user_user_msg_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserAddStockReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserAddStockReq) ProtoMessage() {}
+
+func (x *UserAddStockReq) ProtoReflect() protoreflect.Message {
+	mi := &file_user_user_msg_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserAddStockReq.ProtoReflect.Descriptor instead.
+func (*UserAddStockReq) Descriptor() ([]byte, []int) {
+	return file_user_user_msg_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *UserAddStockReq) GetStock() *DBUserStock {
+	if x != nil {
+		return x.Stock
+	}
+	return nil
+}
+
+type UserAddStockResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Stock         *DBUserStock           `protobuf:"bytes,1,opt,name=stock,proto3" json:"stock" description:"用户股票信息"` //@go_tags(`json:"stock" description:"用户股票信息"`) 用户股票信息
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserAddStockResp) Reset() {
+	*x = UserAddStockResp{}
+	mi := &file_user_user_msg_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserAddStockResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserAddStockResp) ProtoMessage() {}
+
+func (x *UserAddStockResp) ProtoReflect() protoreflect.Message {
+	mi := &file_user_user_msg_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserAddStockResp.ProtoReflect.Descriptor instead.
+func (*UserAddStockResp) Descriptor() ([]byte, []int) {
+	return file_user_user_msg_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *UserAddStockResp) GetStock() *DBUserStock {
+	if x != nil {
+		return x.Stock
+	}
+	return nil
+}
+
+// 删除用户股票信息请求
+type UserDelStockReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Stockid       []string               `protobuf:"bytes,2,rep,name=stockid,proto3" json:"stockid" example:"" description:"股票ID"` //@go_tags(`json:"stockid" example:"" description:"股票ID"`) 股票ID
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserDelStockReq) Reset() {
+	*x = UserDelStockReq{}
+	mi := &file_user_user_msg_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserDelStockReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserDelStockReq) ProtoMessage() {}
+
+func (x *UserDelStockReq) ProtoReflect() protoreflect.Message {
+	mi := &file_user_user_msg_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserDelStockReq.ProtoReflect.Descriptor instead.
+func (*UserDelStockReq) Descriptor() ([]byte, []int) {
+	return file_user_user_msg_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *UserDelStockReq) GetStockid() []string {
+	if x != nil {
+		return x.Stockid
+	}
+	return nil
+}
+
+type UserDelStockResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserDelStockResp) Reset() {
+	*x = UserDelStockResp{}
+	mi := &file_user_user_msg_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserDelStockResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserDelStockResp) ProtoMessage() {}
+
+func (x *UserDelStockResp) ProtoReflect() protoreflect.Message {
+	mi := &file_user_user_msg_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserDelStockResp.ProtoReflect.Descriptor instead.
+func (*UserDelStockResp) Descriptor() ([]byte, []int) {
+	return file_user_user_msg_proto_rawDescGZIP(), []int{7}
+}
+
 var File_user_user_msg_proto protoreflect.FileDescriptor
 
 const file_user_user_msg_proto_rawDesc = "" +
@@ -209,7 +460,17 @@ const file_user_user_msg_proto_rawDesc = "" +
 	"\blanguage\x18\f \x01(\tR\blanguage\"A\n" +
 	"\fUserSginResp\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1b\n" +
-	"\x04user\x18\x02 \x01(\v2\a.DBUserR\x04userB\x06Z\x04.;pbb\x06proto3"
+	"\x04user\x18\x02 \x01(\v2\a.DBUserR\x04user\"\x12\n" +
+	"\x10UserGetStocksReq\"9\n" +
+	"\x11UserGetStocksResp\x12$\n" +
+	"\x06stocks\x18\x01 \x03(\v2\f.DBUserStockR\x06stocks\"5\n" +
+	"\x0fUserAddStockReq\x12\"\n" +
+	"\x05stock\x18\x01 \x01(\v2\f.DBUserStockR\x05stock\"6\n" +
+	"\x10UserAddStockResp\x12\"\n" +
+	"\x05stock\x18\x01 \x01(\v2\f.DBUserStockR\x05stock\"+\n" +
+	"\x0fUserDelStockReq\x12\x18\n" +
+	"\astockid\x18\x02 \x03(\tR\astockid\"\x12\n" +
+	"\x10UserDelStockRespB\x06Z\x04.;pbb\x06proto3"
 
 var (
 	file_user_user_msg_proto_rawDescOnce sync.Once
@@ -223,21 +484,31 @@ func file_user_user_msg_proto_rawDescGZIP() []byte {
 	return file_user_user_msg_proto_rawDescData
 }
 
-var file_user_user_msg_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_user_user_msg_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_user_user_msg_proto_goTypes = []any{
-	(*UserSginReq)(nil),  // 0: UserSginReq
-	(*UserSginResp)(nil), // 1: UserSginResp
-	(SginTyoe)(0),        // 2: SginTyoe
-	(*DBUser)(nil),       // 3: DBUser
+	(*UserSginReq)(nil),       // 0: UserSginReq
+	(*UserSginResp)(nil),      // 1: UserSginResp
+	(*UserGetStocksReq)(nil),  // 2: UserGetStocksReq
+	(*UserGetStocksResp)(nil), // 3: UserGetStocksResp
+	(*UserAddStockReq)(nil),   // 4: UserAddStockReq
+	(*UserAddStockResp)(nil),  // 5: UserAddStockResp
+	(*UserDelStockReq)(nil),   // 6: UserDelStockReq
+	(*UserDelStockResp)(nil),  // 7: UserDelStockResp
+	(SginTyoe)(0),             // 8: SginTyoe
+	(*DBUser)(nil),            // 9: DBUser
+	(*DBUserStock)(nil),       // 10: DBUserStock
 }
 var file_user_user_msg_proto_depIdxs = []int32{
-	2, // 0: UserSginReq.stype:type_name -> SginTyoe
-	3, // 1: UserSginResp.user:type_name -> DBUser
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	8,  // 0: UserSginReq.stype:type_name -> SginTyoe
+	9,  // 1: UserSginResp.user:type_name -> DBUser
+	10, // 2: UserGetStocksResp.stocks:type_name -> DBUserStock
+	10, // 3: UserAddStockReq.stock:type_name -> DBUserStock
+	10, // 4: UserAddStockResp.stock:type_name -> DBUserStock
+	5,  // [5:5] is the sub-list for method output_type
+	5,  // [5:5] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_user_user_msg_proto_init() }
@@ -252,7 +523,7 @@ func file_user_user_msg_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_user_msg_proto_rawDesc), len(file_user_user_msg_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

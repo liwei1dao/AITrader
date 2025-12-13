@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 )
 
 type (
@@ -111,15 +112,7 @@ type (
 		TurnoverRate float64 `json:"换手率" comment:"换手率(%)"`
 	}
 
-	// 个股新闻（东方财富 stock_news_em）记录
-	StockNewsEmRecord struct {
-		Title       string  `json:"标题" comment:"新闻标题"`
-		PublishTime string  `json:"发布时间" comment:"发布时间"`
-		Source      string  `json:"来源" comment:"来源"`
-		URL         string  `json:"新闻链接" comment:"链接"`
-		NewsID      string  `json:"新闻ID" comment:"新闻ID"`
-		Summary     *string `json:"摘要" comment:"摘要(可能不存在)"`
-	}
+	// 新闻类型移至 akshare_news.go
 )
 
 // GetStockBasicInfo 获取股票基本信息（东方财富 stock_individual_basic_info_xq）
@@ -215,43 +208,7 @@ func (a *AkShare) GetStockZhAHist(stockCode, period, start, end, adjust string) 
 	return records, nil
 }
 
-// GetStockNewsEm 获取个股新闻（东方财富 stock_news_em）
-// - 参数: stockCode 可为6位或带前缀；page/size 可选（nil 表示不传）
-// - 返回: 新闻列表（标题/时间/来源/链接等字段）
-// - 说明: 调用 python_akshare `/api/public/stock_news_em`
-func (a *AkShare) GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error) {
-	// 组装可选参数
-	q := ""
-	if page != nil {
-		q += fmt.Sprintf("&page=%d", *page)
-	}
-	if size != nil {
-		q += fmt.Sprintf("&size=%d", *size)
-	}
-	url := fmt.Sprintf("%s/api/public/stock_news_em?symbol=%s%s", a.options.BaseUrl, stockCode, q)
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
-	}
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(body, &records); err != nil {
-		var obj map[string]interface{}
-		if err2 := json.Unmarshal(body, &obj); err2 == nil {
-			if msg, ok := obj["error"]; ok {
-				return nil, fmt.Errorf("stock_news_em error: %v", msg)
-			}
-		}
-		return nil, err
-	}
-	return records, nil
-}
+// 新闻接口迁移至 akshare_news.go
 
 // GetStockBidAskEM 获取实时盘口并映射为结构体
 // 返回 StockBidAskEM，内部按 item/value 结构进行映射
@@ -280,6 +237,36 @@ func (a *AkShare) GetStockBidAskEM(stockCode string) (data *StockBidAskEM, err e
 		return nil, err
 	}
 	return res, nil
+}
+
+// GetStockIndividualFundFlow 获取个股资金流向（东方财富 stock_individual_fund_flow）
+// 参数: stockCode 为 6 位股票代码；market 为市场代码 'sh'/'sz'/'bj'
+// 返回值: 基于上游原始字段的记录列表（字段以接口返回为准）
+// 异常: 网络错误/解码错误或上游返回错误对象时返回错误
+func (a *AkShare) GetStockIndividualFundFlow(stockCode string, market string) (records []map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/public/stock_individual_fund_flow?stock=%s&market=%s", a.options.BaseUrl, stockCode, strings.ToLower(market))
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
+	}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(body, &records); err != nil {
+		var obj map[string]interface{}
+		if err2 := json.Unmarshal(body, &obj); err2 == nil {
+			if msg, ok := obj["error"]; ok {
+				return nil, fmt.Errorf("stock_individual_fund_flow error: %v", msg)
+			}
+		}
+		return nil, err
+	}
+	return records, nil
 }
 
 // GetStockFinancialSummary 获取基本面摘要（雪球/东方财富）

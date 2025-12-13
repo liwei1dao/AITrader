@@ -44,8 +44,11 @@ func TestGetStockBidAskEM(t *testing.T) {
 	t.Logf("StockBidAskEM 样例:\n%s", string(b))
 }
 
-// http://127.0.0.1:8080/api/public/stock_zh_a_hist?symbol=000001&period=daily&start=20170301&end=20240528&adjust=
-// http://127.0.0.1:8080/api/public/stock_zh_a_hist?symbol=000001&period=daily&start=20170301&end=20240528&adjust=
+// TestGetStockZhAHist
+// 接口作用: 获取A股历史行情数据，用于个股K线与回测数据源
+// 参数: t 测试上下文
+// 返回值: 无
+// 异常: 断言失败时抛出测试错误
 func TestGetStockZhAHist(t *testing.T) {
 	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
 	if err != nil {
@@ -64,7 +67,11 @@ func TestGetStockZhAHist(t *testing.T) {
 	t.Logf("StockZhAHist 样例:\n%s", string(b))
 }
 
-// GetStockNewsMainCx 测试
+// TestGetStockNewsMainCx
+// 接口作用: 获取市场要闻，用于大盘看板新闻/快讯模块
+// 参数: t 测试上下文
+// 返回值: 无
+// 异常: 断言失败时抛出测试错误
 func TestGetStockNewsMainCx(t *testing.T) {
 	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
 	if err != nil {
@@ -83,21 +90,25 @@ func TestGetStockNewsMainCx(t *testing.T) {
 	t.Logf("StockNewsMainCx 样例:\n%s", string(b))
 }
 
-// GetStockSzseSummary 测试
-func TestGetStockSzseSummary(t *testing.T) {
+// TestGetStockIndividualFundFlow
+// 接口作用: 获取个股资金流向，用于个股页面资金流模块展示
+// 参数: t 测试上下文
+// 返回值: 无
+// 异常: 上游不可用或被限流时跳过；断言失败抛出测试错误
+func TestGetStockIndividualFundFlow(t *testing.T) {
 	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
 	if err != nil {
 		t.Fatalf("初始化失败: %v", err)
 		return
 	}
-	data, err := sys.GetStockSzseSummary()
+	data, err := sys.GetStockIndividualFundFlow("000001", "sh")
 	if err != nil {
-		t.Fatalf("请求失败: %v", err)
+		t.Skipf("上游不可用或被限流: %v", err)
 		return
 	}
-	if data == nil {
+	if len(data) == 0 {
 		t.Fatalf("返回数据为空")
 	}
-	b, _ := json.MarshalIndent(data, "", "  ")
-	t.Logf("StockSzseSummary 样例:\n%s", string(b))
+	b, _ := json.MarshalIndent(data[:min(5, len(data))], "", "  ")
+	t.Logf("StockIndividualFundFlow 样例(前5条):\n%s", string(b))
 }

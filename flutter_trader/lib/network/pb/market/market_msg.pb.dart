@@ -14,87 +14,100 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'market_db.pb.dart' as $0;
+
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 ///
 /// 获取实时行情请求
-class MarketRealtimeInfoReq extends $pb.GeneratedMessage {
-  factory MarketRealtimeInfoReq() => create();
+class MarketGetSpotsReq extends $pb.GeneratedMessage {
+  factory MarketGetSpotsReq() => create();
 
-  MarketRealtimeInfoReq._();
+  MarketGetSpotsReq._();
 
-  factory MarketRealtimeInfoReq.fromBuffer($core.List<$core.int> data,
+  factory MarketGetSpotsReq.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory MarketRealtimeInfoReq.fromJson($core.String json,
+  factory MarketGetSpotsReq.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MarketRealtimeInfoReq',
+      _omitMessageNames ? '' : 'MarketGetSpotsReq',
       createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  MarketRealtimeInfoReq clone() => deepCopy();
+  MarketGetSpotsReq clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  MarketRealtimeInfoReq copyWith(
-          void Function(MarketRealtimeInfoReq) updates) =>
-      super.copyWith((message) => updates(message as MarketRealtimeInfoReq))
-          as MarketRealtimeInfoReq;
+  MarketGetSpotsReq copyWith(void Function(MarketGetSpotsReq) updates) =>
+      super.copyWith((message) => updates(message as MarketGetSpotsReq))
+          as MarketGetSpotsReq;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static MarketRealtimeInfoReq create() => MarketRealtimeInfoReq._();
+  static MarketGetSpotsReq create() => MarketGetSpotsReq._();
   @$core.override
-  MarketRealtimeInfoReq createEmptyInstance() => create();
+  MarketGetSpotsReq createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static MarketRealtimeInfoReq getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MarketRealtimeInfoReq>(create);
-  static MarketRealtimeInfoReq? _defaultInstance;
+  static MarketGetSpotsReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<MarketGetSpotsReq>(create);
+  static MarketGetSpotsReq? _defaultInstance;
 }
 
 ///
 /// 获取实时行情响应
-class MarketRealtimeInfoResp extends $pb.GeneratedMessage {
-  factory MarketRealtimeInfoResp() => create();
+class MarketGetSpotsResp extends $pb.GeneratedMessage {
+  factory MarketGetSpotsResp({
+    $core.Iterable<$0.DBMarketSpotItem>? items,
+  }) {
+    final result = create();
+    if (items != null) result.items.addAll(items);
+    return result;
+  }
 
-  MarketRealtimeInfoResp._();
+  MarketGetSpotsResp._();
 
-  factory MarketRealtimeInfoResp.fromBuffer($core.List<$core.int> data,
+  factory MarketGetSpotsResp.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory MarketRealtimeInfoResp.fromJson($core.String json,
+  factory MarketGetSpotsResp.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MarketRealtimeInfoResp',
+      _omitMessageNames ? '' : 'MarketGetSpotsResp',
       createEmptyInstance: create)
+    ..pPM<$0.DBMarketSpotItem>(1, _omitFieldNames ? '' : 'Items',
+        protoName: 'Items', subBuilder: $0.DBMarketSpotItem.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  MarketRealtimeInfoResp clone() => deepCopy();
+  MarketGetSpotsResp clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  MarketRealtimeInfoResp copyWith(
-          void Function(MarketRealtimeInfoResp) updates) =>
-      super.copyWith((message) => updates(message as MarketRealtimeInfoResp))
-          as MarketRealtimeInfoResp;
+  MarketGetSpotsResp copyWith(void Function(MarketGetSpotsResp) updates) =>
+      super.copyWith((message) => updates(message as MarketGetSpotsResp))
+          as MarketGetSpotsResp;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static MarketRealtimeInfoResp create() => MarketRealtimeInfoResp._();
+  static MarketGetSpotsResp create() => MarketGetSpotsResp._();
   @$core.override
-  MarketRealtimeInfoResp createEmptyInstance() => create();
+  MarketGetSpotsResp createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static MarketRealtimeInfoResp getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MarketRealtimeInfoResp>(create);
-  static MarketRealtimeInfoResp? _defaultInstance;
+  static MarketGetSpotsResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<MarketGetSpotsResp>(create);
+  static MarketGetSpotsResp? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<$0.DBMarketSpotItem> get items => $_getList(0);
 }
 
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');

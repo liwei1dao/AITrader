@@ -20,12 +20,12 @@ import (
 */
 type stockAkshareComp struct {
 	cbase.ModuleCompBase
-	module *CollectionModule
+	module *Collection
 }
 
 func (this *stockAkshareComp) Init(service core.IService, module core.IModule, comp core.IModuleComp, options core.IModuleOptions) (err error) {
 	this.ModuleCompBase.Init(service, module, comp, options)
-	this.module = module.(*CollectionModule)
+	this.module = module.(*Collection)
 	return
 }
 

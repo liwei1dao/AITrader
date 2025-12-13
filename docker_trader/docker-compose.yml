@@ -1,6 +1,9 @@
 services:
   python_akshare:
-    build: ../python_akshare
+    build:
+      context: ../python_akshare
+      args:
+        PY_BASE_IMAGE: docker.m.daocloud.io/library/python:3.10-slim
     container_name: python_akshare
     ports:
       - "8080:8080"

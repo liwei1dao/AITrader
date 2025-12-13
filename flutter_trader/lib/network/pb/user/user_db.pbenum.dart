@@ -52,6 +52,11 @@ class SginTyoe extends $pb.ProtobufEnum {
   static const SginTyoe Account =
       SginTyoe._(6, _omitEnumNames ? '' : 'Account');
 
+  /// token登录
+  /// @Description token登录
+  /// @example
+  static const SginTyoe Token = SginTyoe._(10, _omitEnumNames ? '' : 'Token');
+
   static const $core.List<SginTyoe> values = <SginTyoe>[
     Mail,
     Phone,
@@ -60,10 +65,11 @@ class SginTyoe extends $pb.ProtobufEnum {
     FaceBook,
     Apple,
     Account,
+    Token,
   ];
 
   static final $core.List<SginTyoe?> _byValue =
-      $pb.ProtobufEnum.$_initByValueList(values, 6);
+      $pb.ProtobufEnum.$_initByValueList(values, 10);
   static SginTyoe? valueOf($core.int value) =>
       value < 0 || value >= _byValue.length ? null : _byValue[value];
 

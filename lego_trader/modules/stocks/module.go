@@ -2,6 +2,10 @@ package stocks
 
 import "lego_trader/lego/core/cbase"
 
-type StockModule struct {
+func NewModule() *Stock {
+	return &Stock{}
+}
+
+type Stock struct {
 	cbase.ModuleBase
 }

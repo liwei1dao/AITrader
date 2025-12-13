@@ -8,7 +8,7 @@ import (
 // 数据模型组件
 type modelComp struct {
 	cbase.ModuleCompBase
-	module *StockModule
+	module *Stock
 }
 
 /*

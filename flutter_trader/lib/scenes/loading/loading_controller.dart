@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import '../../core/cache/cache_manager.dart';
+import '../../core/cache/cache_manager.dart';
 import '../../routes/app_routes.dart';
 import '../../network/socket/socket_service.dart';
 import '../../network/socket/websocket_client.dart';
 import '../../core/config/env.dart';
 import '../../network/socket/proto_codec.dart';
 import '../../network/socket/message_dispatcher.dart';
+import '../../network/pb/user/user_msg.pb.dart' as userpb;
+import '../../network/pb/user/user_db.pb.dart' as userdb;
+import '../../network/pb/gateway/gateway_msg.pb.dart' as gw;
 
 class LoadingController extends GetxController {
   StreamSubscription<ConnectionStatus>? _statusSub;
@@ -59,14 +62,52 @@ class LoadingController extends GetxController {
     );
   }
 
-  /// 连接成功后的跳转处理
+  /// 连接成功后的跳转处理（支持自动 Token 登录）
   ///
   /// 参数：无
   /// 返回值：Future（无具体数据）
   /// 异常：无
   Future<void> _onConnected() async {
     _statusSub?.cancel();
-    debugPrint('[LoadingController] navigate -> login');
+    final token = CacheManager.token;
+    if (token != null && token.isNotEmpty) {
+      final req = userpb.UserSginReq()
+        ..stype = userdb.SginTyoe.Token
+        ..ttoken = token;
+      final future = socket.request(msgName: 'user.sgin', payload: req);
+      future
+          .then((resp) async {
+            if (resp is userpb.UserSginResp) {
+              final newToken = resp.token;
+              if (newToken.isNotEmpty) {
+                await CacheManager.setToken(newToken);
+                debugPrint(
+                  '[LoadingController] token login success, navigate -> market A股',
+                );
+                Get.offAllNamed(AppRoutes.marketAShare);
+                // 目标路由的绑定中会自动设置选中项
+                return;
+              }
+            }
+            debugPrint(
+              '[LoadingController] token login empty, navigate -> login',
+            );
+            Get.offAllNamed(AppRoutes.login);
+          })
+          .catchError((err) {
+            if (err is gw.GatewayErrorNotifyPush) {
+              debugPrint(
+                '[LoadingController] gateway error: ${err.hasError() ? err.error.message : 'unknown'}',
+              );
+            }
+            debugPrint(
+              '[LoadingController] token login failed, navigate -> login',
+            );
+            Get.offAllNamed(AppRoutes.login);
+          });
+      return;
+    }
+    debugPrint('[LoadingController] no token, navigate -> login');
     Get.offAllNamed(AppRoutes.login);
   }
 

@@ -26,13 +26,14 @@ const SginTyoe$json = {
     {'1': 'FaceBook', '2': 4},
     {'1': 'Apple', '2': 5},
     {'1': 'Account', '2': 6},
+    {'1': 'Token', '2': 10},
   ],
 };
 
 /// Descriptor for `SginTyoe`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List sginTyoeDescriptor = $convert.base64Decode(
     'CghTZ2luVHlvZRIICgRNYWlsEAASCQoFUGhvbmUQARIKCgZXWENoYXQQAhIKCgZHb29nbGUQAx'
-    'IMCghGYWNlQm9vaxAEEgkKBUFwcGxlEAUSCwoHQWNjb3VudBAG');
+    'IMCghGYWNlQm9vaxAEEgkKBUFwcGxlEAUSCwoHQWNjb3VudBAGEgkKBVRva2VuEAo=');
 
 @$core.Deprecated('Use dBUserDescriptor instead')
 const DBUser$json = {
@@ -66,3 +67,21 @@ final $typed_data.Uint8List dBUserDescriptor = $convert.base64Decode(
     'h3eG9wZW5pZBIiCgxnb29nbGVvcGVuaWQYEiABKAlSDGdvb2dsZW9wZW5pZBImCg5mYWNlYm9v'
     'a29wZW5pZBgTIAEoCVIOZmFjZWJvb2tvcGVuaWQSIAoLYXBwbGVvcGVuaWQYFCABKAlSC2FwcG'
     'xlb3BlbmlkEiIKDGxhc3RzZ2ludGltZRgVIAEoA1IMbGFzdHNnaW50aW1l');
+
+@$core.Deprecated('Use dBUserStockDescriptor instead')
+const DBUserStock$json = {
+  '1': 'DBUserStock',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 4, '10': 'id'},
+    {'1': 'uid', '3': 2, '4': 1, '5': 9, '10': 'uid'},
+    {'1': 'stockid', '3': 3, '4': 1, '5': 9, '10': 'stockid'},
+    {'1': 'amount', '3': 4, '4': 1, '5': 3, '10': 'amount'},
+    {'1': 'costprice', '3': 5, '4': 1, '5': 5, '10': 'costprice'},
+  ],
+};
+
+/// Descriptor for `DBUserStock`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List dBUserStockDescriptor = $convert.base64Decode(
+    'CgtEQlVzZXJTdG9jaxIOCgJpZBgBIAEoBFICaWQSEAoDdWlkGAIgASgJUgN1aWQSGAoHc3RvY2'
+    'tpZBgDIAEoCVIHc3RvY2tpZBIWCgZhbW91bnQYBCABKANSBmFtb3VudBIcCgljb3N0cHJpY2UY'
+    'BSABKAVSCWNvc3RwcmljZQ==');

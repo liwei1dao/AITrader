@@ -25,6 +25,10 @@ func (this *modelComp) Init(service core.IService, module core.IModule, comp cor
 	if err = db.Mysql().CreateTable(comm.TableUser, &pb.DBUser{}); err != nil {
 		this.module.Errorln(err)
 	}
+	// 创建用户股票持仓表
+	if err = db.Mysql().CreateTable(comm.TableUserStock, &pb.DBUserStock{}); err != nil {
+		this.module.Errorln(err)
+	}
 	return
 }
 
@@ -117,5 +121,22 @@ func (this *modelComp) saveUser(user *pb.DBUser) (err error) {
 */
 func (this *modelComp) getCode(addr string) (code string, err error) {
 	code, err = db.Redis().Get(context.Background(), fmt.Sprintf("%s:%s", Redis_Verification, addr)).Result()
+	return
+}
+
+/*
+根据用户ID查询用户股票持仓
+*/
+func (this *modelComp) getUserStock(uid string) (stocks []*pb.DBUserStock, err error) {
+	stocks = []*pb.DBUserStock{}
+	err = db.Mysql().Find(comm.TableUserStock, stocks, "uid=?", uid)
+	return
+}
+
+/*
+添加用户股票持仓
+*/
+func (this *modelComp) addUserStock(stock *pb.DBUserStock) (err error) {
+	err = db.Mysql().Insert(comm.TableUserStock, stock)
 	return
 }

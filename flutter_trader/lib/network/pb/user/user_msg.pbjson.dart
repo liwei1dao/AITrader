@@ -53,3 +53,77 @@ const UserSginResp$json = {
 final $typed_data.Uint8List userSginRespDescriptor = $convert.base64Decode(
     'CgxVc2VyU2dpblJlc3ASFAoFdG9rZW4YASABKAlSBXRva2VuEhsKBHVzZXIYAiABKAsyBy5EQl'
     'VzZXJSBHVzZXI=');
+
+@$core.Deprecated('Use userGetStocksReqDescriptor instead')
+const UserGetStocksReq$json = {
+  '1': 'UserGetStocksReq',
+};
+
+/// Descriptor for `UserGetStocksReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userGetStocksReqDescriptor =
+    $convert.base64Decode('ChBVc2VyR2V0U3RvY2tzUmVx');
+
+@$core.Deprecated('Use userGetStocksRespDescriptor instead')
+const UserGetStocksResp$json = {
+  '1': 'UserGetStocksResp',
+  '2': [
+    {
+      '1': 'stocks',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.DBUserStock',
+      '10': 'stocks'
+    },
+  ],
+};
+
+/// Descriptor for `UserGetStocksResp`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userGetStocksRespDescriptor = $convert.base64Decode(
+    'ChFVc2VyR2V0U3RvY2tzUmVzcBIkCgZzdG9ja3MYASADKAsyDC5EQlVzZXJTdG9ja1IGc3RvY2'
+    'tz');
+
+@$core.Deprecated('Use userAddStockReqDescriptor instead')
+const UserAddStockReq$json = {
+  '1': 'UserAddStockReq',
+  '2': [
+    {'1': 'stock', '3': 1, '4': 1, '5': 11, '6': '.DBUserStock', '10': 'stock'},
+  ],
+};
+
+/// Descriptor for `UserAddStockReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userAddStockReqDescriptor = $convert.base64Decode(
+    'Cg9Vc2VyQWRkU3RvY2tSZXESIgoFc3RvY2sYASABKAsyDC5EQlVzZXJTdG9ja1IFc3RvY2s=');
+
+@$core.Deprecated('Use userAddStockRespDescriptor instead')
+const UserAddStockResp$json = {
+  '1': 'UserAddStockResp',
+  '2': [
+    {'1': 'stock', '3': 1, '4': 1, '5': 11, '6': '.DBUserStock', '10': 'stock'},
+  ],
+};
+
+/// Descriptor for `UserAddStockResp`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userAddStockRespDescriptor = $convert.base64Decode(
+    'ChBVc2VyQWRkU3RvY2tSZXNwEiIKBXN0b2NrGAEgASgLMgwuREJVc2VyU3RvY2tSBXN0b2Nr');
+
+@$core.Deprecated('Use userDelStockReqDescriptor instead')
+const UserDelStockReq$json = {
+  '1': 'UserDelStockReq',
+  '2': [
+    {'1': 'stockid', '3': 2, '4': 3, '5': 9, '10': 'stockid'},
+  ],
+};
+
+/// Descriptor for `UserDelStockReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userDelStockReqDescriptor = $convert.base64Decode(
+    'Cg9Vc2VyRGVsU3RvY2tSZXESGAoHc3RvY2tpZBgCIAMoCVIHc3RvY2tpZA==');
+
+@$core.Deprecated('Use userDelStockRespDescriptor instead')
+const UserDelStockResp$json = {
+  '1': 'UserDelStockResp',
+};
+
+/// Descriptor for `UserDelStockResp`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userDelStockRespDescriptor =
+    $convert.base64Decode('ChBVc2VyRGVsU3RvY2tSZXNw');

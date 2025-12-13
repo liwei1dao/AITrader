@@ -11,14 +11,20 @@ import (
 集合模块
 提供集合数据 股票, 基金, 指数等
 */
-type CollectionModule struct {
+type Collection struct {
 	cbase.ModuleBase
+	model *modelComp
 }
 
-func (this *CollectionModule) GetType() core.M_Modules {
+func (this *Collection) GetType() core.M_Modules {
 	return comm.ModuleCollection
 }
-func (this *CollectionModule) Init(service core.IService, module core.IModule, options core.IModuleOptions) (err error) {
+func (this *Collection) Init(service core.IService, module core.IModule, options core.IModuleOptions) (err error) {
 	this.ModuleBase.Init(service, module, options)
 	return
+}
+
+func (this *Collection) OnInstallComp() {
+	this.ModuleBase.OnInstallComp()
+	this.model = this.RegisterComp(new(modelComp)).(*modelComp)
 }

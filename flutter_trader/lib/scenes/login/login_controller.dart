@@ -30,9 +30,9 @@ class LoginController extends GetxController {
 
     // 构造登录请求（最小实现：邮箱登录，密码作为验证码传入）
     final req = userpb.UserSginReq()
-      ..stype = userdb.SginTyoe.Mail
-      ..mail = account
-      ..vcode = password;
+      ..stype = userdb.SginTyoe.Account
+      ..account = account
+      ..password = password;
 
     // 使用请求辅助：发送并接收已解码对象
     final future = _socket.request(msgName: 'user.sgin', payload: req);
@@ -49,7 +49,7 @@ class LoginController extends GetxController {
             }
             await CacheManager.setToken(token);
             submitting.value = false;
-            Get.offAllNamed(AppRoutes.home);
+            Get.offAllNamed(AppRoutes.marketAShare);
           }
         })
         .catchError((err) {

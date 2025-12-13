@@ -22,26 +22,26 @@ const (
 )
 
 // 获取实时行情请求
-type MarketRealtimeInfoReq struct {
+type MarketGetSpotsReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *MarketRealtimeInfoReq) Reset() {
-	*x = MarketRealtimeInfoReq{}
+func (x *MarketGetSpotsReq) Reset() {
+	*x = MarketGetSpotsReq{}
 	mi := &file_market_market_msg_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *MarketRealtimeInfoReq) String() string {
+func (x *MarketGetSpotsReq) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MarketRealtimeInfoReq) ProtoMessage() {}
+func (*MarketGetSpotsReq) ProtoMessage() {}
 
-func (x *MarketRealtimeInfoReq) ProtoReflect() protoreflect.Message {
+func (x *MarketGetSpotsReq) ProtoReflect() protoreflect.Message {
 	mi := &file_market_market_msg_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -53,32 +53,33 @@ func (x *MarketRealtimeInfoReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use MarketRealtimeInfoReq.ProtoReflect.Descriptor instead.
-func (*MarketRealtimeInfoReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use MarketGetSpotsReq.ProtoReflect.Descriptor instead.
+func (*MarketGetSpotsReq) Descriptor() ([]byte, []int) {
 	return file_market_market_msg_proto_rawDescGZIP(), []int{0}
 }
 
 // 获取实时行情响应
-type MarketRealtimeInfoResp struct {
+type MarketGetSpotsResp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Items         []*DBMarketSpotItem    `protobuf:"bytes,1,rep,name=Items,proto3" json:"items"` //@go_tags(`json:"items"`)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *MarketRealtimeInfoResp) Reset() {
-	*x = MarketRealtimeInfoResp{}
+func (x *MarketGetSpotsResp) Reset() {
+	*x = MarketGetSpotsResp{}
 	mi := &file_market_market_msg_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *MarketRealtimeInfoResp) String() string {
+func (x *MarketGetSpotsResp) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MarketRealtimeInfoResp) ProtoMessage() {}
+func (*MarketGetSpotsResp) ProtoMessage() {}
 
-func (x *MarketRealtimeInfoResp) ProtoReflect() protoreflect.Message {
+func (x *MarketGetSpotsResp) ProtoReflect() protoreflect.Message {
 	mi := &file_market_market_msg_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -90,18 +91,26 @@ func (x *MarketRealtimeInfoResp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use MarketRealtimeInfoResp.ProtoReflect.Descriptor instead.
-func (*MarketRealtimeInfoResp) Descriptor() ([]byte, []int) {
+// Deprecated: Use MarketGetSpotsResp.ProtoReflect.Descriptor instead.
+func (*MarketGetSpotsResp) Descriptor() ([]byte, []int) {
 	return file_market_market_msg_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *MarketGetSpotsResp) GetItems() []*DBMarketSpotItem {
+	if x != nil {
+		return x.Items
+	}
+	return nil
 }
 
 var File_market_market_msg_proto protoreflect.FileDescriptor
 
 const file_market_market_msg_proto_rawDesc = "" +
 	"\n" +
-	"\x17market/market_msg.proto\"\x17\n" +
-	"\x15MarketRealtimeInfoReq\"\x18\n" +
-	"\x16MarketRealtimeInfoRespB\x06Z\x04.;pbb\x06proto3"
+	"\x17market/market_msg.proto\x1a\x16market/market_db.proto\"\x13\n" +
+	"\x11MarketGetSpotsReq\"=\n" +
+	"\x12MarketGetSpotsResp\x12'\n" +
+	"\x05Items\x18\x01 \x03(\v2\x11.DBMarketSpotItemR\x05ItemsB\x06Z\x04.;pbb\x06proto3"
 
 var (
 	file_market_market_msg_proto_rawDescOnce sync.Once
@@ -117,15 +126,17 @@ func file_market_market_msg_proto_rawDescGZIP() []byte {
 
 var file_market_market_msg_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_market_market_msg_proto_goTypes = []any{
-	(*MarketRealtimeInfoReq)(nil),  // 0: MarketRealtimeInfoReq
-	(*MarketRealtimeInfoResp)(nil), // 1: MarketRealtimeInfoResp
+	(*MarketGetSpotsReq)(nil),  // 0: MarketGetSpotsReq
+	(*MarketGetSpotsResp)(nil), // 1: MarketGetSpotsResp
+	(*DBMarketSpotItem)(nil),   // 2: DBMarketSpotItem
 }
 var file_market_market_msg_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2, // 0: MarketGetSpotsResp.Items:type_name -> DBMarketSpotItem
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_market_market_msg_proto_init() }
@@ -133,6 +144,7 @@ func file_market_market_msg_proto_init() {
 	if File_market_market_msg_proto != nil {
 		return
 	}
+	file_market_market_db_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

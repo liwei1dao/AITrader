@@ -1,15 +1,18 @@
 syntax = "proto3";
 option go_package = ".;pb";
+import "market/market_db.proto";
+
 
 /*
 获取实时行情请求
 */
-message MarketRealtimeInfoReq {
+message MarketGetSpotsReq {
     
 }
 /*
 获取实时行情响应
 */
-message MarketRealtimeInfoResp {
- 
+message MarketGetSpotsResp {
+  repeated DBMarketSpotItem Items = 1; //@go_tags(`json:"items"`)
 }
+

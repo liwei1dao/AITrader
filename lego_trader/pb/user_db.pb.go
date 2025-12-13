@@ -52,18 +52,23 @@ const (
 	// @Description 账号登录 账号密码登录
 	// @example
 	SginTyoe_Account SginTyoe = 6 // 账号登录
+	// token登录
+	// @Description token登录
+	// @example
+	SginTyoe_Token SginTyoe = 10 // token登录
 )
 
 // Enum value maps for SginTyoe.
 var (
 	SginTyoe_name = map[int32]string{
-		0: "Mail",
-		1: "Phone",
-		2: "WXChat",
-		3: "Google",
-		4: "FaceBook",
-		5: "Apple",
-		6: "Account",
+		0:  "Mail",
+		1:  "Phone",
+		2:  "WXChat",
+		3:  "Google",
+		4:  "FaceBook",
+		5:  "Apple",
+		6:  "Account",
+		10: "Token",
 	}
 	SginTyoe_value = map[string]int32{
 		"Mail":     0,
@@ -73,6 +78,7 @@ var (
 		"FaceBook": 4,
 		"Apple":    5,
 		"Account":  6,
+		"Token":    10,
 	}
 )
 
@@ -260,6 +266,82 @@ func (x *DBUser) GetLastsgintime() int64 {
 	return 0
 }
 
+type DBUserStock struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id" gorm:"id:50;primaryKey;autoIncrement"`               //@go_tags(`gorm:"id:50;primaryKey;autoIncrement" json:"id"`) 主键ID
+	Uid           string                 `protobuf:"bytes,2,opt,name=uid,proto3" json:"uid" gorm:"uid:50;index"`              //@go_tags(`gorm:"uid:50;index" json:"uid"`) 用户ID
+	Stockid       string                 `protobuf:"bytes,3,opt,name=stockid,proto3" json:"stockid" gorm:"stockid:50;index"`      //@go_tags(`gorm:"stockid:50;index" json:"stockid"`) 股票ID
+	Amount        int64                  `protobuf:"varint,4,opt,name=amount,proto3" json:"amount" gorm:"amount"`       //@go_tags(`gorm:"amount" json:"amount"`) 股票数量
+	Costprice     int32                  `protobuf:"varint,5,opt,name=costprice,proto3" json:"costprice" gorm:"costprice"` //@go_tags(`gorm:"costprice" json:"costprice"`) 成本价
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DBUserStock) Reset() {
+	*x = DBUserStock{}
+	mi := &file_user_user_db_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DBUserStock) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DBUserStock) ProtoMessage() {}
+
+func (x *DBUserStock) ProtoReflect() protoreflect.Message {
+	mi := &file_user_user_db_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DBUserStock.ProtoReflect.Descriptor instead.
+func (*DBUserStock) Descriptor() ([]byte, []int) {
+	return file_user_user_db_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *DBUserStock) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *DBUserStock) GetUid() string {
+	if x != nil {
+		return x.Uid
+	}
+	return ""
+}
+
+func (x *DBUserStock) GetStockid() string {
+	if x != nil {
+		return x.Stockid
+	}
+	return ""
+}
+
+func (x *DBUserStock) GetAmount() int64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+func (x *DBUserStock) GetCostprice() int32 {
+	if x != nil {
+		return x.Costprice
+	}
+	return 0
+}
+
 var File_user_user_db_proto protoreflect.FileDescriptor
 
 const file_user_user_db_proto_rawDesc = "" +
@@ -284,7 +366,13 @@ const file_user_user_db_proto_rawDesc = "" +
 	"\fgoogleopenid\x18\x12 \x01(\tR\fgoogleopenid\x12&\n" +
 	"\x0efacebookopenid\x18\x13 \x01(\tR\x0efacebookopenid\x12 \n" +
 	"\vappleopenid\x18\x14 \x01(\tR\vappleopenid\x12\"\n" +
-	"\flastsgintime\x18\x15 \x01(\x03R\flastsgintime*]\n" +
+	"\flastsgintime\x18\x15 \x01(\x03R\flastsgintime\"\x7f\n" +
+	"\vDBUserStock\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x10\n" +
+	"\x03uid\x18\x02 \x01(\tR\x03uid\x12\x18\n" +
+	"\astockid\x18\x03 \x01(\tR\astockid\x12\x16\n" +
+	"\x06amount\x18\x04 \x01(\x03R\x06amount\x12\x1c\n" +
+	"\tcostprice\x18\x05 \x01(\x05R\tcostprice*h\n" +
 	"\bSginTyoe\x12\b\n" +
 	"\x04Mail\x10\x00\x12\t\n" +
 	"\x05Phone\x10\x01\x12\n" +
@@ -294,7 +382,9 @@ const file_user_user_db_proto_rawDesc = "" +
 	"\x06Google\x10\x03\x12\f\n" +
 	"\bFaceBook\x10\x04\x12\t\n" +
 	"\x05Apple\x10\x05\x12\v\n" +
-	"\aAccount\x10\x06B\x06Z\x04.;pbb\x06proto3"
+	"\aAccount\x10\x06\x12\t\n" +
+	"\x05Token\x10\n" +
+	"B\x06Z\x04.;pbb\x06proto3"
 
 var (
 	file_user_user_db_proto_rawDescOnce sync.Once
@@ -309,10 +399,11 @@ func file_user_user_db_proto_rawDescGZIP() []byte {
 }
 
 var file_user_user_db_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_user_user_db_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_user_user_db_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_user_user_db_proto_goTypes = []any{
-	(SginTyoe)(0),  // 0: SginTyoe
-	(*DBUser)(nil), // 1: DBUser
+	(SginTyoe)(0),       // 0: SginTyoe
+	(*DBUser)(nil),      // 1: DBUser
+	(*DBUserStock)(nil), // 2: DBUserStock
 }
 var file_user_user_db_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -333,7 +424,7 @@ func file_user_user_db_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_user_db_proto_rawDesc), len(file_user_user_db_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
