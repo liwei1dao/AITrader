@@ -13,7 +13,9 @@ import (
 */
 type Collection struct {
 	cbase.ModuleBase
-	model *modelComp
+	model   *modelComp
+	akshare *stockAkshareComp
+	timer   *timerComp
 }
 
 func (this *Collection) GetType() core.M_Modules {
@@ -27,4 +29,6 @@ func (this *Collection) Init(service core.IService, module core.IModule, options
 func (this *Collection) OnInstallComp() {
 	this.ModuleBase.OnInstallComp()
 	this.model = this.RegisterComp(new(modelComp)).(*modelComp)
+	this.akshare = this.RegisterComp(new(stockAkshareComp)).(*stockAkshareComp)
+	this.timer = this.RegisterComp(new(timerComp)).(*timerComp)
 }
