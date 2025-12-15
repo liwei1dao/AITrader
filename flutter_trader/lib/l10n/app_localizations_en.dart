@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabStocks => 'Stocks';
 
   @override
-  String get tabAnalysis => 'Analysis';
+  String get tabAnalysis => 'News';
 
   @override
   String get tabSettings => 'Settings';

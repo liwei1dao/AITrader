@@ -124,12 +124,13 @@ func (this *modelComp) getCode(addr string) (code string, err error) {
 	return
 }
 
-/*
-根据用户ID查询用户股票持仓
-*/
+// getUserStock 根据用户ID查询用户股票持仓
+// 参数: uid 用户ID
+// 返回值: stocks 用户股票持仓列表；err 错误信息；成功时 err 为 nil
+// 异常: 数据库查询失败时返回错误；当传入不可寻址的集合会导致反射赋值错误
 func (this *modelComp) getUserStock(uid string) (stocks []*pb.DBUserStock, err error) {
 	stocks = []*pb.DBUserStock{}
-	err = db.Mysql().Find(comm.TableUserStock, stocks, "uid=?", uid)
+	err = db.Mysql().Find(comm.TableUserStock, &stocks, "uid=?", uid)
 	return
 }
 

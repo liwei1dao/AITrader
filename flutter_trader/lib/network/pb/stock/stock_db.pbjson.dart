@@ -20,66 +20,25 @@ const DBStockIdentity$json = {
   '1': 'DBStockIdentity',
   '2': [
     {'1': 'Id', '3': 1, '4': 1, '5': 9, '10': 'Id'},
-    {'1': 'Symbol', '3': 2, '4': 1, '5': 9, '10': 'Symbol'},
-    {'1': 'Market', '3': 3, '4': 1, '5': 9, '10': 'Market'},
-    {'1': 'Exchange', '3': 4, '4': 1, '5': 9, '10': 'Exchange'},
-    {'1': 'Name', '3': 5, '4': 1, '5': 9, '10': 'Name'},
-    {'1': 'FullName', '3': 6, '4': 1, '5': 9, '10': 'FullName'},
-    {'1': 'ISIN', '3': 7, '4': 1, '5': 9, '10': 'ISIN'},
-    {'1': 'Industry', '3': 8, '4': 1, '5': 9, '10': 'Industry'},
-    {'1': 'Sector', '3': 9, '4': 1, '5': 9, '10': 'Sector'},
+    {'1': 'Market', '3': 2, '4': 1, '5': 9, '10': 'Market'},
+    {'1': 'Exchange', '3': 3, '4': 1, '5': 9, '10': 'Exchange'},
+    {'1': 'Name', '3': 4, '4': 1, '5': 9, '10': 'Name'},
+    {'1': 'FullName', '3': 5, '4': 1, '5': 9, '10': 'FullName'},
+    {'1': 'Industry', '3': 7, '4': 1, '5': 9, '10': 'Industry'},
+    {'1': 'Sector', '3': 8, '4': 1, '5': 9, '10': 'Sector'},
     {'1': 'Area', '3': 10, '4': 1, '5': 9, '10': 'Area'},
     {'1': 'Currency', '3': 11, '4': 1, '5': 9, '10': 'Currency'},
     {'1': 'ListDate', '3': 12, '4': 1, '5': 9, '10': 'ListDate'},
-    {'1': 'Status', '3': 13, '4': 1, '5': 9, '10': 'Status'},
-    {'1': 'Aliases', '3': 14, '4': 3, '5': 9, '10': 'Aliases'},
-    {'1': 'CreateAt', '3': 15, '4': 1, '5': 9, '10': 'CreateAt'},
-    {'1': 'UpdateAt', '3': 16, '4': 1, '5': 9, '10': 'UpdateAt'},
   ],
 };
 
 /// Descriptor for `DBStockIdentity`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List dBStockIdentityDescriptor = $convert.base64Decode(
-    'Cg9EQlN0b2NrSWRlbnRpdHkSDgoCSWQYASABKAlSAklkEhYKBlN5bWJvbBgCIAEoCVIGU3ltYm'
-    '9sEhYKBk1hcmtldBgDIAEoCVIGTWFya2V0EhoKCEV4Y2hhbmdlGAQgASgJUghFeGNoYW5nZRIS'
-    'CgROYW1lGAUgASgJUgROYW1lEhoKCEZ1bGxOYW1lGAYgASgJUghGdWxsTmFtZRISCgRJU0lOGA'
-    'cgASgJUgRJU0lOEhoKCEluZHVzdHJ5GAggASgJUghJbmR1c3RyeRIWCgZTZWN0b3IYCSABKAlS'
-    'BlNlY3RvchISCgRBcmVhGAogASgJUgRBcmVhEhoKCEN1cnJlbmN5GAsgASgJUghDdXJyZW5jeR'
-    'IaCghMaXN0RGF0ZRgMIAEoCVIITGlzdERhdGUSFgoGU3RhdHVzGA0gASgJUgZTdGF0dXMSGAoH'
-    'QWxpYXNlcxgOIAMoCVIHQWxpYXNlcxIaCghDcmVhdGVBdBgPIAEoCVIIQ3JlYXRlQXQSGgoIVX'
-    'BkYXRlQXQYECABKAlSCFVwZGF0ZUF0');
-
-@$core.Deprecated('Use dBStockBarDescriptor instead')
-const DBStockBar$json = {
-  '1': 'DBStockBar',
-  '2': [
-    {'1': 'Id', '3': 1, '4': 1, '5': 9, '10': 'Id'},
-    {'1': 'Symbol', '3': 2, '4': 1, '5': 9, '10': 'Symbol'},
-    {'1': 'Market', '3': 3, '4': 1, '5': 9, '10': 'Market'},
-    {'1': 'Timeframe', '3': 4, '4': 1, '5': 9, '10': 'Timeframe'},
-    {'1': 'Ts', '3': 5, '4': 1, '5': 9, '10': 'Ts'},
-    {'1': 'Open', '3': 6, '4': 1, '5': 1, '10': 'Open'},
-    {'1': 'High', '3': 7, '4': 1, '5': 1, '10': 'High'},
-    {'1': 'Low', '3': 8, '4': 1, '5': 1, '10': 'Low'},
-    {'1': 'Close', '3': 9, '4': 1, '5': 1, '10': 'Close'},
-    {'1': 'Volume', '3': 10, '4': 1, '5': 3, '10': 'Volume'},
-    {'1': 'Turnover', '3': 11, '4': 1, '5': 1, '10': 'Turnover'},
-    {'1': 'AdjFactor', '3': 12, '4': 1, '5': 1, '10': 'AdjFactor'},
-    {'1': 'Source', '3': 13, '4': 1, '5': 9, '10': 'Source'},
-    {'1': 'CreateAt', '3': 14, '4': 1, '5': 9, '10': 'CreateAt'},
-    {'1': 'UpdateAt', '3': 15, '4': 1, '5': 9, '10': 'UpdateAt'},
-  ],
-};
-
-/// Descriptor for `DBStockBar`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List dBStockBarDescriptor = $convert.base64Decode(
-    'CgpEQlN0b2NrQmFyEg4KAklkGAEgASgJUgJJZBIWCgZTeW1ib2wYAiABKAlSBlN5bWJvbBIWCg'
-    'ZNYXJrZXQYAyABKAlSBk1hcmtldBIcCglUaW1lZnJhbWUYBCABKAlSCVRpbWVmcmFtZRIOCgJU'
-    'cxgFIAEoCVICVHMSEgoET3BlbhgGIAEoAVIET3BlbhISCgRIaWdoGAcgASgBUgRIaWdoEhAKA0'
-    'xvdxgIIAEoAVIDTG93EhQKBUNsb3NlGAkgASgBUgVDbG9zZRIWCgZWb2x1bWUYCiABKANSBlZv'
-    'bHVtZRIaCghUdXJub3ZlchgLIAEoAVIIVHVybm92ZXISHAoJQWRqRmFjdG9yGAwgASgBUglBZG'
-    'pGYWN0b3ISFgoGU291cmNlGA0gASgJUgZTb3VyY2USGgoIQ3JlYXRlQXQYDiABKAlSCENyZWF0'
-    'ZUF0EhoKCFVwZGF0ZUF0GA8gASgJUghVcGRhdGVBdA==');
+    'Cg9EQlN0b2NrSWRlbnRpdHkSDgoCSWQYASABKAlSAklkEhYKBk1hcmtldBgCIAEoCVIGTWFya2'
+    'V0EhoKCEV4Y2hhbmdlGAMgASgJUghFeGNoYW5nZRISCgROYW1lGAQgASgJUgROYW1lEhoKCEZ1'
+    'bGxOYW1lGAUgASgJUghGdWxsTmFtZRIaCghJbmR1c3RyeRgHIAEoCVIISW5kdXN0cnkSFgoGU2'
+    'VjdG9yGAggASgJUgZTZWN0b3ISEgoEQXJlYRgKIAEoCVIEQXJlYRIaCghDdXJyZW5jeRgLIAEo'
+    'CVIIQ3VycmVuY3kSGgoITGlzdERhdGUYDCABKAlSCExpc3REYXRl');
 
 @$core.Deprecated('Use dBFundamentalSnapshotDescriptor instead')
 const DBFundamentalSnapshot$json = {
@@ -174,6 +133,95 @@ final $typed_data.Uint8List dBFundamentalSnapshotDescriptor = $convert.base64Dec
     'I9CgdNZXRyaWNzGDwgAygLMiMuREJGdW5kYW1lbnRhbFNuYXBzaG90Lk1ldHJpY3NFbnRyeVIH'
     'TWV0cmljcxIaCghDcmVhdGVBdBg9IAEoCVIIQ3JlYXRlQXQaOgoMTWV0cmljc0VudHJ5EhAKA2'
     'tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgBUgV2YWx1ZToCOAE=');
+
+@$core.Deprecated('Use dBStockRealTimeItemDescriptor instead')
+const DBStockRealTimeItem$json = {
+  '1': 'DBStockRealTimeItem',
+  '2': [
+    {'1': 'Code', '3': 1, '4': 1, '5': 9, '10': 'Code'},
+    {'1': 'Name', '3': 2, '4': 1, '5': 9, '10': 'Name'},
+    {'1': 'LastPrice', '3': 3, '4': 1, '5': 1, '10': 'LastPrice'},
+    {'1': 'ChangePct', '3': 4, '4': 1, '5': 1, '10': 'ChangePct'},
+    {'1': 'ChangeAmt', '3': 5, '4': 1, '5': 1, '10': 'ChangeAmt'},
+    {'1': 'Volume', '3': 6, '4': 1, '5': 1, '10': 'Volume'},
+    {'1': 'Amount', '3': 7, '4': 1, '5': 1, '10': 'Amount'},
+    {'1': 'Amplitude', '3': 8, '4': 1, '5': 1, '10': 'Amplitude'},
+    {'1': 'High', '3': 9, '4': 1, '5': 1, '10': 'High'},
+    {'1': 'Low', '3': 10, '4': 1, '5': 1, '10': 'Low'},
+    {'1': 'Open', '3': 11, '4': 1, '5': 1, '10': 'Open'},
+    {'1': 'PrevClose', '3': 12, '4': 1, '5': 1, '10': 'PrevClose'},
+    {'1': 'VolumeRatio', '3': 13, '4': 1, '5': 1, '10': 'VolumeRatio'},
+    {'1': 'TurnoverRate', '3': 14, '4': 1, '5': 1, '10': 'TurnoverRate'},
+    {'1': 'PeDynamic', '3': 15, '4': 1, '5': 1, '10': 'PeDynamic'},
+    {'1': 'PbRatio', '3': 16, '4': 1, '5': 1, '10': 'PbRatio'},
+    {'1': 'TotalMarketCap', '3': 17, '4': 1, '5': 1, '10': 'TotalMarketCap'},
+    {
+      '1': 'CirculatingMarketCap',
+      '3': 18,
+      '4': 1,
+      '5': 1,
+      '10': 'CirculatingMarketCap'
+    },
+    {'1': 'PriceSpeed', '3': 19, '4': 1, '5': 1, '10': 'PriceSpeed'},
+    {'1': 'FiveMinChange', '3': 20, '4': 1, '5': 1, '10': 'FiveMinChange'},
+    {
+      '1': 'SixtyDayChangePct',
+      '3': 21,
+      '4': 1,
+      '5': 1,
+      '10': 'SixtyDayChangePct'
+    },
+    {'1': 'YtdChangePct', '3': 22, '4': 1, '5': 1, '10': 'YtdChangePct'},
+  ],
+};
+
+/// Descriptor for `DBStockRealTimeItem`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List dBStockRealTimeItemDescriptor = $convert.base64Decode(
+    'ChNEQlN0b2NrUmVhbFRpbWVJdGVtEhIKBENvZGUYASABKAlSBENvZGUSEgoETmFtZRgCIAEoCV'
+    'IETmFtZRIcCglMYXN0UHJpY2UYAyABKAFSCUxhc3RQcmljZRIcCglDaGFuZ2VQY3QYBCABKAFS'
+    'CUNoYW5nZVBjdBIcCglDaGFuZ2VBbXQYBSABKAFSCUNoYW5nZUFtdBIWCgZWb2x1bWUYBiABKA'
+    'FSBlZvbHVtZRIWCgZBbW91bnQYByABKAFSBkFtb3VudBIcCglBbXBsaXR1ZGUYCCABKAFSCUFt'
+    'cGxpdHVkZRISCgRIaWdoGAkgASgBUgRIaWdoEhAKA0xvdxgKIAEoAVIDTG93EhIKBE9wZW4YCy'
+    'ABKAFSBE9wZW4SHAoJUHJldkNsb3NlGAwgASgBUglQcmV2Q2xvc2USIAoLVm9sdW1lUmF0aW8Y'
+    'DSABKAFSC1ZvbHVtZVJhdGlvEiIKDFR1cm5vdmVyUmF0ZRgOIAEoAVIMVHVybm92ZXJSYXRlEh'
+    'wKCVBlRHluYW1pYxgPIAEoAVIJUGVEeW5hbWljEhgKB1BiUmF0aW8YECABKAFSB1BiUmF0aW8S'
+    'JgoOVG90YWxNYXJrZXRDYXAYESABKAFSDlRvdGFsTWFya2V0Q2FwEjIKFENpcmN1bGF0aW5nTW'
+    'Fya2V0Q2FwGBIgASgBUhRDaXJjdWxhdGluZ01hcmtldENhcBIeCgpQcmljZVNwZWVkGBMgASgB'
+    'UgpQcmljZVNwZWVkEiQKDUZpdmVNaW5DaGFuZ2UYFCABKAFSDUZpdmVNaW5DaGFuZ2USLAoRU2'
+    'l4dHlEYXlDaGFuZ2VQY3QYFSABKAFSEVNpeHR5RGF5Q2hhbmdlUGN0EiIKDFl0ZENoYW5nZVBj'
+    'dBgWIAEoAVIMWXRkQ2hhbmdlUGN0');
+
+@$core.Deprecated('Use dBStockBarDescriptor instead')
+const DBStockBar$json = {
+  '1': 'DBStockBar',
+  '2': [
+    {'1': 'Id', '3': 1, '4': 1, '5': 9, '10': 'Id'},
+    {'1': 'Symbol', '3': 2, '4': 1, '5': 9, '10': 'Symbol'},
+    {'1': 'Market', '3': 3, '4': 1, '5': 9, '10': 'Market'},
+    {'1': 'Timeframe', '3': 4, '4': 1, '5': 9, '10': 'Timeframe'},
+    {'1': 'Ts', '3': 5, '4': 1, '5': 9, '10': 'Ts'},
+    {'1': 'Open', '3': 6, '4': 1, '5': 1, '10': 'Open'},
+    {'1': 'High', '3': 7, '4': 1, '5': 1, '10': 'High'},
+    {'1': 'Low', '3': 8, '4': 1, '5': 1, '10': 'Low'},
+    {'1': 'Close', '3': 9, '4': 1, '5': 1, '10': 'Close'},
+    {'1': 'Volume', '3': 10, '4': 1, '5': 3, '10': 'Volume'},
+    {'1': 'Turnover', '3': 11, '4': 1, '5': 1, '10': 'Turnover'},
+    {'1': 'AdjFactor', '3': 12, '4': 1, '5': 1, '10': 'AdjFactor'},
+    {'1': 'Source', '3': 13, '4': 1, '5': 9, '10': 'Source'},
+    {'1': 'CreateAt', '3': 14, '4': 1, '5': 9, '10': 'CreateAt'},
+    {'1': 'UpdateAt', '3': 15, '4': 1, '5': 9, '10': 'UpdateAt'},
+  ],
+};
+
+/// Descriptor for `DBStockBar`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List dBStockBarDescriptor = $convert.base64Decode(
+    'CgpEQlN0b2NrQmFyEg4KAklkGAEgASgJUgJJZBIWCgZTeW1ib2wYAiABKAlSBlN5bWJvbBIWCg'
+    'ZNYXJrZXQYAyABKAlSBk1hcmtldBIcCglUaW1lZnJhbWUYBCABKAlSCVRpbWVmcmFtZRIOCgJU'
+    'cxgFIAEoCVICVHMSEgoET3BlbhgGIAEoAVIET3BlbhISCgRIaWdoGAcgASgBUgRIaWdoEhAKA0'
+    'xvdxgIIAEoAVIDTG93EhQKBUNsb3NlGAkgASgBUgVDbG9zZRIWCgZWb2x1bWUYCiABKANSBlZv'
+    'bHVtZRIaCghUdXJub3ZlchgLIAEoAVIIVHVybm92ZXISHAoJQWRqRmFjdG9yGAwgASgBUglBZG'
+    'pGYWN0b3ISFgoGU291cmNlGA0gASgJUgZTb3VyY2USGgoIQ3JlYXRlQXQYDiABKAlSCENyZWF0'
+    'ZUF0EhoKCFVwZGF0ZUF0GA8gASgJUghVcGRhdGVBdA==');
 
 @$core.Deprecated('Use dBStockNewsDescriptor instead')
 const DBStockNews$json = {

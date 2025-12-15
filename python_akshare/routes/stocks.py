@@ -8,7 +8,11 @@ from .common import df_to_records, _normalize_symbol_xq
 
 router = APIRouter()
 
-
+# 个股信息查询-东财
+# 接口: stock_individual_info_em
+# 目标地址: http://quote.eastmoney.com/concept/sh603777.html?from=classic
+# 描述: 东方财富-个股-股票信息
+# 限量: 单次返回指定 symbol 的个股信息
 @router.get(
     "/api/public/stock_individual_info_em",
     summary="公司基本信息(东方财富)",
@@ -37,6 +41,11 @@ def stock_individual_info_em(symbol: str = Query(...)):
         return JSONResponse(content={"error": str(e)})
 
 
+# 个股信息查询-雪球
+# 接口: stock_individual_basic_info_xq
+# 目标地址: https://xueqiu.com/snowman/S/SH601127/detail#/GSJJ
+# 描述: 雪球财经-个股-公司概况-公司简介
+# 限量: 单次返回指定 symbol 的个股信息
 @router.get(
     "/api/public/stock_individual_basic_info_xq",
     summary="公司基本信息(雪球)",
@@ -78,7 +87,11 @@ def stock_individual_basic_info_xq(symbol: str = Query(...)):
     except Exception as e:
         return JSONResponse(content={"error": str(e), "normalized_symbol": norm})
 
-
+# 行情报价
+# 接口: stock_bid_ask_em
+# 目标地址: https://quote.eastmoney.com/sz000001.html
+# 描述: 东方财富-行情报价
+# 限量: 单次返回指定股票的行情报价数据
 @router.get(
     "/api/public/stock_bid_ask_em",
     summary="实时盘口(东方财富)",
@@ -120,7 +133,12 @@ def stock_bid_ask_em(symbol: str = Query(...)):
     except Exception as e:
         return JSONResponse(content={"error": str(e), "normalized_symbol": s6})
 
-
+# 历史行情数据
+# 历史行情数据-东财
+# 接口: stock_zh_a_hist
+# 目标地址: https://quote.eastmoney.com/concept/sh603777.html?from=classic(示例)
+# 描述: 东方财富-沪深京 A 股日频率数据; 历史数据按日频率更新, 当日收盘价请在收盘后获取
+# 限量: 单次返回指定沪深京 A 股上市公司、指定周期和指定日期间的历史行情日频率数
 @router.get(
     "/api/public/stock_zh_a_hist",
     summary="A股历史行情(东方财富)",

@@ -61,6 +61,34 @@ type IndexSpotRecord struct {
 }
 
 // A股实时行情（东方财富 stock_zh_a_spot_em）
+type StockZhASpotEMRecord struct {
+	Index                int64   `json:"序号"`
+	Code                 string  `json:"代码"`
+	Name                 string  `json:"名称"`
+	LastPrice            float64 `json:"最新价"`
+	ChangePct            float64 `json:"涨跌幅"`
+	ChangeAmt            float64 `json:"涨跌额"`
+	Volume               float64 `json:"成交量"`
+	Amount               float64 `json:"成交额"`
+	Amplitude            float64 `json:"振幅"`
+	High                 float64 `json:"最高"`
+	Low                  float64 `json:"最低"`
+	Open                 float64 `json:"今开"`
+	PrevClose            float64 `json:"昨收"`
+	VolumeRatio          float64 `json:"量比"`
+	TurnoverRate         float64 `json:"换手率"`
+	PeDynamic            float64 `json:"市盈率-动态"`
+	PbRatio              float64 `json:"市净率"`
+	TotalMarketCap       float64 `json:"总市值"`
+	CirculatingMarketCap float64 `json:"流通市值"`
+	PriceSpeed           float64 `json:"涨速"`
+	FiveMinChange        float64 `json:"5分钟涨跌"`
+	SixtyDayChangePct    float64 `json:"60日涨跌幅"`
+	YtdChangePct         float64 `json:"年初至今涨跌幅"`
+}
+
+// 创业板/科创板实时行情（东方财富 stock_cy_a_spot_em / stock_kc_a_spot_em）
+// 最小化结构，仅包含面板需要的字段
 type AStockSpotRecord struct {
 	Symbol    string  `json:"代码"`
 	Name      string  `json:"名称"`
@@ -158,36 +186,6 @@ func (a *AkShare) GetStockZhIndexSpot() (records []IndexSpotRecord, err error) {
 		if err2 := json.Unmarshal(body, &obj); err2 == nil {
 			if msg, ok := obj["error"]; ok {
 				return nil, fmt.Errorf("stock_zh_index_spot error: %v", msg)
-			}
-		}
-		return nil, err
-	}
-	return records, nil
-}
-
-// GetStockZhASpotEM 获取沪深京 A 股实时行情（东方财富 stock_zh_a_spot_em）
-// 参数: 无
-// 返回值: A 股实时行情列表（包括代码、名称、最新价、涨跌幅、成交量、成交额）
-// 异常: 网络错误/解码错误时返回错误
-func (a *AkShare) GetStockZhASpotEM() (records []AStockSpotRecord, err error) {
-	url := fmt.Sprintf("%s/api/public/stock_zh_a_spot_em", a.options.BaseUrl)
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
-	}
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(body, &records); err != nil {
-		var obj map[string]interface{}
-		if err2 := json.Unmarshal(body, &obj); err2 == nil {
-			if msg, ok := obj["error"]; ok {
-				return nil, fmt.Errorf("stock_zh_a_spot_em error: %v", msg)
 			}
 		}
 		return nil, err
@@ -310,10 +308,10 @@ func (a *AkShare) BuildMarketPanelDTO(topN int) (*MarketPanelDTO, error) {
 		Rise: rise, Fall: fall, Unchanged: unchanged, LimitUp: limitUp, LimitDown: limitDown,
 	}
 	// 3) 榜单
-	sortedUp := make([]AStockSpotRecord, len(astocks))
+	sortedUp := make([]StockZhASpotEMRecord, len(astocks))
 	copy(sortedUp, astocks)
 	sort.Slice(sortedUp, func(i, j int) bool { return sortedUp[i].ChangePct > sortedUp[j].ChangePct })
-	sortedDn := make([]AStockSpotRecord, len(astocks))
+	sortedDn := make([]StockZhASpotEMRecord, len(astocks))
 	copy(sortedDn, astocks)
 	sort.Slice(sortedDn, func(i, j int) bool { return sortedDn[i].ChangePct < sortedDn[j].ChangePct })
 	if topN < 1 {
@@ -327,11 +325,11 @@ func (a *AkShare) BuildMarketPanelDTO(topN int) (*MarketPanelDTO, error) {
 	if dnN > len(sortedDn) {
 		dnN = len(sortedDn)
 	}
-	toMovers := func(src []AStockSpotRecord) []TopMoverDTO {
+	toMovers := func(src []StockZhASpotEMRecord) []TopMoverDTO {
 		res := make([]TopMoverDTO, 0, len(src))
 		for _, r := range src {
 			res = append(res, TopMoverDTO{
-				Symbol: r.Symbol, Name: r.Name, ChangePct: r.ChangePct, Price: r.Price, Volume: int64(r.Volume),
+				Symbol: r.Code, Name: r.Name, ChangePct: r.ChangePct, Price: r.LastPrice, Volume: int64(r.Volume),
 			})
 		}
 		return res

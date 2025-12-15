@@ -4,6 +4,7 @@ import 'package:protobuf/well_known_types/google/protobuf/any.pb.dart'
 import 'socket_service.dart';
 import 'package:flutter_trader/network/pb/gateway/gateway_msg.pb.dart' as gw;
 import 'package:flutter_trader/network/pb/user/user_msg.pb.dart' as upb;
+import 'package:flutter_trader/network/pb/news/news_msg.pb.dart' as nmsg;
 
 class DefaultMessageResolver implements MessageResolver {
   final Map<String, GeneratedMessage Function()> _byTypeUrl = {};
@@ -52,5 +53,6 @@ void installDefaultProtoRegistry(SocketService service) {
   resolver.registerByMessage(upb.UserSginResp(), msgName: 'user.sgin');
   resolver.registerByMessage(upb.UserGetStocksResp(), msgName: 'user.getstocks');
   resolver.registerByMessage(upb.UserAddStockResp(), msgName: 'user.addstock');
+  resolver.registerByMessage(nmsg.NewsMarketNewsResp(), msgName: 'news.marketnews');
   service.setResolver(resolver);
 }

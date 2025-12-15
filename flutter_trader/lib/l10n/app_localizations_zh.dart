@@ -39,7 +39,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tabStocks => '股票';
 
   @override
-  String get tabAnalysis => '分析';
+  String get tabAnalysis => '资讯';
 
   @override
   String get tabSettings => '设置';

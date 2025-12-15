@@ -1,0 +1,22 @@
+syntax = "proto3";
+option go_package = ".;pb";
+import "stock/stock_db.proto";
+
+// 获取股票信息请求
+message StockGetInfosReq {  
+  repeated string stock_ids = 1;
+}
+
+message StockGetInfosResp {
+  repeated DBStockIdentity stock_infos = 1;
+}
+
+
+// 获取基本面快照请求
+message StockGetFundamentalSnapshotReq {
+  string id = 1;
+}
+
+message StockGetFundamentalSnapshotResp {
+  repeated DBFundamentalSnapshot snapshots = 1;
+}

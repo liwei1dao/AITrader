@@ -9,6 +9,17 @@ import (
 )
 
 type (
+	// 新闻接口
+	INews interface {
+		/// 获取市场要闻（财新 stock_news_main_cx）
+		/// 作用: 大盘看板的要闻信息源，用于新闻/快讯模块
+		/// 参数: 无；返回: 市场要闻列表（结构化）
+		GetStockNewsMainCx() (records []StockNewsMainCxRecord, err error)
+		/// 获取个股新闻（东方财富 stock_news_em）
+		/// 参数: stockCode 6位或含前缀；page/size 可选；返回: 新闻列表（结构化）
+		GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error)
+	}
+
 	// 股票基本信息
 	StockBasicInfo struct {
 		OrgID                    string  `json:"org_id" comment:"机构ID"`                          // T000071215
@@ -113,7 +124,68 @@ type (
 	}
 
 	// 新闻类型移至 akshare_news.go
+
+	// 基本面摘要（雪球/东方财富）
+	StockFinancialSummary struct {
+		Period           string  `json:"period"`
+		FiscalYear       string  `json:"fiscal_year"`
+		FiscalQuarter    string  `json:"fiscal_quarter"`
+		Revenue          float64 `json:"revenue"`
+		OperatingIncome  float64 `json:"operating_income"`
+		NetProfit        float64 `json:"net_profit"`
+		EPS              float64 `json:"eps"`
+		ROE              float64 `json:"roe"`
+		ROA              float64 `json:"roa"`
+		GrossMargin      float64 `json:"gross_margin"`
+		OperatingMargin  float64 `json:"operating_margin"`
+		NetMargin        float64 `json:"net_margin"`
+		PE               float64 `json:"pe"`
+		PB               float64 `json:"pb"`
+		PS               float64 `json:"ps"`
+		DividendPerShare float64 `json:"dividend_per_share"`
+		DividendYield    float64 `json:"dividend_yield"`
+		FreeCashFlow     float64 `json:"free_cash_flow"`
+		DebtToEquity     float64 `json:"debt_to_equity"`
+		CurrentRatio     float64 `json:"current_ratio"`
+		QuickRatio       float64 `json:"quick_ratio"`
+		TotalAssets      float64 `json:"total_assets"`
+		TotalLiabilities float64 `json:"total_liabilities"`
+		Equity           float64 `json:"equity"`
+		RevenueYoY       float64 `json:"revenue_yoy"`
+		NetProfitYoY     float64 `json:"net_profit_yoy"`
+		EPSYoY           float64 `json:"eps_yoy"`
+	}
 )
+
+// GetStockZhASpotEM 获取沪深京 A 股实时行情（东方财富 stock_zh_a_spot_em）
+// 参数: 无
+// 返回值: 与接口字段完全一致的结构化列表；不多不少
+// 异常: 网络错误/解码错误或上游返回错误对象时返回错误
+func (a *AkShare) GetStockZhASpotEM() (records []StockZhASpotEMRecord, err error) {
+	url := fmt.Sprintf("%s/api/public/stock_zh_a_spot_em", a.options.BaseUrl)
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("StatusCode: %d", resp.StatusCode)
+	}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(body, &records); err != nil {
+		var obj map[string]interface{}
+		if err2 := json.Unmarshal(body, &obj); err2 == nil {
+			if msg, ok := obj["error"]; ok {
+				return nil, fmt.Errorf("stock_zh_a_spot_em error: %v", msg)
+			}
+		}
+		return nil, err
+	}
+	return records, nil
+}
 
 // GetStockBasicInfo 获取股票基本信息（东方财富 stock_individual_basic_info_xq）
 // - 参数: stockCode 支持 6位代码或带前缀 `sz`/`sh`
@@ -208,8 +280,6 @@ func (a *AkShare) GetStockZhAHist(stockCode, period, start, end, adjust string) 
 	return records, nil
 }
 
-// 新闻接口迁移至 akshare_news.go
-
 // GetStockBidAskEM 获取实时盘口并映射为结构体
 // 返回 StockBidAskEM，内部按 item/value 结构进行映射
 func (a *AkShare) GetStockBidAskEM(stockCode string) (data *StockBidAskEM, err error) {
@@ -271,14 +341,15 @@ func (a *AkShare) GetStockIndividualFundFlow(stockCode string, market string) (r
 
 // GetStockFinancialSummary 获取基本面摘要（雪球/东方财富）
 // - 参数: stockCode 支持 6位代码或带前缀 `sz`/`sh`
-// - 返回: item/value 列表，键可能包含英文或中文名（例如 revenue/净利润/eps/roe 等）
-// - 说明: 调用 python_akshare `/api/public/stock_financial_summary_xq`
-func (a *AkShare) GetStockFinancialSummary(stockCode string) (items []ItemValue, err error) {
-	// 雪球接口要求symbol必须带sz/sh前缀，若未带则默认补sh
-	if len(stockCode) == 6 && (stockCode[:2] != "sz" && stockCode[:2] != "sh") {
-		stockCode = "sh" + stockCode
+// - 返回: 处理后的结构体对象，包含常用指标与周期信息
+// - 异常: 网络错误/解码错误或上游返回错误对象时返回错误
+func (a *AkShare) GetStockFinancialSummary(stockCode string) (summary *StockFinancialSummary, err error) {
+	// 使用东方财富公司基本信息接口作为最小化的基本面来源
+	// 要求 symbol 为6位股票代码；若传入带市场前缀，则转换为6位代码
+	if len(stockCode) >= 8 && (strings.HasPrefix(stockCode, "sz") || strings.HasPrefix(stockCode, "sh")) {
+		stockCode = stockCode[2:]
 	}
-	url := fmt.Sprintf("%s/api/public/stock_financial_summary_xq?symbol=%s", a.options.BaseUrl, stockCode)
+	url := fmt.Sprintf("%s/api/public/stock_individual_info_em?symbol=%s", a.options.BaseUrl, stockCode)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -291,6 +362,7 @@ func (a *AkShare) GetStockFinancialSummary(stockCode string) (items []ItemValue,
 	if err != nil {
 		return nil, err
 	}
+	var items []ItemValue
 	if err := json.Unmarshal(body, &items); err != nil {
 		// 兼容错误对象
 		var obj map[string]interface{}
@@ -301,5 +373,64 @@ func (a *AkShare) GetStockFinancialSummary(stockCode string) (items []ItemValue,
 		}
 		return nil, err
 	}
-	return items, nil
+	// 映射为结构体
+	summary = &StockFinancialSummary{}
+	setNum := func(k string, v interface{}) {
+		switch strings.ToLower(strings.TrimSpace(k)) {
+		case "revenue", "营业收入":
+			summary.Revenue = toFloatAny(v)
+		case "operating_income", "营业利润":
+			summary.OperatingIncome = toFloatAny(v)
+		case "net_profit", "净利润":
+			summary.NetProfit = toFloatAny(v)
+		case "eps", "每股收益":
+			summary.EPS = toFloatAny(v)
+		case "roe", "净资产收益率":
+			summary.ROE = toFloatAny(v)
+		case "roa", "总资产收益率":
+			summary.ROA = toFloatAny(v)
+		case "gross_margin", "毛利率":
+			summary.GrossMargin = toFloatAny(v)
+		case "operating_margin", "营业利润率":
+			summary.OperatingMargin = toFloatAny(v)
+		case "net_margin", "净利率":
+			summary.NetMargin = toFloatAny(v)
+		case "pe", "市盈率":
+			summary.PE = toFloatAny(v)
+		case "pb", "市净率":
+			summary.PB = toFloatAny(v)
+		case "ps", "市销率":
+			summary.PS = toFloatAny(v)
+		case "dividend_per_share", "每股分红":
+			summary.DividendPerShare = toFloatAny(v)
+		case "dividend_yield", "股息率":
+			summary.DividendYield = toFloatAny(v)
+		case "free_cash_flow", "自由现金流":
+			summary.FreeCashFlow = toFloatAny(v)
+		case "debt_to_equity", "资产负债比":
+			summary.DebtToEquity = toFloatAny(v)
+		case "current_ratio", "流动比率":
+			summary.CurrentRatio = toFloatAny(v)
+		case "quick_ratio", "速动比率":
+			summary.QuickRatio = toFloatAny(v)
+		case "total_assets", "总资产":
+			summary.TotalAssets = toFloatAny(v)
+		case "total_liabilities", "总负债":
+			summary.TotalLiabilities = toFloatAny(v)
+		case "equity", "股东权益":
+			summary.Equity = toFloatAny(v)
+		case "revenue_yoy", "收入同比":
+			summary.RevenueYoY = toFloatAny(v)
+		case "net_profit_yoy", "净利润同比":
+			summary.NetProfitYoY = toFloatAny(v)
+		case "eps_yoy", "eps同比", "EPS同比":
+			summary.EPSYoY = toFloatAny(v)
+		}
+	}
+	for _, it := range items {
+		k := strings.TrimSpace(it.Item)
+		// 东方财富公司基本信息接口不提供财报周期信息，保留默认空值
+		setNum(k, it.Value)
+	}
+	return summary, nil
 }

@@ -92,7 +92,7 @@ class LoadingController extends GetxController {
             debugPrint(
               '[LoadingController] token login empty, navigate -> login',
             );
-            Get.offAllNamed(AppRoutes.login);
+            Get.offAllNamed(AppRoutes.marketAShare);
           })
           .catchError((err) {
             if (err is gw.GatewayErrorNotifyPush) {

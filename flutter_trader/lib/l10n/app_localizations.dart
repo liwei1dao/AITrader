@@ -158,7 +158,7 @@ abstract class AppLocalizations {
   /// No description provided for @tabAnalysis.
   ///
   /// In en, this message translates to:
-  /// **'Analysis'**
+  /// **'News'**
   String get tabAnalysis;
 
   /// No description provided for @tabSettings.

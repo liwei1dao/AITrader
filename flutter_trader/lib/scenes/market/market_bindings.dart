@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import '../home/home_controller.dart';
 import 'market_controller.dart';
 import '../../routes/app_routes.dart';
+import '../stocks/stocks_controller.dart';
+import '../news/news_controller.dart';
 
 class MarketBindings implements Bindings {
   /// 注册行情相关依赖
@@ -17,6 +19,12 @@ class MarketBindings implements Bindings {
     final mc = Get.isRegistered<MarketController>()
         ? Get.find<MarketController>()
         : Get.put(MarketController());
+    Get.isRegistered<StocksController>()
+        ? Get.find<StocksController>()
+        : Get.put(StocksController());
+    Get.isRegistered<NewsController>()
+        ? Get.find<NewsController>()
+        : Get.put(NewsController());
     hc.setIndex(0);
     final route = Get.currentRoute;
     if (route == AppRoutes.marketGlobal) {

@@ -22,7 +22,7 @@ type News struct {
 }
 
 func (this *News) GetType() core.M_Modules {
-	return comm.ModuleCollection
+	return comm.ModuleNews
 }
 func (this *News) Init(service core.IService, module core.IModule, options core.IModuleOptions) (err error) {
 	this.ModuleBase.Init(service, module, options)
@@ -31,5 +31,6 @@ func (this *News) Init(service core.IService, module core.IModule, options core.
 
 func (this *News) OnInstallComp() {
 	this.ModuleBase.OnInstallComp()
+	this.api = this.RegisterComp(new(apiComp)).(*apiComp)
 	this.model = this.RegisterComp(new(modelComp)).(*modelComp)
 }

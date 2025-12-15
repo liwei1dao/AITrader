@@ -19,7 +19,7 @@ type (
 		/// 获取沪深京 A 股实时行情（东方财富 stock_zh_a_spot_em）
 		/// 作用: 市场宽度统计与涨跌榜数据源（全市场实时行情）
 		/// 参数: 无；返回: A 股实时行情列表（代码/名称/最新价/涨跌幅/成交量/成交额）
-		GetStockZhASpotEM() (records []AStockSpotRecord, err error)
+		GetStockZhASpotEM() (records []StockZhASpotEMRecord, err error)
 		/// 获取创业板实时行情（东方财富 stock_cy_a_spot_em）
 		/// 作用: 创业板分板块视图与榜单数据源
 		/// 参数: 无；返回: 创业板实时行情列表（代码/名称/最新价/涨跌幅/成交量/成交额）
@@ -53,18 +53,9 @@ type (
 		/// 返回: 基于上游原始字段的记录列表（结构化字典）
 		GetStockIndividualFundFlow(stockCode string, market string) (records []map[string]interface{}, err error)
 		/// 获取基本面摘要（雪球/东方财富）
-		GetStockFinancialSummary(stockCode string) (items []ItemValue, err error)
+		GetStockFinancialSummary(stockCode string) (summary *StockFinancialSummary, err error)
 	}
-	// 新闻接口
-	INews interface {
-		/// 获取市场要闻（财新 stock_news_main_cx）
-		/// 作用: 大盘看板的要闻信息源，用于新闻/快讯模块
-		/// 参数: 无；返回: 市场要闻列表（结构化）
-		GetStockNewsMainCx() (records []StockNewsMainCxRecord, err error)
-		/// 获取个股新闻（东方财富 stock_news_em）
-		/// 参数: stockCode 6位或含前缀；page/size 可选；返回: 新闻列表（结构化）
-		GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error)
-	}
+
 	ISys interface {
 		IMarket
 		IPlate
@@ -118,7 +109,14 @@ func GetStockMarketFundFlow() (flow *StockMarketFundFlow, err error) {
 	return defsys.GetStockMarketFundFlow()
 }
 
-//股票---------------------------
+// 股票---------------------------
+
+// / 获取沪深京 A 股实时行情（东方财富 stock_zh_a_spot_em）
+// / 作用: 市场宽度统计与涨跌榜数据源（全市场实时行情）
+// / 参数: 无；返回: A 股实时行情列表（代码/名称/最新价/涨跌幅/成交量/成交额）
+func GetStockZhASpotEM() (records []StockZhASpotEMRecord, err error) {
+	return defsys.GetStockZhASpotEM()
+}
 
 // GetStockBasicInfo 获取股票基本信息（东方财富）
 // - 参数: stockCode 6位代码或含前缀 sz/sh/bj
@@ -155,6 +153,9 @@ func GetStockNewsMainCx() (records []StockNewsMainCxRecord, err error) {
 }
 
 // GetStockFinancialSummary 获取基本面摘要（item/value 列表）
-func GetStockFinancialSummary(stockCode string) (items []ItemValue, err error) {
+// - 参数: stockCode 6位代码或含前缀 sz/sh/bj
+// - 返回: 原始字段的基本面摘要（资产负债表/利润表/现金流量表等）
+// - 异常: 网络错误/上游返回错误对象时返回错误
+func GetStockFinancialSummary(stockCode string) (summary *StockFinancialSummary, err error) {
 	return defsys.GetStockFinancialSummary(stockCode)
 }

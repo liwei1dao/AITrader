@@ -24,22 +24,16 @@ const (
 // 股票基础信息（静态/半静态）
 type DBStockIdentity struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=Id,proto3" json:"id" gorm:"id;primaryKey;autoIncrement"`              //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
-	Symbol        string                 `protobuf:"bytes,2,opt,name=Symbol,proto3" json:"symbol" gorm:"symbol;uniqueIndex:uk_market_symbol"`      //@go_tags(`gorm:"symbol;uniqueIndex:uk_market_symbol" json:"symbol"`) 股票代码
-	Market        string                 `protobuf:"bytes,3,opt,name=Market,proto3" json:"market" gorm:"market;uniqueIndex:uk_market_symbol"`      //@go_tags(`gorm:"market;uniqueIndex:uk_market_symbol" json:"market"`) 市场标识(sh/sz)
-	Exchange      string                 `protobuf:"bytes,4,opt,name=Exchange,proto3" json:"exchange" gorm:"exchange"`  //@go_tags(`gorm:"exchange" json:"exchange"`) 交易所(SSE/SZSE)
-	Name          string                 `protobuf:"bytes,5,opt,name=Name,proto3" json:"name" gorm:"name"`          //@go_tags(`gorm:"name" json:"name"`) 公司简称
-	FullName      string                 `protobuf:"bytes,6,opt,name=FullName,proto3" json:"full_name" gorm:"full_name"`  //@go_tags(`gorm:"full_name" json:"full_name"`) 公司全称
-	ISIN          string                 `protobuf:"bytes,7,opt,name=ISIN,proto3" json:"isin" gorm:"isin;index"`          //@go_tags(`gorm:"isin;index" json:"isin"`) 国际证券识别码
-	Industry      string                 `protobuf:"bytes,8,opt,name=Industry,proto3" json:"industry" gorm:"industry"`  //@go_tags(`gorm:"industry" json:"industry"`) 行业
-	Sector        string                 `protobuf:"bytes,9,opt,name=Sector,proto3" json:"sector" gorm:"sector"`      //@go_tags(`gorm:"sector" json:"sector"`) 板块
+	Id            string                 `protobuf:"bytes,1,opt,name=Id,proto3" json:"id" gorm:"id;primaryKey;autoIncrement"`              //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 股票代码
+	Market        string                 `protobuf:"bytes,2,opt,name=Market,proto3" json:"market" gorm:"market;uniqueIndex:uk_market_symbol"`      //@go_tags(`gorm:"market;uniqueIndex:uk_market_symbol" json:"market"`) 市场标识(sh/sz)
+	Exchange      string                 `protobuf:"bytes,3,opt,name=Exchange,proto3" json:"exchange" gorm:"exchange"`  //@go_tags(`gorm:"exchange" json:"exchange"`) 交易所(SSE/SZSE)
+	Name          string                 `protobuf:"bytes,4,opt,name=Name,proto3" json:"name" gorm:"name"`          //@go_tags(`gorm:"name" json:"name"`) 公司简称
+	FullName      string                 `protobuf:"bytes,5,opt,name=FullName,proto3" json:"full_name" gorm:"full_name"`  //@go_tags(`gorm:"full_name" json:"full_name"`) 公司全称
+	Industry      string                 `protobuf:"bytes,7,opt,name=Industry,proto3" json:"industry" gorm:"industry"`  //@go_tags(`gorm:"industry" json:"industry"`) 行业
+	Sector        string                 `protobuf:"bytes,8,opt,name=Sector,proto3" json:"sector" gorm:"sector"`      //@go_tags(`gorm:"sector" json:"sector"`) 板块
 	Area          string                 `protobuf:"bytes,10,opt,name=Area,proto3" json:"area" gorm:"area"`         //@go_tags(`gorm:"area" json:"area"`) 地区
 	Currency      string                 `protobuf:"bytes,11,opt,name=Currency,proto3" json:"currency" gorm:"currency"` //@go_tags(`gorm:"currency" json:"currency"`) 币种
 	ListDate      string                 `protobuf:"bytes,12,opt,name=ListDate,proto3" json:"list_date" gorm:"list_date"` //@go_tags(`gorm:"list_date" json:"list_date"`) 上市日期(YYYYMMDD)
-	Status        string                 `protobuf:"bytes,13,opt,name=Status,proto3" json:"status" gorm:"status"`     //@go_tags(`gorm:"status" json:"status"`) 上市状态
-	Aliases       []string               `protobuf:"bytes,14,rep,name=Aliases,proto3" json:"aliases" gorm:"aliases;serializer:json"`   //@go_tags(`gorm:"aliases;serializer:json" json:"aliases"`) 别名列表
-	CreateAt      string                 `protobuf:"bytes,15,opt,name=CreateAt,proto3" json:"create_at" gorm:"create_at"` //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
-	UpdateAt      string                 `protobuf:"bytes,16,opt,name=UpdateAt,proto3" json:"update_at" gorm:"update_at"` //@go_tags(`gorm:"update_at" json:"update_at"`) 更新时间
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -81,13 +75,6 @@ func (x *DBStockIdentity) GetId() string {
 	return ""
 }
 
-func (x *DBStockIdentity) GetSymbol() string {
-	if x != nil {
-		return x.Symbol
-	}
-	return ""
-}
-
 func (x *DBStockIdentity) GetMarket() string {
 	if x != nil {
 		return x.Market
@@ -112,13 +99,6 @@ func (x *DBStockIdentity) GetName() string {
 func (x *DBStockIdentity) GetFullName() string {
 	if x != nil {
 		return x.FullName
-	}
-	return ""
-}
-
-func (x *DBStockIdentity) GetISIN() string {
-	if x != nil {
-		return x.ISIN
 	}
 	return ""
 }
@@ -158,198 +138,13 @@ func (x *DBStockIdentity) GetListDate() string {
 	return ""
 }
 
-func (x *DBStockIdentity) GetStatus() string {
-	if x != nil {
-		return x.Status
-	}
-	return ""
-}
-
-func (x *DBStockIdentity) GetAliases() []string {
-	if x != nil {
-		return x.Aliases
-	}
-	return nil
-}
-
-func (x *DBStockIdentity) GetCreateAt() string {
-	if x != nil {
-		return x.CreateAt
-	}
-	return ""
-}
-
-func (x *DBStockIdentity) GetUpdateAt() string {
-	if x != nil {
-		return x.UpdateAt
-	}
-	return ""
-}
-
-// 日/周/月K线（行情）
-type DBStockBar struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=Id,proto3" json:"id" gorm:"id;primaryKey;autoIncrement"`                  //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
-	Symbol        string                 `protobuf:"bytes,2,opt,name=Symbol,proto3" json:"symbol" gorm:"symbol;uniqueIndex:uk_symbol_tf_ts"`          //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_tf_ts" json:"symbol"`) 股票代码
-	Market        string                 `protobuf:"bytes,3,opt,name=Market,proto3" json:"market" gorm:"market;uniqueIndex:uk_symbol_tf_ts"`          //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_tf_ts" json:"market"`) 市场标识
-	Timeframe     string                 `protobuf:"bytes,4,opt,name=Timeframe,proto3" json:"timeframe" gorm:"timeframe;uniqueIndex:uk_symbol_tf_ts"`    //@go_tags(`gorm:"timeframe;uniqueIndex:uk_symbol_tf_ts" json:"timeframe"`) 周期(1d/1w/1mo)
-	Ts            string                 `protobuf:"bytes,5,opt,name=Ts,proto3" json:"ts" gorm:"ts;uniqueIndex:uk_symbol_tf_ts"`                  //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_tf_ts" json:"ts"`) 时间戳(RFC3339)
-	Open          float64                `protobuf:"fixed64,6,opt,name=Open,proto3" json:"open" gorm:"open"`            //@go_tags(`gorm:"open" json:"open"`) 开盘价
-	High          float64                `protobuf:"fixed64,7,opt,name=High,proto3" json:"high" gorm:"high"`            //@go_tags(`gorm:"high" json:"high"`) 最高价
-	Low           float64                `protobuf:"fixed64,8,opt,name=Low,proto3" json:"low" gorm:"low"`              //@go_tags(`gorm:"low" json:"low"`) 最低价
-	Close         float64                `protobuf:"fixed64,9,opt,name=Close,proto3" json:"close" gorm:"close"`          //@go_tags(`gorm:"close" json:"close"`) 收盘价
-	Volume        int64                  `protobuf:"varint,10,opt,name=Volume,proto3" json:"volume" gorm:"volume"`        //@go_tags(`gorm:"volume" json:"volume"`) 成交量(股)
-	Turnover      float64                `protobuf:"fixed64,11,opt,name=Turnover,proto3" json:"turnover" gorm:"turnover"`   //@go_tags(`gorm:"turnover" json:"turnover"`) 成交额(货币)
-	AdjFactor     float64                `protobuf:"fixed64,12,opt,name=AdjFactor,proto3" json:"adj_factor" gorm:"adj_factor"` //@go_tags(`gorm:"adj_factor" json:"adj_factor"`) 复权因子
-	Source        string                 `protobuf:"bytes,13,opt,name=Source,proto3" json:"source" gorm:"source"`         //@go_tags(`gorm:"source" json:"source"`) 数据来源(akshare等)
-	CreateAt      string                 `protobuf:"bytes,14,opt,name=CreateAt,proto3" json:"create_at" gorm:"create_at"`     //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
-	UpdateAt      string                 `protobuf:"bytes,15,opt,name=UpdateAt,proto3" json:"update_at" gorm:"update_at"`     //@go_tags(`gorm:"update_at" json:"update_at"`) 更新时间
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DBStockBar) Reset() {
-	*x = DBStockBar{}
-	mi := &file_stock_stock_db_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DBStockBar) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DBStockBar) ProtoMessage() {}
-
-func (x *DBStockBar) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_stock_db_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DBStockBar.ProtoReflect.Descriptor instead.
-func (*DBStockBar) Descriptor() ([]byte, []int) {
-	return file_stock_stock_db_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *DBStockBar) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *DBStockBar) GetSymbol() string {
-	if x != nil {
-		return x.Symbol
-	}
-	return ""
-}
-
-func (x *DBStockBar) GetMarket() string {
-	if x != nil {
-		return x.Market
-	}
-	return ""
-}
-
-func (x *DBStockBar) GetTimeframe() string {
-	if x != nil {
-		return x.Timeframe
-	}
-	return ""
-}
-
-func (x *DBStockBar) GetTs() string {
-	if x != nil {
-		return x.Ts
-	}
-	return ""
-}
-
-func (x *DBStockBar) GetOpen() float64 {
-	if x != nil {
-		return x.Open
-	}
-	return 0
-}
-
-func (x *DBStockBar) GetHigh() float64 {
-	if x != nil {
-		return x.High
-	}
-	return 0
-}
-
-func (x *DBStockBar) GetLow() float64 {
-	if x != nil {
-		return x.Low
-	}
-	return 0
-}
-
-func (x *DBStockBar) GetClose() float64 {
-	if x != nil {
-		return x.Close
-	}
-	return 0
-}
-
-func (x *DBStockBar) GetVolume() int64 {
-	if x != nil {
-		return x.Volume
-	}
-	return 0
-}
-
-func (x *DBStockBar) GetTurnover() float64 {
-	if x != nil {
-		return x.Turnover
-	}
-	return 0
-}
-
-func (x *DBStockBar) GetAdjFactor() float64 {
-	if x != nil {
-		return x.AdjFactor
-	}
-	return 0
-}
-
-func (x *DBStockBar) GetSource() string {
-	if x != nil {
-		return x.Source
-	}
-	return ""
-}
-
-func (x *DBStockBar) GetCreateAt() string {
-	if x != nil {
-		return x.CreateAt
-	}
-	return ""
-}
-
-func (x *DBStockBar) GetUpdateAt() string {
-	if x != nil {
-		return x.UpdateAt
-	}
-	return ""
-}
-
 // 基本面快照（按期/按时间）
 type DBFundamentalSnapshot struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	Id               string                 `protobuf:"bytes,1,opt,name=Id,proto3" json:"id" gorm:"id;primaryKey;autoIncrement"`                                                                                        //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
-	Symbol           string                 `protobuf:"bytes,2,opt,name=Symbol,proto3" json:"symbol" gorm:"symbol;uniqueIndex:uk_symbol_ts"`                                                                                //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_ts" json:"symbol"`) 股票代码
-	Market           string                 `protobuf:"bytes,3,opt,name=Market,proto3" json:"market" gorm:"market;uniqueIndex:uk_symbol_ts"`                                                                                //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_ts" json:"market"`) 市场标识
-	Ts               string                 `protobuf:"bytes,4,opt,name=Ts,proto3" json:"ts" gorm:"ts;uniqueIndex:uk_symbol_ts"`                                                                                        //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_ts" json:"ts"`) 时间戳(RFC3339)
+	Symbol           string                 `protobuf:"bytes,2,opt,name=Symbol,proto3" json:"symbol" gorm:"symbol;index"`                                                                                //@go_tags(`gorm:"symbol;index" json:"symbol"`) 股票代码
+	Market           string                 `protobuf:"bytes,3,opt,name=Market,proto3" json:"market" gorm:"market"`                                                                                //@go_tags(`gorm:"market" json:"market"`) 市场标识
+	Ts               string                 `protobuf:"bytes,4,opt,name=Ts,proto3" json:"ts" gorm:"ts"`                                                                                        //@go_tags(`gorm:"ts" json:"ts"`) 时间戳(RFC3339)
 	Period           string                 `protobuf:"bytes,5,opt,name=Period,proto3" json:"period" gorm:"period"`                                                                                //@go_tags(`gorm:"period" json:"period"`) 周期（如 FY/Q）
 	FiscalYear       string                 `protobuf:"bytes,6,opt,name=FiscalYear,proto3" json:"fiscal_year" gorm:"fiscal_year"`                                                                        //@go_tags(`gorm:"fiscal_year" json:"fiscal_year"`) 财年
 	FiscalQuarter    string                 `protobuf:"bytes,7,opt,name=FiscalQuarter,proto3" json:"fiscal_quarter" gorm:"fiscal_quarter"`                                                                  //@go_tags(`gorm:"fiscal_quarter" json:"fiscal_quarter"`) 财季
@@ -386,7 +181,7 @@ type DBFundamentalSnapshot struct {
 
 func (x *DBFundamentalSnapshot) Reset() {
 	*x = DBFundamentalSnapshot{}
-	mi := &file_stock_stock_db_proto_msgTypes[2]
+	mi := &file_stock_stock_db_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -398,7 +193,7 @@ func (x *DBFundamentalSnapshot) String() string {
 func (*DBFundamentalSnapshot) ProtoMessage() {}
 
 func (x *DBFundamentalSnapshot) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_stock_db_proto_msgTypes[2]
+	mi := &file_stock_stock_db_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -411,7 +206,7 @@ func (x *DBFundamentalSnapshot) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DBFundamentalSnapshot.ProtoReflect.Descriptor instead.
 func (*DBFundamentalSnapshot) Descriptor() ([]byte, []int) {
-	return file_stock_stock_db_proto_rawDescGZIP(), []int{2}
+	return file_stock_stock_db_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *DBFundamentalSnapshot) GetId() string {
@@ -652,6 +447,398 @@ func (x *DBFundamentalSnapshot) GetCreateAt() string {
 	return ""
 }
 
+// Index                int64   `json:"序号"`
+// Code                 string  `json:"代码"`
+// Name                 string  `json:"名称"`
+// LastPrice            float64 `json:"最新价"`
+// ChangePct            float64 `json:"涨跌幅"`
+// ChangeAmt            float64 `json:"涨跌额"`
+// Volume               float64 `json:"成交量"`
+// Amount               float64 `json:"成交额"`
+// Amplitude            float64 `json:"振幅"`
+// High                 float64 `json:"最高"`
+// Low                  float64 `json:"最低"`
+// Open                 float64 `json:"今开"`
+// PrevClose            float64 `json:"昨收"`
+// VolumeRatio          float64 `json:"量比"`
+// TurnoverRate         float64 `json:"换手率"`
+// PeDynamic            float64 `json:"市盈率-动态"`
+// PbRatio              float64 `json:"市净率"`
+// TotalMarketCap       float64 `json:"总市值"`
+// CirculatingMarketCap float64 `json:"流通市值"`
+// PriceSpeed           float64 `json:"涨速"`
+// FiveMinChange        float64 `json:"5分钟涨跌"`
+// SixtyDayChangePct    float64 `json:"60日涨跌幅"`
+// YtdChangePct         float64 `json:"年初至今涨跌幅"`
+type DBStockRealTimeItem struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Code                 string                 `protobuf:"bytes,1,opt,name=Code,proto3" json:"code" gorm:"code"`                                    //@go_tags(`gorm:"code" json:"code"`) 股票代码
+	Name                 string                 `protobuf:"bytes,2,opt,name=Name,proto3" json:"name" gorm:"name"`                                    //@go_tags(`gorm:"name" json:"name"`) 股票名称
+	LastPrice            float64                `protobuf:"fixed64,3,opt,name=LastPrice,proto3" json:"last_price" gorm:"last_price"`                        //@go_tags(`gorm:"last_price" json:"last_price"`) 最新价
+	ChangePct            float64                `protobuf:"fixed64,4,opt,name=ChangePct,proto3" json:"change_pct" gorm:"change_pct"`                        //@go_tags(`gorm:"change_pct" json:"change_pct"`) 涨跌幅
+	ChangeAmt            float64                `protobuf:"fixed64,5,opt,name=ChangeAmt,proto3" json:"change_amt" gorm:"change_amt"`                        //@go_tags(`gorm:"change_amt" json:"change_amt"`) 涨跌额
+	Volume               float64                `protobuf:"fixed64,6,opt,name=Volume,proto3" json:"volume" gorm:"volume"`                              //@go_tags(`gorm:"volume" json:"volume"`) 成交量
+	Amount               float64                `protobuf:"fixed64,7,opt,name=Amount,proto3" json:"amount" gorm:"amount"`                              //@go_tags(`gorm:"amount" json:"amount"`) 成交额
+	Amplitude            float64                `protobuf:"fixed64,8,opt,name=Amplitude,proto3" json:"amplitude" gorm:"amplitude"`                        //@go_tags(`gorm:"amplitude" json:"amplitude"`) 振幅
+	High                 float64                `protobuf:"fixed64,9,opt,name=High,proto3" json:"high" gorm:"high"`                                  //@go_tags(`gorm:"high" json:"high"`) 最高
+	Low                  float64                `protobuf:"fixed64,10,opt,name=Low,proto3" json:"low" gorm:"low"`                                   //@go_tags(`gorm:"low" json:"low"`) 最低
+	Open                 float64                `protobuf:"fixed64,11,opt,name=Open,proto3" json:"open" gorm:"open"`                                 //@go_tags(`gorm:"open" json:"open"`) 今开
+	PrevClose            float64                `protobuf:"fixed64,12,opt,name=PrevClose,proto3" json:"prev_close" gorm:"prev_close"`                       //@go_tags(`gorm:"prev_close" json:"prev_close"`) 昨收
+	VolumeRatio          float64                `protobuf:"fixed64,13,opt,name=VolumeRatio,proto3" json:"volume_ratio" gorm:"volume_ratio"`                   //@go_tags(`gorm:"volume_ratio" json:"volume_ratio"`) 量比
+	TurnoverRate         float64                `protobuf:"fixed64,14,opt,name=TurnoverRate,proto3" json:"turnover_rate" gorm:"turnover_rate"`                 //@go_tags(`gorm:"turnover_rate" json:"turnover_rate"`) 换手率
+	PeDynamic            float64                `protobuf:"fixed64,15,opt,name=PeDynamic,proto3" json:"pe_dynamic" gorm:"pe_dynamic"`                       //@go_tags(`gorm:"pe_dynamic" json:"pe_dynamic"`) 市盈率-动态
+	PbRatio              float64                `protobuf:"fixed64,16,opt,name=PbRatio,proto3" json:"pb_ratio" gorm:"pb_ratio"`                           //@go_tags(`gorm:"pb_ratio" json:"pb_ratio"`) 市净率
+	TotalMarketCap       float64                `protobuf:"fixed64,17,opt,name=TotalMarketCap,proto3" json:"total_market_cap" gorm:"total_market_cap"`             //@go_tags(`gorm:"total_market_cap" json:"total_market_cap"`) 总市值
+	CirculatingMarketCap float64                `protobuf:"fixed64,18,opt,name=CirculatingMarketCap,proto3" json:"circulating_market_cap" gorm:"circulating_market_cap"` //@go_tags(`gorm:"circulating_market_cap" json:"circulating_market_cap"`) 流通市值
+	PriceSpeed           float64                `protobuf:"fixed64,19,opt,name=PriceSpeed,proto3" json:"price_speed" gorm:"price_speed"`                     //@go_tags(`gorm:"price_speed" json:"price_speed"`) 涨速
+	FiveMinChange        float64                `protobuf:"fixed64,20,opt,name=FiveMinChange,proto3" json:"five_min_change" gorm:"five_min_change"`               //@go_tags(`gorm:"five_min_change" json:"five_min_change"`) 5分钟涨跌
+	SixtyDayChangePct    float64                `protobuf:"fixed64,21,opt,name=SixtyDayChangePct,proto3" json:"sixty_day_change_pct" gorm:"sixty_day_change_pct"`       //@go_tags(`gorm:"sixty_day_change_pct" json:"sixty_day_change_pct"`) 60日涨跌幅
+	YtdChangePct         float64                `protobuf:"fixed64,22,opt,name=YtdChangePct,proto3" json:"ytd_change_pct" gorm:"ytd_change_pct"`                 //@go_tags(`gorm:"ytd_change_pct" json:"ytd_change_pct"`) 年初至今涨跌幅
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *DBStockRealTimeItem) Reset() {
+	*x = DBStockRealTimeItem{}
+	mi := &file_stock_stock_db_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DBStockRealTimeItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DBStockRealTimeItem) ProtoMessage() {}
+
+func (x *DBStockRealTimeItem) ProtoReflect() protoreflect.Message {
+	mi := &file_stock_stock_db_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DBStockRealTimeItem.ProtoReflect.Descriptor instead.
+func (*DBStockRealTimeItem) Descriptor() ([]byte, []int) {
+	return file_stock_stock_db_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *DBStockRealTimeItem) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *DBStockRealTimeItem) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *DBStockRealTimeItem) GetLastPrice() float64 {
+	if x != nil {
+		return x.LastPrice
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetChangePct() float64 {
+	if x != nil {
+		return x.ChangePct
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetChangeAmt() float64 {
+	if x != nil {
+		return x.ChangeAmt
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetVolume() float64 {
+	if x != nil {
+		return x.Volume
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetAmount() float64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetAmplitude() float64 {
+	if x != nil {
+		return x.Amplitude
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetHigh() float64 {
+	if x != nil {
+		return x.High
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetLow() float64 {
+	if x != nil {
+		return x.Low
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetOpen() float64 {
+	if x != nil {
+		return x.Open
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetPrevClose() float64 {
+	if x != nil {
+		return x.PrevClose
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetVolumeRatio() float64 {
+	if x != nil {
+		return x.VolumeRatio
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetTurnoverRate() float64 {
+	if x != nil {
+		return x.TurnoverRate
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetPeDynamic() float64 {
+	if x != nil {
+		return x.PeDynamic
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetPbRatio() float64 {
+	if x != nil {
+		return x.PbRatio
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetTotalMarketCap() float64 {
+	if x != nil {
+		return x.TotalMarketCap
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetCirculatingMarketCap() float64 {
+	if x != nil {
+		return x.CirculatingMarketCap
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetPriceSpeed() float64 {
+	if x != nil {
+		return x.PriceSpeed
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetFiveMinChange() float64 {
+	if x != nil {
+		return x.FiveMinChange
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetSixtyDayChangePct() float64 {
+	if x != nil {
+		return x.SixtyDayChangePct
+	}
+	return 0
+}
+
+func (x *DBStockRealTimeItem) GetYtdChangePct() float64 {
+	if x != nil {
+		return x.YtdChangePct
+	}
+	return 0
+}
+
+// 日/周/月K线（行情）
+type DBStockBar struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=Id,proto3" json:"id" gorm:"id;primaryKey;autoIncrement"`                  //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
+	Symbol        string                 `protobuf:"bytes,2,opt,name=Symbol,proto3" json:"symbol" gorm:"symbol;uniqueIndex:uk_symbol_tf_ts"`          //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_tf_ts" json:"symbol"`) 股票代码
+	Market        string                 `protobuf:"bytes,3,opt,name=Market,proto3" json:"market" gorm:"market;uniqueIndex:uk_symbol_tf_ts"`          //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_tf_ts" json:"market"`) 市场标识
+	Timeframe     string                 `protobuf:"bytes,4,opt,name=Timeframe,proto3" json:"timeframe" gorm:"timeframe;uniqueIndex:uk_symbol_tf_ts"`    //@go_tags(`gorm:"timeframe;uniqueIndex:uk_symbol_tf_ts" json:"timeframe"`) 周期(1d/1w/1mo)
+	Ts            string                 `protobuf:"bytes,5,opt,name=Ts,proto3" json:"ts" gorm:"ts;uniqueIndex:uk_symbol_tf_ts"`                  //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_tf_ts" json:"ts"`) 时间戳(RFC3339)
+	Open          float64                `protobuf:"fixed64,6,opt,name=Open,proto3" json:"open" gorm:"open"`            //@go_tags(`gorm:"open" json:"open"`) 开盘价
+	High          float64                `protobuf:"fixed64,7,opt,name=High,proto3" json:"high" gorm:"high"`            //@go_tags(`gorm:"high" json:"high"`) 最高价
+	Low           float64                `protobuf:"fixed64,8,opt,name=Low,proto3" json:"low" gorm:"low"`              //@go_tags(`gorm:"low" json:"low"`) 最低价
+	Close         float64                `protobuf:"fixed64,9,opt,name=Close,proto3" json:"close" gorm:"close"`          //@go_tags(`gorm:"close" json:"close"`) 收盘价
+	Volume        int64                  `protobuf:"varint,10,opt,name=Volume,proto3" json:"volume" gorm:"volume"`        //@go_tags(`gorm:"volume" json:"volume"`) 成交量(股)
+	Turnover      float64                `protobuf:"fixed64,11,opt,name=Turnover,proto3" json:"turnover" gorm:"turnover"`   //@go_tags(`gorm:"turnover" json:"turnover"`) 成交额(货币)
+	AdjFactor     float64                `protobuf:"fixed64,12,opt,name=AdjFactor,proto3" json:"adj_factor" gorm:"adj_factor"` //@go_tags(`gorm:"adj_factor" json:"adj_factor"`) 复权因子
+	Source        string                 `protobuf:"bytes,13,opt,name=Source,proto3" json:"source" gorm:"source"`         //@go_tags(`gorm:"source" json:"source"`) 数据来源(akshare等)
+	CreateAt      string                 `protobuf:"bytes,14,opt,name=CreateAt,proto3" json:"create_at" gorm:"create_at"`     //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
+	UpdateAt      string                 `protobuf:"bytes,15,opt,name=UpdateAt,proto3" json:"update_at" gorm:"update_at"`     //@go_tags(`gorm:"update_at" json:"update_at"`) 更新时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DBStockBar) Reset() {
+	*x = DBStockBar{}
+	mi := &file_stock_stock_db_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DBStockBar) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DBStockBar) ProtoMessage() {}
+
+func (x *DBStockBar) ProtoReflect() protoreflect.Message {
+	mi := &file_stock_stock_db_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DBStockBar.ProtoReflect.Descriptor instead.
+func (*DBStockBar) Descriptor() ([]byte, []int) {
+	return file_stock_stock_db_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *DBStockBar) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *DBStockBar) GetSymbol() string {
+	if x != nil {
+		return x.Symbol
+	}
+	return ""
+}
+
+func (x *DBStockBar) GetMarket() string {
+	if x != nil {
+		return x.Market
+	}
+	return ""
+}
+
+func (x *DBStockBar) GetTimeframe() string {
+	if x != nil {
+		return x.Timeframe
+	}
+	return ""
+}
+
+func (x *DBStockBar) GetTs() string {
+	if x != nil {
+		return x.Ts
+	}
+	return ""
+}
+
+func (x *DBStockBar) GetOpen() float64 {
+	if x != nil {
+		return x.Open
+	}
+	return 0
+}
+
+func (x *DBStockBar) GetHigh() float64 {
+	if x != nil {
+		return x.High
+	}
+	return 0
+}
+
+func (x *DBStockBar) GetLow() float64 {
+	if x != nil {
+		return x.Low
+	}
+	return 0
+}
+
+func (x *DBStockBar) GetClose() float64 {
+	if x != nil {
+		return x.Close
+	}
+	return 0
+}
+
+func (x *DBStockBar) GetVolume() int64 {
+	if x != nil {
+		return x.Volume
+	}
+	return 0
+}
+
+func (x *DBStockBar) GetTurnover() float64 {
+	if x != nil {
+		return x.Turnover
+	}
+	return 0
+}
+
+func (x *DBStockBar) GetAdjFactor() float64 {
+	if x != nil {
+		return x.AdjFactor
+	}
+	return 0
+}
+
+func (x *DBStockBar) GetSource() string {
+	if x != nil {
+		return x.Source
+	}
+	return ""
+}
+
+func (x *DBStockBar) GetCreateAt() string {
+	if x != nil {
+		return x.CreateAt
+	}
+	return ""
+}
+
+func (x *DBStockBar) GetUpdateAt() string {
+	if x != nil {
+		return x.UpdateAt
+	}
+	return ""
+}
+
 // 股票新闻
 type DBStockNews struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -668,7 +855,7 @@ type DBStockNews struct {
 
 func (x *DBStockNews) Reset() {
 	*x = DBStockNews{}
-	mi := &file_stock_stock_db_proto_msgTypes[3]
+	mi := &file_stock_stock_db_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -680,7 +867,7 @@ func (x *DBStockNews) String() string {
 func (*DBStockNews) ProtoMessage() {}
 
 func (x *DBStockNews) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_stock_db_proto_msgTypes[3]
+	mi := &file_stock_stock_db_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -693,7 +880,7 @@ func (x *DBStockNews) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DBStockNews.ProtoReflect.Descriptor instead.
 func (*DBStockNews) Descriptor() ([]byte, []int) {
-	return file_stock_stock_db_proto_rawDescGZIP(), []int{3}
+	return file_stock_stock_db_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *DBStockNews) GetId() string {
@@ -760,7 +947,7 @@ type DBStockReport struct {
 
 func (x *DBStockReport) Reset() {
 	*x = DBStockReport{}
-	mi := &file_stock_stock_db_proto_msgTypes[4]
+	mi := &file_stock_stock_db_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -772,7 +959,7 @@ func (x *DBStockReport) String() string {
 func (*DBStockReport) ProtoMessage() {}
 
 func (x *DBStockReport) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_stock_db_proto_msgTypes[4]
+	mi := &file_stock_stock_db_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -785,7 +972,7 @@ func (x *DBStockReport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DBStockReport.ProtoReflect.Descriptor instead.
 func (*DBStockReport) Descriptor() ([]byte, []int) {
-	return file_stock_stock_db_proto_rawDescGZIP(), []int{4}
+	return file_stock_stock_db_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *DBStockReport) GetId() string {
@@ -834,43 +1021,19 @@ var File_stock_stock_db_proto protoreflect.FileDescriptor
 
 const file_stock_stock_db_proto_rawDesc = "" +
 	"\n" +
-	"\x14stock/stock_db.proto\"\x9b\x03\n" +
+	"\x14stock/stock_db.proto\"\x85\x02\n" +
 	"\x0fDBStockIdentity\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x16\n" +
-	"\x06Symbol\x18\x02 \x01(\tR\x06Symbol\x12\x16\n" +
-	"\x06Market\x18\x03 \x01(\tR\x06Market\x12\x1a\n" +
-	"\bExchange\x18\x04 \x01(\tR\bExchange\x12\x12\n" +
-	"\x04Name\x18\x05 \x01(\tR\x04Name\x12\x1a\n" +
-	"\bFullName\x18\x06 \x01(\tR\bFullName\x12\x12\n" +
-	"\x04ISIN\x18\a \x01(\tR\x04ISIN\x12\x1a\n" +
-	"\bIndustry\x18\b \x01(\tR\bIndustry\x12\x16\n" +
-	"\x06Sector\x18\t \x01(\tR\x06Sector\x12\x12\n" +
+	"\x06Market\x18\x02 \x01(\tR\x06Market\x12\x1a\n" +
+	"\bExchange\x18\x03 \x01(\tR\bExchange\x12\x12\n" +
+	"\x04Name\x18\x04 \x01(\tR\x04Name\x12\x1a\n" +
+	"\bFullName\x18\x05 \x01(\tR\bFullName\x12\x1a\n" +
+	"\bIndustry\x18\a \x01(\tR\bIndustry\x12\x16\n" +
+	"\x06Sector\x18\b \x01(\tR\x06Sector\x12\x12\n" +
 	"\x04Area\x18\n" +
 	" \x01(\tR\x04Area\x12\x1a\n" +
 	"\bCurrency\x18\v \x01(\tR\bCurrency\x12\x1a\n" +
-	"\bListDate\x18\f \x01(\tR\bListDate\x12\x16\n" +
-	"\x06Status\x18\r \x01(\tR\x06Status\x12\x18\n" +
-	"\aAliases\x18\x0e \x03(\tR\aAliases\x12\x1a\n" +
-	"\bCreateAt\x18\x0f \x01(\tR\bCreateAt\x12\x1a\n" +
-	"\bUpdateAt\x18\x10 \x01(\tR\bUpdateAt\"\xec\x02\n" +
-	"\n" +
-	"DBStockBar\x12\x0e\n" +
-	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x16\n" +
-	"\x06Symbol\x18\x02 \x01(\tR\x06Symbol\x12\x16\n" +
-	"\x06Market\x18\x03 \x01(\tR\x06Market\x12\x1c\n" +
-	"\tTimeframe\x18\x04 \x01(\tR\tTimeframe\x12\x0e\n" +
-	"\x02Ts\x18\x05 \x01(\tR\x02Ts\x12\x12\n" +
-	"\x04Open\x18\x06 \x01(\x01R\x04Open\x12\x12\n" +
-	"\x04High\x18\a \x01(\x01R\x04High\x12\x10\n" +
-	"\x03Low\x18\b \x01(\x01R\x03Low\x12\x14\n" +
-	"\x05Close\x18\t \x01(\x01R\x05Close\x12\x16\n" +
-	"\x06Volume\x18\n" +
-	" \x01(\x03R\x06Volume\x12\x1a\n" +
-	"\bTurnover\x18\v \x01(\x01R\bTurnover\x12\x1c\n" +
-	"\tAdjFactor\x18\f \x01(\x01R\tAdjFactor\x12\x16\n" +
-	"\x06Source\x18\r \x01(\tR\x06Source\x12\x1a\n" +
-	"\bCreateAt\x18\x0e \x01(\tR\bCreateAt\x12\x1a\n" +
-	"\bUpdateAt\x18\x0f \x01(\tR\bUpdateAt\"\xc6\b\n" +
+	"\bListDate\x18\f \x01(\tR\bListDate\"\xc6\b\n" +
 	"\x15DBFundamentalSnapshot\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x16\n" +
 	"\x06Symbol\x18\x02 \x01(\tR\x06Symbol\x12\x16\n" +
@@ -914,7 +1077,51 @@ const file_stock_stock_db_proto_rawDesc = "" +
 	"\bCreateAt\x18= \x01(\tR\bCreateAt\x1a:\n" +
 	"\fMetricsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x01R\x05value:\x028\x01\"\xa7\x01\n" +
+	"\x05value\x18\x02 \x01(\x01R\x05value:\x028\x01\"\xaf\x05\n" +
+	"\x13DBStockRealTimeItem\x12\x12\n" +
+	"\x04Code\x18\x01 \x01(\tR\x04Code\x12\x12\n" +
+	"\x04Name\x18\x02 \x01(\tR\x04Name\x12\x1c\n" +
+	"\tLastPrice\x18\x03 \x01(\x01R\tLastPrice\x12\x1c\n" +
+	"\tChangePct\x18\x04 \x01(\x01R\tChangePct\x12\x1c\n" +
+	"\tChangeAmt\x18\x05 \x01(\x01R\tChangeAmt\x12\x16\n" +
+	"\x06Volume\x18\x06 \x01(\x01R\x06Volume\x12\x16\n" +
+	"\x06Amount\x18\a \x01(\x01R\x06Amount\x12\x1c\n" +
+	"\tAmplitude\x18\b \x01(\x01R\tAmplitude\x12\x12\n" +
+	"\x04High\x18\t \x01(\x01R\x04High\x12\x10\n" +
+	"\x03Low\x18\n" +
+	" \x01(\x01R\x03Low\x12\x12\n" +
+	"\x04Open\x18\v \x01(\x01R\x04Open\x12\x1c\n" +
+	"\tPrevClose\x18\f \x01(\x01R\tPrevClose\x12 \n" +
+	"\vVolumeRatio\x18\r \x01(\x01R\vVolumeRatio\x12\"\n" +
+	"\fTurnoverRate\x18\x0e \x01(\x01R\fTurnoverRate\x12\x1c\n" +
+	"\tPeDynamic\x18\x0f \x01(\x01R\tPeDynamic\x12\x18\n" +
+	"\aPbRatio\x18\x10 \x01(\x01R\aPbRatio\x12&\n" +
+	"\x0eTotalMarketCap\x18\x11 \x01(\x01R\x0eTotalMarketCap\x122\n" +
+	"\x14CirculatingMarketCap\x18\x12 \x01(\x01R\x14CirculatingMarketCap\x12\x1e\n" +
+	"\n" +
+	"PriceSpeed\x18\x13 \x01(\x01R\n" +
+	"PriceSpeed\x12$\n" +
+	"\rFiveMinChange\x18\x14 \x01(\x01R\rFiveMinChange\x12,\n" +
+	"\x11SixtyDayChangePct\x18\x15 \x01(\x01R\x11SixtyDayChangePct\x12\"\n" +
+	"\fYtdChangePct\x18\x16 \x01(\x01R\fYtdChangePct\"\xec\x02\n" +
+	"\n" +
+	"DBStockBar\x12\x0e\n" +
+	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x16\n" +
+	"\x06Symbol\x18\x02 \x01(\tR\x06Symbol\x12\x16\n" +
+	"\x06Market\x18\x03 \x01(\tR\x06Market\x12\x1c\n" +
+	"\tTimeframe\x18\x04 \x01(\tR\tTimeframe\x12\x0e\n" +
+	"\x02Ts\x18\x05 \x01(\tR\x02Ts\x12\x12\n" +
+	"\x04Open\x18\x06 \x01(\x01R\x04Open\x12\x12\n" +
+	"\x04High\x18\a \x01(\x01R\x04High\x12\x10\n" +
+	"\x03Low\x18\b \x01(\x01R\x03Low\x12\x14\n" +
+	"\x05Close\x18\t \x01(\x01R\x05Close\x12\x16\n" +
+	"\x06Volume\x18\n" +
+	" \x01(\x03R\x06Volume\x12\x1a\n" +
+	"\bTurnover\x18\v \x01(\x01R\bTurnover\x12\x1c\n" +
+	"\tAdjFactor\x18\f \x01(\x01R\tAdjFactor\x12\x16\n" +
+	"\x06Source\x18\r \x01(\tR\x06Source\x12\x1a\n" +
+	"\bCreateAt\x18\x0e \x01(\tR\bCreateAt\x12\x1a\n" +
+	"\bUpdateAt\x18\x0f \x01(\tR\bUpdateAt\"\xa7\x01\n" +
 	"\vDBStockNews\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x16\n" +
 	"\x06Symbol\x18\x02 \x01(\tR\x06Symbol\x12\x16\n" +
@@ -943,17 +1150,18 @@ func file_stock_stock_db_proto_rawDescGZIP() []byte {
 	return file_stock_stock_db_proto_rawDescData
 }
 
-var file_stock_stock_db_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_stock_stock_db_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_stock_stock_db_proto_goTypes = []any{
 	(*DBStockIdentity)(nil),       // 0: DBStockIdentity
-	(*DBStockBar)(nil),            // 1: DBStockBar
-	(*DBFundamentalSnapshot)(nil), // 2: DBFundamentalSnapshot
-	(*DBStockNews)(nil),           // 3: DBStockNews
-	(*DBStockReport)(nil),         // 4: DBStockReport
-	nil,                           // 5: DBFundamentalSnapshot.MetricsEntry
+	(*DBFundamentalSnapshot)(nil), // 1: DBFundamentalSnapshot
+	(*DBStockRealTimeItem)(nil),   // 2: DBStockRealTimeItem
+	(*DBStockBar)(nil),            // 3: DBStockBar
+	(*DBStockNews)(nil),           // 4: DBStockNews
+	(*DBStockReport)(nil),         // 5: DBStockReport
+	nil,                           // 6: DBFundamentalSnapshot.MetricsEntry
 }
 var file_stock_stock_db_proto_depIdxs = []int32{
-	5, // 0: DBFundamentalSnapshot.Metrics:type_name -> DBFundamentalSnapshot.MetricsEntry
+	6, // 0: DBFundamentalSnapshot.Metrics:type_name -> DBFundamentalSnapshot.MetricsEntry
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -972,7 +1180,7 @@ func file_stock_stock_db_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_stock_stock_db_proto_rawDesc), len(file_stock_stock_db_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

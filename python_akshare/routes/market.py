@@ -82,15 +82,44 @@ def stock_szse_summary(
     summary="东方财富网-沪深京 A 股-实时行情",
     description=(
         "调用 AkShare `stock_zh_a_spot_em` 获取东方财富网沪深京 A 股的实时行情数据。\n"
-        "参数: 无。\n"
+        "参数: 可选 `symbol`，支持 6位代码或带市场前缀 `SZ`/`SH`；不传则返回全市场数据。\n"
         "返回: JSON 数组；字段以上游返回为准。"
     ),
 )
-def stock_zh_a_spot_em():
+def stock_zh_a_spot_em(symbol: str | None = Query(None, description="可选，6位代码或带市场前缀 SZ/SH")):
+    """
+    获取沪深京 A 股实时行情（东方财富）
+    
+    参数:
+    - symbol: 可选，支持 6位代码或带市场前缀 SZ/SH；不传则返回全市场
+   
+    返回值:
+    - JSON 数组：字段以上游返回为准
+    
+    异常:
+    - 抓取或处理异常时返回 {"error": str(e)}
+    """
     try:
         df = ak.stock_zh_a_spot_em()
-        recs = df_to_records(df)
-        return JSONResponse(content=recs)
+        s = (symbol or "").strip().upper()
+        if s:
+            # 规范化为 6 位代码
+            if len(s) >= 8 and s[:2] in ("SZ", "SH"):
+                s6 = s[2:8]
+            elif len(s) == 6:
+                s6 = s
+            else:
+                s6 = s
+            # 尝试按常见列名过滤（东财返回通常为 '代码'）
+            if "代码" in df.columns:
+                df = df[df["代码"] == s6]
+            elif "symbol" in df.columns:
+                df = df[df["symbol"] == s6]
+            elif "代码" not in df.columns and "symbol" not in df.columns:
+                # 若无常见列，保留原数据（最小化处理）
+                pass
+        safe = to_json_safe(df)
+        return Response(content=json.dumps(safe, ensure_ascii=False), media_type="application/json")
     except Exception as e:
         return JSONResponse(content={"error": str(e)})
 
