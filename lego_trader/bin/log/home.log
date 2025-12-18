@@ -1,10 +1,10 @@
-2025/12/12 22:56:17.777	INFO	sys log Init success !
-2025/12/12 22:56:17.777	INFO	sys event Init success !
-2025/12/12 22:56:17.789	INFO	init sys.db success!
-2025/12/12 22:56:17.789	INFO	init sys.sms success!
-2025/12/12 22:56:17.789	INFO	init sys.email success!
-2025/12/12 22:56:17.789	INFO	服务[home-d4u2q4c4kvnlisg5egd0] 初始化完成!
-2025/12/12 22:56:17.797	INFO	服务[home-d4u2q4c4kvnlisg5egd0:1.0.0.0] 启动完成!
-2025/12/12 22:56:17.816	DEBUG	启动模块【user】
-2025/12/12 23:00:49.370	ERROR	services/comp_gateroute.go:124	[Handle Api]	t:1	m:user.sgin	uid:	req:{"stype":0,"account":"","password":"","mail":"liwei","phone":"","ttoken":"","vcode":"li13451234","name":"","avatar":"","language":""}	reply:ServicePath:"home/home-d4u2q4c4kvnlisg5egd0" ErrorData:{Code:DBError Message:"redis: nil"}
-2025/12/12 23:12:31.928	DEBUG	[Handle Api]	t:11	m:user.sgin	uid:	req:{"stype":6,"account":"liwei","password":"li13451234","mail":"","phone":"","ttoken":"","vcode":"","name":"","avatar":"","language":""}	reply:ServicePath:"home/home-d4u2q4c4kvnlisg5egd0" Reply:{ServicePath:"home/home-d4u2q4c4kvnlisg5egd0" data:{[type.googleapis.com/UserSginResp]:{token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsZWdvX3RyYWRlciIsInN1YiI6IlNnaW4iLCJuYmYiOjE3NjU1NTIzNTEsImlhdCI6MTc2NTU1MjM1MSwianRpIjoiMTk5OTQzOTAwMDY1NzM2Mjk0NCJ9.iIzkHOetFLC8j5G091JQ3gaZo15L6h2iq4-zLbkz8h8" user:{uid:"1999439000657362944" name:"guest_9351" account:"liwei" password:"li13451234" createtime:1765538380 lastsgintime:1765552351}}}}
+2025/12/18 23:41:48.399	INFO	sys log Init success !
+2025/12/18 23:41:48.425	INFO	sys event Init success !
+2025/12/18 23:41:48.454	INFO	init sys.db success!
+2025/12/18 23:41:48.455	INFO	init sys.sms success!
+2025/12/18 23:41:48.455	INFO	init sys.email success!
+2025/12/18 23:41:48.455	INFO	服务[home-d5221f7tsqgji25k60u0] 初始化完成!
+2025/12/18 23:41:48.472	INFO	服务[home-d5221f7tsqgji25k60u0:1.0.0.0] 启动完成!
+2025/12/18 23:41:48.472	WARN	注册模块【news】 没有对应的配置信息
+2025/12/18 23:41:49.968	DEBUG	启动模块【user】
+2025/12/18 23:41:49.968	DEBUG	启动模块【news】

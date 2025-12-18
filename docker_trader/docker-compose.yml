@@ -1,9 +1,11 @@
+version: '3.8'
+
 services:
   python_akshare:
     build:
       context: ../python_akshare
       args:
-        PY_BASE_IMAGE: docker.m.daocloud.io/library/python:3.10-slim
+        PY_BASE_IMAGE: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/python:3.10-slim
     container_name: python_akshare
     ports:
       - "8080:8080"
@@ -11,3 +13,58 @@ services:
       - TZ=Asia/Shanghai
       - PYTHONUNBUFFERED=1
     restart: unless-stopped
+    networks:
+      - trader_net
+
+  mysql:
+    image: mysql:8.0
+    container_name: trader_mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=li13451234
+      - MYSQL_DATABASE=trader
+      - TZ=Asia/Shanghai
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - trader_net
+
+  redis:
+    image: redis:7.0
+    container_name: trader_redis
+    command: redis-server --requirepass li13451234
+    ports:
+      - "6379:6379"
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - trader_net
+
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.11
+    container_name: trader_etcd
+    environment:
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+    ports:
+      - "12379:2379"
+    volumes:
+      - etcd_data:/bitnami/etcd-data
+    restart: unless-stopped
+    networks:
+      - trader_net
+
+networks:
+  trader_net:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  redis_data:
+  etcd_data:

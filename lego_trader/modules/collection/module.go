@@ -3,8 +3,12 @@ package collection
 import (
 	"lego_trader/comm"
 	"lego_trader/lego/core"
-	"lego_trader/lego/core/cbase"
+	"lego_trader/modules"
 )
+
+func NewModule() *Collection {
+	return &Collection{}
+}
 
 /*
 收藏模块
@@ -12,7 +16,7 @@ import (
 提供集合数据 股票, 基金, 指数等
 */
 type Collection struct {
-	cbase.ModuleBase
+	modules.ModuleBase
 	model   *modelComp
 	akshare *stockAkshareComp
 	timer   *timerComp
@@ -21,6 +25,11 @@ type Collection struct {
 func (this *Collection) GetType() core.M_Modules {
 	return comm.ModuleCollection
 }
+
+func (this *Collection) NewOptions() (options core.IModuleOptions) {
+	return new(Options)
+}
+
 func (this *Collection) Init(service core.IService, module core.IModule, options core.IModuleOptions) (err error) {
 	this.ModuleBase.Init(service, module, options)
 	return

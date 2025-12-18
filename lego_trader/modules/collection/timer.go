@@ -29,12 +29,26 @@ func (this *timerComp) Start() (err error) {
 	cron.AddFunc("0 0 12 * * *", this.dailyNoonBreakTimer)
 	//开始定时器A股 每天下午3:00
 	cron.AddFunc("0 0 15 * * *", this.dailyAfternoonStartTimer)
+	go this.initCache()
+	return
+}
+
+// 初始化缓存
+func (this *timerComp) initCache() (err error) {
+	//初始化股票实时数据队列
+	this.module.model.clearnCache()
+	//初始化股票最新价格
+	err = this.module.akshare.getStockZhASpotEM()
+	if err != nil {
+		this.module.Errorf("init stock zh a spot em err: %s", err.Error())
+	}
 	return
 }
 
 // 每日开始定时器A股 每天早上9:30
 func (this *timerComp) dailyOpenMarketTimer() {
-
+	//查询一次实时股票价格
+	this.module.akshare.getStockZhASpotEM()
 	return
 }
 

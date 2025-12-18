@@ -39,8 +39,9 @@ const (
 
 // Redis 键定义
 const (
-	Redis_MarketSpot = "marketspot" //Redis 市场指数实时数据键
-	Redis_MarketNews = "marketnews" //Redis 市场要闻列表键(List)
+	Redis_MarketSpot     = "marketspot"       //Redis 市场指数实时数据键
+	Redis_MarketNews     = "marketnews"       //Redis 市场要闻列表键(List)
+	Redis_StockSpotQueue = "stock_spot_queue" //Redis 股票实时数据队列键前缀(List)
 )
 
 // 对象池定义

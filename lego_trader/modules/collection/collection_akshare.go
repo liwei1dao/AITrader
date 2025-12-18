@@ -121,16 +121,16 @@ func (this *stockAkshareComp) getStockFundamentalSnapshot(symbol string) (snapsh
 func (this *stockAkshareComp) getStockZhASpotEM() (err error) {
 	var (
 		records []akshare.StockZhASpotEMRecord
-		items   map[string]*pb.DBStockRealTimeItem
+		items   []*pb.DBStockRealTimeItem
 	)
 	records, err = akshare.GetStockZhASpotEM()
 	if err != nil {
 		return
 	}
 
-	items = make(map[string]*pb.DBStockRealTimeItem)
+	items = make([]*pb.DBStockRealTimeItem, 0, len(records))
 	for _, v := range records {
-		items[v.Code] = &pb.DBStockRealTimeItem{
+		items = append(items, &pb.DBStockRealTimeItem{
 			Code:                 v.Code,
 			Name:                 v.Name,
 			LastPrice:            v.LastPrice,
@@ -153,7 +153,10 @@ func (this *stockAkshareComp) getStockZhASpotEM() (err error) {
 			FiveMinChange:        v.FiveMinChange,
 			SixtyDayChangePct:    v.SixtyDayChangePct,
 			YtdChangePct:         v.YtdChangePct,
-		}
+		})
+	}
+	if len(items) > 0 {
+		err = this.module.model.updateDayilSpot(items)
 	}
 	return
 }
