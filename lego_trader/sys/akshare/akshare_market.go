@@ -181,7 +181,7 @@ func (a *AkShare) GetStockZhIndexSpot() (records []StockZhASpotEMRecord, err err
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(string(body))
+	// fmt.Println(string(body))
 	if err := json.Unmarshal(body, &records); err != nil {
 		var obj map[string]interface{}
 		if err2 := json.Unmarshal(body, &obj); err2 == nil {

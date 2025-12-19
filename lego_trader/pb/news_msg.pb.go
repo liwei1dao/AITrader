@@ -7,11 +7,10 @@
 package pb
 
 import (
-	reflect "reflect"
-	sync "sync"
-
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	reflect "reflect"
+	sync "sync"
 )
 
 const (
@@ -23,17 +22,18 @@ const (
 
 // 获取市场新闻请求
 type NewsGetRealTimeGlobalNewsReq struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
+	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
 func (x *NewsGetRealTimeGlobalNewsReq) Reset() {
 	*x = NewsGetRealTimeGlobalNewsReq{}
-	mi := &file_news_news_msg_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
+	if protoimpl.UnsafeEnabled {
+		mi := &file_news_news_msg_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
 func (x *NewsGetRealTimeGlobalNewsReq) String() string {
@@ -60,20 +60,20 @@ func (*NewsGetRealTimeGlobalNewsReq) Descriptor() ([]byte, []int) {
 }
 
 type NewsGetRealTimeGlobalNewsResp struct {
-	state         protoimpl.MessageState  `protogen:"open.v1"`
-	News          []*DBRealTimeGlobalNews `protobuf:"bytes,1,rep,name=news,proto3" json:"news,omitempty"`
-	unknownFields protoimpl.UnknownFields
+	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	News []*DBMarketNews `protobuf:"bytes,1,rep,name=news,proto3" json:"news,omitempty"`
+	News []*DBRealTimeGlobalNews `protobuf:"bytes,1,rep,name=news,proto3" json:"news,omitempty"`
 }
 
 func (x *NewsGetRealTimeGlobalNewsResp) Reset() {
 	*x = NewsGetRealTimeGlobalNewsResp{}
-	mi := &file_news_news_msg_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
+	if protoimpl.UnsafeEnabled {
+		mi := &file_news_news_msg_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
 func (x *NewsGetRealTimeGlobalNewsResp) String() string {
@@ -108,12 +108,19 @@ func (x *NewsGetRealTimeGlobalNewsResp) GetNews() []*DBRealTimeGlobalNews {
 
 var File_news_news_msg_proto protoreflect.FileDescriptor
 
-const file_news_news_msg_proto_rawDesc = "" +
-	"\n" +
-	"\x13news/news_msg.proto\x1a\x12news/news_db.proto\"\x1e\n" +
-	"\x1cNewsGetRealTimeGlobalNewsReq\"J\n" +
-	"\x1dNewsGetRealTimeGlobalNewsResp\x12)\n" +
-	"\x04news\x18\x01 \x03(\v2\x15.DBRealTimeGlobalNewsR\x04newsB\x06Z\x04.;pbb\x06proto3"
+var file_news_news_msg_proto_rawDesc = []byte{
+	0x0a, 0x13, 0x6e, 0x65, 0x77, 0x73, 0x2f, 0x6e, 0x65, 0x77, 0x73, 0x5f, 0x6d, 0x73, 0x67, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x12, 0x6e, 0x65, 0x77, 0x73, 0x2f, 0x6e, 0x65, 0x77, 0x73,
+	0x5f, 0x64, 0x62, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x1e, 0x0a, 0x1c, 0x4e, 0x65, 0x77,
+	0x73, 0x47, 0x65, 0x74, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x47, 0x6c, 0x6f, 0x62,
+	0x61, 0x6c, 0x4e, 0x65, 0x77, 0x73, 0x52, 0x65, 0x71, 0x22, 0x4a, 0x0a, 0x1d, 0x4e, 0x65, 0x77,
+	0x73, 0x47, 0x65, 0x74, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x47, 0x6c, 0x6f, 0x62,
+	0x61, 0x6c, 0x4e, 0x65, 0x77, 0x73, 0x52, 0x65, 0x73, 0x70, 0x12, 0x29, 0x0a, 0x04, 0x6e, 0x65,
+	0x77, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x44, 0x42, 0x52, 0x65, 0x61,
+	0x6c, 0x54, 0x69, 0x6d, 0x65, 0x47, 0x6c, 0x6f, 0x62, 0x61, 0x6c, 0x4e, 0x65, 0x77, 0x73, 0x52,
+	0x04, 0x6e, 0x65, 0x77, 0x73, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x3b, 0x70, 0x62, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
+}
 
 var (
 	file_news_news_msg_proto_rawDescOnce sync.Once
@@ -128,7 +135,7 @@ func file_news_news_msg_proto_rawDescGZIP() []byte {
 }
 
 var file_news_news_msg_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_news_news_msg_proto_goTypes = []any{
+var file_news_news_msg_proto_goTypes = []interface{}{
 	(*NewsGetRealTimeGlobalNewsReq)(nil),  // 0: NewsGetRealTimeGlobalNewsReq
 	(*NewsGetRealTimeGlobalNewsResp)(nil), // 1: NewsGetRealTimeGlobalNewsResp
 	(*DBRealTimeGlobalNews)(nil),          // 2: DBRealTimeGlobalNews
@@ -150,7 +157,7 @@ func file_news_news_msg_proto_init() {
 	file_news_news_db_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_news_news_msg_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*NewsMarketNewsReq); i {
+			switch v := v.(*NewsGetRealTimeGlobalNewsReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -162,7 +169,7 @@ func file_news_news_msg_proto_init() {
 			}
 		}
 		file_news_news_msg_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*NewsMarketNewsResp); i {
+			switch v := v.(*NewsGetRealTimeGlobalNewsResp); i {
 			case 0:
 				return &v.state
 			case 1:

@@ -21,7 +21,7 @@ services:
     container_name: trader_mysql
     command: --default-authentication-plugin=mysql_native_password
     ports:
-      - "13306:3306"
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=li13451234
       - MYSQL_DATABASE=trader
@@ -37,7 +37,7 @@ services:
     container_name: trader_redis
     command: redis-server --requirepass li13451234
     ports:
-      - "16379:6379"
+      - "6379:6379"
     environment:
       - TZ=Asia/Shanghai
     volumes:
@@ -53,7 +53,7 @@ services:
       - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
       - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
     ports:
-      - "12380:2379"
+      - "12379:2379"
     volumes:
       - etcd_data:/bitnami/etcd-data
     restart: unless-stopped

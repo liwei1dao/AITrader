@@ -56,6 +56,8 @@ func (this *stockAkshareComp) getRealTimeNews() (err error) {
 		if err = this.module.model.updateRealTimeNews("ths", items); err != nil {
 			return
 		}
+	} else {
+		this.module.Errorf("getRealTimeNews: no data")
 	}
 	return
 }
@@ -109,6 +111,8 @@ func (this *stockAkshareComp) getMarketRealTimeIndexs() (err error) {
 		if err = this.module.model.updateRealTimeIndexs(items); err != nil {
 			return
 		}
+	} else {
+		this.module.Errorf("getMarketRealTimeIndexs: no data")
 	}
 	return
 }
@@ -209,6 +213,8 @@ func (this *stockAkshareComp) getStockRealTimeSpot() (err error) {
 	}
 	if len(items) > 0 {
 		err = this.module.model.updateRealTimeStock(items)
+	} else {
+		this.module.Errorf("getStockRealTimeSpot: no data")
 	}
 	return
 }

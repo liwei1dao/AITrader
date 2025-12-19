@@ -7,11 +7,10 @@
 package pb
 
 import (
-	reflect "reflect"
-	sync "sync"
-
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	reflect "reflect"
+	sync "sync"
 )
 
 const (
@@ -21,19 +20,21 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 获取实时行情请求
+//
+//获取实时行情请求
 type MarketGetRealTimeIndexsReq struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
+	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
 func (x *MarketGetRealTimeIndexsReq) Reset() {
 	*x = MarketGetRealTimeIndexsReq{}
-	mi := &file_market_market_msg_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
+	if protoimpl.UnsafeEnabled {
+		mi := &file_market_market_msg_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
 func (x *MarketGetRealTimeIndexsReq) String() string {
@@ -59,22 +60,23 @@ func (*MarketGetRealTimeIndexsReq) Descriptor() ([]byte, []int) {
 	return file_market_market_msg_proto_rawDescGZIP(), []int{0}
 }
 
-// 获取实时行情响应
+//
+//获取实时行情响应
 type MarketGetRealTimeIndexsResp struct {
-	state         protoimpl.MessageState       `protogen:"open.v1"`
-	Items         []*DBMarketIndexRealTimeItem `protobuf:"bytes,1,rep,name=Items,proto3" json:"items"` //@go_tags(`json:"items"`)
-	unknownFields protoimpl.UnknownFields
+	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Items []*DBMarketSpotItem `protobuf:"bytes,1,rep,name=Items,proto3" json:"items"`
+	Items []*DBMarketIndexRealTimeItem `protobuf:"bytes,1,rep,name=Items,proto3" json:"items"`
 }
 
 func (x *MarketGetRealTimeIndexsResp) Reset() {
 	*x = MarketGetRealTimeIndexsResp{}
-	mi := &file_market_market_msg_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
+	if protoimpl.UnsafeEnabled {
+		mi := &file_market_market_msg_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
 func (x *MarketGetRealTimeIndexsResp) String() string {
@@ -109,12 +111,19 @@ func (x *MarketGetRealTimeIndexsResp) GetItems() []*DBMarketIndexRealTimeItem {
 
 var File_market_market_msg_proto protoreflect.FileDescriptor
 
-const file_market_market_msg_proto_rawDesc = "" +
-	"\n" +
-	"\x17market/market_msg.proto\x1a\x16market/market_db.proto\"\x1c\n" +
-	"\x1aMarketGetRealTimeIndexsReq\"O\n" +
-	"\x1bMarketGetRealTimeIndexsResp\x120\n" +
-	"\x05Items\x18\x01 \x03(\v2\x1a.DBMarketIndexRealTimeItemR\x05ItemsB\x06Z\x04.;pbb\x06proto3"
+var file_market_market_msg_proto_rawDesc = []byte{
+	0x0a, 0x17, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x2f, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x5f,
+	0x6d, 0x73, 0x67, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x16, 0x6d, 0x61, 0x72, 0x6b, 0x65,
+	0x74, 0x2f, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x5f, 0x64, 0x62, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x22, 0x1c, 0x0a, 0x1a, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x47, 0x65, 0x74, 0x52, 0x65,
+	0x61, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x73, 0x52, 0x65, 0x71, 0x22,
+	0x4f, 0x0a, 0x1b, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x47, 0x65, 0x74, 0x52, 0x65, 0x61, 0x6c,
+	0x54, 0x69, 0x6d, 0x65, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x73, 0x52, 0x65, 0x73, 0x70, 0x12, 0x30,
+	0x0a, 0x05, 0x49, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1a, 0x2e,
+	0x44, 0x42, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x52, 0x65, 0x61,
+	0x6c, 0x54, 0x69, 0x6d, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x05, 0x49, 0x74, 0x65, 0x6d, 0x73,
+	0x42, 0x06, 0x5a, 0x04, 0x2e, 0x3b, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+}
 
 var (
 	file_market_market_msg_proto_rawDescOnce sync.Once
@@ -129,7 +138,7 @@ func file_market_market_msg_proto_rawDescGZIP() []byte {
 }
 
 var file_market_market_msg_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_market_market_msg_proto_goTypes = []any{
+var file_market_market_msg_proto_goTypes = []interface{}{
 	(*MarketGetRealTimeIndexsReq)(nil),  // 0: MarketGetRealTimeIndexsReq
 	(*MarketGetRealTimeIndexsResp)(nil), // 1: MarketGetRealTimeIndexsResp
 	(*DBMarketIndexRealTimeItem)(nil),   // 2: DBMarketIndexRealTimeItem
@@ -151,7 +160,7 @@ func file_market_market_msg_proto_init() {
 	file_market_market_db_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_market_market_msg_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MarketGetSpotsReq); i {
+			switch v := v.(*MarketGetRealTimeIndexsReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -163,7 +172,7 @@ func file_market_market_msg_proto_init() {
 			}
 		}
 		file_market_market_msg_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MarketGetSpotsResp); i {
+			switch v := v.(*MarketGetRealTimeIndexsResp); i {
 			case 0:
 				return &v.state
 			case 1:

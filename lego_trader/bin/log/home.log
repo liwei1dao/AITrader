@@ -1,10 +1,16 @@
-2025/12/18 23:41:48.399	INFO	sys log Init success !
-2025/12/18 23:41:48.425	INFO	sys event Init success !
-2025/12/18 23:41:48.454	INFO	init sys.db success!
-2025/12/18 23:41:48.455	INFO	init sys.sms success!
-2025/12/18 23:41:48.455	INFO	init sys.email success!
-2025/12/18 23:41:48.455	INFO	服务[home-d5221f7tsqgji25k60u0] 初始化完成!
-2025/12/18 23:41:48.472	INFO	服务[home-d5221f7tsqgji25k60u0:1.0.0.0] 启动完成!
-2025/12/18 23:41:48.472	WARN	注册模块【news】 没有对应的配置信息
-2025/12/18 23:41:49.968	DEBUG	启动模块【user】
-2025/12/18 23:41:49.968	DEBUG	启动模块【news】
+2025/12/19 22:31:07.123	INFO	sys log Init success !
+2025/12/19 22:31:07.148	INFO	sys event Init success !
+2025/12/19 22:31:07.185	INFO	init sys.db success!
+2025/12/19 22:31:07.186	INFO	init sys.sms success!
+2025/12/19 22:31:07.186	INFO	init sys.email success!
+2025/12/19 22:31:07.186	INFO	服务[home-d52m3avtsqgipk4e9p8g] 初始化完成!
+2025/12/19 22:31:07.212	INFO	服务[home-d52m3avtsqgipk4e9p8g:1.0.0.0] 启动完成!
+2025/12/19 22:31:07.212	WARN	注册模块【news】 没有对应的配置信息
+2025/12/19 22:31:07.213	WARN	注册模块【market】 没有对应的配置信息
+2025/12/19 22:31:08.586	DEBUG	启动模块【user】
+2025/12/19 22:31:08.586	DEBUG	启动模块【news】
+2025/12/19 22:31:08.586	DEBUG	启动模块【market】
+2025/12/19 22:47:03.778	DEBUG	[Handle Api]	t:208	m:user.sgin	uid:	req:{"stype":6,"account":"liwei","password":"li13451234","mail":"","phone":"","ttoken":"","vcode":"","name":"","avatar":"","language":""}	reply:ServicePath:"home/home-d52m3avtsqgipk4e9p8g"  Reply:{ServicePath:"home/home-d52m3avtsqgipk4e9p8g"  data:{[type.googleapis.com/UserSginResp]:{token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsZWdvX3RyYWRlciIsInN1YiI6IlNnaW4iLCJuYmYiOjE3NjYxNTU2MjMsImlhdCI6MTc2NjE1NTYyMywianRpIjoiMjAwMjAyNzkwNzAzNTA3MDQ2NCJ9.s_eSaZuHjja7Yzncr45LmygtUkI1ffbPK3RRSFDpzYE"  user:{uid:"2002027907035070464"  name:"guest_9351"  account:"liwei"  password:"li13451234"  createtime:1766155623  lastsgintime:1766155623}}}}
+2025/12/19 22:47:04.310	DEBUG	[Handle Api]	t:3	m:user.getstocks	uid:	req:{}	reply:ServicePath:"home/home-d52m3avtsqgipk4e9p8g"  Reply:{MsgName:"user.getstocks"  ServicePath:"home/home-d52m3avtsqgipk4e9p8g"  data:{[type.googleapis.com/UserGetStocksResp]:{}}}
+2025/12/19 22:47:04.313	DEBUG	[Handle Api]	t:1	m:news.getrealtimeglobalnews	uid:	req:{}	reply:ServicePath:"home/home-d52m3avtsqgipk4e9p8g"  Reply:{MsgName:"news.get_realtimeglobalnews"  ServicePath:"home/home-d52m3avtsqgipk4e9p8g"  data:{[type.googleapis.com/NewsGetRealTimeGlobalNewsResp]:{}}}
+2025/12/19 22:55:11.373	DEBUG	[Handle Api]	t:56	m:user.addstock	uid:	req:{"stock":{"id":1,"uid":"","stockid":"688056","amount":100,"costprice":3323}}	reply:ServicePath:"home/home-d52m3avtsqgipk4e9p8g"  Reply:{MsgName:"user.addstock"  ServicePath:"home/home-d52m3avtsqgipk4e9p8g"  data:{[type.googleapis.com/UserAddStockResp]:{stock:{id:1  stockid:"688056"  amount:100  costprice:3323}}}}

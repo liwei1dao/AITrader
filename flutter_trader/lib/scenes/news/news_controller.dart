@@ -23,27 +23,36 @@ class NewsController extends GetxController {
   Future<void> fetch() async {
     if (loading.value) return;
     loading.value = true;
-    final req = nmsg.NewsMarketNewsReq();
-    final future = _socket.request(msgName: 'news.marketnews', payload: req);
-    future.then((resp) {
-      loading.value = false;
-      if (resp is nmsg.NewsMarketNewsResp) {
-        final list = resp.news.map((e) {
-          final t = _parseTime(e.pubTime);
-          final title = e.summary.isNotEmpty ? e.summary : (e.tag.isNotEmpty ? e.tag : '新闻');
-          final source = e.tag.isNotEmpty ? e.tag : '资讯';
-          return NewsItem(title, source, t);
-        }).toList();
-        items.assignAll(list);
-      }
-    }).catchError((err) {
-      loading.value = false;
-      if (err is gw.GatewayErrorNotifyPush) {
-        Get.snackbar('错误', err.hasError() ? err.error.message : '网关错误');
-      } else {
-        Get.snackbar('错误', err.toString());
-      }
-    });
+    final req = nmsg.NewsGetRealTimeGlobalNewsReq();
+    final future = _socket.request(
+      msgName: 'news.get_realtimeglobalnews',
+      payload: req,
+    );
+    future
+        .then((resp) {
+          loading.value = false;
+          if (resp is nmsg.NewsGetRealTimeGlobalNewsResp) {
+            final list =
+                resp.news.map((e) {
+                  final t = _parseTime(e.publishTime);
+                  final title =
+                      e.title.isNotEmpty
+                          ? e.title
+                          : (e.content.isNotEmpty ? e.content : '新闻');
+                  final source = '资讯';
+                  return NewsItem(title, source, t);
+                }).toList();
+            items.assignAll(list);
+          }
+        })
+        .catchError((err) {
+          loading.value = false;
+          if (err is gw.GatewayErrorNotifyPush) {
+            Get.snackbar('错误', err.hasError() ? err.error.message : '网关错误');
+          } else {
+            Get.snackbar('错误', err.toString());
+          }
+        });
   }
 
   /// 清空资讯列表

@@ -7,11 +7,10 @@
 package pb
 
 import (
-	reflect "reflect"
-	sync "sync"
-
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	reflect "reflect"
+	sync "sync"
 )
 
 const (
@@ -21,41 +20,45 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 市场实时指数数据
+//
+//市场实时指数数据
 type DBMarketIndexRealTimeItem struct {
-	state                protoimpl.MessageState `protogen:"open.v1"`
-	Index                int64                  `protobuf:"varint,1,opt,name=index,proto3" json:"index" gorm:"primaryKey"`                                                                                  //@go_tags(`gorm:"primaryKey" json:"index"`) 序号
-	Code                 string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code" gorm:"column:Code"`                                                                                    //@go_tags(`gorm:"column:Code" json:"code"`) 指数代码，如“000001”
-	Name                 string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name" gorm:"column:Name"`                                                                                    //@go_tags(`gorm:"column:Name" json:"name"`) 指数名称，如“上证指数”
-	LastPrice            float64                `protobuf:"fixed64,4,opt,name=last_price,json=lastPrice,proto3" json:"last_price" gorm:"column:lastprice"`                                                  //@go_tags(`gorm:"column:lastprice" json:"last_price"`) 最新价
-	ChangePct            float64                `protobuf:"fixed64,5,opt,name=change_pct,json=changePct,proto3" json:"change_pct" gorm:"column:change_pct"`                                                 //@go_tags(`gorm:"column:change_pct" json:"change_pct"`) 涨跌幅
-	ChangeAmt            float64                `protobuf:"fixed64,6,opt,name=change_amt,json=changeAmt,proto3" json:"change_amt" gorm:"column:change_amt"`                                                 //@go_tags(`gorm:"column:change_amt" json:"change_amt"`) 涨跌额
-	Volume               float64                `protobuf:"fixed64,7,opt,name=volume,proto3" json:"volume" gorm:"column:volume"`                                                                            //@go_tags(`gorm:"column:volume" json:"volume"`) 成交量
-	Amount               float64                `protobuf:"fixed64,8,opt,name=amount,proto3" json:"amount" gorm:"column:amount"`                                                                            //@go_tags(`gorm:"column:amount" json:"amount"`) 成交额
-	Amplitude            float64                `protobuf:"fixed64,9,opt,name=amplitude,proto3" json:"amplitude" gorm:"column:amplitude"`                                                                   //@go_tags(`gorm:"column:amplitude" json:"amplitude"`) 振幅
-	High                 float64                `protobuf:"fixed64,10,opt,name=high,proto3" json:"high" gorm:"column:high"`                                                                                 //@go_tags(`gorm:"column:high" json:"high"`) 最高
-	Low                  float64                `protobuf:"fixed64,11,opt,name=low,proto3" json:"low" gorm:"column:low"`                                                                                    //@go_tags(`gorm:"column:low" json:"low"`) 最低
-	Open                 float64                `protobuf:"fixed64,12,opt,name=open,proto3" json:"open" gorm:"column:open"`                                                                                 //@go_tags(`gorm:"column:open" json:"open"`) 今开
-	PrevClose            float64                `protobuf:"fixed64,13,opt,name=prev_close,json=prevClose,proto3" json:"prev_close" gorm:"column:prev_close"`                                                //@go_tags(`gorm:"column:prev_close" json:"prev_close"`) 昨收
-	VolumeRatio          float64                `protobuf:"fixed64,14,opt,name=volume_ratio,json=volumeRatio,proto3" json:"volume_ratio" gorm:"column:volume_ratio"`                                        //@go_tags(`gorm:"column:volume_ratio" json:"volume_ratio"`) 量比
-	TurnoverRate         float64                `protobuf:"fixed64,15,opt,name=turnover_rate,json=turnoverRate,proto3" json:"turnover_rate" gorm:"column:turnover_rate"`                                    //@go_tags(`gorm:"column:turnover_rate" json:"turnover_rate"`) 换手率
-	PeDynamic            float64                `protobuf:"fixed64,16,opt,name=pe_dynamic,json=peDynamic,proto3" json:"pe_dynamic" gorm:"column:pe_dynamic"`                                                //@go_tags(`gorm:"column:pe_dynamic" json:"pe_dynamic"`) 市盈率-动态
-	PbRatio              float64                `protobuf:"fixed64,17,opt,name=pb_ratio,json=pbRatio,proto3" json:"pb_ratio" gorm:"column:pb_ratio"`                                                        //@go_tags(`gorm:"column:pb_ratio" json:"pb_ratio"`) 市净率
-	TotalMarketCap       float64                `protobuf:"fixed64,18,opt,name=total_market_cap,json=totalMarketCap,proto3" json:"total_market_cap" gorm:"column:total_market_cap"`                         //@go_tags(`gorm:"column:total_market_cap" json:"total_market_cap"`) 总市值
-	CirculatingMarketCap float64                `protobuf:"fixed64,19,opt,name=circulating_market_cap,json=circulatingMarketCap,proto3" json:"circulating_market_cap" gorm:"column:circulating_market_cap"` //@go_tags(`gorm:"column:circulating_market_cap" json:"circulating_market_cap"`) 流通市值
-	PriceSpeed           float64                `protobuf:"fixed64,20,opt,name=price_speed,json=priceSpeed,proto3" json:"price_speed" gorm:"column:price_speed"`                                            //@go_tags(`gorm:"column:price_speed" json:"price_speed"`) 涨速
-	FiveMinChange        float64                `protobuf:"fixed64,21,opt,name=five_min_change,json=fiveMinChange,proto3" json:"five_min_change" gorm:"column:five_min_change"`                             //@go_tags(`gorm:"column:five_min_change" json:"five_min_change"`) 5分钟涨跌
-	SixtyDayChangePct    float64                `protobuf:"fixed64,22,opt,name=sixty_day_change_pct,json=sixtyDayChangePct,proto3" json:"sixty_day_change_pct" gorm:"column:sixty_day_change_pct"`          //@go_tags(`gorm:"column:sixty_day_change_pct" json:"sixty_day_change_pct"`) 60日涨跌幅
-	YtdChangePct         float64                `protobuf:"fixed64,23,opt,name=ytd_change_pct,json=ytdChangePct,proto3" json:"ytd_change_pct" gorm:"column:ytd_change_pct"`                                 //@go_tags(`gorm:"column:ytd_change_pct" json:"ytd_change_pct"`) 年初至今涨跌幅
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Index                int64   `protobuf:"varint,1,opt,name=index,proto3" json:"index" gorm:"primaryKey"`                                                                                  //序号
+	Code                 string  `protobuf:"bytes,2,opt,name=code,proto3" json:"code" gorm:"column:Code"`                                                                                    //指数代码，如“000001”
+	Name                 string  `protobuf:"bytes,3,opt,name=name,proto3" json:"name" gorm:"column:Name"`                                                                                    //指数名称，如“上证指数”
+	LastPrice            float64 `protobuf:"fixed64,4,opt,name=last_price,json=lastPrice,proto3" json:"last_price" gorm:"column:lastprice"`                                                  //最新价
+	ChangePct            float64 `protobuf:"fixed64,5,opt,name=change_pct,json=changePct,proto3" json:"change_pct" gorm:"column:change_pct"`                                                 //涨跌幅
+	ChangeAmt            float64 `protobuf:"fixed64,6,opt,name=change_amt,json=changeAmt,proto3" json:"change_amt" gorm:"column:change_amt"`                                                 //涨跌额
+	Volume               float64 `protobuf:"fixed64,7,opt,name=volume,proto3" json:"volume" gorm:"column:volume"`                                                                            //成交量
+	Amount               float64 `protobuf:"fixed64,8,opt,name=amount,proto3" json:"amount" gorm:"column:amount"`                                                                            //成交额
+	Amplitude            float64 `protobuf:"fixed64,9,opt,name=amplitude,proto3" json:"amplitude" gorm:"column:amplitude"`                                                                   //振幅
+	High                 float64 `protobuf:"fixed64,10,opt,name=high,proto3" json:"high" gorm:"column:high"`                                                                                 //最高
+	Low                  float64 `protobuf:"fixed64,11,opt,name=low,proto3" json:"low" gorm:"column:low"`                                                                                    //最低
+	Open                 float64 `protobuf:"fixed64,12,opt,name=open,proto3" json:"open" gorm:"column:open"`                                                                                 //今开
+	PrevClose            float64 `protobuf:"fixed64,13,opt,name=prev_close,json=prevClose,proto3" json:"prev_close" gorm:"column:prev_close"`                                                //昨收
+	VolumeRatio          float64 `protobuf:"fixed64,14,opt,name=volume_ratio,json=volumeRatio,proto3" json:"volume_ratio" gorm:"column:volume_ratio"`                                        //量比
+	TurnoverRate         float64 `protobuf:"fixed64,15,opt,name=turnover_rate,json=turnoverRate,proto3" json:"turnover_rate" gorm:"column:turnover_rate"`                                    //换手率
+	PeDynamic            float64 `protobuf:"fixed64,16,opt,name=pe_dynamic,json=peDynamic,proto3" json:"pe_dynamic" gorm:"column:pe_dynamic"`                                                //市盈率-动态
+	PbRatio              float64 `protobuf:"fixed64,17,opt,name=pb_ratio,json=pbRatio,proto3" json:"pb_ratio" gorm:"column:pb_ratio"`                                                        //市净率
+	TotalMarketCap       float64 `protobuf:"fixed64,18,opt,name=total_market_cap,json=totalMarketCap,proto3" json:"total_market_cap" gorm:"column:total_market_cap"`                         //总市值
+	CirculatingMarketCap float64 `protobuf:"fixed64,19,opt,name=circulating_market_cap,json=circulatingMarketCap,proto3" json:"circulating_market_cap" gorm:"column:circulating_market_cap"` //流通市值
+	PriceSpeed           float64 `protobuf:"fixed64,20,opt,name=price_speed,json=priceSpeed,proto3" json:"price_speed" gorm:"column:price_speed"`                                            //涨速
+	FiveMinChange        float64 `protobuf:"fixed64,21,opt,name=five_min_change,json=fiveMinChange,proto3" json:"five_min_change" gorm:"column:five_min_change"`                             //5分钟涨跌
+	SixtyDayChangePct    float64 `protobuf:"fixed64,22,opt,name=sixty_day_change_pct,json=sixtyDayChangePct,proto3" json:"sixty_day_change_pct" gorm:"column:sixty_day_change_pct"`          //60日涨跌幅
+	YtdChangePct         float64 `protobuf:"fixed64,23,opt,name=ytd_change_pct,json=ytdChangePct,proto3" json:"ytd_change_pct" gorm:"column:ytd_change_pct"`                                 //年初至今涨跌幅
 }
 
 func (x *DBMarketIndexRealTimeItem) Reset() {
 	*x = DBMarketIndexRealTimeItem{}
-	mi := &file_market_market_db_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
+	if protoimpl.UnsafeEnabled {
+		mi := &file_market_market_db_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
 func (x *DBMarketIndexRealTimeItem) String() string {
@@ -244,40 +247,57 @@ func (x *DBMarketIndexRealTimeItem) GetYtdChangePct() float64 {
 
 var File_market_market_db_proto protoreflect.FileDescriptor
 
-const file_market_market_db_proto_rawDesc = "" +
-	"\n" +
-	"\x16market/market_db.proto\"\xdf\x05\n" +
-	"\x19DBMarketIndexRealTimeItem\x12\x14\n" +
-	"\x05index\x18\x01 \x01(\x03R\x05index\x12\x12\n" +
-	"\x04code\x18\x02 \x01(\tR\x04code\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x12\x1d\n" +
-	"\n" +
-	"last_price\x18\x04 \x01(\x01R\tlastPrice\x12\x1d\n" +
-	"\n" +
-	"change_pct\x18\x05 \x01(\x01R\tchangePct\x12\x1d\n" +
-	"\n" +
-	"change_amt\x18\x06 \x01(\x01R\tchangeAmt\x12\x16\n" +
-	"\x06volume\x18\a \x01(\x01R\x06volume\x12\x16\n" +
-	"\x06amount\x18\b \x01(\x01R\x06amount\x12\x1c\n" +
-	"\tamplitude\x18\t \x01(\x01R\tamplitude\x12\x12\n" +
-	"\x04high\x18\n" +
-	" \x01(\x01R\x04high\x12\x10\n" +
-	"\x03low\x18\v \x01(\x01R\x03low\x12\x12\n" +
-	"\x04open\x18\f \x01(\x01R\x04open\x12\x1d\n" +
-	"\n" +
-	"prev_close\x18\r \x01(\x01R\tprevClose\x12!\n" +
-	"\fvolume_ratio\x18\x0e \x01(\x01R\vvolumeRatio\x12#\n" +
-	"\rturnover_rate\x18\x0f \x01(\x01R\fturnoverRate\x12\x1d\n" +
-	"\n" +
-	"pe_dynamic\x18\x10 \x01(\x01R\tpeDynamic\x12\x19\n" +
-	"\bpb_ratio\x18\x11 \x01(\x01R\apbRatio\x12(\n" +
-	"\x10total_market_cap\x18\x12 \x01(\x01R\x0etotalMarketCap\x124\n" +
-	"\x16circulating_market_cap\x18\x13 \x01(\x01R\x14circulatingMarketCap\x12\x1f\n" +
-	"\vprice_speed\x18\x14 \x01(\x01R\n" +
-	"priceSpeed\x12&\n" +
-	"\x0ffive_min_change\x18\x15 \x01(\x01R\rfiveMinChange\x12/\n" +
-	"\x14sixty_day_change_pct\x18\x16 \x01(\x01R\x11sixtyDayChangePct\x12$\n" +
-	"\x0eytd_change_pct\x18\x17 \x01(\x01R\fytdChangePctB\x06Z\x04.;pbb\x06proto3"
+var file_market_market_db_proto_rawDesc = []byte{
+	0x0a, 0x16, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x2f, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x5f,
+	0x64, 0x62, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xdf, 0x05, 0x0a, 0x19, 0x44, 0x42, 0x4d,
+	0x61, 0x72, 0x6b, 0x65, 0x74, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69,
+	0x6d, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x14, 0x0a, 0x05, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x12, 0x12, 0x0a, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x70, 0x72, 0x69,
+	0x63, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x01, 0x52, 0x09, 0x6c, 0x61, 0x73, 0x74, 0x50, 0x72,
+	0x69, 0x63, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x5f, 0x70, 0x63,
+	0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x01, 0x52, 0x09, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x50,
+	0x63, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x5f, 0x61, 0x6d, 0x74,
+	0x18, 0x06, 0x20, 0x01, 0x28, 0x01, 0x52, 0x09, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x41, 0x6d,
+	0x74, 0x12, 0x16, 0x0a, 0x06, 0x76, 0x6f, 0x6c, 0x75, 0x6d, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28,
+	0x01, 0x52, 0x06, 0x76, 0x6f, 0x6c, 0x75, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x6d, 0x6f,
+	0x75, 0x6e, 0x74, 0x18, 0x08, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e,
+	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x61, 0x6d, 0x70, 0x6c, 0x69, 0x74, 0x75, 0x64, 0x65, 0x18, 0x09,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x09, 0x61, 0x6d, 0x70, 0x6c, 0x69, 0x74, 0x75, 0x64, 0x65, 0x12,
+	0x12, 0x0a, 0x04, 0x68, 0x69, 0x67, 0x68, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x01, 0x52, 0x04, 0x68,
+	0x69, 0x67, 0x68, 0x12, 0x10, 0x0a, 0x03, 0x6c, 0x6f, 0x77, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x01,
+	0x52, 0x03, 0x6c, 0x6f, 0x77, 0x12, 0x12, 0x0a, 0x04, 0x6f, 0x70, 0x65, 0x6e, 0x18, 0x0c, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x04, 0x6f, 0x70, 0x65, 0x6e, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x72, 0x65,
+	0x76, 0x5f, 0x63, 0x6c, 0x6f, 0x73, 0x65, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x01, 0x52, 0x09, 0x70,
+	0x72, 0x65, 0x76, 0x43, 0x6c, 0x6f, 0x73, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x76, 0x6f, 0x6c, 0x75,
+	0x6d, 0x65, 0x5f, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0b,
+	0x76, 0x6f, 0x6c, 0x75, 0x6d, 0x65, 0x52, 0x61, 0x74, 0x69, 0x6f, 0x12, 0x23, 0x0a, 0x0d, 0x74,
+	0x75, 0x72, 0x6e, 0x6f, 0x76, 0x65, 0x72, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x0f, 0x20, 0x01,
+	0x28, 0x01, 0x52, 0x0c, 0x74, 0x75, 0x72, 0x6e, 0x6f, 0x76, 0x65, 0x72, 0x52, 0x61, 0x74, 0x65,
+	0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x65, 0x5f, 0x64, 0x79, 0x6e, 0x61, 0x6d, 0x69, 0x63, 0x18, 0x10,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x09, 0x70, 0x65, 0x44, 0x79, 0x6e, 0x61, 0x6d, 0x69, 0x63, 0x12,
+	0x19, 0x0a, 0x08, 0x70, 0x62, 0x5f, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x18, 0x11, 0x20, 0x01, 0x28,
+	0x01, 0x52, 0x07, 0x70, 0x62, 0x52, 0x61, 0x74, 0x69, 0x6f, 0x12, 0x28, 0x0a, 0x10, 0x74, 0x6f,
+	0x74, 0x61, 0x6c, 0x5f, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x5f, 0x63, 0x61, 0x70, 0x18, 0x12,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x0e, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x4d, 0x61, 0x72, 0x6b, 0x65,
+	0x74, 0x43, 0x61, 0x70, 0x12, 0x34, 0x0a, 0x16, 0x63, 0x69, 0x72, 0x63, 0x75, 0x6c, 0x61, 0x74,
+	0x69, 0x6e, 0x67, 0x5f, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x5f, 0x63, 0x61, 0x70, 0x18, 0x13,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x14, 0x63, 0x69, 0x72, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x69, 0x6e,
+	0x67, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x43, 0x61, 0x70, 0x12, 0x1f, 0x0a, 0x0b, 0x70, 0x72,
+	0x69, 0x63, 0x65, 0x5f, 0x73, 0x70, 0x65, 0x65, 0x64, 0x18, 0x14, 0x20, 0x01, 0x28, 0x01, 0x52,
+	0x0a, 0x70, 0x72, 0x69, 0x63, 0x65, 0x53, 0x70, 0x65, 0x65, 0x64, 0x12, 0x26, 0x0a, 0x0f, 0x66,
+	0x69, 0x76, 0x65, 0x5f, 0x6d, 0x69, 0x6e, 0x5f, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x18, 0x15,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x0d, 0x66, 0x69, 0x76, 0x65, 0x4d, 0x69, 0x6e, 0x43, 0x68, 0x61,
+	0x6e, 0x67, 0x65, 0x12, 0x2f, 0x0a, 0x14, 0x73, 0x69, 0x78, 0x74, 0x79, 0x5f, 0x64, 0x61, 0x79,
+	0x5f, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x5f, 0x70, 0x63, 0x74, 0x18, 0x16, 0x20, 0x01, 0x28,
+	0x01, 0x52, 0x11, 0x73, 0x69, 0x78, 0x74, 0x79, 0x44, 0x61, 0x79, 0x43, 0x68, 0x61, 0x6e, 0x67,
+	0x65, 0x50, 0x63, 0x74, 0x12, 0x24, 0x0a, 0x0e, 0x79, 0x74, 0x64, 0x5f, 0x63, 0x68, 0x61, 0x6e,
+	0x67, 0x65, 0x5f, 0x70, 0x63, 0x74, 0x18, 0x17, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0c, 0x79, 0x74,
+	0x64, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x50, 0x63, 0x74, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x3b,
+	0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+}
 
 var (
 	file_market_market_db_proto_rawDescOnce sync.Once
@@ -292,7 +312,7 @@ func file_market_market_db_proto_rawDescGZIP() []byte {
 }
 
 var file_market_market_db_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
-var file_market_market_db_proto_goTypes = []any{
+var file_market_market_db_proto_goTypes = []interface{}{
 	(*DBMarketIndexRealTimeItem)(nil), // 0: DBMarketIndexRealTimeItem
 }
 var file_market_market_db_proto_depIdxs = []int32{
@@ -310,7 +330,7 @@ func file_market_market_db_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_market_market_db_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DBMarketSpotItem); i {
+			switch v := v.(*DBMarketIndexRealTimeItem); i {
 			case 0:
 				return &v.state
 			case 1:

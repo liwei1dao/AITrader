@@ -24,6 +24,9 @@ type News struct {
 func (this *News) GetType() core.M_Modules {
 	return comm.ModuleNews
 }
+func (this *News) NewOptions() (options core.IModuleOptions) {
+	return new(Options)
+}
 func (this *News) Init(service core.IService, module core.IModule, options core.IModuleOptions) (err error) {
 	this.ModuleBase.Init(service, module, options)
 	return

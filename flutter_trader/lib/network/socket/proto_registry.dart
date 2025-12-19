@@ -53,6 +53,6 @@ void installDefaultProtoRegistry(SocketService service) {
   resolver.registerByMessage(upb.UserSginResp(), msgName: 'user.sgin');
   resolver.registerByMessage(upb.UserGetStocksResp(), msgName: 'user.getstocks');
   resolver.registerByMessage(upb.UserAddStockResp(), msgName: 'user.addstock');
-  resolver.registerByMessage(nmsg.NewsMarketNewsResp(), msgName: 'news.marketnews');
+  resolver.registerByMessage(nmsg.NewsGetRealTimeGlobalNewsResp(), msgName: 'news.get_realtimeglobalnews');
   service.setResolver(resolver);
 }

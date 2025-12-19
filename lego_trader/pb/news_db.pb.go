@@ -7,11 +7,10 @@
 package pb
 
 import (
-	reflect "reflect"
-	sync "sync"
-
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	reflect "reflect"
+	sync "sync"
 )
 
 const (
@@ -21,30 +20,25 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// / 市场新闻
+/// 市场新闻
 type DBRealTimeGlobalNews struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title" gorm:"title"`                                       //@go_tags(`gorm:"title" json:"title"`) 标题
-	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content" gorm:"content"`                                 //@go_tags(`gorm:"content" json:"content"`) 内容
-	PublishTime   string                 `protobuf:"bytes,3,opt,name=publish_time,json=publishTime,proto3" json:"publish_time" gorm:"publish_time"` //@go_tags(`gorm:"publish_time" json:"publish_time"`) 发布时间
-	Url           string                 `protobuf:"bytes,4,opt,name=url,proto3" json:"url" gorm:"url"`                                             //@go_tags(`gorm:"url" json:"url"`) 链接
-	unknownFields protoimpl.UnknownFields
+	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id           string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                         //@go_tags(`gorm:"id:50;primaryKey" json:"id"`
-	Tag          string `protobuf:"bytes,2,opt,name=tag,proto3" json:"tag,omitempty"`                                       //@go_tags(`json:"tag" comment:"标签/标题"`
-	Summary      string `protobuf:"bytes,3,opt,name=summary,proto3" json:"summary,omitempty"`                               //@go_tags(`json:"summary" comment:"摘要"`
-	IntervalTime string `protobuf:"bytes,4,opt,name=interval_time,json=intervalTime,proto3" json:"interval_time,omitempty"` //@go_tags(`json:"interval_time" comment:"时间区间/显示时间"`
-	PubTime      string `protobuf:"bytes,5,opt,name=pub_time,json=pubTime,proto3" json:"pub_time,omitempty"`                //@go_tags(`json:"pub_time" comment:"发布时间(精确)"`
-	Url          string `protobuf:"bytes,6,opt,name=url,proto3" json:"url,omitempty"`                                       //@go_tags(`json:"url" comment:"链接"`
+	Title       string `protobuf:"bytes,1,opt,name=title,proto3" json:"title" gorm:"title"`                                       //标题
+	Content     string `protobuf:"bytes,2,opt,name=content,proto3" json:"content" gorm:"content"`                                 //内容
+	PublishTime string `protobuf:"bytes,3,opt,name=publish_time,json=publishTime,proto3" json:"publish_time" gorm:"publish_time"` //发布时间
+	Url         string `protobuf:"bytes,4,opt,name=url,proto3" json:"url" gorm:"url"`                                             //链接
 }
 
 func (x *DBRealTimeGlobalNews) Reset() {
 	*x = DBRealTimeGlobalNews{}
-	mi := &file_news_news_db_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
+	if protoimpl.UnsafeEnabled {
+		mi := &file_news_news_db_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
 func (x *DBRealTimeGlobalNews) String() string {
@@ -100,14 +94,19 @@ func (x *DBRealTimeGlobalNews) GetUrl() string {
 
 var File_news_news_db_proto protoreflect.FileDescriptor
 
-const file_news_news_db_proto_rawDesc = "" +
-	"\n" +
-	"\x12news/news_db.proto\"{\n" +
-	"\x14DBRealTimeGlobalNews\x12\x14\n" +
-	"\x05title\x18\x01 \x01(\tR\x05title\x12\x18\n" +
-	"\acontent\x18\x02 \x01(\tR\acontent\x12!\n" +
-	"\fpublish_time\x18\x03 \x01(\tR\vpublishTime\x12\x10\n" +
-	"\x03url\x18\x04 \x01(\tR\x03urlB\x06Z\x04.;pbb\x06proto3"
+var file_news_news_db_proto_rawDesc = []byte{
+	0x0a, 0x12, 0x6e, 0x65, 0x77, 0x73, 0x2f, 0x6e, 0x65, 0x77, 0x73, 0x5f, 0x64, 0x62, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x22, 0x7b, 0x0a, 0x14, 0x44, 0x42, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69,
+	0x6d, 0x65, 0x47, 0x6c, 0x6f, 0x62, 0x61, 0x6c, 0x4e, 0x65, 0x77, 0x73, 0x12, 0x14, 0x0a, 0x05,
+	0x74, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x69, 0x74,
+	0x6c, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x12, 0x21, 0x0a, 0x0c,
+	0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0b, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x54, 0x69, 0x6d, 0x65, 0x12,
+	0x10, 0x0a, 0x03, 0x75, 0x72, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x75, 0x72,
+	0x6c, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x3b, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
+}
 
 var (
 	file_news_news_db_proto_rawDescOnce sync.Once
@@ -122,7 +121,7 @@ func file_news_news_db_proto_rawDescGZIP() []byte {
 }
 
 var file_news_news_db_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
-var file_news_news_db_proto_goTypes = []any{
+var file_news_news_db_proto_goTypes = []interface{}{
 	(*DBRealTimeGlobalNews)(nil), // 0: DBRealTimeGlobalNews
 }
 var file_news_news_db_proto_depIdxs = []int32{
@@ -140,7 +139,7 @@ func file_news_news_db_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_news_news_db_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DBMarketNews); i {
+			switch v := v.(*DBRealTimeGlobalNews); i {
 			case 0:
 				return &v.state
 			case 1:

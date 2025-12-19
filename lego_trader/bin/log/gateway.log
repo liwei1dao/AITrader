@@ -1,5 +1,14 @@
-2025/12/18 23:41:45.527	INFO	sys log Init success !
-2025/12/18 23:41:45.556	INFO	sys event Init success !
-2025/12/18 23:41:45.556	INFO	服务[gateway-d5221eftsqgkv86oufu0] 初始化完成!
-2025/12/18 23:41:45.575	INFO	服务[gateway-d5221eftsqgkv86oufu0:1.0.0.0] 启动完成!
-2025/12/18 23:41:45.577	DEBUG	启动模块【gateway】
+2025/12/19 22:21:17.355	INFO	sys log Init success !
+2025/12/19 22:21:17.401	INFO	sys event Init success !
+2025/12/19 22:21:17.401	INFO	服务[gateway-d52lunftsqgi8866nuig] 初始化完成!
+2025/12/19 22:21:17.449	INFO	服务[gateway-d52lunftsqgi8866nuig:1.0.0.0] 启动完成!
+2025/12/19 22:21:17.449	DEBUG	启动模块【gateway】
+2025/12/19 22:46:43.349	DEBUG	[module.gateway]	have new connect	SessionId:d52makvtsqgi8866nuj0
+2025/12/19 22:47:03.781	DEBUG	[module.gateway]	[UserResponse]	t:221	userId:	req:user.sgin:[type.googleapis.com/UserSginReq]:{stype:Account account:"liwei" password:"li13451234"}	reply:ServicePath:"home/home-d52m3avtsqgipk4e9p8g" Reply:{ServicePath:"home/home-d52m3avtsqgipk4e9p8g" data:{[type.googleapis.com/UserSginResp]:{token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsZWdvX3RyYWRlciIsInN1YiI6IlNnaW4iLCJuYmYiOjE3NjYxNTU2MjMsImlhdCI6MTc2NjE1NTYyMywianRpIjoiMjAwMjAyNzkwNzAzNTA3MDQ2NCJ9.s_eSaZuHjja7Yzncr45LmygtUkI1ffbPK3RRSFDpzYE" user:{uid:"2002027907035070464" name:"guest_9351" account:"liwei" password:"li13451234" createtime:1766155623 lastsgintime:1766155623}}}}
+2025/12/19 22:47:04.311	DEBUG	[module.gateway]	[UserResponse]	t:3	userId:	req:user.getstocks:[type.googleapis.com/UserGetStocksReq]:{}	reply:ServicePath:"home/home-d52m3avtsqgipk4e9p8g" Reply:{MsgName:"user.getstocks" ServicePath:"home/home-d52m3avtsqgipk4e9p8g" data:{[type.googleapis.com/UserGetStocksResp]:{}}}
+2025/12/19 22:47:04.320	DEBUG	[module.gateway]	[UserResponse]	t:7	userId:	req:news.getrealtimeglobalnews:[type.googleapis.com/NewsGetRealTimeGlobalNewsReq]:{}	reply:ServicePath:"home/home-d52m3avtsqgipk4e9p8g" Reply:{MsgName:"news.get_realtimeglobalnews" ServicePath:"home/home-d52m3avtsqgipk4e9p8g" data:{[type.googleapis.com/NewsGetRealTimeGlobalNewsResp]:{}}}
+2025/12/19 22:55:11.374	DEBUG	[module.gateway]	[UserResponse]	t:59	userId:	req:user.addstock:[type.googleapis.com/UserAddStockReq]:{stock:{stockid:"688056" amount:100 costprice:3323}}	reply:ServicePath:"home/home-d52m3avtsqgipk4e9p8g" Reply:{MsgName:"user.addstock" ServicePath:"home/home-d52m3avtsqgipk4e9p8g" data:{[type.googleapis.com/UserAddStockResp]:{stock:{id:1 stockid:"688056" amount:100 costprice:3323}}}}
+2025/12/19 22:56:01.270	ERROR	gateway/agent.go:71	[module.gateway]	agent:d52makvtsqgi8866nuj0 userId: ReadMessage err:websocket: close 1001 (going away)
+2025/12/19 22:56:01.271	DEBUG	[module.gateway]	agent:d52makvtsqgi8866nuj0 userId: readLoop end!
+2025/12/19 22:56:01.271	DEBUG	[module.gateway]	agent:d52makvtsqgi8866nuj0 userId: writeLoop end!
+2025/12/19 22:56:01.271	DEBUG	[module.gateway]	have new disconnect	SessionId:d52makvtsqgi8866nuj0
