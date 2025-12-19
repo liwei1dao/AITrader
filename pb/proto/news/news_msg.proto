@@ -4,9 +4,9 @@ import "news/news_db.proto";
 
 
 // 获取市场新闻请求
-message NewsMarketNewsReq {  
+message NewsGetRealTimeGlobalNewsReq {  
 }
 
-message NewsMarketNewsResp {
-  repeated DBMarketNews news = 1;
+message NewsGetRealTimeGlobalNewsResp {
+  repeated DBRealTimeGlobalNews news = 1;
 }

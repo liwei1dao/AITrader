@@ -7,11 +7,13 @@ import (
 
 type apiComp struct {
 	modules.MCompSocketGate
-	module *News
+	module  *News
+	options *Options
 }
 
 func (this *apiComp) Init(service core.IService, module core.IModule, comp core.IModuleComp, options core.IModuleOptions) (err error) {
 	err = this.MCompSocketGate.Init(service, module, comp, options)
 	this.module = module.(*News)
+	this.options = options.(*Options)
 	return
 }

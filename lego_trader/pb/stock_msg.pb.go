@@ -21,6 +21,95 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// 获取对应股票的实时数据
+type StockGetRealTimeDataReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Codes         []string               `protobuf:"bytes,1,rep,name=codes,proto3" json:"codes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StockGetRealTimeDataReq) Reset() {
+	*x = StockGetRealTimeDataReq{}
+	mi := &file_stock_stock_msg_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StockGetRealTimeDataReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StockGetRealTimeDataReq) ProtoMessage() {}
+
+func (x *StockGetRealTimeDataReq) ProtoReflect() protoreflect.Message {
+	mi := &file_stock_stock_msg_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StockGetRealTimeDataReq.ProtoReflect.Descriptor instead.
+func (*StockGetRealTimeDataReq) Descriptor() ([]byte, []int) {
+	return file_stock_stock_msg_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *StockGetRealTimeDataReq) GetCodes() []string {
+	if x != nil {
+		return x.Codes
+	}
+	return nil
+}
+
+type StockGetRealTimeDataResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Items         []*DBStockRealTimeItem `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StockGetRealTimeDataResp) Reset() {
+	*x = StockGetRealTimeDataResp{}
+	mi := &file_stock_stock_msg_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StockGetRealTimeDataResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StockGetRealTimeDataResp) ProtoMessage() {}
+
+func (x *StockGetRealTimeDataResp) ProtoReflect() protoreflect.Message {
+	mi := &file_stock_stock_msg_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StockGetRealTimeDataResp.ProtoReflect.Descriptor instead.
+func (*StockGetRealTimeDataResp) Descriptor() ([]byte, []int) {
+	return file_stock_stock_msg_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *StockGetRealTimeDataResp) GetItems() []*DBStockRealTimeItem {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
 // 获取股票信息请求
 type StockGetInfosReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -31,7 +120,7 @@ type StockGetInfosReq struct {
 
 func (x *StockGetInfosReq) Reset() {
 	*x = StockGetInfosReq{}
-	mi := &file_stock_stock_msg_proto_msgTypes[0]
+	mi := &file_stock_stock_msg_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +132,7 @@ func (x *StockGetInfosReq) String() string {
 func (*StockGetInfosReq) ProtoMessage() {}
 
 func (x *StockGetInfosReq) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_stock_msg_proto_msgTypes[0]
+	mi := &file_stock_stock_msg_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +145,7 @@ func (x *StockGetInfosReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StockGetInfosReq.ProtoReflect.Descriptor instead.
 func (*StockGetInfosReq) Descriptor() ([]byte, []int) {
-	return file_stock_stock_msg_proto_rawDescGZIP(), []int{0}
+	return file_stock_stock_msg_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *StockGetInfosReq) GetStockIds() []string {
@@ -75,7 +164,7 @@ type StockGetInfosResp struct {
 
 func (x *StockGetInfosResp) Reset() {
 	*x = StockGetInfosResp{}
-	mi := &file_stock_stock_msg_proto_msgTypes[1]
+	mi := &file_stock_stock_msg_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -87,7 +176,7 @@ func (x *StockGetInfosResp) String() string {
 func (*StockGetInfosResp) ProtoMessage() {}
 
 func (x *StockGetInfosResp) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_stock_msg_proto_msgTypes[1]
+	mi := &file_stock_stock_msg_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -100,7 +189,7 @@ func (x *StockGetInfosResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StockGetInfosResp.ProtoReflect.Descriptor instead.
 func (*StockGetInfosResp) Descriptor() ([]byte, []int) {
-	return file_stock_stock_msg_proto_rawDescGZIP(), []int{1}
+	return file_stock_stock_msg_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *StockGetInfosResp) GetStockInfos() []*DBStockIdentity {
@@ -120,7 +209,7 @@ type StockGetFundamentalSnapshotReq struct {
 
 func (x *StockGetFundamentalSnapshotReq) Reset() {
 	*x = StockGetFundamentalSnapshotReq{}
-	mi := &file_stock_stock_msg_proto_msgTypes[2]
+	mi := &file_stock_stock_msg_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -132,7 +221,7 @@ func (x *StockGetFundamentalSnapshotReq) String() string {
 func (*StockGetFundamentalSnapshotReq) ProtoMessage() {}
 
 func (x *StockGetFundamentalSnapshotReq) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_stock_msg_proto_msgTypes[2]
+	mi := &file_stock_stock_msg_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -145,7 +234,7 @@ func (x *StockGetFundamentalSnapshotReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StockGetFundamentalSnapshotReq.ProtoReflect.Descriptor instead.
 func (*StockGetFundamentalSnapshotReq) Descriptor() ([]byte, []int) {
-	return file_stock_stock_msg_proto_rawDescGZIP(), []int{2}
+	return file_stock_stock_msg_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *StockGetFundamentalSnapshotReq) GetId() string {
@@ -164,7 +253,7 @@ type StockGetFundamentalSnapshotResp struct {
 
 func (x *StockGetFundamentalSnapshotResp) Reset() {
 	*x = StockGetFundamentalSnapshotResp{}
-	mi := &file_stock_stock_msg_proto_msgTypes[3]
+	mi := &file_stock_stock_msg_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -176,7 +265,7 @@ func (x *StockGetFundamentalSnapshotResp) String() string {
 func (*StockGetFundamentalSnapshotResp) ProtoMessage() {}
 
 func (x *StockGetFundamentalSnapshotResp) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_stock_msg_proto_msgTypes[3]
+	mi := &file_stock_stock_msg_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -189,7 +278,7 @@ func (x *StockGetFundamentalSnapshotResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StockGetFundamentalSnapshotResp.ProtoReflect.Descriptor instead.
 func (*StockGetFundamentalSnapshotResp) Descriptor() ([]byte, []int) {
-	return file_stock_stock_msg_proto_rawDescGZIP(), []int{3}
+	return file_stock_stock_msg_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *StockGetFundamentalSnapshotResp) GetSnapshots() []*DBFundamentalSnapshot {
@@ -204,6 +293,10 @@ var File_stock_stock_msg_proto protoreflect.FileDescriptor
 const file_stock_stock_msg_proto_rawDesc = "" +
 	"\n" +
 	"\x15stock/stock_msg.proto\x1a\x14stock/stock_db.proto\"/\n" +
+	"\x17StockGetRealTimeDataReq\x12\x14\n" +
+	"\x05codes\x18\x01 \x03(\tR\x05codes\"F\n" +
+	"\x18StockGetRealTimeDataResp\x12*\n" +
+	"\x05items\x18\x01 \x03(\v2\x14.DBStockRealTimeItemR\x05items\"/\n" +
 	"\x10StockGetInfosReq\x12\x1b\n" +
 	"\tstock_ids\x18\x01 \x03(\tR\bstockIds\"F\n" +
 	"\x11StockGetInfosResp\x121\n" +
@@ -226,23 +319,27 @@ func file_stock_stock_msg_proto_rawDescGZIP() []byte {
 	return file_stock_stock_msg_proto_rawDescData
 }
 
-var file_stock_stock_msg_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_stock_stock_msg_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_stock_stock_msg_proto_goTypes = []any{
-	(*StockGetInfosReq)(nil),                // 0: StockGetInfosReq
-	(*StockGetInfosResp)(nil),               // 1: StockGetInfosResp
-	(*StockGetFundamentalSnapshotReq)(nil),  // 2: StockGetFundamentalSnapshotReq
-	(*StockGetFundamentalSnapshotResp)(nil), // 3: StockGetFundamentalSnapshotResp
-	(*DBStockIdentity)(nil),                 // 4: DBStockIdentity
-	(*DBFundamentalSnapshot)(nil),           // 5: DBFundamentalSnapshot
+	(*StockGetRealTimeDataReq)(nil),         // 0: StockGetRealTimeDataReq
+	(*StockGetRealTimeDataResp)(nil),        // 1: StockGetRealTimeDataResp
+	(*StockGetInfosReq)(nil),                // 2: StockGetInfosReq
+	(*StockGetInfosResp)(nil),               // 3: StockGetInfosResp
+	(*StockGetFundamentalSnapshotReq)(nil),  // 4: StockGetFundamentalSnapshotReq
+	(*StockGetFundamentalSnapshotResp)(nil), // 5: StockGetFundamentalSnapshotResp
+	(*DBStockRealTimeItem)(nil),             // 6: DBStockRealTimeItem
+	(*DBStockIdentity)(nil),                 // 7: DBStockIdentity
+	(*DBFundamentalSnapshot)(nil),           // 8: DBFundamentalSnapshot
 }
 var file_stock_stock_msg_proto_depIdxs = []int32{
-	4, // 0: StockGetInfosResp.stock_infos:type_name -> DBStockIdentity
-	5, // 1: StockGetFundamentalSnapshotResp.snapshots:type_name -> DBFundamentalSnapshot
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	6, // 0: StockGetRealTimeDataResp.items:type_name -> DBStockRealTimeItem
+	7, // 1: StockGetInfosResp.stock_infos:type_name -> DBStockIdentity
+	8, // 2: StockGetFundamentalSnapshotResp.snapshots:type_name -> DBFundamentalSnapshot
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_stock_stock_msg_proto_init() }
@@ -257,7 +354,7 @@ func file_stock_stock_msg_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_stock_stock_msg_proto_rawDesc), len(file_stock_stock_msg_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

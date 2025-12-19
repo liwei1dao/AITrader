@@ -1,11 +1,28 @@
 package stocks
 
-import "lego_trader/lego/core/cbase"
+import (
+	"lego_trader/comm"
+	"lego_trader/lego/core"
+	"lego_trader/modules"
+)
 
 func NewModule() *Stock {
 	return &Stock{}
 }
 
 type Stock struct {
-	cbase.ModuleBase
+	modules.ModuleBase
+	api   *apiComp
+	model *modelComp
+}
+
+func (this *Stock) GetType() core.M_Modules {
+	return comm.ModuleStock
+}
+
+func (this *Stock) Init(service core.IService, module core.IModule, options core.IModuleOptions) (err error) {
+	if err = this.ModuleBase.Init(service, module, options); err != nil {
+		return
+	}
+	return
 }

@@ -15,21 +15,19 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use dBMarketNewsDescriptor instead')
-const DBMarketNews$json = {
-  '1': 'DBMarketNews',
+@$core.Deprecated('Use dBRealTimeGlobalNewsDescriptor instead')
+const DBRealTimeGlobalNews$json = {
+  '1': 'DBRealTimeGlobalNews',
   '2': [
-    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-    {'1': 'tag', '3': 2, '4': 1, '5': 9, '10': 'tag'},
-    {'1': 'summary', '3': 3, '4': 1, '5': 9, '10': 'summary'},
-    {'1': 'interval_time', '3': 4, '4': 1, '5': 9, '10': 'intervalTime'},
-    {'1': 'pub_time', '3': 5, '4': 1, '5': 9, '10': 'pubTime'},
-    {'1': 'url', '3': 6, '4': 1, '5': 9, '10': 'url'},
+    {'1': 'title', '3': 1, '4': 1, '5': 9, '10': 'title'},
+    {'1': 'content', '3': 2, '4': 1, '5': 9, '10': 'content'},
+    {'1': 'publish_time', '3': 3, '4': 1, '5': 9, '10': 'publishTime'},
+    {'1': 'url', '3': 4, '4': 1, '5': 9, '10': 'url'},
   ],
 };
 
-/// Descriptor for `DBMarketNews`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List dBMarketNewsDescriptor = $convert.base64Decode(
-    'CgxEQk1hcmtldE5ld3MSDgoCaWQYASABKAlSAmlkEhAKA3RhZxgCIAEoCVIDdGFnEhgKB3N1bW'
-    '1hcnkYAyABKAlSB3N1bW1hcnkSIwoNaW50ZXJ2YWxfdGltZRgEIAEoCVIMaW50ZXJ2YWxUaW1l'
-    'EhkKCHB1Yl90aW1lGAUgASgJUgdwdWJUaW1lEhAKA3VybBgGIAEoCVIDdXJs');
+/// Descriptor for `DBRealTimeGlobalNews`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List dBRealTimeGlobalNewsDescriptor = $convert.base64Decode(
+    'ChREQlJlYWxUaW1lR2xvYmFsTmV3cxIUCgV0aXRsZRgBIAEoCVIFdGl0bGUSGAoHY29udGVudB'
+    'gCIAEoCVIHY29udGVudBIhCgxwdWJsaXNoX3RpbWUYAyABKAlSC3B1Ymxpc2hUaW1lEhAKA3Vy'
+    'bBgEIAEoCVIDdXJs');

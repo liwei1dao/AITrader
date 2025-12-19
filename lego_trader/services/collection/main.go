@@ -3,26 +3,23 @@ package main
 import (
 	"flag"
 	"fmt"
-	"lego_trader/modules/market"
-	"lego_trader/modules/news"
-	"lego_trader/modules/user"
+	"lego_trader/modules/collection"
 	"lego_trader/services"
+	"lego_trader/sys/akshare"
 	"lego_trader/sys/db"
 
 	"lego_trader/lego"
 	"lego_trader/lego/base/rpcx"
 	"lego_trader/lego/core"
+	"lego_trader/lego/sys/cron"
 	"lego_trader/lego/sys/log"
-
-	"lego_trader/lego/sys/email"
-	"lego_trader/lego/sys/sms"
 )
 
 /*
 服务类型:后台服务
 */
 var (
-	conf = flag.String("conf", "./conf/home.yaml", "获取需要启动的服务配置文件") //启动服务的Id
+	conf = flag.String("conf", "./conf/collection.yaml", "获取需要启动的服务配置文件") //启动服务的Id
 )
 
 /*服务启动的入口函数*/
@@ -37,9 +34,7 @@ func main() {
 		services.NewSocketRouteComp(),
 	)
 	lego.Run(s, //运行模块
-		user.NewModule(),
-		news.NewModule(),
-		market.NewModule(),
+		collection.NewModule(),
 	)
 }
 
@@ -63,16 +58,15 @@ func (this *Service) InitSys() {
 	} else {
 		log.Infof("init sys.db success!")
 	}
-	//短信服务
-	if err := sms.OnInit(this.GetSettings().Sys["sms"]); err != nil {
-		panic(fmt.Sprintf("init sys.sms err: %s", err.Error()))
+	if err := cron.OnInit(this.GetSettings().Sys["cron"]); err != nil {
+		panic(fmt.Sprintf("init sys.cron err: %s", err.Error()))
 	} else {
-		log.Infof("init sys.sms success!")
+		log.Infof("init sys.cron success!")
 	}
-	//邮件服务
-	if err := email.OnInit(this.GetSettings().Sys["email"]); err != nil {
-		panic(fmt.Sprintf("init sys.email err: %s", err.Error()))
+
+	if err := akshare.OnInit(this.GetSettings().Sys["akshare"]); err != nil {
+		panic(fmt.Sprintf("init sys.akshare err: %s", err.Error()))
 	} else {
-		log.Infof("init sys.email success!")
+		log.Infof("init sys.akshare success!")
 	}
 }

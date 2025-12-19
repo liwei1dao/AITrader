@@ -97,38 +97,6 @@ func TestGetStockZhASpotEM(t *testing.T) {
 	t.Logf("StockZhASpotEM 样例(前5条):\n%s", string(b))
 }
 
-// TestBuildMarketPanelDTO
-// 接口作用: 聚合指数、市场宽度与涨跌榜，形成大盘看板最小 DTO
-// 参数: t 测试上下文
-// 返回值: 无
-// 异常: 断言失败时抛出测试错误
-func TestBuildMarketPanelDTO(t *testing.T) {
-	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
-	if err != nil {
-		t.Fatalf("初始化失败: %v", err)
-		return
-	}
-	panel, err := sys.BuildMarketPanelDTO(10)
-	if err != nil {
-		t.Skipf("上游不可用或被限流: %v", err)
-		return
-	}
-	if panel == nil {
-		t.Fatalf("返回面板为空")
-	}
-	if len(panel.Indices) == 0 {
-		t.Fatalf("指数列表为空")
-	}
-	if len(panel.TopGainers) == 0 || len(panel.TopLosers) == 0 {
-		t.Fatalf("榜单为空: gainers=%d losers=%d", len(panel.TopGainers), len(panel.TopLosers))
-	}
-	if panel.Timestamp <= 0 {
-		t.Fatalf("时间戳异常: %d", panel.Timestamp)
-	}
-	b, _ := json.MarshalIndent(panel, "", "  ")
-	t.Logf("MarketPanelDTO 样例:\n%s", string(b))
-}
-
 // TestGetStockCyASpotEM
 // 接口作用: 获取创业板实时行情，用于分板块视图与创业板榜单
 // 参数: t 测试上下文
@@ -173,4 +141,27 @@ func TestGetStockKcASpotEM(t *testing.T) {
 	}
 	b, _ := json.MarshalIndent(records[:min(5, len(records))], "", "  ")
 	t.Logf("StockKcASpotEM 样例(前5条):\n%s", string(b))
+}
+
+// TestGetStockInfoGlobalThs
+// 接口作用: 获取全球股市资讯（同花顺 stock_info_global_ths）
+// 参数: t 测试上下文
+// 返回值: 无
+// 异常: 断言失败时抛出测试错误
+func TestGetStockInfoGlobalThs(t *testing.T) {
+	sys, err := akshare.NewSys(akshare.SetBaseUrl("http://127.0.0.1:8080"))
+	if err != nil {
+		t.Fatalf("初始化失败: %v", err)
+		return
+	}
+	records, err := sys.GetStockInfoGlobalThs()
+	if err != nil {
+		t.Skipf("上游不可用或被限流: %v", err)
+		return
+	}
+	if len(records) == 0 {
+		t.Fatalf("返回数据为空")
+	}
+	b, _ := json.MarshalIndent(records[:min(5, len(records))], "", "  ")
+	t.Logf("StockInfoGlobalThs 样例(前5条):\n%s", string(b))
 }

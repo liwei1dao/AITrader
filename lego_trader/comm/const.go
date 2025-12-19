@@ -21,6 +21,7 @@ const (
 	ModuleUser       core.M_Modules = "user"       //用户模块 用户服务模块
 	ModuleMarket     core.M_Modules = "market"     //市场模块 市场服务模块
 	ModuleNews       core.M_Modules = "news"       //新闻模块 新闻服务模块
+	ModuleStock      core.M_Modules = "stock"      //股票模块 股票服务模块
 	ModuleCollection core.M_Modules = "collection" //收藏模块 集合模块 提供集合数据 股票, 基金, 指数等
 
 )
@@ -39,8 +40,14 @@ const (
 
 // Redis 键定义
 const (
-	Redis_MarketSpot = "marketspot" //Redis 市场指数实时数据键
-	Redis_MarketNews = "marketnews" //Redis 市场要闻列表键(List)
+	//实时:新闻
+	Redis_RealtimeNewsQueue = "rtime:news_queue" //Redis 市场要闻列表键(List)
+	//实时:指数
+	Redis_RealtimeIndexQueue = "rtime:index_queue" //Redis 指数实时队列键前缀(List)
+	//实时:股票
+	Redis_RealtimeStockQueue = "rtime:stock_queue" //Redis 股票实时队列键前缀(List)
+	//每日股票数据 日K
+	Redis_DailyStockDayQueue = "daily:stock_queue" //Redis 股票日K线数据队列键前缀(List)
 )
 
 // 对象池定义

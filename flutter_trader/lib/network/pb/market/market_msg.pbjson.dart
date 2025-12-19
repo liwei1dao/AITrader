@@ -15,31 +15,32 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use marketGetSpotsReqDescriptor instead')
-const MarketGetSpotsReq$json = {
-  '1': 'MarketGetSpotsReq',
+@$core.Deprecated('Use marketGetRealTimeIndexsReqDescriptor instead')
+const MarketGetRealTimeIndexsReq$json = {
+  '1': 'MarketGetRealTimeIndexsReq',
 };
 
-/// Descriptor for `MarketGetSpotsReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List marketGetSpotsReqDescriptor =
-    $convert.base64Decode('ChFNYXJrZXRHZXRTcG90c1JlcQ==');
+/// Descriptor for `MarketGetRealTimeIndexsReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List marketGetRealTimeIndexsReqDescriptor =
+    $convert.base64Decode('ChpNYXJrZXRHZXRSZWFsVGltZUluZGV4c1JlcQ==');
 
-@$core.Deprecated('Use marketGetSpotsRespDescriptor instead')
-const MarketGetSpotsResp$json = {
-  '1': 'MarketGetSpotsResp',
+@$core.Deprecated('Use marketGetRealTimeIndexsRespDescriptor instead')
+const MarketGetRealTimeIndexsResp$json = {
+  '1': 'MarketGetRealTimeIndexsResp',
   '2': [
     {
       '1': 'Items',
       '3': 1,
       '4': 3,
       '5': 11,
-      '6': '.DBMarketSpotItem',
+      '6': '.DBMarketIndexRealTimeItem',
       '10': 'Items'
     },
   ],
 };
 
-/// Descriptor for `MarketGetSpotsResp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List marketGetSpotsRespDescriptor = $convert.base64Decode(
-    'ChJNYXJrZXRHZXRTcG90c1Jlc3ASJwoFSXRlbXMYASADKAsyES5EQk1hcmtldFNwb3RJdGVtUg'
-    'VJdGVtcw==');
+/// Descriptor for `MarketGetRealTimeIndexsResp`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List marketGetRealTimeIndexsRespDescriptor =
+    $convert.base64Decode(
+        'ChtNYXJrZXRHZXRSZWFsVGltZUluZGV4c1Jlc3ASMAoFSXRlbXMYASADKAsyGi5EQk1hcmtldE'
+        'luZGV4UmVhbFRpbWVJdGVtUgVJdGVtcw==');

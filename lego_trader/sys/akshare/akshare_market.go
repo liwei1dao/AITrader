@@ -5,9 +5,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"sort"
-	"strings"
-	"time"
 )
 
 type (
@@ -129,9 +126,12 @@ type MarketPanelDTO struct {
 }
 
 // 获取深圳证券交易所 summary（东方财富 stock_szse_summary）
-// - 参数: 无
-// - 返回: 深圳证券交易所 summary 结构体（包含总市值/总成交量/总成交额等字段）
-// - 说明: 调用 python_akshare `/api/public/stock_szse_summary`
+/*
+获取深圳证券交易所 summary
+参数: 无
+返回值: summary 深圳证券交易所 summary 结构体（包含总市值/总成交量/总成交额等字段）
+异常: 网络错误/解码错误时返回错误
+*/
 func (a *AkShare) GetStockSzseSummary() (summary *StockSzseSummary, err error) {
 	url := fmt.Sprintf("%s/api/public/stock_szse_summary", a.options.BaseUrl)
 	resp, err := http.Get(url)
@@ -167,7 +167,7 @@ func (a *AkShare) GetStockSzseSummary() (summary *StockSzseSummary, err error) {
 // 参数: 无
 // 返回值: 指数快照列表（包括代码、名称、最新价、涨跌幅、成交额）
 // 异常: 网络错误/解码错误时返回错误
-func (a *AkShare) GetStockZhIndexSpot() (records []IndexSpotRecord, err error) {
+func (a *AkShare) GetStockZhIndexSpot() (records []StockZhASpotEMRecord, err error) {
 	url := fmt.Sprintf("%s/api/public/stock_zh_index_spot", a.options.BaseUrl)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -181,6 +181,7 @@ func (a *AkShare) GetStockZhIndexSpot() (records []IndexSpotRecord, err error) {
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println(string(body))
 	if err := json.Unmarshal(body, &records); err != nil {
 		var obj map[string]interface{}
 		if err2 := json.Unmarshal(body, &obj); err2 == nil {
@@ -252,99 +253,6 @@ func (a *AkShare) GetStockKcASpotEM() (records []AStockSpotRecord, err error) {
 	}
 	return records, nil
 }
-
-// BuildMarketPanelDTO 构建最小化大盘面板 DTO
-// 参数: topN 榜单数量（如 10）
-// 返回值: 面板 DTO，包括 indices、breadth、top_gainers、top_losers、timestamp
-// 异常: 上游接口失败或数据解码异常时返回错误
-func (a *AkShare) BuildMarketPanelDTO(topN int) (*MarketPanelDTO, error) {
-	idxs, err := a.GetStockZhIndexSpot()
-	if err != nil {
-		return nil, err
-	}
-	astocks, err := a.GetStockZhASpotEM()
-	if err != nil {
-		return nil, err
-	}
-	// 1) 指数筛选与映射
-	targets := map[string]bool{
-		"上证指数": true, "深证成指": true, "创业板指": true, "科创50": true,
-	}
-	var indices []MarketIndexDTO
-	for _, r := range idxs {
-		if targets[r.Name] {
-			indices = append(indices, MarketIndexDTO{
-				Code: r.Code, Name: r.Name, Last: r.Last, ChangePct: r.ChangePct, TurnOver: r.TurnOver,
-			})
-		}
-	}
-	// 2) 宽度统计与涨跌停（最小实现: 非 ST 10%，ST 5%）
-	var rise, fall, unchanged, limitUp, limitDown int64
-	for _, s := range astocks {
-		cp := s.ChangePct
-		n := strings.ToUpper(s.Name)
-		isST := strings.Contains(n, "ST")
-		upTh := 9.9
-		downTh := -9.9
-		if isST {
-			upTh = 4.9
-			downTh = -4.9
-		}
-		if cp > 0 {
-			rise++
-		} else if cp < 0 {
-			fall++
-		} else {
-			unchanged++
-		}
-		if cp >= upTh {
-			limitUp++
-		}
-		if cp <= downTh {
-			limitDown++
-		}
-	}
-	breadth := MarketBreadthDTO{
-		Rise: rise, Fall: fall, Unchanged: unchanged, LimitUp: limitUp, LimitDown: limitDown,
-	}
-	// 3) 榜单
-	sortedUp := make([]StockZhASpotEMRecord, len(astocks))
-	copy(sortedUp, astocks)
-	sort.Slice(sortedUp, func(i, j int) bool { return sortedUp[i].ChangePct > sortedUp[j].ChangePct })
-	sortedDn := make([]StockZhASpotEMRecord, len(astocks))
-	copy(sortedDn, astocks)
-	sort.Slice(sortedDn, func(i, j int) bool { return sortedDn[i].ChangePct < sortedDn[j].ChangePct })
-	if topN < 1 {
-		topN = 10
-	}
-	upN := topN
-	if upN > len(sortedUp) {
-		upN = len(sortedUp)
-	}
-	dnN := topN
-	if dnN > len(sortedDn) {
-		dnN = len(sortedDn)
-	}
-	toMovers := func(src []StockZhASpotEMRecord) []TopMoverDTO {
-		res := make([]TopMoverDTO, 0, len(src))
-		for _, r := range src {
-			res = append(res, TopMoverDTO{
-				Symbol: r.Code, Name: r.Name, ChangePct: r.ChangePct, Price: r.LastPrice, Volume: int64(r.Volume),
-			})
-		}
-		return res
-	}
-	panel := &MarketPanelDTO{
-		Indices:    indices,
-		Breadth:    breadth,
-		TopGainers: toMovers(sortedUp[:upN]),
-		TopLosers:  toMovers(sortedDn[:dnN]),
-		Timestamp:  time.Now().UnixMilli(),
-	}
-	return panel, nil
-}
-
-// 新闻接口迁移至 akshare_news.go
 
 // GetStockMarketFundFlow 获取大盘资金流向（东方财富 stock_market_fund_flow）
 // 参数: 无

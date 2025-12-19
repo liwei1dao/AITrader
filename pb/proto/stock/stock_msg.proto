@@ -2,6 +2,17 @@ syntax = "proto3";
 option go_package = ".;pb";
 import "stock/stock_db.proto";
 
+//获取对应股票的实时数据
+message StockGetRealTimeDataReq {
+  repeated string codes = 1;
+}
+
+message StockGetRealTimeDataResp {
+  repeated DBStockRealTimeItem items = 1;
+}
+
+
+
 // 获取股票信息请求
 message StockGetInfosReq {  
   repeated string stock_ids = 1;
@@ -20,3 +31,4 @@ message StockGetFundamentalSnapshotReq {
 message StockGetFundamentalSnapshotResp {
   repeated DBFundamentalSnapshot snapshots = 1;
 }
+

@@ -2,6 +2,7 @@ package market
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"lego_trader/comm"
 	"lego_trader/lego/core"
@@ -27,28 +28,46 @@ func (this *modelComp) Init(service core.IService, module core.IModule, comp cor
 }
 
 // GetMarketSpot 获取市场股票指数
-// 参数: codes - 股票指数代码列表
+// 参数: 无
 // 返回值: items - 股票指数信息列表；err - 错误信息；成功时err为nil
 // 异常: Redis查询失败时返回错误
-func (this *modelComp) getMarketSpot(codes []string) (items []*pb.DBMarketSpotItem, err error) {
+func (this *modelComp) getMarketRealTimeIndexs() (items []*pb.DBMarketIndexRealTimeItem, err error) {
 	var (
 		ctx      = context.Background()
+		keys     []string
 		redisPip = db.Redis().Pipeline()
-		cmdItems = make(map[string]*redis.MapStringStringCmd)
+		cmds     = make([]*redis.StringCmd, 0)
 	)
-	for _, v := range codes {
-		cmdItems[v] = redisPip.HGetAll(ctx, fmt.Sprintf("%s:%s", comm.Redis_MarketSpot, v))
-	}
-	_, err = redisPip.Exec(ctx)
-	if err != nil {
+
+	// 获取所有指数实时队列的键
+	if keys, err = db.Redis().Keys(ctx, fmt.Sprintf("%s:*", comm.Redis_RealtimeIndexQueue)).Result(); err != nil {
 		return
 	}
-	for _, v := range cmdItems {
-		item := &pb.DBMarketSpotItem{}
-		if err = v.Scan(item); err != nil {
-			return
+
+	// 批量获取每个队列的最新数据
+	for _, key := range keys {
+		cmds = append(cmds, redisPip.LIndex(ctx, key, -1))
+	}
+
+	if _, err = redisPip.Exec(ctx); err != nil && err != redis.Nil {
+		this.module.Errorf("Redis pipeline execution error: %v", err)
+		// 不直接返回，尝试处理成功的结果
+	}
+
+	items = make([]*pb.DBMarketIndexRealTimeItem, 0, len(keys))
+	for _, cmd := range cmds {
+		val, err := cmd.Result()
+		if err != nil {
+			continue
+		}
+
+		item := &pb.DBMarketIndexRealTimeItem{}
+		if err := json.Unmarshal([]byte(val), item); err != nil {
+			this.module.Errorf("Unmarshal error: %v value: %s", err, val)
+			continue
 		}
 		items = append(items, item)
 	}
+	err = nil
 	return
 }

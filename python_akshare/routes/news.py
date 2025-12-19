@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
 import akshare as ak
+import json
 
 from .common import df_to_records
 
@@ -72,13 +73,54 @@ def stock_news_em(
 def stock_news_main_cx():
     """
     获取市场要闻（财新）
-    - 功能: 通过 AkShare `stock_news_main_cx` 拉取财新网的股票市场要闻
-    - 参数: 无
-    - 返回: list[dict]，包含标题/时间/来源/链接/摘要等字段（以上游返回为准）
-    - 错误: 上游异常时返回 {"error": string}
+    
+    参数:
+    - 无
+    
+    返回值:
+    - JSON 数组：包含标题/时间/来源/链接/摘要等字段（以上游返回为准）
+    
+    异常:
+    - 上游报错时尝试使用新浪全球快讯作为兜底；若兜底也失败则返回 {"error": string}
     """
     try:
         df = ak.stock_news_main_cx()
+        recs = df_to_records(df)
+        return JSONResponse(content=recs)
+    except Exception as e:
+        # 兜底：使用新浪全球快讯
+        try:
+            df2 = ak.stock_info_global_sina()
+            recs2 = df_to_records(df2)
+            return JSONResponse(content=recs2)
+        except Exception as e2:
+            return JSONResponse(content={"error": str(e2)})
+
+
+@router.get(
+    "/api/public/stock_info_global_ths",
+    summary="全球市场实时快讯(同花顺)",
+    description=(
+        "调用 AkShare `stock_info_global_ths` 获取同花顺全球市场的实时快讯数据。\n"
+        "参数: 无。\n"
+        "返回: JSON 数组；字段以上游返回为准（常见包含时间、标题、内容等）。"
+    ),
+)
+def stock_info_global_ths():
+    """
+    获取全球市场实时快讯（同花顺）
+    
+    参数:
+    - 无
+    
+    返回值:
+    - JSON 数组：字段以上游返回为准（常见包含时间、标题、内容等）
+    
+    异常:
+    - 上游报错时返回 {\"error\": string}
+    """
+    try:
+        df = ak.stock_info_global_ths()
         recs = df_to_records(df)
         return JSONResponse(content=recs)
     except Exception as e:

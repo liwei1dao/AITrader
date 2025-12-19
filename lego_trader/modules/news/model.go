@@ -26,18 +26,18 @@ func (this *modelComp) Init(service core.IService, module core.IModule, comp cor
 // 参数: 无
 // 返回值: records 市场新闻列表；err 错误信息；成功时 err 为 nil
 // 异常: Redis 访问失败时返回错误；JSON 解析失败的条目将被忽略
-func (this *modelComp) getMarketNews() (records []*pb.DBMarketNews, err error) {
+func (this *modelComp) getMarketNews(source string) (records []*pb.DBRealTimeGlobalNews, err error) {
 	var (
 		ctx   = context.Background()
 		items []string
 	)
-	items, err = db.Redis().LRange(ctx, comm.Redis_MarketNews, 0, -1).Result()
+	items, err = db.Redis().LRange(ctx, comm.Redis_RealtimeNewsQueue, 0, -1).Result()
 	if err != nil {
 		return
 	}
-	records = make([]*pb.DBMarketNews, 0, len(items))
+	records = make([]*pb.DBRealTimeGlobalNews, 0, len(items))
 	for _, s := range items {
-		var it pb.DBMarketNews
+		var it pb.DBRealTimeGlobalNews
 		if e := json.Unmarshal([]byte(s), &it); e != nil {
 			continue
 		}

@@ -1,7 +1,20 @@
 package akshare
 
 type (
-
+	// 新闻接口
+	INews interface {
+		/// 获取全球股市资讯（同花顺 stock_info_global_ths）
+		/// 作用: 大盘看板的全球股市资讯源，用于新闻/快讯模块
+		/// 参数: 无；返回: 全球股市资讯列表（结构化）
+		GetStockInfoGlobalThs() (records []StockInfoGlobalThsRecord, err error)
+		/// 获取市场要闻（财新 stock_news_main_cx）
+		/// 作用: 大盘看板的要闻信息源，用于新闻/快讯模块
+		/// 参数: 无；返回: 市场要闻列表（结构化）
+		GetStockNewsMainCx() (records []StockNewsMainCxRecord, err error)
+		/// 获取个股新闻（东方财富 stock_news_em）
+		/// 参数: stockCode 6位或含前缀；page/size 可选；返回: 新闻列表（结构化）
+		GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error)
+	}
 	// 市场接口
 	IMarket interface {
 		/// 获取深圳证券交易所 summary（东方财富 stock_szse_summary）
@@ -15,7 +28,7 @@ type (
 		/// 获取沪深主要指数实时快照（东方财富 stock_zh_index_spot）
 		/// 作用: 大盘看板指数卡片数据源（上证/深证/创业板/科创50等）
 		/// 参数: 无；返回: 指数快照列表（代码/名称/最新价/涨跌幅/成交额）
-		GetStockZhIndexSpot() (records []IndexSpotRecord, err error)
+		GetStockZhIndexSpot() (records []StockZhASpotEMRecord, err error)
 		/// 获取沪深京 A 股实时行情（东方财富 stock_zh_a_spot_em）
 		/// 作用: 市场宽度统计与涨跌榜数据源（全市场实时行情）
 		/// 参数: 无；返回: A 股实时行情列表（代码/名称/最新价/涨跌幅/成交量/成交额）
@@ -28,10 +41,6 @@ type (
 		/// 作用: 科创板分板块视图与榜单数据源
 		/// 参数: 无；返回: 科创板实时行情列表（代码/名称/最新价/涨跌幅/成交量/成交额）
 		GetStockKcASpotEM() (records []AStockSpotRecord, err error)
-		/// 构建最小化大盘面板 DTO
-		/// 作用: 汇总指数、市场宽度与涨跌榜形成看板最小数据传输对象
-		/// 参数: topN 榜单数量；返回: 面板 DTO（indices/breadth/top列表/timestamp）
-		BuildMarketPanelDTO(topN int) (*MarketPanelDTO, error)
 	}
 	// 板块接口
 	IPlate interface {
@@ -89,7 +98,23 @@ func NewSys(opt ...Option) (sys ISys, err error) {
 	return
 }
 
-// 市场---------------------------
+/*-----------------------------------------------新闻------------------------------------------------------*/
+/// 获取全球股市资讯（同花顺 stock_info_global_ths）
+/// 作用: 大盘看板的全球股市资讯源，用于新闻/快讯模块
+/// 参数: 无；返回: 全球股市资讯列表（结构化）
+func GetStockInfoGlobalThs() (records []StockInfoGlobalThsRecord, err error) {
+	return defsys.GetStockInfoGlobalThs()
+}
+
+/*-----------------------------------------------市场------------------------------------------------------*/
+
+// GetStockSzseSummary 获取深交所市场概况（东方财富）
+// - 参数: 无
+// - 返回: 深交所市场概况结构体（Items 为各证券类别明细）
+// - 异常: 网络错误/上游返回错误对象时返回错误
+func GetStockKcASpotEM() (records []AStockSpotRecord, err error) {
+	return defsys.GetStockKcASpotEM()
+}
 
 // GetStockZhIndexSpot 获取沪深主要指数实时快照（东方财富 stock_zh_index_spot）
 // - 参数: 无
@@ -97,7 +122,7 @@ func NewSys(opt ...Option) (sys ISys, err error) {
 // / 获取沪深主要指数实时快照（东方财富 stock_zh_index_spot）
 // / 作用: 大盘看板指数卡片数据源（上证/深证/创业板/科创50等）
 // / 参数: 无；返回: 指数快照列表（代码/名称/最新价/涨跌幅/成交额）
-func GetStockZhIndexSpot() (records []IndexSpotRecord, err error) {
+func GetStockZhIndexSpot() (records []StockZhASpotEMRecord, err error) {
 	return defsys.GetStockZhIndexSpot()
 }
 
@@ -109,7 +134,7 @@ func GetStockMarketFundFlow() (flow *StockMarketFundFlow, err error) {
 	return defsys.GetStockMarketFundFlow()
 }
 
-// 股票---------------------------
+/*-----------------------------------------------股票------------------------------------------------------*/
 
 // / 获取沪深京 A 股实时行情（东方财富 stock_zh_a_spot_em）
 // / 作用: 市场宽度统计与涨跌榜数据源（全市场实时行情）

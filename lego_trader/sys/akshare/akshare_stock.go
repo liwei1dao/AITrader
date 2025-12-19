@@ -9,16 +9,6 @@ import (
 )
 
 type (
-	// 新闻接口
-	INews interface {
-		/// 获取市场要闻（财新 stock_news_main_cx）
-		/// 作用: 大盘看板的要闻信息源，用于新闻/快讯模块
-		/// 参数: 无；返回: 市场要闻列表（结构化）
-		GetStockNewsMainCx() (records []StockNewsMainCxRecord, err error)
-		/// 获取个股新闻（东方财富 stock_news_em）
-		/// 参数: stockCode 6位或含前缀；page/size 可选；返回: 新闻列表（结构化）
-		GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error)
-	}
 
 	// 股票基本信息
 	StockBasicInfo struct {

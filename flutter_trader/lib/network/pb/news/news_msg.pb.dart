@@ -19,89 +19,95 @@ import 'news_db.pb.dart' as $0;
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 /// 获取市场新闻请求
-class NewsMarketNewsReq extends $pb.GeneratedMessage {
-  factory NewsMarketNewsReq() => create();
+class NewsGetRealTimeGlobalNewsReq extends $pb.GeneratedMessage {
+  factory NewsGetRealTimeGlobalNewsReq() => create();
 
-  NewsMarketNewsReq._();
+  NewsGetRealTimeGlobalNewsReq._();
 
-  factory NewsMarketNewsReq.fromBuffer($core.List<$core.int> data,
+  factory NewsGetRealTimeGlobalNewsReq.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory NewsMarketNewsReq.fromJson($core.String json,
+  factory NewsGetRealTimeGlobalNewsReq.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'NewsMarketNewsReq',
+      _omitMessageNames ? '' : 'NewsGetRealTimeGlobalNewsReq',
       createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  NewsMarketNewsReq clone() => deepCopy();
+  NewsGetRealTimeGlobalNewsReq clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  NewsMarketNewsReq copyWith(void Function(NewsMarketNewsReq) updates) =>
-      super.copyWith((message) => updates(message as NewsMarketNewsReq))
-          as NewsMarketNewsReq;
+  NewsGetRealTimeGlobalNewsReq copyWith(
+          void Function(NewsGetRealTimeGlobalNewsReq) updates) =>
+      super.copyWith(
+              (message) => updates(message as NewsGetRealTimeGlobalNewsReq))
+          as NewsGetRealTimeGlobalNewsReq;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static NewsMarketNewsReq create() => NewsMarketNewsReq._();
+  static NewsGetRealTimeGlobalNewsReq create() =>
+      NewsGetRealTimeGlobalNewsReq._();
   @$core.override
-  NewsMarketNewsReq createEmptyInstance() => create();
+  NewsGetRealTimeGlobalNewsReq createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static NewsMarketNewsReq getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<NewsMarketNewsReq>(create);
-  static NewsMarketNewsReq? _defaultInstance;
+  static NewsGetRealTimeGlobalNewsReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<NewsGetRealTimeGlobalNewsReq>(create);
+  static NewsGetRealTimeGlobalNewsReq? _defaultInstance;
 }
 
-class NewsMarketNewsResp extends $pb.GeneratedMessage {
-  factory NewsMarketNewsResp({
-    $core.Iterable<$0.DBMarketNews>? news,
+class NewsGetRealTimeGlobalNewsResp extends $pb.GeneratedMessage {
+  factory NewsGetRealTimeGlobalNewsResp({
+    $core.Iterable<$0.DBRealTimeGlobalNews>? news,
   }) {
     final result = create();
     if (news != null) result.news.addAll(news);
     return result;
   }
 
-  NewsMarketNewsResp._();
+  NewsGetRealTimeGlobalNewsResp._();
 
-  factory NewsMarketNewsResp.fromBuffer($core.List<$core.int> data,
+  factory NewsGetRealTimeGlobalNewsResp.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory NewsMarketNewsResp.fromJson($core.String json,
+  factory NewsGetRealTimeGlobalNewsResp.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'NewsMarketNewsResp',
+      _omitMessageNames ? '' : 'NewsGetRealTimeGlobalNewsResp',
       createEmptyInstance: create)
-    ..pPM<$0.DBMarketNews>(1, _omitFieldNames ? '' : 'news',
-        subBuilder: $0.DBMarketNews.create)
+    ..pPM<$0.DBRealTimeGlobalNews>(1, _omitFieldNames ? '' : 'news',
+        subBuilder: $0.DBRealTimeGlobalNews.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  NewsMarketNewsResp clone() => deepCopy();
+  NewsGetRealTimeGlobalNewsResp clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  NewsMarketNewsResp copyWith(void Function(NewsMarketNewsResp) updates) =>
-      super.copyWith((message) => updates(message as NewsMarketNewsResp))
-          as NewsMarketNewsResp;
+  NewsGetRealTimeGlobalNewsResp copyWith(
+          void Function(NewsGetRealTimeGlobalNewsResp) updates) =>
+      super.copyWith(
+              (message) => updates(message as NewsGetRealTimeGlobalNewsResp))
+          as NewsGetRealTimeGlobalNewsResp;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static NewsMarketNewsResp create() => NewsMarketNewsResp._();
+  static NewsGetRealTimeGlobalNewsResp create() =>
+      NewsGetRealTimeGlobalNewsResp._();
   @$core.override
-  NewsMarketNewsResp createEmptyInstance() => create();
+  NewsGetRealTimeGlobalNewsResp createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static NewsMarketNewsResp getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<NewsMarketNewsResp>(create);
-  static NewsMarketNewsResp? _defaultInstance;
+  static NewsGetRealTimeGlobalNewsResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<NewsGetRealTimeGlobalNewsResp>(create);
+  static NewsGetRealTimeGlobalNewsResp? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $pb.PbList<$0.DBMarketNews> get news => $_getList(0);
+  $pb.PbList<$0.DBRealTimeGlobalNews> get news => $_getList(0);
 }
 
 const $core.bool _omitFieldNames =

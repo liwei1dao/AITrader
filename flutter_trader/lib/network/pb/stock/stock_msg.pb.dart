@@ -18,6 +18,104 @@ import 'stock_db.pb.dart' as $0;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
+/// 获取对应股票的实时数据
+class StockGetRealTimeDataReq extends $pb.GeneratedMessage {
+  factory StockGetRealTimeDataReq({
+    $core.Iterable<$core.String>? codes,
+  }) {
+    final result = create();
+    if (codes != null) result.codes.addAll(codes);
+    return result;
+  }
+
+  StockGetRealTimeDataReq._();
+
+  factory StockGetRealTimeDataReq.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory StockGetRealTimeDataReq.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StockGetRealTimeDataReq',
+      createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'codes')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StockGetRealTimeDataReq clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StockGetRealTimeDataReq copyWith(
+          void Function(StockGetRealTimeDataReq) updates) =>
+      super.copyWith((message) => updates(message as StockGetRealTimeDataReq))
+          as StockGetRealTimeDataReq;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StockGetRealTimeDataReq create() => StockGetRealTimeDataReq._();
+  @$core.override
+  StockGetRealTimeDataReq createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static StockGetRealTimeDataReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StockGetRealTimeDataReq>(create);
+  static StockGetRealTimeDataReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<$core.String> get codes => $_getList(0);
+}
+
+class StockGetRealTimeDataResp extends $pb.GeneratedMessage {
+  factory StockGetRealTimeDataResp({
+    $core.Iterable<$0.DBStockRealTimeItem>? items,
+  }) {
+    final result = create();
+    if (items != null) result.items.addAll(items);
+    return result;
+  }
+
+  StockGetRealTimeDataResp._();
+
+  factory StockGetRealTimeDataResp.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory StockGetRealTimeDataResp.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StockGetRealTimeDataResp',
+      createEmptyInstance: create)
+    ..pPM<$0.DBStockRealTimeItem>(1, _omitFieldNames ? '' : 'items',
+        subBuilder: $0.DBStockRealTimeItem.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StockGetRealTimeDataResp clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StockGetRealTimeDataResp copyWith(
+          void Function(StockGetRealTimeDataResp) updates) =>
+      super.copyWith((message) => updates(message as StockGetRealTimeDataResp))
+          as StockGetRealTimeDataResp;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StockGetRealTimeDataResp create() => StockGetRealTimeDataResp._();
+  @$core.override
+  StockGetRealTimeDataResp createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static StockGetRealTimeDataResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StockGetRealTimeDataResp>(create);
+  static StockGetRealTimeDataResp? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<$0.DBStockRealTimeItem> get items => $_getList(0);
+}
+
 /// 获取股票信息请求
 class StockGetInfosReq extends $pb.GeneratedMessage {
   factory StockGetInfosReq({

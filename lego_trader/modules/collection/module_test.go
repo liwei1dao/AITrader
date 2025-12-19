@@ -3,6 +3,7 @@ package collection_test
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"lego_trader/comm"
 	"lego_trader/pb"
 	"lego_trader/sys/akshare"
@@ -27,25 +28,24 @@ func TestStockAkshareComp(t *testing.T) {
 		return
 	}
 
-	records, err := akshare.GetStockNewsMainCx()
+	records, err := akshare.GetStockInfoGlobalThs()
 	if err != nil {
 		return
 	}
 	ctx := context.Background()
 	redisPip := db.Redis().Pipeline()
 	for _, r := range records {
-		item := &pb.DBMarketNews{
-			Tag:          r.Tag,
-			Summary:      r.Summary,
-			IntervalTime: r.IntervalTime,
-			PubTime:      r.PubTime,
-			Url:          r.URL,
+		item := &pb.DBRealTimeGlobalNews{
+			Title:       r.Title,
+			Content:     r.Content,
+			Url:         r.URL,
+			PublishTime: r.PublishTime,
 		}
 		var b []byte
 		if b, err = json.Marshal(item); err != nil {
 			return
 		}
-		redisPip.LPush(ctx, comm.Redis_MarketNews, string(b))
+		redisPip.LPush(ctx, fmt.Sprintf("%s:%s", comm.Redis_RealtimeNewsQueue, "stock_info_global_ths"), string(b))
 	}
 	_, err = redisPip.Exec(ctx)
 

@@ -6,13 +6,13 @@ import "market/market_db.proto";
 /*
 获取实时行情请求
 */
-message MarketGetSpotsReq {
+message MarketGetRealTimeIndexsReq {
     
 }
 /*
 获取实时行情响应
 */
-message MarketGetSpotsResp {
-  repeated DBMarketSpotItem Items = 1; //@go_tags(`json:"items"`)
+message MarketGetRealTimeIndexsResp {
+  repeated DBMarketIndexRealTimeItem Items = 1; //@go_tags(`json:"items"`)
 }
 

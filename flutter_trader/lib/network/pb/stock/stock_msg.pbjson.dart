@@ -15,6 +15,40 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use stockGetRealTimeDataReqDescriptor instead')
+const StockGetRealTimeDataReq$json = {
+  '1': 'StockGetRealTimeDataReq',
+  '2': [
+    {'1': 'codes', '3': 1, '4': 3, '5': 9, '10': 'codes'},
+  ],
+};
+
+/// Descriptor for `StockGetRealTimeDataReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List stockGetRealTimeDataReqDescriptor =
+    $convert.base64Decode(
+        'ChdTdG9ja0dldFJlYWxUaW1lRGF0YVJlcRIUCgVjb2RlcxgBIAMoCVIFY29kZXM=');
+
+@$core.Deprecated('Use stockGetRealTimeDataRespDescriptor instead')
+const StockGetRealTimeDataResp$json = {
+  '1': 'StockGetRealTimeDataResp',
+  '2': [
+    {
+      '1': 'items',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.DBStockRealTimeItem',
+      '10': 'items'
+    },
+  ],
+};
+
+/// Descriptor for `StockGetRealTimeDataResp`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List stockGetRealTimeDataRespDescriptor =
+    $convert.base64Decode(
+        'ChhTdG9ja0dldFJlYWxUaW1lRGF0YVJlc3ASKgoFaXRlbXMYASADKAsyFC5EQlN0b2NrUmVhbF'
+        'RpbWVJdGVtUgVpdGVtcw==');
+
 @$core.Deprecated('Use stockGetInfosReqDescriptor instead')
 const StockGetInfosReq$json = {
   '1': 'StockGetInfosReq',

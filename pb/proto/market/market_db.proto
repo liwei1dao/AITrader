@@ -2,11 +2,32 @@ syntax = "proto3";
 option go_package = ".;pb";
 
 
-// 指数实时快照（东方财富 stock_zh_index_spot）
-message DBMarketSpotItem  {
-    string Code     = 1; // 指数代码，如“000001”
-    string Name     = 2; // 指数名称，如“上证指数”
-    double Last     = 3; // 最新价
-    double ChangePct = 4; // 涨跌幅
-    double TurnOver = 5; // 成交额（元）
+/*
+    市场实时指数数据
+*/
+message DBMarketIndexRealTimeItem  {
+  int64 index     = 1; //@go_tags(`gorm:"primaryKey" json:"index"`) 序号
+  string code     = 2; //@go_tags(`gorm:"column:Code" json:"code"`) 指数代码，如“000001”
+  string name     = 3; //@go_tags(`gorm:"column:Name" json:"name"`) 指数名称，如“上证指数”
+  double last_price     = 4; //@go_tags(`gorm:"column:lastprice" json:"last_price"`) 最新价
+  double change_pct = 5; //@go_tags(`gorm:"column:change_pct" json:"change_pct"`) 涨跌幅
+  double change_amt = 6; //@go_tags(`gorm:"column:change_amt" json:"change_amt"`) 涨跌额
+  double volume = 7; //@go_tags(`gorm:"column:volume" json:"volume"`) 成交量
+  double amount = 8; //@go_tags(`gorm:"column:amount" json:"amount"`) 成交额
+  double amplitude = 9; //@go_tags(`gorm:"column:amplitude" json:"amplitude"`) 振幅
+  double high = 10; //@go_tags(`gorm:"column:high" json:"high"`) 最高
+  double low = 11; //@go_tags(`gorm:"column:low" json:"low"`) 最低
+  double open = 12; //@go_tags(`gorm:"column:open" json:"open"`) 今开
+  double prev_close = 13; //@go_tags(`gorm:"column:prev_close" json:"prev_close"`) 昨收
+  double volume_ratio = 14; //@go_tags(`gorm:"column:volume_ratio" json:"volume_ratio"`) 量比
+  double turnover_rate = 15; //@go_tags(`gorm:"column:turnover_rate" json:"turnover_rate"`) 换手率
+  double pe_dynamic = 16; //@go_tags(`gorm:"column:pe_dynamic" json:"pe_dynamic"`) 市盈率-动态
+  double pb_ratio = 17; //@go_tags(`gorm:"column:pb_ratio" json:"pb_ratio"`) 市净率
+  double total_market_cap = 18; //@go_tags(`gorm:"column:total_market_cap" json:"total_market_cap"`) 总市值
+  double circulating_market_cap = 19; //@go_tags(`gorm:"column:circulating_market_cap" json:"circulating_market_cap"`) 流通市值
+  double price_speed = 20; //@go_tags(`gorm:"column:price_speed" json:"price_speed"`) 涨速
+  double five_min_change = 21; //@go_tags(`gorm:"column:five_min_change" json:"five_min_change"`) 5分钟涨跌
+  double sixty_day_change_pct = 22; //@go_tags(`gorm:"column:sixty_day_change_pct" json:"sixty_day_change_pct"`) 60日涨跌幅
+  double ytd_change_pct = 23; //@go_tags(`gorm:"column:ytd_change_pct" json:"ytd_change_pct"`) 年初至今涨跌幅
 }
+

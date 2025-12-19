@@ -1,14 +1,12 @@
 package collection
 
 import (
-	"context"
 	"encoding/json"
 	"lego_trader/comm"
 	"lego_trader/lego/core"
 	"lego_trader/lego/core/cbase"
 	"lego_trader/pb"
 	"lego_trader/sys/akshare"
-	"lego_trader/sys/db"
 	"time"
 )
 
@@ -28,7 +26,101 @@ func (this *stockAkshareComp) Init(service core.IService, module core.IModule, c
 	return
 }
 
-// 获取股票基本信息
+/*----------------------------------------------------新闻-----------------------------------------------------------*/
+/// 获取全球股市资讯（同花顺 stock_info_global_ths）
+/// 作用: 大盘看板的全球股市资讯源，用于新闻/快讯模块
+/// 参数: 无；返回: 全球股市资讯列表（结构化）
+func (this *stockAkshareComp) getRealTimeNews() (err error) {
+	var (
+		records []akshare.StockInfoGlobalThsRecord
+		items   []*pb.DBRealTimeGlobalNews
+	)
+
+	records, err = akshare.GetStockInfoGlobalThs()
+	if err != nil {
+		return
+	}
+	if len(records) == 0 {
+		return
+	}
+	for _, r := range records {
+		item := &pb.DBRealTimeGlobalNews{
+			Title:       r.Title,
+			Content:     r.Content,
+			Url:         r.URL,
+			PublishTime: r.PublishTime,
+		}
+		items = append(items, item)
+	}
+	if len(items) > 0 {
+		if err = this.module.model.updateRealTimeNews("ths", items); err != nil {
+			return
+		}
+	}
+	return
+}
+
+/*----------------------------------------------------指数-----------------------------------------------------------*/
+/*
+获取市场实时指数（akshare）
+参数: 无
+返回值: err 错误信息；成功时返回 nil
+异常: 上游 AkShare 访问失败或解码失败时返回错误
+*/
+func (this *stockAkshareComp) getMarketRealTimeIndexs() (err error) {
+	var (
+		records []akshare.StockZhASpotEMRecord
+		items   []*pb.DBMarketIndexRealTimeItem
+	)
+	records, err = akshare.GetStockZhIndexSpot()
+	if err != nil {
+		return
+	}
+	items = make([]*pb.DBMarketIndexRealTimeItem, 0, len(records))
+	for _, r := range records {
+		item := &pb.DBMarketIndexRealTimeItem{
+			Index:                r.Index,
+			Code:                 r.Code,
+			Name:                 r.Name,
+			LastPrice:            r.LastPrice,
+			ChangePct:            r.ChangePct,
+			ChangeAmt:            r.ChangeAmt,
+			Volume:               r.Volume,
+			Amount:               r.Amount,
+			Amplitude:            r.Amplitude,
+			High:                 r.High,
+			Low:                  r.Low,
+			Open:                 r.Open,
+			PrevClose:            r.PrevClose,
+			VolumeRatio:          r.VolumeRatio,
+			TurnoverRate:         r.TurnoverRate,
+			PeDynamic:            r.PeDynamic,
+			PbRatio:              r.PbRatio,
+			TotalMarketCap:       r.TotalMarketCap,
+			CirculatingMarketCap: r.CirculatingMarketCap,
+			PriceSpeed:           r.PriceSpeed,
+			FiveMinChange:        r.FiveMinChange,
+			SixtyDayChangePct:    r.SixtyDayChangePct,
+			YtdChangePct:         r.YtdChangePct,
+		}
+		items = append(items, item)
+	}
+	if len(items) > 0 {
+		if err = this.module.model.updateRealTimeIndexs(items); err != nil {
+			return
+		}
+	}
+	return
+}
+
+/*-----------------------------------------------------股票----------------------------------------------------------*/
+
+/*
+获取股票基本信息
+参数: symbol 股票符号（例如："sh.000001"）
+返回值: info 股票基本信息；err 错误信息；成功时返回 nil
+异常: 上游 AkShare 访问失败或解码失败时返回错误
+*/
 func (this *stockAkshareComp) getStockBasicInfo(symbol string) (info *pb.DBStockIdentity, err error) {
 	var (
 		basicInfo *akshare.StockBasicInfo
@@ -72,65 +164,25 @@ func (this *stockAkshareComp) getStockBasicInfo(symbol string) (info *pb.DBStock
 	return
 }
 
-// 获取股票快照信息
-func (this *stockAkshareComp) getStockFundamentalSnapshot(symbol string) (snapshot *pb.DBFundamentalSnapshot, err error) {
-	market, code, akSymbol := comm.NormalizeSymbol(symbol)
-	summary, err := akshare.GetStockFinancialSummary(akSymbol)
-	if err != nil {
-		return nil, err
-	}
-	snapshot = &pb.DBFundamentalSnapshot{}
-	snapshot.Symbol = code
-	snapshot.Market = market
-	snapshot.Source = "akshare_xq"
-	snapshot.Ts = time.Now().Format(time.RFC3339)
-	snapshot.Period = summary.Period
-	snapshot.FiscalYear = summary.FiscalYear
-	snapshot.FiscalQuarter = summary.FiscalQuarter
-	snapshot.Revenue = summary.Revenue
-	snapshot.OperatingIncome = summary.OperatingIncome
-	snapshot.NetProfit = summary.NetProfit
-	snapshot.EPS = summary.EPS
-	snapshot.ROE = summary.ROE
-	snapshot.ROA = summary.ROA
-	snapshot.GrossMargin = summary.GrossMargin
-	snapshot.OperatingMargin = summary.OperatingMargin
-	snapshot.NetMargin = summary.NetMargin
-	snapshot.PE = summary.PE
-	snapshot.PB = summary.PB
-	snapshot.PS = summary.PS
-	snapshot.DividendPerShare = summary.DividendPerShare
-	snapshot.DividendYield = summary.DividendYield
-	snapshot.FreeCashFlow = summary.FreeCashFlow
-	snapshot.DebtToEquity = summary.DebtToEquity
-	snapshot.CurrentRatio = summary.CurrentRatio
-	snapshot.QuickRatio = summary.QuickRatio
-	snapshot.TotalAssets = summary.TotalAssets
-	snapshot.TotalLiabilities = summary.TotalLiabilities
-	snapshot.Equity = summary.Equity
-	snapshot.RevenueYoY = summary.RevenueYoY
-	snapshot.NetProfitYoY = summary.NetProfitYoY
-	snapshot.EPSYoY = summary.EPSYoY
-	return
-}
-
-// getStockZhASpotEM 获取沪深京 A 股实时行情并写入Redis
-// 参数: 无
-// 返回值: err 错误信息；成功时返回 nil
-// 异常: 上游 AkShare 访问失败或解码失败时返回错误
-func (this *stockAkshareComp) getStockZhASpotEM() (err error) {
+/*
+获取股票实时行情数据（akshare）
+参数: 无
+返回值: err 错误信息；成功时返回 nil
+异常: 上游 AkShare 访问失败或解码失败时返回错误
+*/
+func (this *stockAkshareComp) getStockRealTimeSpot() (err error) {
 	var (
 		records []akshare.StockZhASpotEMRecord
-		items   map[string]*pb.DBStockRealTimeItem
+		items   []*pb.DBStockRealTimeItem
 	)
 	records, err = akshare.GetStockZhASpotEM()
 	if err != nil {
 		return
 	}
 
-	items = make(map[string]*pb.DBStockRealTimeItem)
+	items = make([]*pb.DBStockRealTimeItem, 0, len(records))
 	for _, v := range records {
-		items[v.Code] = &pb.DBStockRealTimeItem{
+		items = append(items, &pb.DBStockRealTimeItem{
 			Code:                 v.Code,
 			Name:                 v.Name,
 			LastPrice:            v.LastPrice,
@@ -153,63 +205,10 @@ func (this *stockAkshareComp) getStockZhASpotEM() (err error) {
 			FiveMinChange:        v.FiveMinChange,
 			SixtyDayChangePct:    v.SixtyDayChangePct,
 			YtdChangePct:         v.YtdChangePct,
-		}
-	}
-	return
-}
-
-// GetStockZhIndexSpot 读取沪深主要指数的实时数据并写入Redis
-// 参数: 无
-// 返回值: 错误信息；成功时返回nil
-// 异常: 上游AkShare访问失败、JSON序列化失败、Redis写入失败时返回错误
-func (this *stockAkshareComp) GetStockZhIndexSpot() (err error) {
-	var (
-		records []akshare.IndexSpotRecord
-	)
-	records, err = akshare.GetStockZhIndexSpot()
-	if err != nil {
-		return
-	}
-	for _, v := range records {
-		this.module.model.UpdateMarketSpot(&pb.DBMarketSpotItem{
-			Code:      v.Code,
-			Name:      v.Name,
-			Last:      v.Last,
-			ChangePct: v.ChangePct,
-			TurnOver:  v.TurnOver,
 		})
 	}
-	return
-}
-
-// GetMarketNews 获取市场要闻（财新 stock_news_main_cx）
-// 参数: 无
-// 返回值: err 错误信息；成功时返回 nil
-// 异常: 上游 AkShare 访问失败或解码失败时返回错误
-func (this *stockAkshareComp) GetMarketNews() (err error) {
-	var (
-		records []akshare.StockNewsMainCxRecord
-	)
-	records, err = akshare.GetStockNewsMainCx()
-	if err != nil {
-		return
+	if len(items) > 0 {
+		err = this.module.model.updateRealTimeStock(items)
 	}
-	ctx := context.Background()
-	redisPip := db.Redis().Pipeline()
-	for _, r := range records {
-		item := &pb.DBMarketNews{
-			Tag:          r.Tag,
-			Summary:      r.Summary,
-			IntervalTime: r.IntervalTime,
-			PubTime:      r.PubTime,
-			Url:          r.URL,
-		}
-		var b []byte
-		if b, err = json.Marshal(item); err != nil {
-			return
-		}
-		redisPip.LPush(ctx, comm.Redis_MarketNews, string(b))
-	}
-	_, err = redisPip.Exec(ctx)
 	return
 }

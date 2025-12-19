@@ -11,23 +11,23 @@ import (
 @Tags User
 @Accept  json
 @Produce  json
-@Param user body pb.NewsMarketNewsReq true "获取市场要闻请求"
-@Success 200 {object} comm.HttpResult{data=pb.NewsMarketNewsResp} "成功返回市场要闻信息"
-@Router /api/home/news_marketnews [post]
+@Param user body pb.NewsGetRealTimeGlobalNewsReq true "获取市场要闻请求"
+@Success 200 {object} comm.HttpResult{data=pb.NewsGetRealTimeGlobalNewsResp} "成功返回市场要闻信息"
+@Router /api/home/get_realtimeglobalnews [post]
 */
-func (this *apiComp) MarketNews(session comm.IUserSession, req *pb.NewsMarketNewsReq) (errdata *pb.ErrorData) {
+func (this *apiComp) GetRealTimeGlobalNews(session comm.IUserSession, req *pb.NewsGetRealTimeGlobalNewsReq) (errdata *pb.ErrorData) {
 	var (
 		err   error
-		items []*pb.DBMarketNews
+		items []*pb.DBRealTimeGlobalNews
 	)
-	if items, err = this.module.model.getMarketNews(); err != nil {
+	if items, err = this.module.model.getMarketNews(this.options.Source); err != nil {
 		errdata = &pb.ErrorData{
 			Code:    pb.ErrorCode_DBError,
 			Message: err.Error(),
 		}
 		return
 	}
-	session.SendMsg("news.marketnews", &pb.NewsMarketNewsResp{
+	session.SendMsg("news.get_realtimeglobalnews", &pb.NewsGetRealTimeGlobalNewsResp{
 		News: items,
 	})
 	return
