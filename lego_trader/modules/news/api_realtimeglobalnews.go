@@ -13,7 +13,7 @@ import (
 @Produce  json
 @Param user body pb.NewsGetRealTimeGlobalNewsReq true "获取市场要闻请求"
 @Success 200 {object} comm.HttpResult{data=pb.NewsGetRealTimeGlobalNewsResp} "成功返回市场要闻信息"
-@Router /api/home/get_realtimeglobalnews [post]
+@Router /api/home/news.getrealtimeglobalnews [post]
 */
 func (this *apiComp) GetRealTimeGlobalNews(session comm.IUserSession, req *pb.NewsGetRealTimeGlobalNewsReq) (errdata *pb.ErrorData) {
 	var (

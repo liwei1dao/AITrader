@@ -25,7 +25,7 @@ class NewsController extends GetxController {
     loading.value = true;
     final req = nmsg.NewsGetRealTimeGlobalNewsReq();
     final future = _socket.request(
-      msgName: 'news.get_realtimeglobalnews',
+      msgName: 'news.getrealtimeglobalnews',
       payload: req,
     );
     future

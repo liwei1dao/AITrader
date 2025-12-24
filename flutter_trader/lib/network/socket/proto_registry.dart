@@ -51,8 +51,14 @@ void installDefaultProtoRegistry(SocketService service) {
     msgName: 'gateway.errornotify',
   );
   resolver.registerByMessage(upb.UserSginResp(), msgName: 'user.sgin');
-  resolver.registerByMessage(upb.UserGetStocksResp(), msgName: 'user.getstocks');
+  resolver.registerByMessage(
+    upb.UserGetStocksResp(),
+    msgName: 'user.getstocks',
+  );
   resolver.registerByMessage(upb.UserAddStockResp(), msgName: 'user.addstock');
-  resolver.registerByMessage(nmsg.NewsGetRealTimeGlobalNewsResp(), msgName: 'news.get_realtimeglobalnews');
+  resolver.registerByMessage(
+    nmsg.NewsGetRealTimeGlobalNewsResp(),
+    msgName: 'news.getrealtimeglobalnews',
+  );
   service.setResolver(resolver);
 }
