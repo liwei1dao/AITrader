@@ -120,55 +120,6 @@ func (this *stockAkshareComp) getMarketRealTimeIndexs() (err error) {
 /*-----------------------------------------------------股票----------------------------------------------------------*/
 
 /*
-获取股票基本信息
-参数: symbol 股票符号（例如："sh.000001"）
-返回值: info 股票基本信息；err 错误信息；成功时返回 nil
-异常: 上游 AkShare 访问失败或解码失败时返回错误
-*/
-func (this *stockAkshareComp) getStockBasicInfo(symbol string) (info *pb.DBStockIdentity, err error) {
-	var (
-		basicInfo *akshare.StockBasicInfo
-	)
-	info = &pb.DBStockIdentity{}
-
-	market, _, akSymbol := comm.NormalizeSymbol(symbol)
-
-	basicInfo, err = akshare.GetStockBasicInfo(akSymbol)
-	if err != nil {
-		return
-	}
-
-	info.Id = akSymbol
-	info.Market = market
-	if market == "sz" {
-		info.Exchange = "SZSE"
-	} else if market == "sh" {
-		info.Exchange = "SSE"
-	}
-	info.Name = basicInfo.OrgShortNameCn
-	info.FullName = basicInfo.OrgNameCn
-	info.Currency = basicInfo.Currency
-	info.Area = basicInfo.ProvincialName
-	if basicInfo.ListedDate > 0 {
-		info.ListDate = time.UnixMilli(basicInfo.ListedDate).Format("20060102")
-	}
-	if len(basicInfo.AffiliateIndustry) > 0 {
-		var ind struct {
-			IndCode string `json:"ind_code"`
-			IndName string `json:"ind_name"`
-		}
-		_ = json.Unmarshal([]byte(basicInfo.AffiliateIndustry), &ind)
-		if ind.IndName != "" {
-			info.Industry = ind.IndName
-		}
-		if ind.IndCode != "" {
-			info.Sector = ind.IndCode
-		}
-	}
-	return
-}
-
-/*
 获取股票实时行情数据（akshare）
 参数: 无
 返回值: err 错误信息；成功时返回 nil
@@ -215,6 +166,77 @@ func (this *stockAkshareComp) getStockRealTimeSpot() (err error) {
 		err = this.module.model.updateRealTimeStock(items)
 	} else {
 		this.module.Errorf("getStockRealTimeSpot: no data")
+	}
+	return
+}
+
+/*
+获取股票基本信息
+参数: symbol 股票符号（例如："sh.000001"）
+返回值: info 股票基本信息；err 错误信息；成功时返回 nil
+异常: 上游 AkShare 访问失败或解码失败时返回错误
+*/
+func (this *stockAkshareComp) getStockBasicInfo(symbol string) (info *pb.DBStockBasicInfo, err error) {
+	var (
+		basicInfo *akshare.StockBasicInfo
+	)
+	info = &pb.DBStockBasicInfo{}
+
+	market, _, akSymbol := comm.NormalizeSymbol(symbol)
+
+	basicInfo, err = akshare.GetStockBasicInfo(akSymbol)
+	if err != nil {
+		return
+	}
+
+	info.Id = akSymbol
+	info.Market = market
+	if market == "sz" {
+		info.Exchange = "SZSE"
+	} else if market == "sh" {
+		info.Exchange = "SSE"
+	}
+	info.Name = basicInfo.OrgShortNameCn
+	info.FullName = basicInfo.OrgNameCn
+	info.Currency = basicInfo.Currency
+	info.Area = basicInfo.ProvincialName
+	if basicInfo.ListedDate > 0 {
+		info.ListDate = time.UnixMilli(basicInfo.ListedDate).Format("20060102")
+	}
+	if len(basicInfo.AffiliateIndustry) > 0 {
+		var ind struct {
+			IndCode string `json:"ind_code"`
+			IndName string `json:"ind_name"`
+		}
+		_ = json.Unmarshal([]byte(basicInfo.AffiliateIndustry), &ind)
+		if ind.IndName != "" {
+			info.Industry = ind.IndName
+		}
+		if ind.IndCode != "" {
+			info.Sector = ind.IndCode
+		}
+	}
+	return
+}
+
+// 获取股票新闻/公告
+func (this *stockAkshareComp) getStockNews(symbol string) (items []*pb.DBStockNews, err error) {
+	var (
+		records []akshare.StockNewsEmRecord
+	)
+	records, err = akshare.GetStockNewsEm(symbol)
+	if err != nil {
+		return
+	}
+	items = make([]*pb.DBStockNews, 0, len(records))
+	for _, v := range records {
+
+		items = append(items, &pb.DBStockNews{
+			Symbol:       symbol,
+			Title:        v.Title,
+			Source:       v.Source,
+			Url:          v.URL,
+		})
 	}
 	return
 }

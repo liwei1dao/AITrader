@@ -27,7 +27,7 @@ func (this *apiComp) GetRealTimeData(session comm.IUserSession, req *pb.StockGet
 		}
 		return
 	}
-	session.SendMsg("stocks.getrealtimeindexs", &pb.StockGetRealTimeDataResp{
+	session.SendMsg("stocks.getrealtimedata", &pb.StockGetRealTimeDataResp{
 		Items: items,
 	})
 	return

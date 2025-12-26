@@ -113,8 +113,6 @@ type (
 		TurnoverRate float64 `json:"换手率" comment:"换手率(%)"`
 	}
 
-	// 新闻类型移至 akshare_news.go
-
 	// 基本面摘要（雪球/东方财富）
 	StockFinancialSummary struct {
 		Period           string  `json:"period"`

@@ -30,10 +30,10 @@ type UserSginReq struct {
 	Account  string   `protobuf:"bytes,2,opt,name=account,proto3" json:"account" example:"" description:"账号"`                //账号
 	Password string   `protobuf:"bytes,3,opt,name=password,proto3" json:"password" example:"" description:"密码"`              //密码
 	Mail     string   `protobuf:"bytes,4,opt,name=mail,proto3" json:"mail" example:"" description:"邮箱地址"`                    //邮箱地址
-	Phone    string   `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone" description:"手机号码“" example:""`                 //手机号
+	Phone    string   `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone" example:"" description:"手机号码“"`                 //手机号
 	Ttoken   string   `protobuf:"bytes,6,opt,name=ttoken,proto3" json:"ttoken" example:"" description:"第三方token"`            //第三方token
 	Vcode    string   `protobuf:"bytes,7,opt,name=vcode,proto3" json:"vcode" example:"" description:"验证码"`                   //验证码
-	Name     string   `protobuf:"bytes,10,opt,name=name,proto3" json:"name" description:"用户名" gorm:"name:50" example:""`     //用户名
+	Name     string   `protobuf:"bytes,10,opt,name=name,proto3" json:"name" gorm:"name:50" example:"" description:"用户名"`     //用户名
 	Avatar   string   `protobuf:"bytes,11,opt,name=avatar,proto3" json:"avatar" gorm:"avatar" example:"" description:"头像连接"` //头像连接
 	Language string   `protobuf:"bytes,12,opt,name=language,proto3" json:"language" example:"en" description:"语言"`           //
 }
@@ -382,7 +382,7 @@ type UserDelStockReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Stockid []string `protobuf:"bytes,2,rep,name=stockid,proto3" json:"stockid" description:"股票ID" example:""` //股票ID
+	Stockid []string `protobuf:"bytes,2,rep,name=stockid,proto3" json:"stockid" example:"" description:"股票ID"` //股票ID
 }
 
 func (x *UserDelStockReq) Reset() {

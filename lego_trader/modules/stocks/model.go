@@ -18,9 +18,9 @@ type modelComp struct {
 	module *Stock
 }
 
-// GetMarketSpot 获取市场股票指数
-// 参数: 无
-// 返回值: items - 股票指数信息列表；err - 错误信息；成功时err为nil
+// GetMarketSpot 获取股票实时数据
+// 参数: codes - 股票代码列表
+// 返回值: items - 股票实时数据列表；err - 错误信息；成功时err为nil
 // 异常: Redis查询失败时返回错误
 func (this *modelComp) getStocksRealTimeData(codes []string) (items []*pb.DBStockRealTimeItem, err error) {
 	var (
@@ -58,31 +58,61 @@ func (this *modelComp) getStocksRealTimeData(codes []string) (items []*pb.DBStoc
 	return
 }
 
+// GetStockIntradayChart 获取股票实时数据
+// 参数: code - 股票代码
+// 返回值: chart - 股票实时数据列表；err - 错误信息；成功时err为nil
+// 异常: Redis查询失败时返回错误
+func (this *modelComp) getStockIntradayChart(code string) (chart []*pb.DBStockRealTimeItem, err error) {
+	var (
+		ctx   = context.Background()
+		items []string
+	)
+	chart = make([]*pb.DBStockRealTimeItem, 0)
+	items, err = db.Redis().LRange(ctx, fmt.Sprintf("%s:%s", comm.Redis_RealtimeStockQueue, code), 0, -1).Result()
+	if err != nil {
+		this.module.Errorf("Redis pipeline execution error: %v", err)
+		return
+	}
+
+	for _, item := range items {
+		chartItem := &pb.DBStockRealTimeItem{}
+		if err := json.Unmarshal([]byte(item), chartItem); err != nil {
+			this.module.Errorf("Unmarshal error: %v value: %s", err, item)
+			continue
+		}
+		chart = append(chart, chartItem)
+	}
+	return
+}
+
 /*
 获取股票信息
-symbol: 股票代码 例如: SZ300001/SH600000
+code: 股票代码 例如: SZ300001/SH600000
 */
-func (this *modelComp) getStockIdentity(symbol string) (info *pb.DBStockIdentity, err error) {
-
+func (this *modelComp) getStockBasicInfo(code string) (info *pb.DBStockBasicInfo, err error) {
+	this.module.Debugf("getStockBasicInfo code: %s", code)
+	err = db.Mysql().FindOne(comm.TableStockBasicInfo, &info, "id = ?", code)
 	return
 }
 
 /*
 获取股票基本面快照
-symbol: 股票代码 例如: SZ300001/SH600000
+code: 股票代码 例如: SZ300001/SH600000
 */
-func (this *modelComp) getStockFundamentalSnapshot(symbol string) (snapshot *pb.DBFundamentalSnapshot, err error) {
-
+func (this *modelComp) getStockOperatingSnapshot(code string) (snapshot []*pb.DBStockOperatingSnapshot, err error) {
+	this.module.Debugf("getStockOperatingSnapshot code: %s", code)
+	snapshot = make([]*pb.DBStockOperatingSnapshot, 0)
+	err = db.Mysql().Find(comm.TableStockOperatingSnapshot, &snapshot, "symbol = ?", code)
 	return
 }
 
 /*
 获取股票日历史数据
-symbol: 股票代码 例如: SZ300001/SH600000
+code: 股票代码 例如: SZ300001/SH600000
 startDate: 开始日期
 endDate: 结束日期
 */
-func (this *modelComp) getStockDayHist(symbol string, startDate, endDate string) (hist []*pb.DBStockBar, err error) {
+func (this *modelComp) getStockDayHist(code string, startDate, endDate string) (hist []*pb.DBStockBar, err error) {
 	hist = make([]*pb.DBStockBar, 0)
 
 	return
@@ -90,11 +120,11 @@ func (this *modelComp) getStockDayHist(symbol string, startDate, endDate string)
 
 /*
 获取股票新闻
-symbol: 股票代码 例如: SZ300001/SH600000
+code: 股票代码 例如: SZ300001/SH600000
 startDate: 开始日期
 endDate: 结束日期
 */
-func (this *modelComp) getStockNews(symbol string, startDate, endDate string) (news []*pb.DBStockNews, err error) {
+func (this *modelComp) getStockNews(code string, startDate, endDate string) (news []*pb.DBStockNews, err error) {
 	news = make([]*pb.DBStockNews, 0)
 	return
 }

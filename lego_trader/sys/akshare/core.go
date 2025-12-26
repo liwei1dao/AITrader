@@ -13,7 +13,7 @@ type (
 		GetStockNewsMainCx() (records []StockNewsMainCxRecord, err error)
 		/// 获取个股新闻（东方财富 stock_news_em）
 		/// 参数: stockCode 6位或含前缀；page/size 可选；返回: 新闻列表（结构化）
-		GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error)
+		GetStockNewsEm(stockCode string) (records []StockNewsEmRecord, err error)
 	}
 	// 市场接口
 	IMarket interface {
@@ -166,8 +166,8 @@ func GetStockZhAHist(stockCode, period, start, end, adjust string) (records []St
 // GetStockNewsEm 获取个股新闻（东方财富）
 // - 参数: stockCode 可为6位或带前缀；page/size 可选
 // - 返回: 原始字段的新闻记录列表（标题/时间/来源/链接等）
-func GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error) {
-	return defsys.GetStockNewsEm(stockCode, page, size)
+func GetStockNewsEm(stockCode string) (records []StockNewsEmRecord, err error) {
+	return defsys.GetStockNewsEm(stockCode)
 }
 
 // GetStockNewsMainCx 获取市场要闻（财新）

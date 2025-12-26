@@ -3,6 +3,7 @@ package news
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"lego_trader/comm"
 	"lego_trader/lego/core"
 	"lego_trader/lego/core/cbase"
@@ -31,7 +32,7 @@ func (this *modelComp) getMarketNews(source string) (records []*pb.DBRealTimeGlo
 		ctx   = context.Background()
 		items []string
 	)
-	items, err = db.Redis().LRange(ctx, comm.Redis_RealtimeNewsQueue, 0, -1).Result()
+	items, err = db.Redis().LRange(ctx, fmt.Sprintf("%s:%s", comm.Redis_RealtimeNewsQueue, source), 0, -1).Result()
 	if err != nil {
 		return
 	}

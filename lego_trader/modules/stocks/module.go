@@ -26,3 +26,9 @@ func (this *Stock) Init(service core.IService, module core.IModule, options core
 	}
 	return
 }
+
+func (this *Stock) OnInstallComp() {
+	this.ModuleBase.OnInstallComp()
+	this.api = this.RegisterComp(new(apiComp)).(*apiComp)
+	this.model = this.RegisterComp(new(modelComp)).(*modelComp)
+}

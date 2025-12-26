@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;pb";
 
 // 股票基础信息（静态/半静态）
-message DBStockIdentity {
+message DBStockBasicInfo {
   string Id = 1;                   //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 股票代码
   string Market = 2;               //@go_tags(`gorm:"market;uniqueIndex:uk_market_symbol" json:"market"`) 市场标识(sh/sz)
   string Exchange = 3;             //@go_tags(`gorm:"exchange" json:"exchange"`) 交易所(SSE/SZSE)
@@ -16,7 +16,7 @@ message DBStockIdentity {
 }
 
 // 基本面快照（按期/按时间）
-message DBFundamentalSnapshot {
+message DBStockOperatingSnapshot {
   string Id = 1;                   //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
   string Symbol = 2;               //@go_tags(`gorm:"symbol;index" json:"symbol"`) 股票代码
   string Market = 3;               //@go_tags(`gorm:"market" json:"market"`) 市场标识
@@ -50,38 +50,10 @@ message DBFundamentalSnapshot {
   double RevenueYoY = 41;          //@go_tags(`gorm:"revenue_yoy" json:"revenue_yoy"`) 收入同比
   double NetProfitYoY = 42;        //@go_tags(`gorm:"net_profit_yoy" json:"net_profit_yoy"`) 净利润同比
   double EPSYoY = 43;              //@go_tags(`gorm:"eps_yoy" json:"eps_yoy"`) EPS 同比
-
-  map<string, double> Metrics = 60; //@go_tags(`gorm:"metrics;serializer:json" json:"metrics"`) 自定义扩展指标
   string CreateAt = 61;             //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
 }
 
 
-/*
-
-	Index                int64   `json:"序号"`
-	Code                 string  `json:"代码"`
-	Name                 string  `json:"名称"`
-	LastPrice            float64 `json:"最新价"`
-	ChangePct            float64 `json:"涨跌幅"`
-	ChangeAmt            float64 `json:"涨跌额"`
-	Volume               float64 `json:"成交量"`
-	Amount               float64 `json:"成交额"`
-	Amplitude            float64 `json:"振幅"`
-	High                 float64 `json:"最高"`
-	Low                  float64 `json:"最低"`
-	Open                 float64 `json:"今开"`
-	PrevClose            float64 `json:"昨收"`
-	VolumeRatio          float64 `json:"量比"`
-	TurnoverRate         float64 `json:"换手率"`
-	PeDynamic            float64 `json:"市盈率-动态"`
-	PbRatio              float64 `json:"市净率"`
-	TotalMarketCap       float64 `json:"总市值"`
-	CirculatingMarketCap float64 `json:"流通市值"`
-	PriceSpeed           float64 `json:"涨速"`
-	FiveMinChange        float64 `json:"5分钟涨跌"`
-	SixtyDayChangePct    float64 `json:"60日涨跌幅"`
-	YtdChangePct         float64 `json:"年初至今涨跌幅"`
-*/
 message DBStockRealTimeItem {
     string	Code               = 1; //@go_tags(`gorm:"code" json:"code"`) 股票代码
     string	Name               = 2; //@go_tags(`gorm:"name" json:"name"`) 股票名称
@@ -138,7 +110,8 @@ message DBStockNews {
   string Ts = 4;                   //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_ts" json:"ts"`) 时间戳(RFC3339)
   string Title = 5;                //@go_tags(`gorm:"title" json:"title"`) 新闻标题
   string Source = 6;               //@go_tags(`gorm:"source" json:"source"`) 数据来源
-  string CreateAt = 7;             //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
+  string Url = 7;                  //@go_tags(`gorm:"url" json:"url"`) 新闻链接
+  string CreateAt = 8;             //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间(RFC3339)
 }
 
 //股票分析报告 每日

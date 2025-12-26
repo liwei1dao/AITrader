@@ -43,12 +43,14 @@ class NewsView extends GetView<NewsController> {
         mainAxisSize: MainAxisSize.min,
         children: [
           FloatingActionButton.extended(
+            heroTag: 'news_refresh',
             onPressed: c.fetch,
             icon: const Icon(Icons.refresh),
             label: const Text('刷新'),
           ),
           const SizedBox(width: 12),
           FloatingActionButton.extended(
+            heroTag: 'news_clear',
             onPressed: c.clear,
             icon: const Icon(Icons.clear_all),
             label: const Text('清空'),

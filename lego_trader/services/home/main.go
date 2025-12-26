@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"lego_trader/modules/market"
 	"lego_trader/modules/news"
+	"lego_trader/modules/stocks"
 	"lego_trader/modules/user"
 	"lego_trader/services"
 	"lego_trader/sys/db"
@@ -40,6 +41,7 @@ func main() {
 		user.NewModule(),
 		news.NewModule(),
 		market.NewModule(),
+		stocks.NewModule(),
 	)
 }
 

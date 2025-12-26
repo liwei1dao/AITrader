@@ -40,15 +40,9 @@ type (
 // - 参数: stockCode 可为6位或带前缀；page/size 可选（nil 表示不传）
 // - 返回: 新闻列表（标题/时间/来源/链接等字段）
 // - 异常: 网络错误/解码错误或上游返回错误对象时返回错误
-func (a *AkShare) GetStockNewsEm(stockCode string, page, size *int) (records []StockNewsEmRecord, err error) {
-	q := ""
-	if page != nil {
-		q += fmt.Sprintf("&page=%d", *page)
-	}
-	if size != nil {
-		q += fmt.Sprintf("&size=%d", *size)
-	}
-	url := fmt.Sprintf("%s/api/public/stock_news_em?symbol=%s%s", a.options.BaseUrl, stockCode, q)
+func (a *AkShare) GetStockNewsEm(stockCode string) (records []StockNewsEmRecord, err error) {
+
+	url := fmt.Sprintf("%s/api/public/stock_news_em?symbol=%s", a.options.BaseUrl, stockCode)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err

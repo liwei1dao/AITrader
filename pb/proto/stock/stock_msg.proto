@@ -11,24 +11,34 @@ message StockGetRealTimeDataResp {
   repeated DBStockRealTimeItem items = 1;
 }
 
+//获取股票当日分时数据
+message StockGetIntradayChartReq {
+  string code = 1;
+}
+
+//获取股票当日分时数据响应
+message StockGetIntradayChartResp {
+  repeated DBStockRealTimeItem items = 1;
+}
+
 
 
 // 获取股票信息请求
-message StockGetInfosReq {  
-  repeated string stock_ids = 1;
+message StockGetBasicInfoReq {  
+  string code = 1;
 }
 
-message StockGetInfosResp {
-  repeated DBStockIdentity stock_infos = 1;
+message StockGetBasicInfoResp {
+  DBStockBasicInfo info = 1;
 }
 
 
-// 获取基本面快照请求
-message StockGetFundamentalSnapshotReq {
-  string id = 1;
+// 获取股票的经营快照
+message StockGetOperatingSnapshotReq {
+  string code = 1;
 }
 
-message StockGetFundamentalSnapshotResp {
-  repeated DBFundamentalSnapshot snapshots = 1;
+message StockGetOperatingSnapshotResp {
+  repeated DBStockOperatingSnapshot snapshots = 1;
 }
 

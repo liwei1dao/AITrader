@@ -1,15 +1,37 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 import '../../network/socket/socket_service.dart';
+import '../../network/pb/gateway/gateway_msg.pb.dart' as gw;
 import '../../network/pb/user/user_msg.pb.dart' as userpb;
 import '../../network/pb/user/user_db.pb.dart' as userdb;
-import '../../network/pb/gateway/gateway_msg.pb.dart' as gw;
+import '../../network/pb/stock/stock_db.pb.dart' as stockdb;
+import '../../network/pb/stock/stock_msg.pb.dart' as stockmsg;
 import 'package:fixnum/fixnum.dart' as fixnum;
 
 class StocksController extends GetxController {
   final stocks = <userdb.DBUserStock>[].obs;
+  final realTimeData = <String, stockdb.DBStockRealTimeItem>{}.obs;
   final loading = false.obs;
+  Timer? _timer;
   late final SocketService _socket;
+
+  @override
+  void onClose() {
+    _timer?.cancel();
+    super.onClose();
+  }
+
+  /// 开启实时数据更新定时器
+  void _startRealTimeUpdates() {
+    _timer?.cancel();
+    // 立即请求一次
+    _fetchRealTimeData();
+    // 每分钟请求一次
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+      _fetchRealTimeData();
+    });
+  }
 
   /// 获取用户股票列表
   ///
@@ -26,10 +48,39 @@ class StocksController extends GetxController {
           loading.value = false;
           if (resp is userpb.UserGetStocksResp) {
             stocks.assignAll(resp.stocks);
+            // 添加新股票后立即更新一次数据
+            _fetchRealTimeData();
           }
         })
         .catchError((err) {
           loading.value = false;
+          if (err is gw.GatewayErrorNotifyPush) {
+            Get.snackbar('错误', err.hasError() ? err.error.message : '网关错误');
+          } else {
+            Get.snackbar('错误', err.toString());
+          }
+        });
+  }
+
+  /// 获取实时数据
+  void _fetchRealTimeData() {
+    if (stocks.isEmpty) return;
+    final codes = stocks.map((s) => s.stockid).toList();
+    final req = stockmsg.StockGetRealTimeDataReq(codes: codes);
+    _socket
+        .request(msgName: 'stock.getrealtimedata', payload: req)
+        .then((resp) {
+          if (resp is stockmsg.StockGetRealTimeDataResp) {
+            final Map<String, stockdb.DBStockRealTimeItem> dataMap = {};
+            for (var item in resp.items) {
+              dataMap[item.code] = item;
+            }
+            //打印一下实时数据
+            print('实时数据：$dataMap');
+            realTimeData.assignAll(dataMap);
+          }
+        })
+        .catchError((err) {
           if (err is gw.GatewayErrorNotifyPush) {
             Get.snackbar('错误', err.hasError() ? err.error.message : '网关错误');
           } else {
@@ -49,11 +100,13 @@ class StocksController extends GetxController {
     required int amount,
   }) async {
     if (stockId.isEmpty) return;
-    final req = userpb.UserAddStockReq()
-      ..stock = (userdb.DBUserStock()
-        ..stockid = stockId
-        ..costprice = costPrice
-        ..amount = fixnum.Int64(amount));
+    final req =
+        userpb.UserAddStockReq()
+          ..stock =
+              (userdb.DBUserStock()
+                ..stockid = stockId
+                ..costprice = costPrice
+                ..amount = fixnum.Int64(amount));
     final future = _socket.request(msgName: 'user.addstock', payload: req);
     future
         .then((resp) {
@@ -135,6 +188,9 @@ class StocksController extends GetxController {
   void onReady() {
     super.onReady();
     fetchStocks();
+    _timer = Timer.periodic(const Duration(seconds: 120), (timer) {
+      _fetchRealTimeData();
+    });
   }
 
   @override

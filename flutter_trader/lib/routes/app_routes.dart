@@ -5,4 +5,5 @@ class AppRoutes {
   static const marketGlobal = '/market/global';
   static const marketUS = '/market/us';
   static const marketAShare = '/market/a';
+  static const stockDetail = '/stock/detail';
 }
