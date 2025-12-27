@@ -1,0 +1,14 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+// 初始化股票数据请求
+// 参数: code 股票代码
+message RPC_CollectionInitStockReq {
+  string code = 1;
+}
+
+// 初始化股票数据响应
+// 参数: code 股票代码
+message RPC_CollectionInitStockResp {
+  int64 code = 1;
+}

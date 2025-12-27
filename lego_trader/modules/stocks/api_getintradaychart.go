@@ -6,13 +6,13 @@ import (
 )
 
 /*
-@Summary 获取股票实时数据
-@Description 获取用户关注的股票实时数据
+@Summary 获取股票分时数据接口
+@Description 获取用户关注的股票分时数据
 @Tags User
 @Accept  json
 @Produce  json
-@Param user body pb.StockGetIntradayChartReq true "获取股票实时数据请求"
-@Success 200 {object} comm.HttpResult{data=pb.StockGetRealTimeDataResp} "成功返回股票实时数据"
+@Param user body pb.StockGetIntradayChartReq true "获取股票分时数据请求"
+@Success 200 {object} comm.HttpResult{data=pb.StockGetIntradayChartResp} "成功返回股票分时数据"
 @Router /api/home/stocks.getintradaychart [post]
 */
 func (this *apiComp) GetIntradayChart(session comm.IUserSession, req *pb.StockGetIntradayChartReq) (errdata *pb.ErrorData) {

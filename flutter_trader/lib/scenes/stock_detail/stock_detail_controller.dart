@@ -1,49 +1,64 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import '../../network/socket/socket_service.dart';
-import '../../network/pb/stock/stock_msg.pb.dart' as stockmsg;
+import '../../network/pb/stock/stock_msg.pb.dart' as stockpb;
 import '../../network/pb/stock/stock_db.pb.dart' as stockdb;
 
 class StockDetailController extends GetxController {
-  late final SocketService _socket;
   late final String stockId;
-  final realTimeData = Rxn<stockdb.DBStockRealTimeItem>();
+  final detail = Rxn<stockdb.DBStockRealTimeItem>();
   final loading = false.obs;
-  Timer? _timer;
+  late final SocketService _socket;
+  Timer? _refreshTimer;
 
   @override
   void onInit() {
     super.onInit();
     _socket = Get.find<SocketService>();
-    stockId = Get.arguments as String;
+    stockId = Get.arguments['stockId'] ?? '';
   }
 
   @override
   void onReady() {
     super.onReady();
-    _startRealTimeUpdates();
+    if (stockId.isNotEmpty) {
+      fetchDetail();
+      _startAutoRefresh();
+    }
   }
 
   @override
   void onClose() {
-    _timer?.cancel();
+    _stopAutoRefresh();
     super.onClose();
   }
 
-  void _startRealTimeUpdates() {
-    _timer?.cancel();
-    _fetchRealTimeData();
-    _timer = Timer.periodic(const Duration(seconds: 3), (_) {
-      _fetchRealTimeData();
+  Future<void> fetchDetail() async {
+    if (detail.value == null) loading.value = true;
+    
+    final req = stockpb.StockGetRealTimeDataReq(codes: [stockId]);
+    try {
+      final resp = await _socket.request(
+        msgName: 'stock.getrealtimedata', 
+        payload: req
+      );
+      if (resp is stockpb.StockGetRealTimeDataResp && resp.items.isNotEmpty) {
+        detail.value = resp.items.first;
+      }
+    } catch (e) {
+      print('Fetch detail error: $e');
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  void _startAutoRefresh() {
+    _refreshTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+      fetchDetail();
     });
   }
 
-  void _fetchRealTimeData() {
-    final req = stockmsg.StockGetRealTimeDataReq(codes: [stockId]);
-    _socket.request(msgName: 'stock.getrealtimedata', payload: req).then((resp) {
-      if (resp is stockmsg.StockGetRealTimeDataResp && resp.items.isNotEmpty) {
-        realTimeData.value = resp.items.first;
-      }
-    });
+  void _stopAutoRefresh() {
+    _refreshTimer?.cancel();
   }
 }

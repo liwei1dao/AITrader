@@ -59,7 +59,7 @@
             "configurations": [
                 "gateway",
                 "home",
-                "collection"
+                // "collection"
             ]
         }
     ]

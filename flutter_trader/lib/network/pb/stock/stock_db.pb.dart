@@ -12,14 +12,13 @@
 
 import 'dart:core' as $core;
 
-import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 /// 股票基础信息（静态/半静态）
-class DBStockIdentity extends $pb.GeneratedMessage {
-  factory DBStockIdentity({
+class DBStockBasicInfo extends $pb.GeneratedMessage {
+  factory DBStockBasicInfo({
     $core.String? id,
     $core.String? market,
     $core.String? exchange,
@@ -45,17 +44,17 @@ class DBStockIdentity extends $pb.GeneratedMessage {
     return result;
   }
 
-  DBStockIdentity._();
+  DBStockBasicInfo._();
 
-  factory DBStockIdentity.fromBuffer($core.List<$core.int> data,
+  factory DBStockBasicInfo.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory DBStockIdentity.fromJson($core.String json,
+  factory DBStockBasicInfo.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'DBStockIdentity',
+      _omitMessageNames ? '' : 'DBStockBasicInfo',
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'Id', protoName: 'Id')
     ..aOS(2, _omitFieldNames ? '' : 'Market', protoName: 'Market')
@@ -70,23 +69,23 @@ class DBStockIdentity extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DBStockIdentity clone() => deepCopy();
+  DBStockBasicInfo clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DBStockIdentity copyWith(void Function(DBStockIdentity) updates) =>
-      super.copyWith((message) => updates(message as DBStockIdentity))
-          as DBStockIdentity;
+  DBStockBasicInfo copyWith(void Function(DBStockBasicInfo) updates) =>
+      super.copyWith((message) => updates(message as DBStockBasicInfo))
+          as DBStockBasicInfo;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static DBStockIdentity create() => DBStockIdentity._();
+  static DBStockBasicInfo create() => DBStockBasicInfo._();
   @$core.override
-  DBStockIdentity createEmptyInstance() => create();
+  DBStockBasicInfo createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static DBStockIdentity getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<DBStockIdentity>(create);
-  static DBStockIdentity? _defaultInstance;
+  static DBStockBasicInfo getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<DBStockBasicInfo>(create);
+  static DBStockBasicInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -180,8 +179,8 @@ class DBStockIdentity extends $pb.GeneratedMessage {
 }
 
 /// 基本面快照（按期/按时间）
-class DBFundamentalSnapshot extends $pb.GeneratedMessage {
-  factory DBFundamentalSnapshot({
+class DBStockOperatingSnapshot extends $pb.GeneratedMessage {
+  factory DBStockOperatingSnapshot({
     $core.String? id,
     $core.String? symbol,
     $core.String? market,
@@ -214,7 +213,6 @@ class DBFundamentalSnapshot extends $pb.GeneratedMessage {
     $core.double? revenueYoY,
     $core.double? netProfitYoY,
     $core.double? ePSYoY,
-    $core.Iterable<$core.MapEntry<$core.String, $core.double>>? metrics,
     $core.String? createAt,
   }) {
     final result = create();
@@ -250,22 +248,21 @@ class DBFundamentalSnapshot extends $pb.GeneratedMessage {
     if (revenueYoY != null) result.revenueYoY = revenueYoY;
     if (netProfitYoY != null) result.netProfitYoY = netProfitYoY;
     if (ePSYoY != null) result.ePSYoY = ePSYoY;
-    if (metrics != null) result.metrics.addEntries(metrics);
     if (createAt != null) result.createAt = createAt;
     return result;
   }
 
-  DBFundamentalSnapshot._();
+  DBStockOperatingSnapshot._();
 
-  factory DBFundamentalSnapshot.fromBuffer($core.List<$core.int> data,
+  factory DBStockOperatingSnapshot.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory DBFundamentalSnapshot.fromJson($core.String json,
+  factory DBStockOperatingSnapshot.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'DBFundamentalSnapshot',
+      _omitMessageNames ? '' : 'DBStockOperatingSnapshot',
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'Id', protoName: 'Id')
     ..aOS(2, _omitFieldNames ? '' : 'Symbol', protoName: 'Symbol')
@@ -303,33 +300,28 @@ class DBFundamentalSnapshot extends $pb.GeneratedMessage {
     ..aD(41, _omitFieldNames ? '' : 'RevenueYoY', protoName: 'RevenueYoY')
     ..aD(42, _omitFieldNames ? '' : 'NetProfitYoY', protoName: 'NetProfitYoY')
     ..aD(43, _omitFieldNames ? '' : 'EPSYoY', protoName: 'EPSYoY')
-    ..m<$core.String, $core.double>(60, _omitFieldNames ? '' : 'Metrics',
-        protoName: 'Metrics',
-        entryClassName: 'DBFundamentalSnapshot.MetricsEntry',
-        keyFieldType: $pb.PbFieldType.OS,
-        valueFieldType: $pb.PbFieldType.OD)
     ..aOS(61, _omitFieldNames ? '' : 'CreateAt', protoName: 'CreateAt')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DBFundamentalSnapshot clone() => deepCopy();
+  DBStockOperatingSnapshot clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DBFundamentalSnapshot copyWith(
-          void Function(DBFundamentalSnapshot) updates) =>
-      super.copyWith((message) => updates(message as DBFundamentalSnapshot))
-          as DBFundamentalSnapshot;
+  DBStockOperatingSnapshot copyWith(
+          void Function(DBStockOperatingSnapshot) updates) =>
+      super.copyWith((message) => updates(message as DBStockOperatingSnapshot))
+          as DBStockOperatingSnapshot;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static DBFundamentalSnapshot create() => DBFundamentalSnapshot._();
+  static DBStockOperatingSnapshot create() => DBStockOperatingSnapshot._();
   @$core.override
-  DBFundamentalSnapshot createEmptyInstance() => create();
+  DBStockOperatingSnapshot createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static DBFundamentalSnapshot getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<DBFundamentalSnapshot>(create);
-  static DBFundamentalSnapshot? _defaultInstance;
+  static DBStockOperatingSnapshot getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<DBStockOperatingSnapshot>(create);
+  static DBStockOperatingSnapshot? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -619,44 +611,16 @@ class DBFundamentalSnapshot extends $pb.GeneratedMessage {
   @$pb.TagNumber(43)
   void clearEPSYoY() => $_clearField(43);
 
-  @$pb.TagNumber(60)
-  $pb.PbMap<$core.String, $core.double> get metrics => $_getMap(32);
-
   @$pb.TagNumber(61)
-  $core.String get createAt => $_getSZ(33);
+  $core.String get createAt => $_getSZ(32);
   @$pb.TagNumber(61)
-  set createAt($core.String value) => $_setString(33, value);
+  set createAt($core.String value) => $_setString(32, value);
   @$pb.TagNumber(61)
-  $core.bool hasCreateAt() => $_has(33);
+  $core.bool hasCreateAt() => $_has(32);
   @$pb.TagNumber(61)
   void clearCreateAt() => $_clearField(61);
 }
 
-///
-///
-/// Index                int64   `json:"序号"`
-/// Code                 string  `json:"代码"`
-/// Name                 string  `json:"名称"`
-/// LastPrice            float64 `json:"最新价"`
-/// ChangePct            float64 `json:"涨跌幅"`
-/// ChangeAmt            float64 `json:"涨跌额"`
-/// Volume               float64 `json:"成交量"`
-/// Amount               float64 `json:"成交额"`
-/// Amplitude            float64 `json:"振幅"`
-/// High                 float64 `json:"最高"`
-/// Low                  float64 `json:"最低"`
-/// Open                 float64 `json:"今开"`
-/// PrevClose            float64 `json:"昨收"`
-/// VolumeRatio          float64 `json:"量比"`
-/// TurnoverRate         float64 `json:"换手率"`
-/// PeDynamic            float64 `json:"市盈率-动态"`
-/// PbRatio              float64 `json:"市净率"`
-/// TotalMarketCap       float64 `json:"总市值"`
-/// CirculatingMarketCap float64 `json:"流通市值"`
-/// PriceSpeed           float64 `json:"涨速"`
-/// FiveMinChange        float64 `json:"5分钟涨跌"`
-/// SixtyDayChangePct    float64 `json:"60日涨跌幅"`
-/// YtdChangePct         float64 `json:"年初至今涨跌幅"`
 class DBStockRealTimeItem extends $pb.GeneratedMessage {
   factory DBStockRealTimeItem({
     $core.String? code,
@@ -972,35 +936,33 @@ class DBStockBar extends $pb.GeneratedMessage {
     $core.String? id,
     $core.String? symbol,
     $core.String? market,
-    $core.String? timeframe,
-    $core.String? ts,
+    $core.String? date,
     $core.double? open,
+    $core.double? close,
     $core.double? high,
     $core.double? low,
-    $core.double? close,
-    $fixnum.Int64? volume,
-    $core.double? turnover,
-    $core.double? adjFactor,
-    $core.String? source,
-    $core.String? createAt,
-    $core.String? updateAt,
+    $core.double? volume,
+    $core.double? amount,
+    $core.double? amplitude,
+    $core.double? changePct,
+    $core.double? changeAmt,
+    $core.double? turnoverRate,
   }) {
     final result = create();
     if (id != null) result.id = id;
     if (symbol != null) result.symbol = symbol;
     if (market != null) result.market = market;
-    if (timeframe != null) result.timeframe = timeframe;
-    if (ts != null) result.ts = ts;
+    if (date != null) result.date = date;
     if (open != null) result.open = open;
+    if (close != null) result.close = close;
     if (high != null) result.high = high;
     if (low != null) result.low = low;
-    if (close != null) result.close = close;
     if (volume != null) result.volume = volume;
-    if (turnover != null) result.turnover = turnover;
-    if (adjFactor != null) result.adjFactor = adjFactor;
-    if (source != null) result.source = source;
-    if (createAt != null) result.createAt = createAt;
-    if (updateAt != null) result.updateAt = updateAt;
+    if (amount != null) result.amount = amount;
+    if (amplitude != null) result.amplitude = amplitude;
+    if (changePct != null) result.changePct = changePct;
+    if (changeAmt != null) result.changeAmt = changeAmt;
+    if (turnoverRate != null) result.turnoverRate = turnoverRate;
     return result;
   }
 
@@ -1019,18 +981,17 @@ class DBStockBar extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'Id', protoName: 'Id')
     ..aOS(2, _omitFieldNames ? '' : 'Symbol', protoName: 'Symbol')
     ..aOS(3, _omitFieldNames ? '' : 'Market', protoName: 'Market')
-    ..aOS(4, _omitFieldNames ? '' : 'Timeframe', protoName: 'Timeframe')
-    ..aOS(5, _omitFieldNames ? '' : 'Ts', protoName: 'Ts')
-    ..aD(6, _omitFieldNames ? '' : 'Open', protoName: 'Open')
+    ..aOS(4, _omitFieldNames ? '' : 'Date', protoName: 'Date')
+    ..aD(5, _omitFieldNames ? '' : 'Open', protoName: 'Open')
+    ..aD(6, _omitFieldNames ? '' : 'Close', protoName: 'Close')
     ..aD(7, _omitFieldNames ? '' : 'High', protoName: 'High')
     ..aD(8, _omitFieldNames ? '' : 'Low', protoName: 'Low')
-    ..aD(9, _omitFieldNames ? '' : 'Close', protoName: 'Close')
-    ..aInt64(10, _omitFieldNames ? '' : 'Volume', protoName: 'Volume')
-    ..aD(11, _omitFieldNames ? '' : 'Turnover', protoName: 'Turnover')
-    ..aD(12, _omitFieldNames ? '' : 'AdjFactor', protoName: 'AdjFactor')
-    ..aOS(13, _omitFieldNames ? '' : 'Source', protoName: 'Source')
-    ..aOS(14, _omitFieldNames ? '' : 'CreateAt', protoName: 'CreateAt')
-    ..aOS(15, _omitFieldNames ? '' : 'UpdateAt', protoName: 'UpdateAt')
+    ..aD(9, _omitFieldNames ? '' : 'Volume', protoName: 'Volume')
+    ..aD(10, _omitFieldNames ? '' : 'Amount', protoName: 'Amount')
+    ..aD(11, _omitFieldNames ? '' : 'Amplitude', protoName: 'Amplitude')
+    ..aD(12, _omitFieldNames ? '' : 'ChangePct', protoName: 'ChangePct')
+    ..aD(13, _omitFieldNames ? '' : 'ChangeAmt', protoName: 'ChangeAmt')
+    ..aD(14, _omitFieldNames ? '' : 'TurnoverRate', protoName: 'TurnoverRate')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1079,31 +1040,31 @@ class DBStockBar extends $pb.GeneratedMessage {
   void clearMarket() => $_clearField(3);
 
   @$pb.TagNumber(4)
-  $core.String get timeframe => $_getSZ(3);
+  $core.String get date => $_getSZ(3);
   @$pb.TagNumber(4)
-  set timeframe($core.String value) => $_setString(3, value);
+  set date($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
-  $core.bool hasTimeframe() => $_has(3);
+  $core.bool hasDate() => $_has(3);
   @$pb.TagNumber(4)
-  void clearTimeframe() => $_clearField(4);
+  void clearDate() => $_clearField(4);
 
   @$pb.TagNumber(5)
-  $core.String get ts => $_getSZ(4);
+  $core.double get open => $_getN(4);
   @$pb.TagNumber(5)
-  set ts($core.String value) => $_setString(4, value);
+  set open($core.double value) => $_setDouble(4, value);
   @$pb.TagNumber(5)
-  $core.bool hasTs() => $_has(4);
+  $core.bool hasOpen() => $_has(4);
   @$pb.TagNumber(5)
-  void clearTs() => $_clearField(5);
+  void clearOpen() => $_clearField(5);
 
   @$pb.TagNumber(6)
-  $core.double get open => $_getN(5);
+  $core.double get close => $_getN(5);
   @$pb.TagNumber(6)
-  set open($core.double value) => $_setDouble(5, value);
+  set close($core.double value) => $_setDouble(5, value);
   @$pb.TagNumber(6)
-  $core.bool hasOpen() => $_has(5);
+  $core.bool hasClose() => $_has(5);
   @$pb.TagNumber(6)
-  void clearOpen() => $_clearField(6);
+  void clearClose() => $_clearField(6);
 
   @$pb.TagNumber(7)
   $core.double get high => $_getN(6);
@@ -1124,67 +1085,58 @@ class DBStockBar extends $pb.GeneratedMessage {
   void clearLow() => $_clearField(8);
 
   @$pb.TagNumber(9)
-  $core.double get close => $_getN(8);
+  $core.double get volume => $_getN(8);
   @$pb.TagNumber(9)
-  set close($core.double value) => $_setDouble(8, value);
+  set volume($core.double value) => $_setDouble(8, value);
   @$pb.TagNumber(9)
-  $core.bool hasClose() => $_has(8);
+  $core.bool hasVolume() => $_has(8);
   @$pb.TagNumber(9)
-  void clearClose() => $_clearField(9);
+  void clearVolume() => $_clearField(9);
 
   @$pb.TagNumber(10)
-  $fixnum.Int64 get volume => $_getI64(9);
+  $core.double get amount => $_getN(9);
   @$pb.TagNumber(10)
-  set volume($fixnum.Int64 value) => $_setInt64(9, value);
+  set amount($core.double value) => $_setDouble(9, value);
   @$pb.TagNumber(10)
-  $core.bool hasVolume() => $_has(9);
+  $core.bool hasAmount() => $_has(9);
   @$pb.TagNumber(10)
-  void clearVolume() => $_clearField(10);
+  void clearAmount() => $_clearField(10);
 
   @$pb.TagNumber(11)
-  $core.double get turnover => $_getN(10);
+  $core.double get amplitude => $_getN(10);
   @$pb.TagNumber(11)
-  set turnover($core.double value) => $_setDouble(10, value);
+  set amplitude($core.double value) => $_setDouble(10, value);
   @$pb.TagNumber(11)
-  $core.bool hasTurnover() => $_has(10);
+  $core.bool hasAmplitude() => $_has(10);
   @$pb.TagNumber(11)
-  void clearTurnover() => $_clearField(11);
+  void clearAmplitude() => $_clearField(11);
 
   @$pb.TagNumber(12)
-  $core.double get adjFactor => $_getN(11);
+  $core.double get changePct => $_getN(11);
   @$pb.TagNumber(12)
-  set adjFactor($core.double value) => $_setDouble(11, value);
+  set changePct($core.double value) => $_setDouble(11, value);
   @$pb.TagNumber(12)
-  $core.bool hasAdjFactor() => $_has(11);
+  $core.bool hasChangePct() => $_has(11);
   @$pb.TagNumber(12)
-  void clearAdjFactor() => $_clearField(12);
+  void clearChangePct() => $_clearField(12);
 
   @$pb.TagNumber(13)
-  $core.String get source => $_getSZ(12);
+  $core.double get changeAmt => $_getN(12);
   @$pb.TagNumber(13)
-  set source($core.String value) => $_setString(12, value);
+  set changeAmt($core.double value) => $_setDouble(12, value);
   @$pb.TagNumber(13)
-  $core.bool hasSource() => $_has(12);
+  $core.bool hasChangeAmt() => $_has(12);
   @$pb.TagNumber(13)
-  void clearSource() => $_clearField(13);
+  void clearChangeAmt() => $_clearField(13);
 
   @$pb.TagNumber(14)
-  $core.String get createAt => $_getSZ(13);
+  $core.double get turnoverRate => $_getN(13);
   @$pb.TagNumber(14)
-  set createAt($core.String value) => $_setString(13, value);
+  set turnoverRate($core.double value) => $_setDouble(13, value);
   @$pb.TagNumber(14)
-  $core.bool hasCreateAt() => $_has(13);
+  $core.bool hasTurnoverRate() => $_has(13);
   @$pb.TagNumber(14)
-  void clearCreateAt() => $_clearField(14);
-
-  @$pb.TagNumber(15)
-  $core.String get updateAt => $_getSZ(14);
-  @$pb.TagNumber(15)
-  set updateAt($core.String value) => $_setString(14, value);
-  @$pb.TagNumber(15)
-  $core.bool hasUpdateAt() => $_has(14);
-  @$pb.TagNumber(15)
-  void clearUpdateAt() => $_clearField(15);
+  void clearTurnoverRate() => $_clearField(14);
 }
 
 /// 股票新闻
@@ -1196,6 +1148,7 @@ class DBStockNews extends $pb.GeneratedMessage {
     $core.String? ts,
     $core.String? title,
     $core.String? source,
+    $core.String? url,
     $core.String? createAt,
   }) {
     final result = create();
@@ -1205,6 +1158,7 @@ class DBStockNews extends $pb.GeneratedMessage {
     if (ts != null) result.ts = ts;
     if (title != null) result.title = title;
     if (source != null) result.source = source;
+    if (url != null) result.url = url;
     if (createAt != null) result.createAt = createAt;
     return result;
   }
@@ -1227,7 +1181,8 @@ class DBStockNews extends $pb.GeneratedMessage {
     ..aOS(4, _omitFieldNames ? '' : 'Ts', protoName: 'Ts')
     ..aOS(5, _omitFieldNames ? '' : 'Title', protoName: 'Title')
     ..aOS(6, _omitFieldNames ? '' : 'Source', protoName: 'Source')
-    ..aOS(7, _omitFieldNames ? '' : 'CreateAt', protoName: 'CreateAt')
+    ..aOS(7, _omitFieldNames ? '' : 'Url', protoName: 'Url')
+    ..aOS(8, _omitFieldNames ? '' : 'CreateAt', protoName: 'CreateAt')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1304,13 +1259,22 @@ class DBStockNews extends $pb.GeneratedMessage {
   void clearSource() => $_clearField(6);
 
   @$pb.TagNumber(7)
-  $core.String get createAt => $_getSZ(6);
+  $core.String get url => $_getSZ(6);
   @$pb.TagNumber(7)
-  set createAt($core.String value) => $_setString(6, value);
+  set url($core.String value) => $_setString(6, value);
   @$pb.TagNumber(7)
-  $core.bool hasCreateAt() => $_has(6);
+  $core.bool hasUrl() => $_has(6);
   @$pb.TagNumber(7)
-  void clearCreateAt() => $_clearField(7);
+  void clearUrl() => $_clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get createAt => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set createAt($core.String value) => $_setString(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasCreateAt() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearCreateAt() => $_clearField(8);
 }
 
 /// 股票分析报告 每日

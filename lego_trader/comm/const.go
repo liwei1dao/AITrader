@@ -33,8 +33,9 @@ const (
 
 // 数据表名定义处
 const (
-	TableUser                   = "user"                     //用户表
-	TableStockDayHist           = "stock_day_hist"           //股票日历史数据表
+	TableUser                = "user"                  //用户表
+	TableStockCollectionInfo = "stock_collection_info" //采集信息
+
 	TableUserStock              = "user_stock"               //用户股票持仓表
 	TableStockBasicInfo         = "stock_basic_info"         //股票基本信息表
 	TableStockOperatingSnapshot = "stock_operating_snapshot" //股票基本面快照表
@@ -49,7 +50,7 @@ const (
 	//实时:股票
 	Redis_RealtimeStockQueue = "rtime:stock_queue" //Redis 股票实时队列键前缀(List)
 	//每日股票数据 日K
-	Redis_DailyStockDayQueue = "daily:stock_queue" //Redis 股票日K线数据队列键前缀(List)
+	Redis_HitStockQueue = "hit:stock_queue" //Redis 股票历史数据队列键前缀(List)
 	//个股咨询数据列表
 	Redis_StockNewsQueue = "stock:news_queue" //Redis 股票新闻队列键前缀(List)
 )

@@ -22,7 +22,7 @@ const (
 )
 
 // 股票基础信息（静态/半静态）
-type DBStockIdentity struct {
+type DBStockBasicInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=Id,proto3" json:"id" gorm:"id;primaryKey;autoIncrement"`              //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 股票代码
 	Market        string                 `protobuf:"bytes,2,opt,name=Market,proto3" json:"market" gorm:"market;uniqueIndex:uk_market_symbol"`      //@go_tags(`gorm:"market;uniqueIndex:uk_market_symbol" json:"market"`) 市场标识(sh/sz)
@@ -38,8 +38,8 @@ type DBStockIdentity struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DBStockIdentity) Reset() {
-	*x = DBStockIdentity{}
+func (x *DBStockBasicInfo) Reset() {
+	*x = DBStockBasicInfo{}
 	mi := &file_stock_stock_db_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
@@ -139,48 +139,47 @@ func (x *DBStockBasicInfo) GetListDate() string {
 }
 
 // 基本面快照（按期/按时间）
-type DBFundamentalSnapshot struct {
+type DBStockOperatingSnapshot struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
-	Id               string                 `protobuf:"bytes,1,opt,name=Id,proto3" json:"id" gorm:"id;primaryKey;autoIncrement"`                                                                                        //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
-	Symbol           string                 `protobuf:"bytes,2,opt,name=Symbol,proto3" json:"symbol" gorm:"symbol;index"`                                                                                //@go_tags(`gorm:"symbol;index" json:"symbol"`) 股票代码
-	Market           string                 `protobuf:"bytes,3,opt,name=Market,proto3" json:"market" gorm:"market"`                                                                                //@go_tags(`gorm:"market" json:"market"`) 市场标识
-	Ts               string                 `protobuf:"bytes,4,opt,name=Ts,proto3" json:"ts" gorm:"ts"`                                                                                        //@go_tags(`gorm:"ts" json:"ts"`) 时间戳(RFC3339)
-	Period           string                 `protobuf:"bytes,5,opt,name=Period,proto3" json:"period" gorm:"period"`                                                                                //@go_tags(`gorm:"period" json:"period"`) 周期（如 FY/Q）
-	FiscalYear       string                 `protobuf:"bytes,6,opt,name=FiscalYear,proto3" json:"fiscal_year" gorm:"fiscal_year"`                                                                        //@go_tags(`gorm:"fiscal_year" json:"fiscal_year"`) 财年
-	FiscalQuarter    string                 `protobuf:"bytes,7,opt,name=FiscalQuarter,proto3" json:"fiscal_quarter" gorm:"fiscal_quarter"`                                                                  //@go_tags(`gorm:"fiscal_quarter" json:"fiscal_quarter"`) 财季
-	Source           string                 `protobuf:"bytes,8,opt,name=Source,proto3" json:"source" gorm:"source"`                                                                                //@go_tags(`gorm:"source" json:"source"`) 数据来源
-	Revenue          float64                `protobuf:"fixed64,20,opt,name=Revenue,proto3" json:"revenue" gorm:"revenue"`                                                                           //@go_tags(`gorm:"revenue" json:"revenue"`) 营业收入
-	OperatingIncome  float64                `protobuf:"fixed64,21,opt,name=OperatingIncome,proto3" json:"operating_income" gorm:"operating_income"`                                                           //@go_tags(`gorm:"operating_income" json:"operating_income"`) 营业利润
-	NetProfit        float64                `protobuf:"fixed64,22,opt,name=NetProfit,proto3" json:"net_profit" gorm:"net_profit"`                                                                       //@go_tags(`gorm:"net_profit" json:"net_profit"`) 净利润
-	EPS              float64                `protobuf:"fixed64,23,opt,name=EPS,proto3" json:"eps" gorm:"eps"`                                                                                   //@go_tags(`gorm:"eps" json:"eps"`) 每股收益
-	ROE              float64                `protobuf:"fixed64,24,opt,name=ROE,proto3" json:"roe" gorm:"roe"`                                                                                   //@go_tags(`gorm:"roe" json:"roe"`) 净资产收益率
-	ROA              float64                `protobuf:"fixed64,25,opt,name=ROA,proto3" json:"roa" gorm:"roa"`                                                                                   //@go_tags(`gorm:"roa" json:"roa"`) 总资产收益率
-	GrossMargin      float64                `protobuf:"fixed64,26,opt,name=GrossMargin,proto3" json:"gross_margin" gorm:"gross_margin"`                                                                   //@go_tags(`gorm:"gross_margin" json:"gross_margin"`) 毛利率
-	OperatingMargin  float64                `protobuf:"fixed64,27,opt,name=OperatingMargin,proto3" json:"operating_margin" gorm:"operating_margin"`                                                           //@go_tags(`gorm:"operating_margin" json:"operating_margin"`) 营业利润率
-	NetMargin        float64                `protobuf:"fixed64,28,opt,name=NetMargin,proto3" json:"net_margin" gorm:"net_margin"`                                                                       //@go_tags(`gorm:"net_margin" json:"net_margin"`) 净利率
-	PE               float64                `protobuf:"fixed64,29,opt,name=PE,proto3" json:"pe" gorm:"pe"`                                                                                     //@go_tags(`gorm:"pe" json:"pe"`) 市盈率
-	PB               float64                `protobuf:"fixed64,30,opt,name=PB,proto3" json:"pb" gorm:"pb"`                                                                                     //@go_tags(`gorm:"pb" json:"pb"`) 市净率
-	PS               float64                `protobuf:"fixed64,31,opt,name=PS,proto3" json:"ps" gorm:"ps"`                                                                                     //@go_tags(`gorm:"ps" json:"ps"`) 市销率
-	DividendPerShare float64                `protobuf:"fixed64,32,opt,name=DividendPerShare,proto3" json:"dividend_per_share" gorm:"dividend_per_share"`                                                         //@go_tags(`gorm:"dividend_per_share" json:"dividend_per_share"`) 每股分红
-	DividendYield    float64                `protobuf:"fixed64,33,opt,name=DividendYield,proto3" json:"dividend_yield" gorm:"dividend_yield"`                                                               //@go_tags(`gorm:"dividend_yield" json:"dividend_yield"`) 股息率
-	FreeCashFlow     float64                `protobuf:"fixed64,34,opt,name=FreeCashFlow,proto3" json:"free_cash_flow" gorm:"free_cash_flow"`                                                                 //@go_tags(`gorm:"free_cash_flow" json:"free_cash_flow"`) 自由现金流
-	DebtToEquity     float64                `protobuf:"fixed64,35,opt,name=DebtToEquity,proto3" json:"debt_to_equity" gorm:"debt_to_equity"`                                                                 //@go_tags(`gorm:"debt_to_equity" json:"debt_to_equity"`) 资产负债比
-	CurrentRatio     float64                `protobuf:"fixed64,36,opt,name=CurrentRatio,proto3" json:"current_ratio" gorm:"current_ratio"`                                                                 //@go_tags(`gorm:"current_ratio" json:"current_ratio"`) 流动比率
-	QuickRatio       float64                `protobuf:"fixed64,37,opt,name=QuickRatio,proto3" json:"quick_ratio" gorm:"quick_ratio"`                                                                     //@go_tags(`gorm:"quick_ratio" json:"quick_ratio"`) 速动比率
-	TotalAssets      float64                `protobuf:"fixed64,38,opt,name=TotalAssets,proto3" json:"total_assets" gorm:"total_assets"`                                                                   //@go_tags(`gorm:"total_assets" json:"total_assets"`) 总资产
-	TotalLiabilities float64                `protobuf:"fixed64,39,opt,name=TotalLiabilities,proto3" json:"total_liabilities" gorm:"total_liabilities"`                                                         //@go_tags(`gorm:"total_liabilities" json:"total_liabilities"`) 总负债
-	Equity           float64                `protobuf:"fixed64,40,opt,name=Equity,proto3" json:"equity" gorm:"equity"`                                                                             //@go_tags(`gorm:"equity" json:"equity"`) 股东权益
-	RevenueYoY       float64                `protobuf:"fixed64,41,opt,name=RevenueYoY,proto3" json:"revenue_yoy" gorm:"revenue_yoy"`                                                                     //@go_tags(`gorm:"revenue_yoy" json:"revenue_yoy"`) 收入同比
-	NetProfitYoY     float64                `protobuf:"fixed64,42,opt,name=NetProfitYoY,proto3" json:"net_profit_yoy" gorm:"net_profit_yoy"`                                                                 //@go_tags(`gorm:"net_profit_yoy" json:"net_profit_yoy"`) 净利润同比
-	EPSYoY           float64                `protobuf:"fixed64,43,opt,name=EPSYoY,proto3" json:"eps_yoy" gorm:"eps_yoy"`                                                                             //@go_tags(`gorm:"eps_yoy" json:"eps_yoy"`) EPS 同比
-	Metrics          map[string]float64     `protobuf:"bytes,60,rep,name=Metrics,proto3" json:"metrics" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"fixed64,2,opt,name=value" gorm:"metrics;serializer:json"` //@go_tags(`gorm:"metrics;serializer:json" json:"metrics"`) 自定义扩展指标
-	CreateAt         string                 `protobuf:"bytes,61,opt,name=CreateAt,proto3" json:"create_at" gorm:"create_at"`                                                                           //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
+	Id               string                 `protobuf:"bytes,1,opt,name=Id,proto3" json:"id" gorm:"id;primaryKey;autoIncrement"`                                //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
+	Symbol           string                 `protobuf:"bytes,2,opt,name=Symbol,proto3" json:"symbol" gorm:"symbol;index"`                        //@go_tags(`gorm:"symbol;index" json:"symbol"`) 股票代码
+	Market           string                 `protobuf:"bytes,3,opt,name=Market,proto3" json:"market" gorm:"market"`                        //@go_tags(`gorm:"market" json:"market"`) 市场标识
+	Ts               string                 `protobuf:"bytes,4,opt,name=Ts,proto3" json:"ts" gorm:"ts"`                                //@go_tags(`gorm:"ts" json:"ts"`) 时间戳(RFC3339)
+	Period           string                 `protobuf:"bytes,5,opt,name=Period,proto3" json:"period" gorm:"period"`                        //@go_tags(`gorm:"period" json:"period"`) 周期（如 FY/Q）
+	FiscalYear       string                 `protobuf:"bytes,6,opt,name=FiscalYear,proto3" json:"fiscal_year" gorm:"fiscal_year"`                //@go_tags(`gorm:"fiscal_year" json:"fiscal_year"`) 财年
+	FiscalQuarter    string                 `protobuf:"bytes,7,opt,name=FiscalQuarter,proto3" json:"fiscal_quarter" gorm:"fiscal_quarter"`          //@go_tags(`gorm:"fiscal_quarter" json:"fiscal_quarter"`) 财季
+	Source           string                 `protobuf:"bytes,8,opt,name=Source,proto3" json:"source" gorm:"source"`                        //@go_tags(`gorm:"source" json:"source"`) 数据来源
+	Revenue          float64                `protobuf:"fixed64,20,opt,name=Revenue,proto3" json:"revenue" gorm:"revenue"`                   //@go_tags(`gorm:"revenue" json:"revenue"`) 营业收入
+	OperatingIncome  float64                `protobuf:"fixed64,21,opt,name=OperatingIncome,proto3" json:"operating_income" gorm:"operating_income"`   //@go_tags(`gorm:"operating_income" json:"operating_income"`) 营业利润
+	NetProfit        float64                `protobuf:"fixed64,22,opt,name=NetProfit,proto3" json:"net_profit" gorm:"net_profit"`               //@go_tags(`gorm:"net_profit" json:"net_profit"`) 净利润
+	EPS              float64                `protobuf:"fixed64,23,opt,name=EPS,proto3" json:"eps" gorm:"eps"`                           //@go_tags(`gorm:"eps" json:"eps"`) 每股收益
+	ROE              float64                `protobuf:"fixed64,24,opt,name=ROE,proto3" json:"roe" gorm:"roe"`                           //@go_tags(`gorm:"roe" json:"roe"`) 净资产收益率
+	ROA              float64                `protobuf:"fixed64,25,opt,name=ROA,proto3" json:"roa" gorm:"roa"`                           //@go_tags(`gorm:"roa" json:"roa"`) 总资产收益率
+	GrossMargin      float64                `protobuf:"fixed64,26,opt,name=GrossMargin,proto3" json:"gross_margin" gorm:"gross_margin"`           //@go_tags(`gorm:"gross_margin" json:"gross_margin"`) 毛利率
+	OperatingMargin  float64                `protobuf:"fixed64,27,opt,name=OperatingMargin,proto3" json:"operating_margin" gorm:"operating_margin"`   //@go_tags(`gorm:"operating_margin" json:"operating_margin"`) 营业利润率
+	NetMargin        float64                `protobuf:"fixed64,28,opt,name=NetMargin,proto3" json:"net_margin" gorm:"net_margin"`               //@go_tags(`gorm:"net_margin" json:"net_margin"`) 净利率
+	PE               float64                `protobuf:"fixed64,29,opt,name=PE,proto3" json:"pe" gorm:"pe"`                             //@go_tags(`gorm:"pe" json:"pe"`) 市盈率
+	PB               float64                `protobuf:"fixed64,30,opt,name=PB,proto3" json:"pb" gorm:"pb"`                             //@go_tags(`gorm:"pb" json:"pb"`) 市净率
+	PS               float64                `protobuf:"fixed64,31,opt,name=PS,proto3" json:"ps" gorm:"ps"`                             //@go_tags(`gorm:"ps" json:"ps"`) 市销率
+	DividendPerShare float64                `protobuf:"fixed64,32,opt,name=DividendPerShare,proto3" json:"dividend_per_share" gorm:"dividend_per_share"` //@go_tags(`gorm:"dividend_per_share" json:"dividend_per_share"`) 每股分红
+	DividendYield    float64                `protobuf:"fixed64,33,opt,name=DividendYield,proto3" json:"dividend_yield" gorm:"dividend_yield"`       //@go_tags(`gorm:"dividend_yield" json:"dividend_yield"`) 股息率
+	FreeCashFlow     float64                `protobuf:"fixed64,34,opt,name=FreeCashFlow,proto3" json:"free_cash_flow" gorm:"free_cash_flow"`         //@go_tags(`gorm:"free_cash_flow" json:"free_cash_flow"`) 自由现金流
+	DebtToEquity     float64                `protobuf:"fixed64,35,opt,name=DebtToEquity,proto3" json:"debt_to_equity" gorm:"debt_to_equity"`         //@go_tags(`gorm:"debt_to_equity" json:"debt_to_equity"`) 资产负债比
+	CurrentRatio     float64                `protobuf:"fixed64,36,opt,name=CurrentRatio,proto3" json:"current_ratio" gorm:"current_ratio"`         //@go_tags(`gorm:"current_ratio" json:"current_ratio"`) 流动比率
+	QuickRatio       float64                `protobuf:"fixed64,37,opt,name=QuickRatio,proto3" json:"quick_ratio" gorm:"quick_ratio"`             //@go_tags(`gorm:"quick_ratio" json:"quick_ratio"`) 速动比率
+	TotalAssets      float64                `protobuf:"fixed64,38,opt,name=TotalAssets,proto3" json:"total_assets" gorm:"total_assets"`           //@go_tags(`gorm:"total_assets" json:"total_assets"`) 总资产
+	TotalLiabilities float64                `protobuf:"fixed64,39,opt,name=TotalLiabilities,proto3" json:"total_liabilities" gorm:"total_liabilities"` //@go_tags(`gorm:"total_liabilities" json:"total_liabilities"`) 总负债
+	Equity           float64                `protobuf:"fixed64,40,opt,name=Equity,proto3" json:"equity" gorm:"equity"`                     //@go_tags(`gorm:"equity" json:"equity"`) 股东权益
+	RevenueYoY       float64                `protobuf:"fixed64,41,opt,name=RevenueYoY,proto3" json:"revenue_yoy" gorm:"revenue_yoy"`             //@go_tags(`gorm:"revenue_yoy" json:"revenue_yoy"`) 收入同比
+	NetProfitYoY     float64                `protobuf:"fixed64,42,opt,name=NetProfitYoY,proto3" json:"net_profit_yoy" gorm:"net_profit_yoy"`         //@go_tags(`gorm:"net_profit_yoy" json:"net_profit_yoy"`) 净利润同比
+	EPSYoY           float64                `protobuf:"fixed64,43,opt,name=EPSYoY,proto3" json:"eps_yoy" gorm:"eps_yoy"`                     //@go_tags(`gorm:"eps_yoy" json:"eps_yoy"`) EPS 同比
+	CreateAt         string                 `protobuf:"bytes,61,opt,name=CreateAt,proto3" json:"create_at" gorm:"create_at"`                   //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
 
-func (x *DBFundamentalSnapshot) Reset() {
-	*x = DBFundamentalSnapshot{}
+func (x *DBStockOperatingSnapshot) Reset() {
+	*x = DBStockOperatingSnapshot{}
 	mi := &file_stock_stock_db_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
@@ -440,29 +439,6 @@ func (x *DBStockOperatingSnapshot) GetCreateAt() string {
 	return ""
 }
 
-// Index                int64   `json:"序号"`
-// Code                 string  `json:"代码"`
-// Name                 string  `json:"名称"`
-// LastPrice            float64 `json:"最新价"`
-// ChangePct            float64 `json:"涨跌幅"`
-// ChangeAmt            float64 `json:"涨跌额"`
-// Volume               float64 `json:"成交量"`
-// Amount               float64 `json:"成交额"`
-// Amplitude            float64 `json:"振幅"`
-// High                 float64 `json:"最高"`
-// Low                  float64 `json:"最低"`
-// Open                 float64 `json:"今开"`
-// PrevClose            float64 `json:"昨收"`
-// VolumeRatio          float64 `json:"量比"`
-// TurnoverRate         float64 `json:"换手率"`
-// PeDynamic            float64 `json:"市盈率-动态"`
-// PbRatio              float64 `json:"市净率"`
-// TotalMarketCap       float64 `json:"总市值"`
-// CirculatingMarketCap float64 `json:"流通市值"`
-// PriceSpeed           float64 `json:"涨速"`
-// FiveMinChange        float64 `json:"5分钟涨跌"`
-// SixtyDayChangePct    float64 `json:"60日涨跌幅"`
-// YtdChangePct         float64 `json:"年初至今涨跌幅"`
 type DBStockRealTimeItem struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	Code                 string                 `protobuf:"bytes,1,opt,name=Code,proto3" json:"code" gorm:"code"`                                    //@go_tags(`gorm:"code" json:"code"`) 股票代码
@@ -678,21 +654,20 @@ func (x *DBStockRealTimeItem) GetYtdChangePct() float64 {
 // 日/周/月K线（行情）
 type DBStockBar struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=Id,proto3" json:"id" gorm:"id;primaryKey;autoIncrement"`                  //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
-	Symbol        string                 `protobuf:"bytes,2,opt,name=Symbol,proto3" json:"symbol" gorm:"symbol;uniqueIndex:uk_symbol_tf_ts"`          //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_tf_ts" json:"symbol"`) 股票代码
-	Market        string                 `protobuf:"bytes,3,opt,name=Market,proto3" json:"market" gorm:"market;uniqueIndex:uk_symbol_tf_ts"`          //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_tf_ts" json:"market"`) 市场标识
-	Timeframe     string                 `protobuf:"bytes,4,opt,name=Timeframe,proto3" json:"timeframe" gorm:"timeframe;uniqueIndex:uk_symbol_tf_ts"`    //@go_tags(`gorm:"timeframe;uniqueIndex:uk_symbol_tf_ts" json:"timeframe"`) 周期(1d/1w/1mo)
-	Ts            string                 `protobuf:"bytes,5,opt,name=Ts,proto3" json:"ts" gorm:"ts;uniqueIndex:uk_symbol_tf_ts"`                  //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_tf_ts" json:"ts"`) 时间戳(RFC3339)
-	Open          float64                `protobuf:"fixed64,6,opt,name=Open,proto3" json:"open" gorm:"open"`            //@go_tags(`gorm:"open" json:"open"`) 开盘价
-	High          float64                `protobuf:"fixed64,7,opt,name=High,proto3" json:"high" gorm:"high"`            //@go_tags(`gorm:"high" json:"high"`) 最高价
-	Low           float64                `protobuf:"fixed64,8,opt,name=Low,proto3" json:"low" gorm:"low"`              //@go_tags(`gorm:"low" json:"low"`) 最低价
-	Close         float64                `protobuf:"fixed64,9,opt,name=Close,proto3" json:"close" gorm:"close"`          //@go_tags(`gorm:"close" json:"close"`) 收盘价
-	Volume        int64                  `protobuf:"varint,10,opt,name=Volume,proto3" json:"volume" gorm:"volume"`        //@go_tags(`gorm:"volume" json:"volume"`) 成交量(股)
-	Turnover      float64                `protobuf:"fixed64,11,opt,name=Turnover,proto3" json:"turnover" gorm:"turnover"`   //@go_tags(`gorm:"turnover" json:"turnover"`) 成交额(货币)
-	AdjFactor     float64                `protobuf:"fixed64,12,opt,name=AdjFactor,proto3" json:"adj_factor" gorm:"adj_factor"` //@go_tags(`gorm:"adj_factor" json:"adj_factor"`) 复权因子
-	Source        string                 `protobuf:"bytes,13,opt,name=Source,proto3" json:"source" gorm:"source"`         //@go_tags(`gorm:"source" json:"source"`) 数据来源(akshare等)
-	CreateAt      string                 `protobuf:"bytes,14,opt,name=CreateAt,proto3" json:"create_at" gorm:"create_at"`     //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
-	UpdateAt      string                 `protobuf:"bytes,15,opt,name=UpdateAt,proto3" json:"update_at" gorm:"update_at"`     //@go_tags(`gorm:"update_at" json:"update_at"`) 更新时间
+	Id            string                 `protobuf:"bytes,1,opt,name=Id,proto3" json:"id" gorm:"id;primaryKey;autoIncrement"`                        //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
+	Symbol        string                 `protobuf:"bytes,2,opt,name=Symbol,proto3" json:"symbol" gorm:"symbol;index"`                //@go_tags(`gorm:"symbol;index" json:"symbol"`) 股票代码
+	Market        string                 `protobuf:"bytes,3,opt,name=Market,proto3" json:"market" gorm:"market"`                //@go_tags(`gorm:"market" json:"market"`) 市场标识
+	Date          string                 `protobuf:"bytes,4,opt,name=Date,proto3" json:"date" gorm:"date;index"`                    //@go_tags(`gorm:"date;index" json:"date"`) 日期(YYYYMMDD)
+	Open          float64                `protobuf:"fixed64,5,opt,name=Open,proto3" json:"open" gorm:"open"`                  //@go_tags(`gorm:"open" json:"open"`) 开盘价
+	Close         float64                `protobuf:"fixed64,6,opt,name=Close,proto3" json:"close" gorm:"close"`                //@go_tags(`gorm:"close" json:"close"`) 收盘价
+	High          float64                `protobuf:"fixed64,7,opt,name=High,proto3" json:"high" gorm:"high"`                  //@go_tags(`gorm:"high" json:"high"`) 最高价
+	Low           float64                `protobuf:"fixed64,8,opt,name=Low,proto3" json:"low" gorm:"low"`                    //@go_tags(`gorm:"low" json:"low"`) 最低价
+	Volume        float64                `protobuf:"fixed64,9,opt,name=Volume,proto3" json:"volume" gorm:"volume"`              //@go_tags(`gorm:"volume" json:"volume"`) 成交量
+	Amount        float64                `protobuf:"fixed64,10,opt,name=Amount,proto3" json:"amount" gorm:"amount"`             //@go_tags(`gorm:"amount" json:"amount"`) 成交额
+	Amplitude     float64                `protobuf:"fixed64,11,opt,name=Amplitude,proto3" json:"amplitude" gorm:"amplitude"`       //@go_tags(`gorm:"amplitude" json:"amplitude"`) 振幅
+	ChangePct     float64                `protobuf:"fixed64,12,opt,name=ChangePct,proto3" json:"change_pct" gorm:"change_pct"`       //@go_tags(`gorm:"change_pct" json:"change_pct"`) 涨跌幅
+	ChangeAmt     float64                `protobuf:"fixed64,13,opt,name=ChangeAmt,proto3" json:"change_amt" gorm:"change_amt"`       //@go_tags(`gorm:"change_amt" json:"change_amt"`) 涨跌额
+	TurnoverRate  float64                `protobuf:"fixed64,14,opt,name=TurnoverRate,proto3" json:"turnover_rate" gorm:"turnover_rate"` //@go_tags(`gorm:"turnover_rate" json:"turnover_rate"`) 换手率
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -748,16 +723,9 @@ func (x *DBStockBar) GetMarket() string {
 	return ""
 }
 
-func (x *DBStockBar) GetTimeframe() string {
+func (x *DBStockBar) GetDate() string {
 	if x != nil {
-		return x.Timeframe
-	}
-	return ""
-}
-
-func (x *DBStockBar) GetTs() string {
-	if x != nil {
-		return x.Ts
+		return x.Date
 	}
 	return ""
 }
@@ -765,6 +733,13 @@ func (x *DBStockBar) GetTs() string {
 func (x *DBStockBar) GetOpen() float64 {
 	if x != nil {
 		return x.Open
+	}
+	return 0
+}
+
+func (x *DBStockBar) GetClose() float64 {
+	if x != nil {
+		return x.Close
 	}
 	return 0
 }
@@ -783,53 +758,46 @@ func (x *DBStockBar) GetLow() float64 {
 	return 0
 }
 
-func (x *DBStockBar) GetClose() float64 {
-	if x != nil {
-		return x.Close
-	}
-	return 0
-}
-
-func (x *DBStockBar) GetVolume() int64 {
+func (x *DBStockBar) GetVolume() float64 {
 	if x != nil {
 		return x.Volume
 	}
 	return 0
 }
 
-func (x *DBStockBar) GetTurnover() float64 {
+func (x *DBStockBar) GetAmount() float64 {
 	if x != nil {
-		return x.Turnover
+		return x.Amount
 	}
 	return 0
 }
 
-func (x *DBStockBar) GetAdjFactor() float64 {
+func (x *DBStockBar) GetAmplitude() float64 {
 	if x != nil {
-		return x.AdjFactor
+		return x.Amplitude
 	}
 	return 0
 }
 
-func (x *DBStockBar) GetSource() string {
+func (x *DBStockBar) GetChangePct() float64 {
 	if x != nil {
-		return x.Source
+		return x.ChangePct
 	}
-	return ""
+	return 0
 }
 
-func (x *DBStockBar) GetCreateAt() string {
+func (x *DBStockBar) GetChangeAmt() float64 {
 	if x != nil {
-		return x.CreateAt
+		return x.ChangeAmt
 	}
-	return ""
+	return 0
 }
 
-func (x *DBStockBar) GetUpdateAt() string {
+func (x *DBStockBar) GetTurnoverRate() float64 {
 	if x != nil {
-		return x.UpdateAt
+		return x.TurnoverRate
 	}
-	return ""
+	return 0
 }
 
 // 股票新闻
@@ -841,7 +809,8 @@ type DBStockNews struct {
 	Ts            string                 `protobuf:"bytes,4,opt,name=Ts,proto3" json:"ts" gorm:"ts;uniqueIndex:uk_symbol_ts"`             //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_ts" json:"ts"`) 时间戳(RFC3339)
 	Title         string                 `protobuf:"bytes,5,opt,name=Title,proto3" json:"title" gorm:"title"`       //@go_tags(`gorm:"title" json:"title"`) 新闻标题
 	Source        string                 `protobuf:"bytes,6,opt,name=Source,proto3" json:"source" gorm:"source"`     //@go_tags(`gorm:"source" json:"source"`) 数据来源
-	CreateAt      string                 `protobuf:"bytes,7,opt,name=CreateAt,proto3" json:"create_at" gorm:"create_at"` //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
+	Url           string                 `protobuf:"bytes,7,opt,name=Url,proto3" json:"url" gorm:"url"`           //@go_tags(`gorm:"url" json:"url"`) 新闻链接
+	CreateAt      string                 `protobuf:"bytes,8,opt,name=CreateAt,proto3" json:"create_at" gorm:"create_at"` //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间(RFC3339)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1021,8 +990,8 @@ var File_stock_stock_db_proto protoreflect.FileDescriptor
 
 const file_stock_stock_db_proto_rawDesc = "" +
 	"\n" +
-	"\x14stock/stock_db.proto\"\x85\x02\n" +
-	"\x0fDBStockIdentity\x12\x0e\n" +
+	"\x14stock/stock_db.proto\"\x86\x02\n" +
+	"\x10DBStockBasicInfo\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x16\n" +
 	"\x06Market\x18\x02 \x01(\tR\x06Market\x12\x1a\n" +
 	"\bExchange\x18\x03 \x01(\tR\bExchange\x12\x12\n" +
@@ -1033,8 +1002,8 @@ const file_stock_stock_db_proto_rawDesc = "" +
 	"\x04Area\x18\n" +
 	" \x01(\tR\x04Area\x12\x1a\n" +
 	"\bCurrency\x18\v \x01(\tR\bCurrency\x12\x1a\n" +
-	"\bListDate\x18\f \x01(\tR\bListDate\"\xc6\b\n" +
-	"\x15DBFundamentalSnapshot\x12\x0e\n" +
+	"\bListDate\x18\f \x01(\tR\bListDate\"\xce\a\n" +
+	"\x18DBStockOperatingSnapshot\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x16\n" +
 	"\x06Symbol\x18\x02 \x01(\tR\x06Symbol\x12\x16\n" +
 	"\x06Market\x18\x03 \x01(\tR\x06Market\x12\x0e\n" +
@@ -1072,12 +1041,8 @@ const file_stock_stock_db_proto_rawDesc = "" +
 	"RevenueYoY\x18) \x01(\x01R\n" +
 	"RevenueYoY\x12\"\n" +
 	"\fNetProfitYoY\x18* \x01(\x01R\fNetProfitYoY\x12\x16\n" +
-	"\x06EPSYoY\x18+ \x01(\x01R\x06EPSYoY\x12=\n" +
-	"\aMetrics\x18< \x03(\v2#.DBFundamentalSnapshot.MetricsEntryR\aMetrics\x12\x1a\n" +
-	"\bCreateAt\x18= \x01(\tR\bCreateAt\x1a:\n" +
-	"\fMetricsEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x01R\x05value:\x028\x01\"\xaf\x05\n" +
+	"\x06EPSYoY\x18+ \x01(\x01R\x06EPSYoY\x12\x1a\n" +
+	"\bCreateAt\x18= \x01(\tR\bCreateAt\"\xaf\x05\n" +
 	"\x13DBStockRealTimeItem\x12\x12\n" +
 	"\x04Code\x18\x01 \x01(\tR\x04Code\x12\x12\n" +
 	"\x04Name\x18\x02 \x01(\tR\x04Name\x12\x1c\n" +
@@ -1103,33 +1068,33 @@ const file_stock_stock_db_proto_rawDesc = "" +
 	"PriceSpeed\x12$\n" +
 	"\rFiveMinChange\x18\x14 \x01(\x01R\rFiveMinChange\x12,\n" +
 	"\x11SixtyDayChangePct\x18\x15 \x01(\x01R\x11SixtyDayChangePct\x12\"\n" +
-	"\fYtdChangePct\x18\x16 \x01(\x01R\fYtdChangePct\"\xec\x02\n" +
+	"\fYtdChangePct\x18\x16 \x01(\x01R\fYtdChangePct\"\xde\x02\n" +
 	"\n" +
 	"DBStockBar\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x16\n" +
 	"\x06Symbol\x18\x02 \x01(\tR\x06Symbol\x12\x16\n" +
-	"\x06Market\x18\x03 \x01(\tR\x06Market\x12\x1c\n" +
-	"\tTimeframe\x18\x04 \x01(\tR\tTimeframe\x12\x0e\n" +
-	"\x02Ts\x18\x05 \x01(\tR\x02Ts\x12\x12\n" +
-	"\x04Open\x18\x06 \x01(\x01R\x04Open\x12\x12\n" +
+	"\x06Market\x18\x03 \x01(\tR\x06Market\x12\x12\n" +
+	"\x04Date\x18\x04 \x01(\tR\x04Date\x12\x12\n" +
+	"\x04Open\x18\x05 \x01(\x01R\x04Open\x12\x14\n" +
+	"\x05Close\x18\x06 \x01(\x01R\x05Close\x12\x12\n" +
 	"\x04High\x18\a \x01(\x01R\x04High\x12\x10\n" +
-	"\x03Low\x18\b \x01(\x01R\x03Low\x12\x14\n" +
-	"\x05Close\x18\t \x01(\x01R\x05Close\x12\x16\n" +
-	"\x06Volume\x18\n" +
-	" \x01(\x03R\x06Volume\x12\x1a\n" +
-	"\bTurnover\x18\v \x01(\x01R\bTurnover\x12\x1c\n" +
-	"\tAdjFactor\x18\f \x01(\x01R\tAdjFactor\x12\x16\n" +
-	"\x06Source\x18\r \x01(\tR\x06Source\x12\x1a\n" +
-	"\bCreateAt\x18\x0e \x01(\tR\bCreateAt\x12\x1a\n" +
-	"\bUpdateAt\x18\x0f \x01(\tR\bUpdateAt\"\xa7\x01\n" +
+	"\x03Low\x18\b \x01(\x01R\x03Low\x12\x16\n" +
+	"\x06Volume\x18\t \x01(\x01R\x06Volume\x12\x16\n" +
+	"\x06Amount\x18\n" +
+	" \x01(\x01R\x06Amount\x12\x1c\n" +
+	"\tAmplitude\x18\v \x01(\x01R\tAmplitude\x12\x1c\n" +
+	"\tChangePct\x18\f \x01(\x01R\tChangePct\x12\x1c\n" +
+	"\tChangeAmt\x18\r \x01(\x01R\tChangeAmt\x12\"\n" +
+	"\fTurnoverRate\x18\x0e \x01(\x01R\fTurnoverRate\"\xb9\x01\n" +
 	"\vDBStockNews\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x16\n" +
 	"\x06Symbol\x18\x02 \x01(\tR\x06Symbol\x12\x16\n" +
 	"\x06Market\x18\x03 \x01(\tR\x06Market\x12\x0e\n" +
 	"\x02Ts\x18\x04 \x01(\tR\x02Ts\x12\x14\n" +
 	"\x05Title\x18\x05 \x01(\tR\x05Title\x12\x16\n" +
-	"\x06Source\x18\x06 \x01(\tR\x06Source\x12\x1a\n" +
-	"\bCreateAt\x18\a \x01(\tR\bCreateAt\"\x93\x01\n" +
+	"\x06Source\x18\x06 \x01(\tR\x06Source\x12\x10\n" +
+	"\x03Url\x18\a \x01(\tR\x03Url\x12\x1a\n" +
+	"\bCreateAt\x18\b \x01(\tR\bCreateAt\"\x93\x01\n" +
 	"\rDBStockReport\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x16\n" +
 	"\x06Symbol\x18\x02 \x01(\tR\x06Symbol\x12\x16\n" +
@@ -1150,15 +1115,14 @@ func file_stock_stock_db_proto_rawDescGZIP() []byte {
 	return file_stock_stock_db_proto_rawDescData
 }
 
-var file_stock_stock_db_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_stock_stock_db_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_stock_stock_db_proto_goTypes = []any{
-	(*DBStockIdentity)(nil),       // 0: DBStockIdentity
-	(*DBFundamentalSnapshot)(nil), // 1: DBFundamentalSnapshot
-	(*DBStockRealTimeItem)(nil),   // 2: DBStockRealTimeItem
-	(*DBStockBar)(nil),            // 3: DBStockBar
-	(*DBStockNews)(nil),           // 4: DBStockNews
-	(*DBStockReport)(nil),         // 5: DBStockReport
-	nil,                           // 6: DBFundamentalSnapshot.MetricsEntry
+	(*DBStockBasicInfo)(nil),         // 0: DBStockBasicInfo
+	(*DBStockOperatingSnapshot)(nil), // 1: DBStockOperatingSnapshot
+	(*DBStockRealTimeItem)(nil),      // 2: DBStockRealTimeItem
+	(*DBStockBar)(nil),               // 3: DBStockBar
+	(*DBStockNews)(nil),              // 4: DBStockNews
+	(*DBStockReport)(nil),            // 5: DBStockReport
 }
 var file_stock_stock_db_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

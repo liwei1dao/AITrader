@@ -85,6 +85,29 @@ func (this *modelComp) getStockIntradayChart(code string) (chart []*pb.DBStockRe
 	return
 }
 
+func (this *modelComp) getStockHitData(code string, period string) (chart []*pb.DBStockBar, err error) {
+	var (
+		ctx   = context.Background()
+		items []string
+	)
+	chart = make([]*pb.DBStockBar, 0)
+	items, err = db.Redis().LRange(ctx, fmt.Sprintf("%s:%s:%s", comm.Redis_HitStockQueue, code, period), 0, -1).Result()
+	if err != nil {
+		this.module.Errorf("Redis pipeline execution error: %v", err)
+		return
+	}
+
+	for _, item := range items {
+		chartItem := &pb.DBStockBar{}
+		if err := json.Unmarshal([]byte(item), chartItem); err != nil {
+			this.module.Errorf("Unmarshal error: %v value: %s", err, item)
+			continue
+		}
+		chart = append(chart, chartItem)
+	}
+	return
+}
+
 /*
 获取股票信息
 code: 股票代码 例如: SZ300001/SH600000

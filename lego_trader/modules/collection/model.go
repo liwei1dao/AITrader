@@ -4,11 +4,16 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strconv"
+	"time"
+
 	"lego_trader/comm"
 	"lego_trader/lego/core"
 	"lego_trader/lego/core/cbase"
 	"lego_trader/pb"
 	"lego_trader/sys/db"
+
+	"github.com/redis/go-redis/v9"
 )
 
 // 代理模型
@@ -132,6 +137,55 @@ func (this *modelComp) updateRealTimeStock(items []*pb.DBStockRealTimeItem) (err
 	_, err = redisPip.Exec(context.Background())
 	if err != nil {
 		this.module.Errorf("批量执行股票实时价格队列更新失败 err:%v\n", err)
+	}
+	return
+}
+
+// 更新股票日K线数据（ZSet 按时间戳去重/更新）
+// 参数: symbol - 股票符号；period - 周期（如 day）；items - 股票日K线数据列表
+// 返回值: err 错误信息；成功时返回 nil
+// 异常: Redis 写入失败时返回错误
+func (this *modelComp) updateStockDayHit(symbol string, period string, items []*pb.DBStockBar) (err error) {
+	var (
+		ctx      = context.Background()
+		redisPip = db.Redis().TxPipeline() // 使用事务管道，保证操作的原子性
+		key      = fmt.Sprintf("%s:%s:%s", comm.Redis_HitStockQueue, symbol, period)
+		item     *pb.DBStockBar
+		val      []byte
+		score    float64
+		t        time.Time
+		scoreStr string
+	)
+	for _, item = range items {
+		if val, err = json.Marshal(item); err != nil {
+			this.module.Errorf("序列化股票K线数据失败 symbol:%s err:%v\n", item.Symbol, err)
+			continue
+		}
+		// 解析日期字符串为时间戳 (支持 YYYYMMDD 或 YYYY-MM-DD)
+		// 优先尝试 YYYYMMDD (Proto定义的标准格式)
+		t, err = time.Parse("20060102", item.Date)
+		if err != nil {
+			// 尝试 YYYY-MM-DD
+			t, err = time.Parse("2006-01-02", item.Date)
+			if err != nil {
+				this.module.Errorf("解析股票K线日期失败 symbol:%s date:%s err:%v\n", item.Symbol, item.Date, err)
+				continue
+			}
+		}
+		score = float64(t.Unix())
+		scoreStr = strconv.FormatFloat(score, 'f', -1, 64)
+
+		// 覆盖模式：先删除同分值的旧数据，确保相同时间点只有一条记录
+		// 在 TxPipeline 中，ZRemRangeByScore 和 ZAdd 会按顺序在事务中执行
+		redisPip.ZRemRangeByScore(ctx, key, scoreStr, scoreStr)
+
+		// 以时间戳作为 score
+		redisPip.ZAdd(ctx, key, redis.Z{Score: score, Member: val})
+	}
+
+	_, err = redisPip.Exec(ctx)
+	if err != nil {
+		this.module.Errorf("批量执行股票K线数据ZSet更新失败 err:%v\n", err)
 	}
 	return
 }
