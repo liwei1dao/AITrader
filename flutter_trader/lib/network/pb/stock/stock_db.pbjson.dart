@@ -15,9 +15,9 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use dBStockIdentityDescriptor instead')
-const DBStockIdentity$json = {
-  '1': 'DBStockIdentity',
+@$core.Deprecated('Use dBStockBasicInfoDescriptor instead')
+const DBStockBasicInfo$json = {
+  '1': 'DBStockBasicInfo',
   '2': [
     {'1': 'Id', '3': 1, '4': 1, '5': 9, '10': 'Id'},
     {'1': 'Market', '3': 2, '4': 1, '5': 9, '10': 'Market'},
@@ -32,17 +32,17 @@ const DBStockIdentity$json = {
   ],
 };
 
-/// Descriptor for `DBStockIdentity`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List dBStockIdentityDescriptor = $convert.base64Decode(
-    'Cg9EQlN0b2NrSWRlbnRpdHkSDgoCSWQYASABKAlSAklkEhYKBk1hcmtldBgCIAEoCVIGTWFya2'
-    'V0EhoKCEV4Y2hhbmdlGAMgASgJUghFeGNoYW5nZRISCgROYW1lGAQgASgJUgROYW1lEhoKCEZ1'
-    'bGxOYW1lGAUgASgJUghGdWxsTmFtZRIaCghJbmR1c3RyeRgHIAEoCVIISW5kdXN0cnkSFgoGU2'
-    'VjdG9yGAggASgJUgZTZWN0b3ISEgoEQXJlYRgKIAEoCVIEQXJlYRIaCghDdXJyZW5jeRgLIAEo'
-    'CVIIQ3VycmVuY3kSGgoITGlzdERhdGUYDCABKAlSCExpc3REYXRl');
+/// Descriptor for `DBStockBasicInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List dBStockBasicInfoDescriptor = $convert.base64Decode(
+    'ChBEQlN0b2NrQmFzaWNJbmZvEg4KAklkGAEgASgJUgJJZBIWCgZNYXJrZXQYAiABKAlSBk1hcm'
+    'tldBIaCghFeGNoYW5nZRgDIAEoCVIIRXhjaGFuZ2USEgoETmFtZRgEIAEoCVIETmFtZRIaCghG'
+    'dWxsTmFtZRgFIAEoCVIIRnVsbE5hbWUSGgoISW5kdXN0cnkYByABKAlSCEluZHVzdHJ5EhYKBl'
+    'NlY3RvchgIIAEoCVIGU2VjdG9yEhIKBEFyZWEYCiABKAlSBEFyZWESGgoIQ3VycmVuY3kYCyAB'
+    'KAlSCEN1cnJlbmN5EhoKCExpc3REYXRlGAwgASgJUghMaXN0RGF0ZQ==');
 
-@$core.Deprecated('Use dBFundamentalSnapshotDescriptor instead')
-const DBFundamentalSnapshot$json = {
-  '1': 'DBFundamentalSnapshot',
+@$core.Deprecated('Use dBStockOperatingSnapshotDescriptor instead')
+const DBStockOperatingSnapshot$json = {
+  '1': 'DBStockOperatingSnapshot',
   '2': [
     {'1': 'Id', '3': 1, '4': 1, '5': 9, '10': 'Id'},
     {'1': 'Symbol', '3': 2, '4': 1, '5': 9, '10': 'Symbol'},
@@ -88,51 +88,30 @@ const DBFundamentalSnapshot$json = {
     {'1': 'RevenueYoY', '3': 41, '4': 1, '5': 1, '10': 'RevenueYoY'},
     {'1': 'NetProfitYoY', '3': 42, '4': 1, '5': 1, '10': 'NetProfitYoY'},
     {'1': 'EPSYoY', '3': 43, '4': 1, '5': 1, '10': 'EPSYoY'},
-    {
-      '1': 'Metrics',
-      '3': 60,
-      '4': 3,
-      '5': 11,
-      '6': '.DBFundamentalSnapshot.MetricsEntry',
-      '10': 'Metrics'
-    },
     {'1': 'CreateAt', '3': 61, '4': 1, '5': 9, '10': 'CreateAt'},
   ],
-  '3': [DBFundamentalSnapshot_MetricsEntry$json],
 };
 
-@$core.Deprecated('Use dBFundamentalSnapshotDescriptor instead')
-const DBFundamentalSnapshot_MetricsEntry$json = {
-  '1': 'MetricsEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 1, '10': 'value'},
-  ],
-  '7': {'7': true},
-};
-
-/// Descriptor for `DBFundamentalSnapshot`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List dBFundamentalSnapshotDescriptor = $convert.base64Decode(
-    'ChVEQkZ1bmRhbWVudGFsU25hcHNob3QSDgoCSWQYASABKAlSAklkEhYKBlN5bWJvbBgCIAEoCV'
-    'IGU3ltYm9sEhYKBk1hcmtldBgDIAEoCVIGTWFya2V0Eg4KAlRzGAQgASgJUgJUcxIWCgZQZXJp'
-    'b2QYBSABKAlSBlBlcmlvZBIeCgpGaXNjYWxZZWFyGAYgASgJUgpGaXNjYWxZZWFyEiQKDUZpc2'
-    'NhbFF1YXJ0ZXIYByABKAlSDUZpc2NhbFF1YXJ0ZXISFgoGU291cmNlGAggASgJUgZTb3VyY2US'
-    'GAoHUmV2ZW51ZRgUIAEoAVIHUmV2ZW51ZRIoCg9PcGVyYXRpbmdJbmNvbWUYFSABKAFSD09wZX'
-    'JhdGluZ0luY29tZRIcCglOZXRQcm9maXQYFiABKAFSCU5ldFByb2ZpdBIQCgNFUFMYFyABKAFS'
-    'A0VQUxIQCgNST0UYGCABKAFSA1JPRRIQCgNST0EYGSABKAFSA1JPQRIgCgtHcm9zc01hcmdpbh'
-    'gaIAEoAVILR3Jvc3NNYXJnaW4SKAoPT3BlcmF0aW5nTWFyZ2luGBsgASgBUg9PcGVyYXRpbmdN'
-    'YXJnaW4SHAoJTmV0TWFyZ2luGBwgASgBUglOZXRNYXJnaW4SDgoCUEUYHSABKAFSAlBFEg4KAl'
-    'BCGB4gASgBUgJQQhIOCgJQUxgfIAEoAVICUFMSKgoQRGl2aWRlbmRQZXJTaGFyZRggIAEoAVIQ'
-    'RGl2aWRlbmRQZXJTaGFyZRIkCg1EaXZpZGVuZFlpZWxkGCEgASgBUg1EaXZpZGVuZFlpZWxkEi'
-    'IKDEZyZWVDYXNoRmxvdxgiIAEoAVIMRnJlZUNhc2hGbG93EiIKDERlYnRUb0VxdWl0eRgjIAEo'
-    'AVIMRGVidFRvRXF1aXR5EiIKDEN1cnJlbnRSYXRpbxgkIAEoAVIMQ3VycmVudFJhdGlvEh4KCl'
-    'F1aWNrUmF0aW8YJSABKAFSClF1aWNrUmF0aW8SIAoLVG90YWxBc3NldHMYJiABKAFSC1RvdGFs'
-    'QXNzZXRzEioKEFRvdGFsTGlhYmlsaXRpZXMYJyABKAFSEFRvdGFsTGlhYmlsaXRpZXMSFgoGRX'
-    'F1aXR5GCggASgBUgZFcXVpdHkSHgoKUmV2ZW51ZVlvWRgpIAEoAVIKUmV2ZW51ZVlvWRIiCgxO'
-    'ZXRQcm9maXRZb1kYKiABKAFSDE5ldFByb2ZpdFlvWRIWCgZFUFNZb1kYKyABKAFSBkVQU1lvWR'
-    'I9CgdNZXRyaWNzGDwgAygLMiMuREJGdW5kYW1lbnRhbFNuYXBzaG90Lk1ldHJpY3NFbnRyeVIH'
-    'TWV0cmljcxIaCghDcmVhdGVBdBg9IAEoCVIIQ3JlYXRlQXQaOgoMTWV0cmljc0VudHJ5EhAKA2'
-    'tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgBUgV2YWx1ZToCOAE=');
+/// Descriptor for `DBStockOperatingSnapshot`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List dBStockOperatingSnapshotDescriptor = $convert.base64Decode(
+    'ChhEQlN0b2NrT3BlcmF0aW5nU25hcHNob3QSDgoCSWQYASABKAlSAklkEhYKBlN5bWJvbBgCIA'
+    'EoCVIGU3ltYm9sEhYKBk1hcmtldBgDIAEoCVIGTWFya2V0Eg4KAlRzGAQgASgJUgJUcxIWCgZQ'
+    'ZXJpb2QYBSABKAlSBlBlcmlvZBIeCgpGaXNjYWxZZWFyGAYgASgJUgpGaXNjYWxZZWFyEiQKDU'
+    'Zpc2NhbFF1YXJ0ZXIYByABKAlSDUZpc2NhbFF1YXJ0ZXISFgoGU291cmNlGAggASgJUgZTb3Vy'
+    'Y2USGAoHUmV2ZW51ZRgUIAEoAVIHUmV2ZW51ZRIoCg9PcGVyYXRpbmdJbmNvbWUYFSABKAFSD0'
+    '9wZXJhdGluZ0luY29tZRIcCglOZXRQcm9maXQYFiABKAFSCU5ldFByb2ZpdBIQCgNFUFMYFyAB'
+    'KAFSA0VQUxIQCgNST0UYGCABKAFSA1JPRRIQCgNST0EYGSABKAFSA1JPQRIgCgtHcm9zc01hcm'
+    'dpbhgaIAEoAVILR3Jvc3NNYXJnaW4SKAoPT3BlcmF0aW5nTWFyZ2luGBsgASgBUg9PcGVyYXRp'
+    'bmdNYXJnaW4SHAoJTmV0TWFyZ2luGBwgASgBUglOZXRNYXJnaW4SDgoCUEUYHSABKAFSAlBFEg'
+    '4KAlBCGB4gASgBUgJQQhIOCgJQUxgfIAEoAVICUFMSKgoQRGl2aWRlbmRQZXJTaGFyZRggIAEo'
+    'AVIQRGl2aWRlbmRQZXJTaGFyZRIkCg1EaXZpZGVuZFlpZWxkGCEgASgBUg1EaXZpZGVuZFlpZW'
+    'xkEiIKDEZyZWVDYXNoRmxvdxgiIAEoAVIMRnJlZUNhc2hGbG93EiIKDERlYnRUb0VxdWl0eRgj'
+    'IAEoAVIMRGVidFRvRXF1aXR5EiIKDEN1cnJlbnRSYXRpbxgkIAEoAVIMQ3VycmVudFJhdGlvEh'
+    '4KClF1aWNrUmF0aW8YJSABKAFSClF1aWNrUmF0aW8SIAoLVG90YWxBc3NldHMYJiABKAFSC1Rv'
+    'dGFsQXNzZXRzEioKEFRvdGFsTGlhYmlsaXRpZXMYJyABKAFSEFRvdGFsTGlhYmlsaXRpZXMSFg'
+    'oGRXF1aXR5GCggASgBUgZFcXVpdHkSHgoKUmV2ZW51ZVlvWRgpIAEoAVIKUmV2ZW51ZVlvWRIi'
+    'CgxOZXRQcm9maXRZb1kYKiABKAFSDE5ldFByb2ZpdFlvWRIWCgZFUFNZb1kYKyABKAFSBkVQU1'
+    'lvWRIaCghDcmVhdGVBdBg9IAEoCVIIQ3JlYXRlQXQ=');
 
 @$core.Deprecated('Use dBStockRealTimeItemDescriptor instead')
 const DBStockRealTimeItem$json = {
@@ -198,30 +177,29 @@ const DBStockBar$json = {
     {'1': 'Id', '3': 1, '4': 1, '5': 9, '10': 'Id'},
     {'1': 'Symbol', '3': 2, '4': 1, '5': 9, '10': 'Symbol'},
     {'1': 'Market', '3': 3, '4': 1, '5': 9, '10': 'Market'},
-    {'1': 'Timeframe', '3': 4, '4': 1, '5': 9, '10': 'Timeframe'},
-    {'1': 'Ts', '3': 5, '4': 1, '5': 9, '10': 'Ts'},
-    {'1': 'Open', '3': 6, '4': 1, '5': 1, '10': 'Open'},
+    {'1': 'Date', '3': 4, '4': 1, '5': 9, '10': 'Date'},
+    {'1': 'Open', '3': 5, '4': 1, '5': 1, '10': 'Open'},
+    {'1': 'Close', '3': 6, '4': 1, '5': 1, '10': 'Close'},
     {'1': 'High', '3': 7, '4': 1, '5': 1, '10': 'High'},
     {'1': 'Low', '3': 8, '4': 1, '5': 1, '10': 'Low'},
-    {'1': 'Close', '3': 9, '4': 1, '5': 1, '10': 'Close'},
-    {'1': 'Volume', '3': 10, '4': 1, '5': 3, '10': 'Volume'},
-    {'1': 'Turnover', '3': 11, '4': 1, '5': 1, '10': 'Turnover'},
-    {'1': 'AdjFactor', '3': 12, '4': 1, '5': 1, '10': 'AdjFactor'},
-    {'1': 'Source', '3': 13, '4': 1, '5': 9, '10': 'Source'},
-    {'1': 'CreateAt', '3': 14, '4': 1, '5': 9, '10': 'CreateAt'},
-    {'1': 'UpdateAt', '3': 15, '4': 1, '5': 9, '10': 'UpdateAt'},
+    {'1': 'Volume', '3': 9, '4': 1, '5': 1, '10': 'Volume'},
+    {'1': 'Amount', '3': 10, '4': 1, '5': 1, '10': 'Amount'},
+    {'1': 'Amplitude', '3': 11, '4': 1, '5': 1, '10': 'Amplitude'},
+    {'1': 'ChangePct', '3': 12, '4': 1, '5': 1, '10': 'ChangePct'},
+    {'1': 'ChangeAmt', '3': 13, '4': 1, '5': 1, '10': 'ChangeAmt'},
+    {'1': 'TurnoverRate', '3': 14, '4': 1, '5': 1, '10': 'TurnoverRate'},
   ],
 };
 
 /// Descriptor for `DBStockBar`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List dBStockBarDescriptor = $convert.base64Decode(
     'CgpEQlN0b2NrQmFyEg4KAklkGAEgASgJUgJJZBIWCgZTeW1ib2wYAiABKAlSBlN5bWJvbBIWCg'
-    'ZNYXJrZXQYAyABKAlSBk1hcmtldBIcCglUaW1lZnJhbWUYBCABKAlSCVRpbWVmcmFtZRIOCgJU'
-    'cxgFIAEoCVICVHMSEgoET3BlbhgGIAEoAVIET3BlbhISCgRIaWdoGAcgASgBUgRIaWdoEhAKA0'
-    'xvdxgIIAEoAVIDTG93EhQKBUNsb3NlGAkgASgBUgVDbG9zZRIWCgZWb2x1bWUYCiABKANSBlZv'
-    'bHVtZRIaCghUdXJub3ZlchgLIAEoAVIIVHVybm92ZXISHAoJQWRqRmFjdG9yGAwgASgBUglBZG'
-    'pGYWN0b3ISFgoGU291cmNlGA0gASgJUgZTb3VyY2USGgoIQ3JlYXRlQXQYDiABKAlSCENyZWF0'
-    'ZUF0EhoKCFVwZGF0ZUF0GA8gASgJUghVcGRhdGVBdA==');
+    'ZNYXJrZXQYAyABKAlSBk1hcmtldBISCgREYXRlGAQgASgJUgREYXRlEhIKBE9wZW4YBSABKAFS'
+    'BE9wZW4SFAoFQ2xvc2UYBiABKAFSBUNsb3NlEhIKBEhpZ2gYByABKAFSBEhpZ2gSEAoDTG93GA'
+    'ggASgBUgNMb3cSFgoGVm9sdW1lGAkgASgBUgZWb2x1bWUSFgoGQW1vdW50GAogASgBUgZBbW91'
+    'bnQSHAoJQW1wbGl0dWRlGAsgASgBUglBbXBsaXR1ZGUSHAoJQ2hhbmdlUGN0GAwgASgBUglDaG'
+    'FuZ2VQY3QSHAoJQ2hhbmdlQW10GA0gASgBUglDaGFuZ2VBbXQSIgoMVHVybm92ZXJSYXRlGA4g'
+    'ASgBUgxUdXJub3ZlclJhdGU=');
 
 @$core.Deprecated('Use dBStockNewsDescriptor instead')
 const DBStockNews$json = {
@@ -233,7 +211,8 @@ const DBStockNews$json = {
     {'1': 'Ts', '3': 4, '4': 1, '5': 9, '10': 'Ts'},
     {'1': 'Title', '3': 5, '4': 1, '5': 9, '10': 'Title'},
     {'1': 'Source', '3': 6, '4': 1, '5': 9, '10': 'Source'},
-    {'1': 'CreateAt', '3': 7, '4': 1, '5': 9, '10': 'CreateAt'},
+    {'1': 'Url', '3': 7, '4': 1, '5': 9, '10': 'Url'},
+    {'1': 'CreateAt', '3': 8, '4': 1, '5': 9, '10': 'CreateAt'},
   ],
 };
 
@@ -241,8 +220,8 @@ const DBStockNews$json = {
 final $typed_data.Uint8List dBStockNewsDescriptor = $convert.base64Decode(
     'CgtEQlN0b2NrTmV3cxIOCgJJZBgBIAEoCVICSWQSFgoGU3ltYm9sGAIgASgJUgZTeW1ib2wSFg'
     'oGTWFya2V0GAMgASgJUgZNYXJrZXQSDgoCVHMYBCABKAlSAlRzEhQKBVRpdGxlGAUgASgJUgVU'
-    'aXRsZRIWCgZTb3VyY2UYBiABKAlSBlNvdXJjZRIaCghDcmVhdGVBdBgHIAEoCVIIQ3JlYXRlQX'
-    'Q=');
+    'aXRsZRIWCgZTb3VyY2UYBiABKAlSBlNvdXJjZRIQCgNVcmwYByABKAlSA1VybBIaCghDcmVhdG'
+    'VBdBgIIAEoCVIIQ3JlYXRlQXQ=');
 
 @$core.Deprecated('Use dBStockReportDescriptor instead')
 const DBStockReport$json = {

@@ -1,0 +1,8 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+message DBCollectionItem {
+  string code = 1;
+  int64 last_update_time = 2;
+}
+

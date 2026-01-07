@@ -41,3 +41,8 @@ func (this *Collection) OnInstallComp() {
 	this.akshare = this.RegisterComp(new(stockAkshareComp)).(*stockAkshareComp)
 	this.timer = this.RegisterComp(new(timerComp)).(*timerComp)
 }
+
+func (this *Collection) RPC_InitStock(code string) (err error) {
+	this.ModuleBase.Start()
+	return
+}

@@ -80,24 +80,22 @@ message DBStockRealTimeItem {
 }
 
 
-
 // 日/周/月K线（行情）
 message DBStockBar {
   string Id = 1;                   //@go_tags(`gorm:"id;primaryKey;autoIncrement" json:"id"`) 主键ID
-  string Symbol = 2;               //@go_tags(`gorm:"symbol;uniqueIndex:uk_symbol_tf_ts" json:"symbol"`) 股票代码
-  string Market = 3;               //@go_tags(`gorm:"market;uniqueIndex:uk_symbol_tf_ts" json:"market"`) 市场标识
-  string Timeframe = 4;            //@go_tags(`gorm:"timeframe;uniqueIndex:uk_symbol_tf_ts" json:"timeframe"`) 周期(1d/1w/1mo)
-  string Ts = 5;                   //@go_tags(`gorm:"ts;uniqueIndex:uk_symbol_tf_ts" json:"ts"`) 时间戳(RFC3339)
-  double Open = 6;                 //@go_tags(`gorm:"open" json:"open"`) 开盘价
+  string Symbol = 2;               //@go_tags(`gorm:"symbol;index" json:"symbol"`) 股票代码
+  string Market = 3;               //@go_tags(`gorm:"market" json:"market"`) 市场标识
+  string Date = 4;                 //@go_tags(`gorm:"date;index" json:"date"`) 日期(YYYYMMDD)
+  double Open = 5;                 //@go_tags(`gorm:"open" json:"open"`) 开盘价
+  double Close = 6;                //@go_tags(`gorm:"close" json:"close"`) 收盘价
   double High = 7;                 //@go_tags(`gorm:"high" json:"high"`) 最高价
   double Low = 8;                  //@go_tags(`gorm:"low" json:"low"`) 最低价
-  double Close = 9;                //@go_tags(`gorm:"close" json:"close"`) 收盘价
-  int64 Volume = 10;               //@go_tags(`gorm:"volume" json:"volume"`) 成交量(股)
-  double Turnover = 11;            //@go_tags(`gorm:"turnover" json:"turnover"`) 成交额(货币)
-  double AdjFactor = 12;           //@go_tags(`gorm:"adj_factor" json:"adj_factor"`) 复权因子
-  string Source = 13;              //@go_tags(`gorm:"source" json:"source"`) 数据来源(akshare等)
-  string CreateAt = 14;            //@go_tags(`gorm:"create_at" json:"create_at"`) 创建时间
-  string UpdateAt = 15;            //@go_tags(`gorm:"update_at" json:"update_at"`) 更新时间
+  double Volume = 9;                //@go_tags(`gorm:"volume" json:"volume"`) 成交量
+  double Amount = 10;              //@go_tags(`gorm:"amount" json:"amount"`) 成交额
+  double Amplitude = 11;           //@go_tags(`gorm:"amplitude" json:"amplitude"`) 振幅
+  double ChangePct = 12;           //@go_tags(`gorm:"change_pct" json:"change_pct"`) 涨跌幅
+  double ChangeAmt = 13;           //@go_tags(`gorm:"change_amt" json:"change_amt"`) 涨跌额
+  double TurnoverRate = 14;        //@go_tags(`gorm:"turnover_rate" json:"turnover_rate"`) 换手率
 }
 
 

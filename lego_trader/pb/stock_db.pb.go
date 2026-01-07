@@ -7,10 +7,11 @@
 package pb
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -735,16 +736,9 @@ func (x *DBStockBar) GetMarket() string {
 	return ""
 }
 
-func (x *DBStockBar) GetTimeframe() string {
+func (x *DBStockBar) GetDate() string {
 	if x != nil {
-		return x.Timeframe
-	}
-	return ""
-}
-
-func (x *DBStockBar) GetTs() string {
-	if x != nil {
-		return x.Ts
+		return x.Date
 	}
 	return ""
 }
@@ -752,6 +746,13 @@ func (x *DBStockBar) GetTs() string {
 func (x *DBStockBar) GetOpen() float64 {
 	if x != nil {
 		return x.Open
+	}
+	return 0
+}
+
+func (x *DBStockBar) GetClose() float64 {
+	if x != nil {
+		return x.Close
 	}
 	return 0
 }
@@ -770,53 +771,46 @@ func (x *DBStockBar) GetLow() float64 {
 	return 0
 }
 
-func (x *DBStockBar) GetClose() float64 {
-	if x != nil {
-		return x.Close
-	}
-	return 0
-}
-
-func (x *DBStockBar) GetVolume() int64 {
+func (x *DBStockBar) GetVolume() float64 {
 	if x != nil {
 		return x.Volume
 	}
 	return 0
 }
 
-func (x *DBStockBar) GetTurnover() float64 {
+func (x *DBStockBar) GetAmount() float64 {
 	if x != nil {
-		return x.Turnover
+		return x.Amount
 	}
 	return 0
 }
 
-func (x *DBStockBar) GetAdjFactor() float64 {
+func (x *DBStockBar) GetAmplitude() float64 {
 	if x != nil {
-		return x.AdjFactor
+		return x.Amplitude
 	}
 	return 0
 }
 
-func (x *DBStockBar) GetSource() string {
+func (x *DBStockBar) GetChangePct() float64 {
 	if x != nil {
-		return x.Source
+		return x.ChangePct
 	}
-	return ""
+	return 0
 }
 
-func (x *DBStockBar) GetCreateAt() string {
+func (x *DBStockBar) GetChangeAmt() float64 {
 	if x != nil {
-		return x.CreateAt
+		return x.ChangeAmt
 	}
-	return ""
+	return 0
 }
 
-func (x *DBStockBar) GetUpdateAt() string {
+func (x *DBStockBar) GetTurnoverRate() float64 {
 	if x != nil {
-		return x.UpdateAt
+		return x.TurnoverRate
 	}
-	return ""
+	return 0
 }
 
 // 股票新闻
@@ -923,7 +917,7 @@ func (x *DBStockNews) GetCreateAt() string {
 	return ""
 }
 
-//股票分析报告 每日
+// 股票分析报告 每日
 type DBStockReport struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

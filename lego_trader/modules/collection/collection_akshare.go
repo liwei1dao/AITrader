@@ -120,6 +120,17 @@ func (this *stockAkshareComp) getMarketRealTimeIndexs() (err error) {
 /*-----------------------------------------------------股票----------------------------------------------------------*/
 
 /*
+初始化股票数据（akshare）
+参数: 无
+返回值: err 错误信息；成功时返回 nil
+异常: 上游 AkShare 访问失败或解码失败时返回错误
+*/
+func (this *stockAkshareComp) initstock(code string) (err error) {
+
+	return
+}
+
+/*
 获取股票实时行情数据（akshare）
 参数: 无
 返回值: err 错误信息；成功时返回 nil
@@ -166,6 +177,50 @@ func (this *stockAkshareComp) getStockRealTimeSpot() (err error) {
 		err = this.module.model.updateRealTimeStock(items)
 	} else {
 		this.module.Errorf("getStockRealTimeSpot: no data")
+	}
+	return
+}
+
+/*
+获取股票日K线数据（akshare）
+参数: symbol 股票符号（例如："sh.000001"）
+返回值: err 错误信息；成功时返回 nil
+异常: 上游 AkShare 访问失败或解码失败时返回错误
+*/
+func (this *stockAkshareComp) getStockDayHist(symbol string, period string, startDate string, endDate string) (err error) {
+	var (
+		records []akshare.StockZhAHistRecord
+	)
+	records, err = akshare.GetStockZhAHist(symbol, period, startDate, endDate, "")
+	if err != nil {
+		return
+	}
+	if len(records) == 0 {
+		return
+	}
+	items := make([]*pb.DBStockBar, 0, len(records))
+	for _, v := range records {
+		items = append(items, &pb.DBStockBar{
+			Symbol:       symbol,
+			Date:         v.Date,
+			Open:         v.Open,
+			High:         v.High,
+			Low:          v.Low,
+			Close:        v.Close,
+			Volume:       v.Volume,
+			Amount:       v.Turnover,
+			Amplitude:    v.Amplitude,
+			ChangePct:    v.ChangePct,
+			ChangeAmt:    v.ChangeAmt,
+			TurnoverRate: v.TurnoverRate,
+		})
+	}
+	if len(items) > 0 {
+		if err = this.module.model.updateStockDayHit(symbol, period, items); err != nil {
+			return
+		}
+	} else {
+		this.module.Errorf("getStockDayHist: no data")
 	}
 	return
 }
@@ -232,10 +287,10 @@ func (this *stockAkshareComp) getStockNews(symbol string) (items []*pb.DBStockNe
 	for _, v := range records {
 
 		items = append(items, &pb.DBStockNews{
-			Symbol:       symbol,
-			Title:        v.Title,
-			Source:       v.Source,
-			Url:          v.URL,
+			Symbol: symbol,
+			Title:  v.Title,
+			Source: v.Source,
+			Url:    v.URL,
 		})
 	}
 	return

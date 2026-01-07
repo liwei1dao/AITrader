@@ -116,209 +116,442 @@ class StockGetRealTimeDataResp extends $pb.GeneratedMessage {
   $pb.PbList<$0.DBStockRealTimeItem> get items => $_getList(0);
 }
 
+/// 获取股票当日分时数据
+class StockGetIntradayChartReq extends $pb.GeneratedMessage {
+  factory StockGetIntradayChartReq({
+    $core.String? code,
+  }) {
+    final result = create();
+    if (code != null) result.code = code;
+    return result;
+  }
+
+  StockGetIntradayChartReq._();
+
+  factory StockGetIntradayChartReq.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory StockGetIntradayChartReq.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StockGetIntradayChartReq',
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'code')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StockGetIntradayChartReq clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StockGetIntradayChartReq copyWith(
+          void Function(StockGetIntradayChartReq) updates) =>
+      super.copyWith((message) => updates(message as StockGetIntradayChartReq))
+          as StockGetIntradayChartReq;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StockGetIntradayChartReq create() => StockGetIntradayChartReq._();
+  @$core.override
+  StockGetIntradayChartReq createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static StockGetIntradayChartReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StockGetIntradayChartReq>(create);
+  static StockGetIntradayChartReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get code => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set code($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCode() => $_clearField(1);
+}
+
+/// 获取股票当日分时数据响应
+class StockGetIntradayChartResp extends $pb.GeneratedMessage {
+  factory StockGetIntradayChartResp({
+    $core.Iterable<$0.DBStockRealTimeItem>? items,
+  }) {
+    final result = create();
+    if (items != null) result.items.addAll(items);
+    return result;
+  }
+
+  StockGetIntradayChartResp._();
+
+  factory StockGetIntradayChartResp.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory StockGetIntradayChartResp.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StockGetIntradayChartResp',
+      createEmptyInstance: create)
+    ..pPM<$0.DBStockRealTimeItem>(1, _omitFieldNames ? '' : 'items',
+        subBuilder: $0.DBStockRealTimeItem.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StockGetIntradayChartResp clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StockGetIntradayChartResp copyWith(
+          void Function(StockGetIntradayChartResp) updates) =>
+      super.copyWith((message) => updates(message as StockGetIntradayChartResp))
+          as StockGetIntradayChartResp;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StockGetIntradayChartResp create() => StockGetIntradayChartResp._();
+  @$core.override
+  StockGetIntradayChartResp createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static StockGetIntradayChartResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StockGetIntradayChartResp>(create);
+  static StockGetIntradayChartResp? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<$0.DBStockRealTimeItem> get items => $_getList(0);
+}
+
+/// 获取股票K线数据 period: `daily`/`weekly`/`monthly`
+class StockGetHitDataReq extends $pb.GeneratedMessage {
+  factory StockGetHitDataReq({
+    $core.String? code,
+    $core.String? period,
+  }) {
+    final result = create();
+    if (code != null) result.code = code;
+    if (period != null) result.period = period;
+    return result;
+  }
+
+  StockGetHitDataReq._();
+
+  factory StockGetHitDataReq.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory StockGetHitDataReq.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StockGetHitDataReq',
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'code')
+    ..aOS(2, _omitFieldNames ? '' : 'period')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StockGetHitDataReq clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StockGetHitDataReq copyWith(void Function(StockGetHitDataReq) updates) =>
+      super.copyWith((message) => updates(message as StockGetHitDataReq))
+          as StockGetHitDataReq;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StockGetHitDataReq create() => StockGetHitDataReq._();
+  @$core.override
+  StockGetHitDataReq createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static StockGetHitDataReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StockGetHitDataReq>(create);
+  static StockGetHitDataReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get code => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set code($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCode() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get period => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set period($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasPeriod() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPeriod() => $_clearField(2);
+}
+
+class StockGetHitDataResp extends $pb.GeneratedMessage {
+  factory StockGetHitDataResp({
+    $core.Iterable<$0.DBStockBar>? items,
+  }) {
+    final result = create();
+    if (items != null) result.items.addAll(items);
+    return result;
+  }
+
+  StockGetHitDataResp._();
+
+  factory StockGetHitDataResp.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory StockGetHitDataResp.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'StockGetHitDataResp',
+      createEmptyInstance: create)
+    ..pPM<$0.DBStockBar>(1, _omitFieldNames ? '' : 'items',
+        subBuilder: $0.DBStockBar.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StockGetHitDataResp clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  StockGetHitDataResp copyWith(void Function(StockGetHitDataResp) updates) =>
+      super.copyWith((message) => updates(message as StockGetHitDataResp))
+          as StockGetHitDataResp;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StockGetHitDataResp create() => StockGetHitDataResp._();
+  @$core.override
+  StockGetHitDataResp createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static StockGetHitDataResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StockGetHitDataResp>(create);
+  static StockGetHitDataResp? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<$0.DBStockBar> get items => $_getList(0);
+}
+
 /// 获取股票信息请求
-class StockGetInfosReq extends $pb.GeneratedMessage {
-  factory StockGetInfosReq({
-    $core.Iterable<$core.String>? stockIds,
+class StockGetBasicInfoReq extends $pb.GeneratedMessage {
+  factory StockGetBasicInfoReq({
+    $core.String? code,
   }) {
     final result = create();
-    if (stockIds != null) result.stockIds.addAll(stockIds);
+    if (code != null) result.code = code;
     return result;
   }
 
-  StockGetInfosReq._();
+  StockGetBasicInfoReq._();
 
-  factory StockGetInfosReq.fromBuffer($core.List<$core.int> data,
+  factory StockGetBasicInfoReq.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory StockGetInfosReq.fromJson($core.String json,
+  factory StockGetBasicInfoReq.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'StockGetInfosReq',
+      _omitMessageNames ? '' : 'StockGetBasicInfoReq',
       createEmptyInstance: create)
-    ..pPS(1, _omitFieldNames ? '' : 'stockIds')
+    ..aOS(1, _omitFieldNames ? '' : 'code')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  StockGetInfosReq clone() => deepCopy();
+  StockGetBasicInfoReq clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  StockGetInfosReq copyWith(void Function(StockGetInfosReq) updates) =>
-      super.copyWith((message) => updates(message as StockGetInfosReq))
-          as StockGetInfosReq;
+  StockGetBasicInfoReq copyWith(void Function(StockGetBasicInfoReq) updates) =>
+      super.copyWith((message) => updates(message as StockGetBasicInfoReq))
+          as StockGetBasicInfoReq;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static StockGetInfosReq create() => StockGetInfosReq._();
+  static StockGetBasicInfoReq create() => StockGetBasicInfoReq._();
   @$core.override
-  StockGetInfosReq createEmptyInstance() => create();
+  StockGetBasicInfoReq createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static StockGetInfosReq getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<StockGetInfosReq>(create);
-  static StockGetInfosReq? _defaultInstance;
+  static StockGetBasicInfoReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StockGetBasicInfoReq>(create);
+  static StockGetBasicInfoReq? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $pb.PbList<$core.String> get stockIds => $_getList(0);
+  $core.String get code => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set code($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCode() => $_clearField(1);
 }
 
-class StockGetInfosResp extends $pb.GeneratedMessage {
-  factory StockGetInfosResp({
-    $core.Iterable<$0.DBStockIdentity>? stockInfos,
+class StockGetBasicInfoResp extends $pb.GeneratedMessage {
+  factory StockGetBasicInfoResp({
+    $0.DBStockBasicInfo? info,
   }) {
     final result = create();
-    if (stockInfos != null) result.stockInfos.addAll(stockInfos);
+    if (info != null) result.info = info;
     return result;
   }
 
-  StockGetInfosResp._();
+  StockGetBasicInfoResp._();
 
-  factory StockGetInfosResp.fromBuffer($core.List<$core.int> data,
+  factory StockGetBasicInfoResp.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory StockGetInfosResp.fromJson($core.String json,
+  factory StockGetBasicInfoResp.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'StockGetInfosResp',
+      _omitMessageNames ? '' : 'StockGetBasicInfoResp',
       createEmptyInstance: create)
-    ..pPM<$0.DBStockIdentity>(1, _omitFieldNames ? '' : 'stockInfos',
-        subBuilder: $0.DBStockIdentity.create)
+    ..aOM<$0.DBStockBasicInfo>(1, _omitFieldNames ? '' : 'info',
+        subBuilder: $0.DBStockBasicInfo.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  StockGetInfosResp clone() => deepCopy();
+  StockGetBasicInfoResp clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  StockGetInfosResp copyWith(void Function(StockGetInfosResp) updates) =>
-      super.copyWith((message) => updates(message as StockGetInfosResp))
-          as StockGetInfosResp;
+  StockGetBasicInfoResp copyWith(
+          void Function(StockGetBasicInfoResp) updates) =>
+      super.copyWith((message) => updates(message as StockGetBasicInfoResp))
+          as StockGetBasicInfoResp;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static StockGetInfosResp create() => StockGetInfosResp._();
+  static StockGetBasicInfoResp create() => StockGetBasicInfoResp._();
   @$core.override
-  StockGetInfosResp createEmptyInstance() => create();
+  StockGetBasicInfoResp createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static StockGetInfosResp getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<StockGetInfosResp>(create);
-  static StockGetInfosResp? _defaultInstance;
+  static StockGetBasicInfoResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StockGetBasicInfoResp>(create);
+  static StockGetBasicInfoResp? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $pb.PbList<$0.DBStockIdentity> get stockInfos => $_getList(0);
+  $0.DBStockBasicInfo get info => $_getN(0);
+  @$pb.TagNumber(1)
+  set info($0.DBStockBasicInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasInfo() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearInfo() => $_clearField(1);
+  @$pb.TagNumber(1)
+  $0.DBStockBasicInfo ensureInfo() => $_ensure(0);
 }
 
-/// 获取基本面快照请求
-class StockGetFundamentalSnapshotReq extends $pb.GeneratedMessage {
-  factory StockGetFundamentalSnapshotReq({
-    $core.String? id,
+/// 获取股票的经营快照
+class StockGetOperatingSnapshotReq extends $pb.GeneratedMessage {
+  factory StockGetOperatingSnapshotReq({
+    $core.String? code,
   }) {
     final result = create();
-    if (id != null) result.id = id;
+    if (code != null) result.code = code;
     return result;
   }
 
-  StockGetFundamentalSnapshotReq._();
+  StockGetOperatingSnapshotReq._();
 
-  factory StockGetFundamentalSnapshotReq.fromBuffer($core.List<$core.int> data,
+  factory StockGetOperatingSnapshotReq.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory StockGetFundamentalSnapshotReq.fromJson($core.String json,
+  factory StockGetOperatingSnapshotReq.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'StockGetFundamentalSnapshotReq',
+      _omitMessageNames ? '' : 'StockGetOperatingSnapshotReq',
       createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(1, _omitFieldNames ? '' : 'code')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  StockGetFundamentalSnapshotReq clone() => deepCopy();
+  StockGetOperatingSnapshotReq clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  StockGetFundamentalSnapshotReq copyWith(
-          void Function(StockGetFundamentalSnapshotReq) updates) =>
+  StockGetOperatingSnapshotReq copyWith(
+          void Function(StockGetOperatingSnapshotReq) updates) =>
       super.copyWith(
-              (message) => updates(message as StockGetFundamentalSnapshotReq))
-          as StockGetFundamentalSnapshotReq;
+              (message) => updates(message as StockGetOperatingSnapshotReq))
+          as StockGetOperatingSnapshotReq;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static StockGetFundamentalSnapshotReq create() =>
-      StockGetFundamentalSnapshotReq._();
+  static StockGetOperatingSnapshotReq create() =>
+      StockGetOperatingSnapshotReq._();
   @$core.override
-  StockGetFundamentalSnapshotReq createEmptyInstance() => create();
+  StockGetOperatingSnapshotReq createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static StockGetFundamentalSnapshotReq getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<StockGetFundamentalSnapshotReq>(create);
-  static StockGetFundamentalSnapshotReq? _defaultInstance;
+  static StockGetOperatingSnapshotReq getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StockGetOperatingSnapshotReq>(create);
+  static StockGetOperatingSnapshotReq? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get id => $_getSZ(0);
+  $core.String get code => $_getSZ(0);
   @$pb.TagNumber(1)
-  set id($core.String value) => $_setString(0, value);
+  set code($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
+  $core.bool hasCode() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => $_clearField(1);
+  void clearCode() => $_clearField(1);
 }
 
-class StockGetFundamentalSnapshotResp extends $pb.GeneratedMessage {
-  factory StockGetFundamentalSnapshotResp({
-    $core.Iterable<$0.DBFundamentalSnapshot>? snapshots,
+class StockGetOperatingSnapshotResp extends $pb.GeneratedMessage {
+  factory StockGetOperatingSnapshotResp({
+    $core.Iterable<$0.DBStockOperatingSnapshot>? snapshots,
   }) {
     final result = create();
     if (snapshots != null) result.snapshots.addAll(snapshots);
     return result;
   }
 
-  StockGetFundamentalSnapshotResp._();
+  StockGetOperatingSnapshotResp._();
 
-  factory StockGetFundamentalSnapshotResp.fromBuffer($core.List<$core.int> data,
+  factory StockGetOperatingSnapshotResp.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(data, registry);
-  factory StockGetFundamentalSnapshotResp.fromJson($core.String json,
+  factory StockGetOperatingSnapshotResp.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'StockGetFundamentalSnapshotResp',
+      _omitMessageNames ? '' : 'StockGetOperatingSnapshotResp',
       createEmptyInstance: create)
-    ..pPM<$0.DBFundamentalSnapshot>(1, _omitFieldNames ? '' : 'snapshots',
-        subBuilder: $0.DBFundamentalSnapshot.create)
+    ..pPM<$0.DBStockOperatingSnapshot>(1, _omitFieldNames ? '' : 'snapshots',
+        subBuilder: $0.DBStockOperatingSnapshot.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  StockGetFundamentalSnapshotResp clone() => deepCopy();
+  StockGetOperatingSnapshotResp clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  StockGetFundamentalSnapshotResp copyWith(
-          void Function(StockGetFundamentalSnapshotResp) updates) =>
+  StockGetOperatingSnapshotResp copyWith(
+          void Function(StockGetOperatingSnapshotResp) updates) =>
       super.copyWith(
-              (message) => updates(message as StockGetFundamentalSnapshotResp))
-          as StockGetFundamentalSnapshotResp;
+              (message) => updates(message as StockGetOperatingSnapshotResp))
+          as StockGetOperatingSnapshotResp;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static StockGetFundamentalSnapshotResp create() =>
-      StockGetFundamentalSnapshotResp._();
+  static StockGetOperatingSnapshotResp create() =>
+      StockGetOperatingSnapshotResp._();
   @$core.override
-  StockGetFundamentalSnapshotResp createEmptyInstance() => create();
+  StockGetOperatingSnapshotResp createEmptyInstance() => create();
   @$core.pragma('dart2js:noInline')
-  static StockGetFundamentalSnapshotResp getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<StockGetFundamentalSnapshotResp>(
-          create);
-  static StockGetFundamentalSnapshotResp? _defaultInstance;
+  static StockGetOperatingSnapshotResp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StockGetOperatingSnapshotResp>(create);
+  static StockGetOperatingSnapshotResp? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $pb.PbList<$0.DBFundamentalSnapshot> get snapshots => $_getList(0);
+  $pb.PbList<$0.DBStockOperatingSnapshot> get snapshots => $_getList(0);
 }
 
 const $core.bool _omitFieldNames =

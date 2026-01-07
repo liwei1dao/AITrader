@@ -21,6 +21,15 @@ message StockGetIntradayChartResp {
   repeated DBStockRealTimeItem items = 1;
 }
 
+//获取股票K线数据 period: `daily`/`weekly`/`monthly`
+message StockGetHitDataReq {
+  string code = 1;
+  string period = 2;
+}
+
+message StockGetHitDataResp {
+  repeated DBStockBar items = 1;
+}
 
 
 // 获取股票信息请求

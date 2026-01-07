@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'stocks_controller.dart';
 import '../../routes/app_routes.dart';
-import '../../network/pb/stock/stock_db.pb.dart' as stockdb;
 
 class StocksView extends GetView<StocksController> {
   const StocksView({super.key});
@@ -80,6 +79,9 @@ class StocksView extends GetView<StocksController> {
                     ),
                   ],
                 ),
+                onTap: () {
+                  Get.toNamed(AppRoutes.stockDetail, arguments: {'stockId': s.stockid});
+                },
               );
             },
           );

@@ -55,7 +55,7 @@ func TestGetStockZhAHist(t *testing.T) {
 		t.Fatalf("初始化失败: %v", err)
 		return
 	}
-	data, err := sys.GetStockZhAHist("000001", "daily", "20170301", "20240528", "")
+	data, err := sys.GetStockZhAHist("000651", "weekly", "20170301", "20240528", "")
 	if err != nil {
 		t.Fatalf("请求失败: %v", err)
 		return

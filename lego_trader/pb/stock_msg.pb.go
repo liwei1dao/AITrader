@@ -7,10 +7,11 @@
 package pb
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -20,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//获取对应股票的实时数据
+// 获取对应股票的实时数据
 type StockGetRealTimeDataReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -115,7 +116,7 @@ func (x *StockGetRealTimeDataResp) GetItems() []*DBStockRealTimeItem {
 	return nil
 }
 
-//获取股票当日分时数据
+// 获取股票当日分时数据
 type StockGetIntradayChartReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -163,7 +164,7 @@ func (x *StockGetIntradayChartReq) GetCode() string {
 	return ""
 }
 
-//获取股票当日分时数据响应
+// 获取股票当日分时数据响应
 type StockGetIntradayChartResp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -229,6 +230,102 @@ func (x *StockGetBasicInfoReq) Reset() {
 	}
 }
 
+func (x *StockGetHitDataReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StockGetHitDataReq) ProtoMessage() {}
+
+func (x *StockGetHitDataReq) ProtoReflect() protoreflect.Message {
+	mi := &file_stock_stock_msg_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StockGetHitDataReq.ProtoReflect.Descriptor instead.
+func (*StockGetHitDataReq) Descriptor() ([]byte, []int) {
+	return file_stock_stock_msg_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *StockGetHitDataReq) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *StockGetHitDataReq) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+type StockGetHitDataResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Items         []*DBStockBar          `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StockGetHitDataResp) Reset() {
+	*x = StockGetHitDataResp{}
+	mi := &file_stock_stock_msg_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StockGetHitDataResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StockGetHitDataResp) ProtoMessage() {}
+
+func (x *StockGetHitDataResp) ProtoReflect() protoreflect.Message {
+	mi := &file_stock_stock_msg_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StockGetHitDataResp.ProtoReflect.Descriptor instead.
+func (*StockGetHitDataResp) Descriptor() ([]byte, []int) {
+	return file_stock_stock_msg_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *StockGetHitDataResp) GetItems() []*DBStockBar {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+// 获取股票信息请求
+type StockGetBasicInfoReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StockGetBasicInfoReq) Reset() {
+	*x = StockGetBasicInfoReq{}
+	mi := &file_stock_stock_msg_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
 func (x *StockGetBasicInfoReq) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
@@ -249,7 +346,7 @@ func (x *StockGetBasicInfoReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StockGetBasicInfoReq.ProtoReflect.Descriptor instead.
 func (*StockGetBasicInfoReq) Descriptor() ([]byte, []int) {
-	return file_stock_stock_msg_proto_rawDescGZIP(), []int{4}
+	return file_stock_stock_msg_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *StockGetBasicInfoReq) GetCode() string {
@@ -296,7 +393,7 @@ func (x *StockGetBasicInfoResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StockGetBasicInfoResp.ProtoReflect.Descriptor instead.
 func (*StockGetBasicInfoResp) Descriptor() ([]byte, []int) {
-	return file_stock_stock_msg_proto_rawDescGZIP(), []int{5}
+	return file_stock_stock_msg_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *StockGetBasicInfoResp) GetInfo() *DBStockBasicInfo {
@@ -308,20 +405,17 @@ func (x *StockGetBasicInfoResp) GetInfo() *DBStockBasicInfo {
 
 // 获取股票的经营快照
 type StockGetOperatingSnapshotReq struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
 	unknownFields protoimpl.UnknownFields
-
-	Code string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *StockGetOperatingSnapshotReq) Reset() {
 	*x = StockGetOperatingSnapshotReq{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_stock_stock_msg_proto_msgTypes[6]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
+	mi := &file_stock_stock_msg_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
 }
 
 func (x *StockGetOperatingSnapshotReq) String() string {
@@ -331,8 +425,8 @@ func (x *StockGetOperatingSnapshotReq) String() string {
 func (*StockGetOperatingSnapshotReq) ProtoMessage() {}
 
 func (x *StockGetOperatingSnapshotReq) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_stock_msg_proto_msgTypes[6]
-	if protoimpl.UnsafeEnabled && x != nil {
+	mi := &file_stock_stock_msg_proto_msgTypes[8]
+	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
@@ -344,7 +438,7 @@ func (x *StockGetOperatingSnapshotReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StockGetOperatingSnapshotReq.ProtoReflect.Descriptor instead.
 func (*StockGetOperatingSnapshotReq) Descriptor() ([]byte, []int) {
-	return file_stock_stock_msg_proto_rawDescGZIP(), []int{6}
+	return file_stock_stock_msg_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *StockGetOperatingSnapshotReq) GetCode() string {
@@ -355,20 +449,17 @@ func (x *StockGetOperatingSnapshotReq) GetCode() string {
 }
 
 type StockGetOperatingSnapshotResp struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	Snapshots     []*DBStockOperatingSnapshot `protobuf:"bytes,1,rep,name=snapshots,proto3" json:"snapshots,omitempty"`
 	unknownFields protoimpl.UnknownFields
-
-	Snapshots []*DBStockOperatingSnapshot `protobuf:"bytes,1,rep,name=snapshots,proto3" json:"snapshots,omitempty"`
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *StockGetOperatingSnapshotResp) Reset() {
 	*x = StockGetOperatingSnapshotResp{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_stock_stock_msg_proto_msgTypes[7]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
+	mi := &file_stock_stock_msg_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
 }
 
 func (x *StockGetOperatingSnapshotResp) String() string {
@@ -378,8 +469,8 @@ func (x *StockGetOperatingSnapshotResp) String() string {
 func (*StockGetOperatingSnapshotResp) ProtoMessage() {}
 
 func (x *StockGetOperatingSnapshotResp) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_stock_msg_proto_msgTypes[7]
-	if protoimpl.UnsafeEnabled && x != nil {
+	mi := &file_stock_stock_msg_proto_msgTypes[9]
+	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
@@ -391,7 +482,7 @@ func (x *StockGetOperatingSnapshotResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StockGetOperatingSnapshotResp.ProtoReflect.Descriptor instead.
 func (*StockGetOperatingSnapshotResp) Descriptor() ([]byte, []int) {
-	return file_stock_stock_msg_proto_rawDescGZIP(), []int{7}
+	return file_stock_stock_msg_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *StockGetOperatingSnapshotResp) GetSnapshots() []*DBStockOperatingSnapshot {
@@ -468,15 +559,16 @@ var file_stock_stock_msg_proto_goTypes = []interface{}{
 	(*DBStockOperatingSnapshot)(nil),      // 10: DBStockOperatingSnapshot
 }
 var file_stock_stock_msg_proto_depIdxs = []int32{
-	8,  // 0: StockGetRealTimeDataResp.items:type_name -> DBStockRealTimeItem
-	8,  // 1: StockGetIntradayChartResp.items:type_name -> DBStockRealTimeItem
-	9,  // 2: StockGetBasicInfoResp.info:type_name -> DBStockBasicInfo
-	10, // 3: StockGetOperatingSnapshotResp.snapshots:type_name -> DBStockOperatingSnapshot
-	4,  // [4:4] is the sub-list for method output_type
-	4,  // [4:4] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	10, // 0: StockGetRealTimeDataResp.items:type_name -> DBStockRealTimeItem
+	10, // 1: StockGetIntradayChartResp.items:type_name -> DBStockRealTimeItem
+	11, // 2: StockGetHitDataResp.items:type_name -> DBStockBar
+	12, // 3: StockGetBasicInfoResp.info:type_name -> DBStockBasicInfo
+	13, // 4: StockGetOperatingSnapshotResp.snapshots:type_name -> DBStockOperatingSnapshot
+	5,  // [5:5] is the sub-list for method output_type
+	5,  // [5:5] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_stock_stock_msg_proto_init() }
@@ -589,7 +681,7 @@ func file_stock_stock_msg_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_stock_stock_msg_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
