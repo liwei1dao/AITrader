@@ -26,15 +26,15 @@ type UserSginReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Stype    SginTyoe `protobuf:"varint,1,opt,name=stype,proto3,enum=SginTyoe" json:"stype" example:"0" description:"登录方式“"` //登录方式
+	Stype    SginTyoe `protobuf:"varint,1,opt,name=stype,proto3,enum=SginTyoe" json:"stype" description:"登录方式“" example:"0"` //登录方式
 	Account  string   `protobuf:"bytes,2,opt,name=account,proto3" json:"account" example:"" description:"账号"`                //账号
 	Password string   `protobuf:"bytes,3,opt,name=password,proto3" json:"password" example:"" description:"密码"`              //密码
 	Mail     string   `protobuf:"bytes,4,opt,name=mail,proto3" json:"mail" example:"" description:"邮箱地址"`                    //邮箱地址
 	Phone    string   `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone" example:"" description:"手机号码“"`                 //手机号
-	Ttoken   string   `protobuf:"bytes,6,opt,name=ttoken,proto3" json:"ttoken" description:"第三方token" example:""`            //第三方token
-	Vcode    string   `protobuf:"bytes,7,opt,name=vcode,proto3" json:"vcode" description:"验证码" example:""`                   //验证码
+	Ttoken   string   `protobuf:"bytes,6,opt,name=ttoken,proto3" json:"ttoken" example:"" description:"第三方token"`            //第三方token
+	Vcode    string   `protobuf:"bytes,7,opt,name=vcode,proto3" json:"vcode" example:"" description:"验证码"`                   //验证码
 	Name     string   `protobuf:"bytes,10,opt,name=name,proto3" json:"name" gorm:"name:50" example:"" description:"用户名"`     //用户名
-	Avatar   string   `protobuf:"bytes,11,opt,name=avatar,proto3" json:"avatar" description:"头像连接" gorm:"avatar" example:""` //头像连接
+	Avatar   string   `protobuf:"bytes,11,opt,name=avatar,proto3" json:"avatar" example:"" description:"头像连接" gorm:"avatar"` //头像连接
 	Language string   `protobuf:"bytes,12,opt,name=language,proto3" json:"language" example:"en" description:"语言"`           //
 }
 

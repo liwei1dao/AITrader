@@ -7,11 +7,10 @@
 package pb
 
 import (
-	reflect "reflect"
-	sync "sync"
-
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	reflect "reflect"
+	sync "sync"
 )
 
 const (
@@ -21,7 +20,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 获取对应股票的实时数据
+//获取对应股票的实时数据
 type StockGetRealTimeDataReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -116,7 +115,7 @@ func (x *StockGetRealTimeDataResp) GetItems() []*DBStockRealTimeItem {
 	return nil
 }
 
-// 获取股票当日分时数据
+//获取股票当日分时数据
 type StockGetIntradayChartReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -164,7 +163,7 @@ func (x *StockGetIntradayChartReq) GetCode() string {
 	return ""
 }
 
-// 获取股票当日分时数据响应
+//获取股票当日分时数据响应
 type StockGetIntradayChartResp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -212,17 +211,18 @@ func (x *StockGetIntradayChartResp) GetItems() []*DBStockRealTimeItem {
 	return nil
 }
 
-// 获取股票信息请求
-type StockGetBasicInfoReq struct {
+//获取股票K线数据 period: `daily`/`weekly`/`monthly`
+type StockGetHitDataReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Code   string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Period string `protobuf:"bytes,2,opt,name=period,proto3" json:"period,omitempty"`
 }
 
-func (x *StockGetBasicInfoReq) Reset() {
-	*x = StockGetBasicInfoReq{}
+func (x *StockGetHitDataReq) Reset() {
+	*x = StockGetHitDataReq{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_stock_stock_msg_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -238,7 +238,7 @@ func (*StockGetHitDataReq) ProtoMessage() {}
 
 func (x *StockGetHitDataReq) ProtoReflect() protoreflect.Message {
 	mi := &file_stock_stock_msg_proto_msgTypes[4]
-	if x != nil {
+	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
@@ -268,17 +268,20 @@ func (x *StockGetHitDataReq) GetPeriod() string {
 }
 
 type StockGetHitDataResp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Items         []*DBStockBar          `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	unknownFields protoimpl.UnknownFields
+	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Items []*DBStockBar `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 }
 
 func (x *StockGetHitDataResp) Reset() {
 	*x = StockGetHitDataResp{}
-	mi := &file_stock_stock_msg_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
+	if protoimpl.UnsafeEnabled {
+		mi := &file_stock_stock_msg_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
 func (x *StockGetHitDataResp) String() string {
@@ -289,7 +292,7 @@ func (*StockGetHitDataResp) ProtoMessage() {}
 
 func (x *StockGetHitDataResp) ProtoReflect() protoreflect.Message {
 	mi := &file_stock_stock_msg_proto_msgTypes[5]
-	if x != nil {
+	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
@@ -313,17 +316,20 @@ func (x *StockGetHitDataResp) GetItems() []*DBStockBar {
 
 // 获取股票信息请求
 type StockGetBasicInfoReq struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	unknownFields protoimpl.UnknownFields
+	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
 }
 
 func (x *StockGetBasicInfoReq) Reset() {
 	*x = StockGetBasicInfoReq{}
-	mi := &file_stock_stock_msg_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
+	if protoimpl.UnsafeEnabled {
+		mi := &file_stock_stock_msg_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
 func (x *StockGetBasicInfoReq) String() string {
@@ -333,7 +339,7 @@ func (x *StockGetBasicInfoReq) String() string {
 func (*StockGetBasicInfoReq) ProtoMessage() {}
 
 func (x *StockGetBasicInfoReq) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_stock_msg_proto_msgTypes[4]
+	mi := &file_stock_stock_msg_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -367,7 +373,7 @@ type StockGetBasicInfoResp struct {
 func (x *StockGetBasicInfoResp) Reset() {
 	*x = StockGetBasicInfoResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_stock_stock_msg_proto_msgTypes[5]
+		mi := &file_stock_stock_msg_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -380,7 +386,7 @@ func (x *StockGetBasicInfoResp) String() string {
 func (*StockGetBasicInfoResp) ProtoMessage() {}
 
 func (x *StockGetBasicInfoResp) ProtoReflect() protoreflect.Message {
-	mi := &file_stock_stock_msg_proto_msgTypes[5]
+	mi := &file_stock_stock_msg_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -405,17 +411,20 @@ func (x *StockGetBasicInfoResp) GetInfo() *DBStockBasicInfo {
 
 // 获取股票的经营快照
 type StockGetOperatingSnapshotReq struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	unknownFields protoimpl.UnknownFields
+	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
 }
 
 func (x *StockGetOperatingSnapshotReq) Reset() {
 	*x = StockGetOperatingSnapshotReq{}
-	mi := &file_stock_stock_msg_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
+	if protoimpl.UnsafeEnabled {
+		mi := &file_stock_stock_msg_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
 func (x *StockGetOperatingSnapshotReq) String() string {
@@ -426,7 +435,7 @@ func (*StockGetOperatingSnapshotReq) ProtoMessage() {}
 
 func (x *StockGetOperatingSnapshotReq) ProtoReflect() protoreflect.Message {
 	mi := &file_stock_stock_msg_proto_msgTypes[8]
-	if x != nil {
+	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
@@ -449,17 +458,20 @@ func (x *StockGetOperatingSnapshotReq) GetCode() string {
 }
 
 type StockGetOperatingSnapshotResp struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	Snapshots     []*DBStockOperatingSnapshot `protobuf:"bytes,1,rep,name=snapshots,proto3" json:"snapshots,omitempty"`
-	unknownFields protoimpl.UnknownFields
+	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Snapshots []*DBStockOperatingSnapshot `protobuf:"bytes,1,rep,name=snapshots,proto3" json:"snapshots,omitempty"`
 }
 
 func (x *StockGetOperatingSnapshotResp) Reset() {
 	*x = StockGetOperatingSnapshotResp{}
-	mi := &file_stock_stock_msg_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
+	if protoimpl.UnsafeEnabled {
+		mi := &file_stock_stock_msg_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
 func (x *StockGetOperatingSnapshotResp) String() string {
@@ -470,7 +482,7 @@ func (*StockGetOperatingSnapshotResp) ProtoMessage() {}
 
 func (x *StockGetOperatingSnapshotResp) ProtoReflect() protoreflect.Message {
 	mi := &file_stock_stock_msg_proto_msgTypes[9]
-	if x != nil {
+	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
@@ -513,23 +525,31 @@ var file_stock_stock_msg_proto_rawDesc = []byte{
 	0x65, 0x73, 0x70, 0x12, 0x2a, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x03,
 	0x28, 0x0b, 0x32, 0x14, 0x2e, 0x44, 0x42, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x52, 0x65, 0x61, 0x6c,
 	0x54, 0x69, 0x6d, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x22,
-	0x2a, 0x0a, 0x14, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x47, 0x65, 0x74, 0x42, 0x61, 0x73, 0x69, 0x63,
-	0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x22, 0x3e, 0x0a, 0x15, 0x53,
+	0x40, 0x0a, 0x12, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x47, 0x65, 0x74, 0x48, 0x69, 0x74, 0x44, 0x61,
+	0x74, 0x61, 0x52, 0x65, 0x71, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x65, 0x72,
+	0x69, 0x6f, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x65, 0x72, 0x69, 0x6f,
+	0x64, 0x22, 0x38, 0x0a, 0x13, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x47, 0x65, 0x74, 0x48, 0x69, 0x74,
+	0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x12, 0x21, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0b, 0x2e, 0x44, 0x42, 0x53, 0x74, 0x6f, 0x63,
+	0x6b, 0x42, 0x61, 0x72, 0x52, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x22, 0x2a, 0x0a, 0x14, 0x53,
 	0x74, 0x6f, 0x63, 0x6b, 0x47, 0x65, 0x74, 0x42, 0x61, 0x73, 0x69, 0x63, 0x49, 0x6e, 0x66, 0x6f,
-	0x52, 0x65, 0x73, 0x70, 0x12, 0x25, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x11, 0x2e, 0x44, 0x42, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x42, 0x61, 0x73, 0x69,
-	0x63, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x22, 0x32, 0x0a, 0x1c, 0x53,
+	0x52, 0x65, 0x71, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x22, 0x3e, 0x0a, 0x15, 0x53, 0x74, 0x6f, 0x63, 0x6b,
+	0x47, 0x65, 0x74, 0x42, 0x61, 0x73, 0x69, 0x63, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70,
+	0x12, 0x25, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11,
+	0x2e, 0x44, 0x42, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x42, 0x61, 0x73, 0x69, 0x63, 0x49, 0x6e, 0x66,
+	0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x22, 0x32, 0x0a, 0x1c, 0x53, 0x74, 0x6f, 0x63, 0x6b,
+	0x47, 0x65, 0x74, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x53, 0x6e, 0x61, 0x70,
+	0x73, 0x68, 0x6f, 0x74, 0x52, 0x65, 0x71, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x22, 0x58, 0x0a, 0x1d, 0x53,
 	0x74, 0x6f, 0x63, 0x6b, 0x47, 0x65, 0x74, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6e, 0x67,
-	0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x52, 0x65, 0x71, 0x12, 0x12, 0x0a, 0x04, 0x63,
-	0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x22,
-	0x58, 0x0a, 0x1d, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x47, 0x65, 0x74, 0x4f, 0x70, 0x65, 0x72, 0x61,
-	0x74, 0x69, 0x6e, 0x67, 0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x52, 0x65, 0x73, 0x70,
-	0x12, 0x37, 0x0a, 0x09, 0x73, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x73, 0x18, 0x01, 0x20,
-	0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x44, 0x42, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x4f, 0x70, 0x65,
-	0x72, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x52, 0x09,
-	0x73, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x73, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x3b, 0x70,
-	0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x52, 0x65, 0x73, 0x70, 0x12, 0x37, 0x0a, 0x09,
+	0x73, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x19, 0x2e, 0x44, 0x42, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69,
+	0x6e, 0x67, 0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x52, 0x09, 0x73, 0x6e, 0x61, 0x70,
+	0x73, 0x68, 0x6f, 0x74, 0x73, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x3b, 0x70, 0x62, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -544,19 +564,22 @@ func file_stock_stock_msg_proto_rawDescGZIP() []byte {
 	return file_stock_stock_msg_proto_rawDescData
 }
 
-var file_stock_stock_msg_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_stock_stock_msg_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_stock_stock_msg_proto_goTypes = []interface{}{
 	(*StockGetRealTimeDataReq)(nil),       // 0: StockGetRealTimeDataReq
 	(*StockGetRealTimeDataResp)(nil),      // 1: StockGetRealTimeDataResp
 	(*StockGetIntradayChartReq)(nil),      // 2: StockGetIntradayChartReq
 	(*StockGetIntradayChartResp)(nil),     // 3: StockGetIntradayChartResp
-	(*StockGetBasicInfoReq)(nil),          // 4: StockGetBasicInfoReq
-	(*StockGetBasicInfoResp)(nil),         // 5: StockGetBasicInfoResp
-	(*StockGetOperatingSnapshotReq)(nil),  // 6: StockGetOperatingSnapshotReq
-	(*StockGetOperatingSnapshotResp)(nil), // 7: StockGetOperatingSnapshotResp
-	(*DBStockRealTimeItem)(nil),           // 8: DBStockRealTimeItem
-	(*DBStockBasicInfo)(nil),              // 9: DBStockBasicInfo
-	(*DBStockOperatingSnapshot)(nil),      // 10: DBStockOperatingSnapshot
+	(*StockGetHitDataReq)(nil),            // 4: StockGetHitDataReq
+	(*StockGetHitDataResp)(nil),           // 5: StockGetHitDataResp
+	(*StockGetBasicInfoReq)(nil),          // 6: StockGetBasicInfoReq
+	(*StockGetBasicInfoResp)(nil),         // 7: StockGetBasicInfoResp
+	(*StockGetOperatingSnapshotReq)(nil),  // 8: StockGetOperatingSnapshotReq
+	(*StockGetOperatingSnapshotResp)(nil), // 9: StockGetOperatingSnapshotResp
+	(*DBStockRealTimeItem)(nil),           // 10: DBStockRealTimeItem
+	(*DBStockBar)(nil),                    // 11: DBStockBar
+	(*DBStockBasicInfo)(nil),              // 12: DBStockBasicInfo
+	(*DBStockOperatingSnapshot)(nil),      // 13: DBStockOperatingSnapshot
 }
 var file_stock_stock_msg_proto_depIdxs = []int32{
 	10, // 0: StockGetRealTimeDataResp.items:type_name -> DBStockRealTimeItem
@@ -627,7 +650,7 @@ func file_stock_stock_msg_proto_init() {
 			}
 		}
 		file_stock_stock_msg_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StockGetBasicInfoReq); i {
+			switch v := v.(*StockGetHitDataReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -639,7 +662,7 @@ func file_stock_stock_msg_proto_init() {
 			}
 		}
 		file_stock_stock_msg_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StockGetBasicInfoResp); i {
+			switch v := v.(*StockGetHitDataResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -651,7 +674,7 @@ func file_stock_stock_msg_proto_init() {
 			}
 		}
 		file_stock_stock_msg_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StockGetOperatingSnapshotReq); i {
+			switch v := v.(*StockGetBasicInfoReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -663,6 +686,30 @@ func file_stock_stock_msg_proto_init() {
 			}
 		}
 		file_stock_stock_msg_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StockGetBasicInfoResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_stock_stock_msg_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StockGetOperatingSnapshotReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_stock_stock_msg_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StockGetOperatingSnapshotResp); i {
 			case 0:
 				return &v.state
