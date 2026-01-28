@@ -7,6 +7,8 @@ import (
 	"lego_trader/lego/core/cbase"
 	"lego_trader/lego/sys/cron"
 	"lego_trader/lego/sys/timewheel"
+	"lego_trader/pb"
+	"lego_trader/sys/akshare"
 	"lego_trader/sys/db"
 	"sync"
 	"time"
@@ -31,28 +33,105 @@ func (this *timerComp) Init(service core.IService, module core.IModule, comp cor
 
 func (this *timerComp) Start() (err error) {
 	this.ModuleCompBase.Start()
+	// A股交易时间定时采集：每隔5分钟请求一次实时股票价格
+	// 上午 09:30 - 09:55
+	cron.AddFunc("0 30-59/5 9 * * MON-FRI", this.marketTicker)
+	// 上午 10:00 - 10:55
+	cron.AddFunc("0 */5 10 * * MON-FRI", this.marketTicker)
+	// 上午 11:00 - 11:30
+	cron.AddFunc("0 0-30/5 11 * * MON-FRI", this.marketTicker)
+	// 下午 13:00 - 13:55
+	cron.AddFunc("0 */5 13 * * MON-FRI", this.marketTicker)
+	// 下午 14:00 - 14:55
+	cron.AddFunc("0 */5 14 * * MON-FRI", this.marketTicker)
+	// 下午 15:00 (收盘)
+	cron.AddFunc("0 0 15 * * MON-FRI", this.marketTicker)
 
-	// 1. 实时采集调度
-	// 09:15 开始采集
-	cron.AddFunc("0 15 9 * * *", this.startRealtimeLoop)
-	// 11:30 暂停采集
-	cron.AddFunc("0 30 11 * * *", this.stopRealtimeLoop)
-	// 13:00 恢复采集
-	cron.AddFunc("0 0 13 * * *", this.startRealtimeLoop)
-	// 15:00 停止采集
-	cron.AddFunc("0 0 15 * * *", this.stopRealtimeLoop)
-
-	// 2. 盘后日K更新 (每天 15:15)
-	cron.AddFunc("0 15 15 * * *", this.dailyUpdateHistory)
-
-	// 3. 新闻采集 (每天 9:00 - 15:00, 每小时一次)
-	cron.AddFunc("0 0 9-15 * * *", this.collectNews)
+	// 每日凌晨清理任务（清理缓存、归档昨日K线）
+	cron.AddFunc("0 0 1 * * *", this.dailyCleanAndStoreTask)
 
 	go this.initCache()
 	return
 }
 
-// 初始化缓存与历史数据
+// 每日凌晨清理与归档任务
+func (this *timerComp) dailyCleanAndStoreTask() {
+	this.module.Infof("Start dailyCleanAndStoreTask...")
+
+	// 1. 归档昨日K线数据
+	// 判断昨日是否为交易日（周一至周五）
+	yesterday := time.Now().AddDate(0, 0, -1)
+	if yesterday.Weekday() >= time.Monday && yesterday.Weekday() <= time.Friday {
+		this.archiveDailyKline(yesterday)
+	}
+
+	// 2. 清理并重建缓存（复用initCache逻辑：清理队列 -> 拉取最新快照填充）
+	// 注意：此时拉取的快照是昨日收盘数据，作为今日开盘前的初始状态是合适的
+	if err := this.initCache(); err != nil {
+		this.module.Errorf("dailyCleanAndStoreTask initCache error: %v", err)
+	}
+
+	this.module.Infof("dailyCleanAndStoreTask finished.")
+}
+
+// 归档指定日期的K线数据
+func (this *timerComp) archiveDailyKline(date time.Time) {
+	dateStr := date.Format("20060102")
+	this.module.Infof("Archiving daily kline for date: %s", dateStr)
+
+	// 获取全市场实时行情（即昨日收盘数据）
+	records, err := akshare.GetStockZhASpotEM()
+	if err != nil {
+		this.module.Errorf("archiveDailyKline GetStockZhASpotEM error: %v", err)
+		return
+	}
+
+	if len(records) == 0 {
+		this.module.Warnf("archiveDailyKline: no records found")
+		return
+	}
+
+	// 遍历并存储
+	// 注意：这里是一个比较重的操作，如果有数千只股票，建议分批或并行处理
+	// 目前简单实现为串行处理，Redis 写入通常很快
+	count := 0
+	for _, r := range records {
+		// 过滤掉无成交量或停牌的股票（可选，视需求而定，这里暂不过滤，保留全量）
+
+		bar := &pb.DBStockBar{
+			Symbol:    r.Code,
+			Date:      dateStr,
+			Open:      r.Open,
+			High:      r.High,
+			Low:       r.Low,
+			Close:     r.LastPrice,
+			Volume:    r.Volume,
+			Amount:    r.Amount,
+			ChangePct: r.ChangePct,
+		}
+
+		// 存入 Redis 历史 K 线 ZSet
+		// updateStockDayHit 内部是单个 symbol 的操作
+		if err := this.module.model.updateStockDayHit(r.Code, "day", []*pb.DBStockBar{bar}); err != nil {
+			this.module.Errorf("archiveDailyKline updateStockDayHit error: %s, %v", r.Code, err)
+		} else {
+			count++
+		}
+	}
+
+	this.module.Infof("Archived %d stock klines for %s", count, dateStr)
+}
+
+// 市场行情定时器：采集实时数据并写入缓存
+func (this *timerComp) marketTicker() {
+	// 查询一次实时股票价格
+	err := this.module.akshare.getStockRealTimeSpot()
+	if err != nil {
+		this.module.Errorf("marketTicker error: %v", err)
+	}
+}
+
+// 初始化缓存
 func (this *timerComp) initCache() (err error) {
 	// 1. 历史数据全量采集 (启动时检查)
 	val, _ := db.Redis().Get(context.Background(), "collection:history:init_done").Result()
@@ -78,7 +157,6 @@ func (this *timerComp) initCache() (err error) {
 	if err != nil {
 		this.module.Errorf("init market news em err: %s", err.Error())
 	}
-
 	//加载指数实时数据
 	err = this.module.akshare.getMarketRealTimeIndexs()
 	if err != nil {
@@ -90,82 +168,4 @@ func (this *timerComp) initCache() (err error) {
 		this.module.Errorf("init stock zh a spot em err: %s", err.Error())
 	}
 	return
-}
-
-// 开启实时采集循环
-func (this *timerComp) startRealtimeLoop() {
-	this.mu.Lock()
-	defer this.mu.Unlock()
-
-	if this.cancelRealtime != nil {
-		return // 已经在运行
-	}
-
-	this.module.Infof("Starting realtime collection loop...")
-	ctx, cancel := context.WithCancel(context.Background())
-	this.cancelRealtime = cancel
-
-	go func() {
-		// 每 30 秒采集一次
-		ticker := time.NewTicker(time.Second * 30)
-		defer ticker.Stop()
-
-		// 立即执行一次
-		this.doRealtimeCollection()
-
-		for {
-			select {
-			case <-ctx.Done():
-				this.module.Infof("Realtime collection loop stopped.")
-				return
-			case <-ticker.C:
-				this.doRealtimeCollection()
-			}
-		}
-	}()
-}
-
-// 停止实时采集循环
-func (this *timerComp) stopRealtimeLoop() {
-	this.mu.Lock()
-	defer this.mu.Unlock()
-
-	if this.cancelRealtime != nil {
-		this.module.Infof("Stopping realtime collection loop...")
-		this.cancelRealtime()
-		this.cancelRealtime = nil
-	}
-}
-
-// 执行实时采集
-func (this *timerComp) doRealtimeCollection() {
-	this.module.Infof("Collecting realtime data snapshot...")
-	// 采集股票实时数据
-	if err := this.module.akshare.getStockRealTimeSpot(); err != nil {
-		this.module.Errorf("Realtime stock collection failed: %v", err)
-	}
-	// 采集指数实时数据
-	if err := this.module.akshare.getMarketRealTimeIndexs(); err != nil {
-		this.module.Errorf("Realtime index collection failed: %v", err)
-	}
-}
-
-// 每日盘后更新日K数据
-func (this *timerComp) dailyUpdateHistory() {
-	this.module.Infof("Starting daily history update...")
-	today := time.Now().Format("20060102")
-	// 采集当天的日K
-	if err := this.module.akshare.collectAllStocksHistory(today, today); err != nil {
-		this.module.Errorf("Daily history update failed: %v", err)
-	} else {
-		this.module.Infof("Daily history update completed.")
-	}
-}
-
-// 定时采集新闻
-func (this *timerComp) collectNews() {
-	this.module.Infof("Collecting news...")
-	if err := this.module.akshare.getRealTimeNews(); err != nil {
-		this.module.Errorf("News collection failed: %v", err)
-	}
 }
