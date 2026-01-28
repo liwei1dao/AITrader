@@ -10,6 +10,7 @@ import (
 	"lego_trader/comm"
 	"lego_trader/lego/core"
 	"lego_trader/lego/core/cbase"
+	"lego_trader/lego/utils/crypto/md5"
 	"lego_trader/pb"
 	"lego_trader/sys/db"
 
@@ -25,6 +26,58 @@ type modelComp struct {
 func (this *modelComp) Init(service core.IService, module core.IModule, comp core.IModuleComp, options core.IModuleOptions) (err error) {
 	this.ModuleCompBase.Init(service, module, comp, options)
 	this.module = module.(*Collection)
+	return
+}
+
+/*
+过滤并保存新个股新闻
+参数: items - 原始新闻列表
+返回值: newItems - 去重后的新新闻列表; err - 错误信息
+说明: 使用 Redis Set 存储已处理的新闻 URL，返回 Set 中不存在的新闻，并将其加入 Set
+*/
+func (this *modelComp) filterNewStockNews(items []*pb.DBStockNews) (newItems []*pb.DBStockNews, err error) {
+	var (
+		ctx      = context.Background()
+		pipeline = db.Redis().Pipeline()
+		seenKey  = "collection:stock_news:seen"
+		futures  []*redis.BoolCmd
+	)
+
+	// 1. 批量检查是否存在 (使用MD5作为key)
+	for _, item := range items {
+		urlHash := md5.MD5EncToLower(item.Url)
+		futures = append(futures, pipeline.SIsMember(ctx, seenKey, urlHash))
+	}
+	if _, err = pipeline.Exec(ctx); err != nil {
+		this.module.Errorf("Redis pipeline exec failed: %v", err)
+		return
+	}
+
+	// 2. 筛选新新闻并准备写入
+	newItems = make([]*pb.DBStockNews, 0)
+	writePipeline := db.Redis().Pipeline()
+	hasNew := false
+
+	for i, future := range futures {
+		exists := future.Val()
+		if !exists {
+			item := items[i]
+			newItems = append(newItems, item)
+			urlHash := md5.MD5EncToLower(item.Url)
+			writePipeline.SAdd(ctx, seenKey, urlHash)
+			hasNew = true
+		}
+	}
+
+	// 3. 批量写入新标记
+	if hasNew {
+		if _, err = writePipeline.Exec(ctx); err != nil {
+			this.module.Errorf("Redis SAdd failed: %v", err)
+			// 即使写入失败，也返回筛选出的新闻，虽然可能导致下次重复，但保证了本次可用
+			return newItems, nil
+		}
+	}
+
 	return
 }
 
@@ -75,11 +128,18 @@ func (this *modelComp) updateRealTimeNews(source string, items []*pb.DBRealTimeG
 		val      []byte
 	)
 	for _, item = range items {
+		// 去重检查
+		if db.Redis().SIsMember(context.Background(), "collection:news:seen", item.Url).Val() {
+			continue
+		}
+
 		if val, err = json.Marshal(item); err != nil {
 			continue
 		}
 		// 插入到队列
 		redisPip.RPush(context.Background(), fmt.Sprintf("%s:%s", comm.Redis_RealtimeNewsQueue, source), val)
+		// 记录已处理
+		redisPip.SAdd(context.Background(), "collection:news:seen", item.Url)
 	}
 	_, err = redisPip.Exec(context.Background())
 	if err != nil {

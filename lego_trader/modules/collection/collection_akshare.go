@@ -26,6 +26,43 @@ func (this *stockAkshareComp) Init(service core.IService, module core.IModule, c
 	return
 }
 
+/*
+采集所有股票历史数据
+参数: startDate 开始日期 (格式: "20060102"); endDate 结束日期
+返回值: err 错误信息
+说明: 遍历所有A股股票，获取指定时间段的日K数据
+*/
+func (this *stockAkshareComp) collectAllStocksHistory(startDate, endDate string) (err error) {
+	var (
+		records []akshare.StockZhASpotEMRecord
+	)
+	// 1. 获取所有A股实时行情以拿到代码列表
+	records, err = akshare.GetStockZhASpotEM()
+	if err != nil {
+		this.module.Errorf("collectAllStocksHistory: get stock list failed: %v", err)
+		return
+	}
+
+	this.module.Infof("Start collecting history for %d stocks from %s to %s", len(records), startDate, endDate)
+
+	// 2. 遍历采集
+	for i, r := range records {
+		// 避免频繁请求导致封禁，适当延时
+		time.Sleep(time.Millisecond * 50)
+
+		if errH := this.getStockDayHist(r.Code, "daily", startDate, endDate); errH != nil {
+			this.module.Errorf("collect history for %s failed: %v", r.Code, errH)
+			continue
+		}
+
+		if (i+1)%100 == 0 {
+			this.module.Infof("Collected history for %d/%d stocks", i+1, len(records))
+		}
+	}
+	this.module.Infof("Finished collecting history")
+	return
+}
+
 /*----------------------------------------------------新闻-----------------------------------------------------------*/
 /// 获取全球股市资讯（同花顺 stock_info_global_ths）
 /// 作用: 大盘看板的全球股市资讯源，用于新闻/快讯模块
